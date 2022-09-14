@@ -1,12 +1,13 @@
 <!doctype html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="utf-8">
-<title>CSS</title>
+<title>키위</title>
 <style>
 body {
 	padding: 0px;
 	margin: 0px;
+	width: 100%;
+	height: 100vh;
 }
 
 .jb-box {
@@ -38,10 +39,10 @@ video {
 </style>
 </head>
 <body>
-	<div class="jb-box">
-		<video th:src="@{/video/main_Video.mp4}" muted autoplay loop></video>
+	<div class="">
+		<video th:src="${videoUrl}" muted autoplay loop></video>
 		<div class="jb-text">
-			<p>Lorem Ipsum Dolor</p>
+			<p>희희 김민솔 고마워~!</p>
 		</div>
 	</div>
 </body>
