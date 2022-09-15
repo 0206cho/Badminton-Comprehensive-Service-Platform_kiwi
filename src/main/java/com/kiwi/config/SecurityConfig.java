@@ -26,8 +26,6 @@ public class SecurityConfig {
    @Autowired
     MemberService memberService;
 
-
-
     // 인증 or 인가에 대한 설정
     // 스프링 시큐리티 5.7 버전부터는 WebSecurityConfigurerAdapter가 Deprecated 되었기 때문에
     // 아래와 같이SecurityFilterChain 타입의 빈으로 대체
@@ -47,8 +45,8 @@ public class SecurityConfig {
                 .logoutSuccessUrl("/");
 
         http.authorizeRequests()
-                .mvcMatchers("/css/**","/js/**","/img/**","/video/**").permitAll()
-                .mvcMatchers("/","/members/**","/item/**","/images/**").permitAll()
+                .mvcMatchers("/css/**","/js/**","/img/**").permitAll()
+                .mvcMatchers("/","/members/**","/item/**","/images/**","/market/**").permitAll()
                 .mvcMatchers("/admin/**").hasRole("ADMIN")
                 .anyRequest().authenticated();
 
