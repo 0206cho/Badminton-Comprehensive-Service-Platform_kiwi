@@ -29,4 +29,9 @@ public class MainController {
         model.addAttribute("maxPage", 5);
         return "main";
     }
+    
+    @GetMapping(value = "/market")
+    public String market(){
+        return "market/market";
+    }
 }
