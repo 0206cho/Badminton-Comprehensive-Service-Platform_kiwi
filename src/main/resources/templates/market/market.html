@@ -16,6 +16,8 @@
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+	margin-left: 15%;
+	margin-right: 15%;
 }
 
 .fieldError {
@@ -63,13 +65,13 @@ a {
 }
 
 .head { /*지역, 도시, 검색창, 글쓰기 버튼*/
-	display: flex; 
+	display: flex;
 	align-items: center;
 	gap: 5px;
 	margin-bottom: 50px;
 }
 
-.btn-kiwi{
+.btn-kiwi {
 	background-color: #70ACB1;
 	color: white;
 	border-color: #666;
@@ -97,8 +99,8 @@ a {
 		<!--지역 -->
 		<div class="btn-group">
 			<button type="button" class="btn btn-outline-kiwi dropdown-toggle"
-				data-bs-toggle="dropdown" aria-expanded="false" style="width: 4cm; margin-right: 20px">지역
-			</button>
+				data-bs-toggle="dropdown" aria-expanded="false"
+				style="width: 4cm; margin-right: 20px">지역</button>
 			<ul class="dropdown-menu">
 				<li><a class="dropdown-item" href="#">서울</a></li>
 				<li><a class="dropdown-item" href="#">부산</a></li>
@@ -122,8 +124,8 @@ a {
 		<!--도시 -->
 		<div class="btn-group">
 			<button type="button" class="btn btn-outline-kiwi dropdown-toggle"
-				data-bs-toggle="dropdown" aria-expanded="false" style="width: 4cm;  margin-right: 120px">도시
-			</button>
+				data-bs-toggle="dropdown" aria-expanded="false"
+				style="width: 4cm; margin-right: 120px">도시</button>
 			<ul class="dropdown-menu">
 				<li><a class="dropdown-item" href="#">서울</a></li>
 				<li><a class="dropdown-item" href="#">부산</a></li>
@@ -146,19 +148,101 @@ a {
 		</div>
 		<!-- 검색창 -->
 		<input type="text" id="keyword" style="width: 50%; height: 36px;">
-		<button class="btn btn-outline-success" id="search" style="width:100px; margin-right: 30px">검색</button>
-		<button type="button" class="btn btn-kiwi" style="width:120px;">글쓰기</button>
+		<button class="btn btn-outline-success" id="search"
+			style="width: 100px; margin-right: 30px">검색</button>
+		<button type="button" class="btn btn-kiwi" style="width: 120px;">글쓰기</button>
 	</div>
-	
-	
-	<div class="card" style="width: 18rem;">
-  <img src="..." class="card-img-top" alt="...">
-  <div class="card-body">
-    <h5 class="card-title">Card title</h5>
-    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-    <a href="#" class="btn btn-primary">Go somewhere</a>
-  </div>
-</div>
-	
+
+	<!-- 마켓 카드 -->
+	<div class="row">
+
+		<div class="col col-xl-3 col-lg-3 col-md-6"
+			style="margin-bottom: 20px">
+			<div class="card" style="width: 18rem; border-color: black;">
+				<img src="/img/라켓1.jpg" class="card-img-top" alt="이미지 로딩중"
+					style="width: 15rem; height: 15rem; margin: auto; padding-top: 15px;">
+				<div class="card-body">
+					<h5 class="card-title" style="font-weight: bold;">최고급 라켓</h5>
+					<p class="card-text">
+						5000원 <br> 인천광역시 연수구
+					</p>
+				</div>
+			</div>
+		</div>
+
+		<div class="col col-xl-3 col-lg-3 col-md-6"
+			style="margin-bottom: 20px">
+			<div class="card" style="width: 18rem; border-color: black;">
+				<img src="/img/셔틀콕.jpg" class="card-img-top" alt="이미지 로딩중"
+					style="width: 15rem; height: 15rem; margin: auto; padding-top: 15px;">
+				<div class="card-body">
+					<h5 class="card-title" style="font-weight: bold;">최고급 셔틀콕</h5>
+					<p class="card-text">
+						2000원 <br> 인천광역시 남동구
+					</p>
+				</div>
+			</div>
+		</div>
+
+		<div class="col col-xl-3 col-lg-3 col-md-6"
+			style="margin-bottom: 20px">
+			<div class="card" style="width: 18rem; border-color: black;">
+				<img src="/img/셔틀콕.jpg" class="card-img-top" alt="이미지 로딩중"
+					style="width: 15rem; height: 15rem; margin: auto; padding-top: 15px;">
+				<div class="card-body">
+					<h5 class="card-title" style="font-weight: bold;">최고급 셔틀콕</h5>
+					<p class="card-text">
+						2000원 <br> 인천광역시 남동구
+					</p>
+				</div>
+			</div>
+		</div>
+
+		<div class="col col-xl-3 col-lg-3 col-md-6"
+			style="margin-bottom: 20px">
+			<div class="card" style="width: 18rem; border-color: black;">
+				<img src="/img/셔틀콕.jpg" class="card-img-top" alt="이미지 로딩중"
+					style="width: 15rem; height: 15rem; margin: auto; padding-top: 15px;">
+				<div class="card-body">
+					<h5 class="card-title" style="font-weight: bold;">최고급 셔틀콕</h5>
+					<p class="card-text">
+						2000원 <br> 인천광역시 남동구
+					</p>
+				</div>
+			</div>
+		</div>
+
+		<div class="col col-xl-3 col-lg-3 col-md-6"
+			style="margin-bottom: 20px">
+			<div class="card" style="width: 18rem; border-color: black;">
+				<img src="/img/셔틀콕.jpg" class="card-img-top" alt="이미지 로딩중"
+					style="width: 15rem; height: 15rem; margin: auto; padding-top: 15px;">
+				<div class="card-body">
+					<h5 class="card-title" style="font-weight: bold;">최고급 셔틀콕</h5>
+					<p class="card-text">
+						2000원 <br> 인천광역시 남동구
+					</p>
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+<br>
+<br>
+	<nav aria-label="Page navigation">
+		<ul class="pagination">
+			<li class="page-item"><a class="page-link" href="#"
+				aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
+			</a></li>
+			<li class="page-item"><a class="page-link" href="#">1</a></li>
+			<li class="page-item"><a class="page-link" href="#">2</a></li>
+			<li class="page-item"><a class="page-link" href="#">3</a></li>
+			<li class="page-item"><a class="page-link" href="#"
+				aria-label="Next"> <span aria-hidden="true">&raquo;</span>
+			</a></li>
+		</ul>
+	</nav>
+
 </div>
 </html>
