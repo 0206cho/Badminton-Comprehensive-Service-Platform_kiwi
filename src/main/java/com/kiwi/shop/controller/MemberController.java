@@ -58,7 +58,7 @@ public class MemberController {
     //로그인 로직
     @GetMapping(value = "/login")
     public String loginMember(){
-        return "/member/memberLoginForm_test";
+        return "/member/memberLoginForm_test2";
     }
     
     
