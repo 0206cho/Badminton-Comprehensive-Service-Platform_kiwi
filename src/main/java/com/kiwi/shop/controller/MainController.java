@@ -42,4 +42,9 @@ public class MainController {
     public String market(){
         return "market/market";
     }
+    
+    @GetMapping(value = "/marketDetail")
+    public String marketDetail(){
+        return "market/marketDetail";
+    }
 }
