@@ -1,89 +1,163 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layouts/layout1}">
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
 
-<!-- 사용자 CSS 추가 -->
-<th:block layout:fragment="css">
-    <style>
-        .carousel-inner > .item {
-            height: 350px;
-        }
-        .margin{
-            margin-bottom:30px;
-        }
-        .banner{
-            height: 300px;
-            position: absolute; top:0; left: 0;
-            width: 100%;
-            height: 100%;
-        }
-        .card-text{
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            overflow: hidden;
-        }
-        a:hover{
-            text-decoration:none;
-        }
-        .center{
-            text-align:center;
-        }
-    </style>
-</th:block>
+<head>
 
-<div layout:fragment="content">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>키위</title>
+	<style>
+		* {
+			box-sizing: border-box;
+		}
 
-    <div id="carouselControls" class="carousel slide margin" data-ride="carousel">
-        <div class="carousel-inner">
-            <div class="carousel-item active item">
-                <img class="d-block w-100 banner" src="https://user-images.githubusercontent.com/13268420/112147492-1ab76200-8c20-11eb-8649-3d2f282c3c02.png" alt="First slide">
-            </div>
-        </div>
-    </div>
+		body {
+			margin: 0;
+			font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+			font-size: 1rem;
+			line-height: 1.5;
+			color: #333;
+			overflow-x: hidden;
+		}
 
-    <input type="hidden" name="searchQuery" th:value="${itemSearchDto.searchQuery}">
-    <div th:if="${not #strings.isEmpty(itemSearchDto.searchQuery)}" class="center">
-        <p class="h3 font-weight-bold" th:text="${itemSearchDto.searchQuery} + '검색 결과'"></p>
-    </div>
+		.vid-header {
+			height: 100vh;
+			display: flex;
+			align-items: center;
+			color: black;
+		}
 
-    <div class="row">
-        <th:block th:each="item, status: ${items.getContent()}">
-            <div class="col-md-4 margin">
-                <div class="card">
-                    <a th:href="'/item/' +${item.id}" class="text-dark">
-                        <img th:src="${item.imgUrl}" class="card-img-top" th:alt="${item.itemNm}" height="400">
-                        <div class="card-body">
-                            <h4 class="card-title">[[${item.itemNm}]]</h4>
-                            <p class="card-text">[[${item.itemDetail}]]</p>
-                            <h3 class="card-title text-danger">[[${item.price}]]원</h3>
-                        </div>
-                    </a>
-                </div>
-            </div>
-        </th:block>
-    </div>
+		.container {
+			max-width: 960px;
+			padding-left: 1rem;
+			padding-right: 1rem;
+			margin: auto;
+			text-align: center;
+		}
 
-    <div th:with="start=${(items.number/maxPage)*maxPage + 1}, end=(${(items.totalPages == 0) ? 1 : (start + (maxPage - 1) < items.totalPages ? start + (maxPage - 1) : items.totalPages)})" >
-        <ul class="pagination justify-content-center">
+		.fullscreen-vid-wrap {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100vh;
+			overflow: hidden;
+		}
 
-            <li class="page-item" th:classappend="${items.number eq 0}?'disabled':''">
-                <a th:href="@{'/' + '?searchQuery=' + ${itemSearchDto.searchQuery} + '&page=' + ${items.number-1}}" aria-label='Previous' class="page-link">
-                    <span aria-hidden='true'>Previous</span>
-                </a>
-            </li>
+		.fullscreen-vid-wrap video {
+			min-width: 100%;
+			min-height: 100%;
+		}
 
-            <li class="page-item" th:each="page: ${#numbers.sequence(start, end)}" th:classappend="${items.number eq page-1}?'active':''">
-                <a th:href="@{'/' +'?searchQuery=' + ${itemSearchDto.searchQuery} + '&page=' + ${page-1}}" th:inline="text" class="page-link">[[${page}]]</a>
-            </li>
+		.header-overlay {
+			height: 100vh;
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100vw;
+			background-color: #225470;
+			z-index: 1;
+			opacity: 0.45;
+		}
 
-            <li class="page-item" th:classappend="${items.number+1 ge items.totalPages}?'disabled':''">
-                <a th:href="@{'/' +'?searchQuery=' + ${itemSearchDto.searchQuery} + '&page=' + ${items.number+1}}" aria-label='Next' class="page-link">
-                    <span aria-hidden='true'>Next</span>
-                </a>
-            </li>
+		.header-footer {
+			height: 60%;
+			width: 60%;
+			position: absolute;
+			bottom: 20%;
+			left: 20%;
+			background-color: #225470;
+			background-color: rgba(255, 255, 255, 0.45);
+			z-index: 2;
+			text-align: right;
+			padding: 1rem 10rem;
 
-        </ul>
-    </div>
+		}
 
-</div>
+		.header-footer img {
+			opacity: 0.45;
+			background-color: #225470;
+		}
+
+		.header-content {
+			z-index: 3;
+		}
+
+		.header-content h1 {
+			font-size: 50px;
+			margin-bottom: 0;
+
+		}
+
+		.header-content p {
+			font-size: 1.5rem;
+			display: block;
+			padding-bottom: 2rem;
+		}
+
+		.btn {
+			color: black;
+			font-size: 1.5rem;
+			padding: 1rem 2rem;
+
+		}
+		
+		.logo {
+			padding: 5px 2rem;
+			left: 30%;
+			height: 13%;
+			width: 13%;
+		
+		}
+		
+		.logoA {
+			text-decoration: none;
+			
+			
+		}
+
+		@media(max-width:960px) {
+			.container {
+				padding-right: 3rem;
+				padding-left: 3rem;
+			}
+		}
+	</style>
+</head>
+
+<body>
+
+	<header class="vid-header container">
+		<div class="fullscreen-vid-wrap">
+			<video th:src="${videoUrl}" muted autoplay loop></video>
+		</div>
+	  <div class="header-overlay"> 
+		</div>
+		<div class="header-content">
+			<h1>나만의 배드민턴 매칭 서비스 플랫폼 KiWi</h1>
+			<p>
+				쉽고 빠르게 예약해보세요.
+			</p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<a href="#" class="btn">매치</a>
+			<a href="#" class="btn">코트예약</a>
+			<a href="/market" class="btn">키위마켓</a>
+			<a href="#" class="btn">소곤소곤</a>
+			<br>
+			<br>
+			<a href="#" class="logoA">
+				<img class="logo" src="img/kakaotalk.png" alt="kakaotalk">
+			</a>
+			<a href="/members/login" class="logoA">
+				<img class="logo" src="img/person.png" alt="person">
+			</a>
+		</div>
+		  <div class="header-footer">
+		
+			
+		</div>
+	</header>
+
+
+
+</body>
+
+</html>

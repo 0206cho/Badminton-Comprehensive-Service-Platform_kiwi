@@ -35,7 +35,7 @@ public class MainController {
     @GetMapping(value = "/")
     public String test(Model model) {
     	model.addAttribute("videoUrl", "/video/main.mp4");
-    	return "main_test";
+    	return "main";
     }
     
     @GetMapping(value = "/market")
