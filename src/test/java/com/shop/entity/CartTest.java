@@ -10,11 +10,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.kiwi.shop.dto.MemberFormDto;
+import com.kiwi.member.dto.MemberFormDto;
 import com.kiwi.shop.entity.Cart;
-import com.kiwi.shop.entity.Member;
+import com.kiwi.member.entity.Member;
 import com.kiwi.shop.repository.CartRepository;
-import com.kiwi.shop.repository.MemberRepository;
+import com.kiwi.member.repository.MemberRepository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityNotFoundException;

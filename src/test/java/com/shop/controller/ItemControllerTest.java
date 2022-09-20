@@ -12,9 +12,9 @@ import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import com.kiwi.shop.dto.MemberFormDto;
-import com.kiwi.shop.entity.Member;
-import com.kiwi.shop.service.MemberService;
+import com.kiwi.member.dto.MemberFormDto;
+import com.kiwi.member.entity.Member;
+import com.kiwi.member.service.MemberService;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;

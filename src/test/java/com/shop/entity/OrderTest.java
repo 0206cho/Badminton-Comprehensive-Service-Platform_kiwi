@@ -11,11 +11,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.kiwi.constant.ItemSellStatus;
 import com.kiwi.shop.entity.Item;
-import com.kiwi.shop.entity.Member;
+import com.kiwi.member.entity.Member;
 import com.kiwi.shop.entity.Order;
 import com.kiwi.shop.entity.OrderItem;
 import com.kiwi.shop.repository.ItemRepository;
-import com.kiwi.shop.repository.MemberRepository;
+import com.kiwi.member.repository.MemberRepository;
 import com.kiwi.shop.repository.OrderItemRepository;
 import com.kiwi.shop.repository.OrderRepository;
 
