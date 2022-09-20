@@ -1,4 +1,4 @@
-package com.kiwi.shop.dto;
+package com.kiwi.member.dto;
 
 import lombok.Getter;
 import lombok.Setter;

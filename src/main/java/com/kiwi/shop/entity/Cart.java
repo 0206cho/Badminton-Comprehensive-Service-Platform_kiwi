@@ -6,6 +6,8 @@ import lombok.ToString;
 
 import javax.persistence.*;
 
+import com.kiwi.member.entity.Member;
+
 @Entity
 @Table(name = "cart")
 @Getter @Setter

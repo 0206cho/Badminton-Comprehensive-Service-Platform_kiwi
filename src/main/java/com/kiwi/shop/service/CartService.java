@@ -5,6 +5,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.thymeleaf.util.StringUtils;
 
+import com.kiwi.member.entity.Member;
+import com.kiwi.member.repository.MemberRepository;
 import com.kiwi.shop.dto.CartDetailDto;
 import com.kiwi.shop.dto.CartItemDto;
 import com.kiwi.shop.dto.CartOrderDto;
@@ -12,11 +14,9 @@ import com.kiwi.shop.dto.OrderDto;
 import com.kiwi.shop.entity.Cart;
 import com.kiwi.shop.entity.CartItem;
 import com.kiwi.shop.entity.Item;
-import com.kiwi.shop.entity.Member;
 import com.kiwi.shop.repository.CartItemRepository;
 import com.kiwi.shop.repository.CartRepository;
 import com.kiwi.shop.repository.ItemRepository;
-import com.kiwi.shop.repository.MemberRepository;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;

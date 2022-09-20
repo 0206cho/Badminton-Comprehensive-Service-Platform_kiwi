@@ -1,4 +1,4 @@
-package com.kiwi.shop.entity;
+package com.kiwi.member.entity;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -6,7 +6,8 @@ import lombok.ToString;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.kiwi.constant.Role;
-import com.kiwi.shop.dto.MemberFormDto;
+import com.kiwi.member.dto.MemberFormDto;
+import com.kiwi.shop.entity.BaseEntity;
 
 import javax.persistence.*;
 
@@ -14,7 +15,7 @@ import javax.persistence.*;
 @Table(name="member")
 @Getter @Setter
 @ToString
-public class Member extends BaseEntity{
+public class Member extends BaseEntity {
     @Id
     @Column(name="member_id")
     @GeneratedValue(strategy = GenerationType.AUTO)

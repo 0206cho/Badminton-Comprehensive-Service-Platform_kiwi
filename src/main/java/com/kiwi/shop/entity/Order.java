@@ -6,6 +6,7 @@ import lombok.Setter;
 import javax.persistence.*;
 
 import com.kiwi.constant.OrderStatus;
+import com.kiwi.member.entity.Member;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;

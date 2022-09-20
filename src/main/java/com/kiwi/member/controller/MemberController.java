@@ -1,4 +1,4 @@
-package com.kiwi.shop.controller;
+package com.kiwi.member.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.kiwi.shop.dto.MemberFormDto;
-import com.kiwi.shop.entity.Member;
-import com.kiwi.shop.service.MemberService;
+import com.kiwi.member.dto.MemberFormDto;
+import com.kiwi.member.entity.Member;
+import com.kiwi.member.service.MemberService;
 
 import javax.validation.Valid;
 
@@ -31,7 +31,7 @@ public class MemberController {
     @GetMapping(value = "/new")
     public String memberForm(Model model){
         model.addAttribute("memberFormDto", new MemberFormDto());
-        return "member/memberForm_test"; 
+        return "member/memberForm"; 
     }
     
     @PostMapping(value = "/new")
@@ -58,7 +58,7 @@ public class MemberController {
     //로그인 로직
     @GetMapping(value = "/login")
     public String loginMember(){
-        return "/member/memberLoginForm_test2";
+        return "/member/memberLoginForm";
     }
     
     

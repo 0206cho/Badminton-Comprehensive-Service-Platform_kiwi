@@ -10,18 +10,18 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.thymeleaf.util.StringUtils;
 
+import com.kiwi.member.entity.Member;
+import com.kiwi.member.repository.MemberRepository;
 import com.kiwi.shop.dto.OrderDto;
 import com.kiwi.shop.dto.OrderHistDto;
 import com.kiwi.shop.dto.OrderItemDto;
 //import com.kiwi.entity.*;
 import com.kiwi.shop.entity.Item;
 import com.kiwi.shop.entity.ItemImg;
-import com.kiwi.shop.entity.Member;
 import com.kiwi.shop.entity.Order;
 import com.kiwi.shop.entity.OrderItem;
 import com.kiwi.shop.repository.ItemImgRepository;
 import com.kiwi.shop.repository.ItemRepository;
-import com.kiwi.shop.repository.MemberRepository;
 import com.kiwi.shop.repository.OrderRepository;
 
 import javax.persistence.EntityNotFoundException;
