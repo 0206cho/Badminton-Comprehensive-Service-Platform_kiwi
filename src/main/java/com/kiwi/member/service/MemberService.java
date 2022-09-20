@@ -1,4 +1,4 @@
-package com.kiwi.shop.service;
+package com.kiwi.member.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,8 +9,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.kiwi.shop.entity.Member;
-import com.kiwi.shop.repository.MemberRepository;
+import com.kiwi.member.entity.Member;
+import com.kiwi.member.repository.MemberRepository;
+
 
 @Service
 //로직을 처리하다가 에러가 발생하면 변경된 데이터를 조직 이전으로 콜백 시켜주기 위해
