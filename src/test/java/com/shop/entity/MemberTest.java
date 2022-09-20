@@ -8,8 +8,8 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.kiwi.shop.entity.Member;
-import com.kiwi.shop.repository.MemberRepository;
+import com.kiwi.member.entity.Member;
+import com.kiwi.member.repository.MemberRepository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityNotFoundException;

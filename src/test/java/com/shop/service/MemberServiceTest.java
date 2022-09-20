@@ -11,11 +11,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.kiwi.constant.ItemSellStatus;
 import com.kiwi.constant.Role;
-import com.kiwi.shop.dto.MemberFormDto;
+import com.kiwi.member.dto.MemberFormDto;
 import com.kiwi.shop.entity.Item;
-import com.kiwi.shop.entity.Member;
+import com.kiwi.member.entity.Member;
 import com.kiwi.shop.repository.ItemRepository;
-import com.kiwi.shop.service.MemberService;
+import com.kiwi.member.service.MemberService;
 
 import java.time.LocalDateTime;
 import java.util.List;
