@@ -5,6 +5,9 @@ import lombok.Setter;
 import lombok.ToString;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import com.kiwi.constant.Address;
+import com.kiwi.constant.Bank;
+import com.kiwi.constant.Gender;
 import com.kiwi.constant.Role;
 import com.kiwi.member.dto.MemberFormDto;
 import com.kiwi.shop.entity.BaseEntity;
@@ -20,20 +23,50 @@ public class Member extends BaseEntity {
     @Column(name="member_id")
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
+    
+    @Column(name="member_name")
     private String name;
 
     // 회원은 이메일을 통해 유일하게 구분해야 하기 때문에, 동일한 값이 DB에 저장할 수 없도록 unique 속성 지정한다.
-    @Column(unique = true)
+    @Column(unique = true, name="member_email")
     private String email;
-
+    
+    @Column(name="member_password")
     private String password;
-
-    private String address;
+    
+    
+    // 주소
+    @Enumerated(EnumType.STRING)
+    @Column(name="member_address")
+    private Address address;
+    
+    // 핸드폰 번호
+    @Column(name="member_pnum")
+    private String pnum;
+    
+    // 생년월일
+    @Column(name="member_birthday")
+    private String birthday;
+    
+    // 성별
+    @Enumerated(EnumType.STRING)
+    @Column(name="member_gender")
+    private Gender gender;
+    
+    // 계좌은행
+    @Enumerated(EnumType.STRING)
+    @Column(name="member_bname")
+    private Bank bname;
+    
+    // 계좌번호
+    @Column(name="member_bnumber")
+    private String bnumber;
 
     // enum 타입은 기본적으로 순서가 저장되는데 순서가 바뀌면 문제가 생기므로 STRING 옵션 설정한다.
     @Enumerated(EnumType.STRING)
     private Role role;
+    
+    
 
     public static Member createMember(MemberFormDto memberFormDto, PasswordEncoder passwordEncoder){
         Member member = new Member();
@@ -43,6 +76,11 @@ public class Member extends BaseEntity {
         String password = passwordEncoder.encode(memberFormDto.getPassword());
         member.setPassword(password);
         member.setRole(Role.ADMIN);
+        member.setPnum(memberFormDto.getPnum());
+        member.setBirthday(memberFormDto.getBirthday());
+        member.setGender(memberFormDto.getGender());
+        member.setBname(memberFormDto.getBname());
+        member.setBnumber(memberFormDto.getBnumber());
         return member;
     }
 }

@@ -23,20 +23,20 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public class ItemRepositoryCustomImpl implements ItemRepositoryCustom{
-
+	
     private JPAQueryFactory queryFactory;
-
+    
     public ItemRepositoryCustomImpl(EntityManager em){
         this.queryFactory = new JPAQueryFactory(em);
     }
-
+    
     private BooleanExpression searchSellStatusEq(ItemSellStatus searchSellStatus){
         return searchSellStatus == null ? null : QItem.item.itemSellStatus.eq(searchSellStatus);
     }
-
+    
     private BooleanExpression regDtsAfter(String searchDateType){
         LocalDateTime dateTime = LocalDateTime.now();
-
+        
         if(StringUtils.equals("all", searchDateType) || searchDateType == null){
             return null;
         } else if (StringUtils.equals("1d",searchDateType)) {
