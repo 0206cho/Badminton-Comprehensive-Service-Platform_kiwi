@@ -9,6 +9,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kiwi.constant.Address;
 import com.kiwi.constant.Bank;
@@ -66,7 +67,7 @@ public class MemberController {
             model.addAttribute("errorMessage", e.getMessage());
             return "member/memberForm";
         }
-        return "redirect:/";
+        return "redirect:/members/login";
     }
 
 //    //로그인 로직
@@ -87,7 +88,11 @@ public class MemberController {
         return "/member/memberLoginForm";
     }
 
-
+    // 마이페이지
+    @GetMapping(value = "/mypage")
+    public String mypage(){
+        return "/member/memberMypage";
+    }
 
 
 

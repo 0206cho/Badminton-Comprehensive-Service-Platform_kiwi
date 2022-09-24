@@ -146,7 +146,10 @@
 			<a href="http://pf.kakao.com/_RxcnVxj" class="logoA">
 				<img class="logo" src="img/kakaotalk.png" alt="kakaotalk">
 			</a>
-			<a href="/members/login" class="logoA">
+			<a sec:authorize="isAnonymous()" href="/members/login" class="logoA">
+				<img class="logo" src="img/person.png" alt="person">
+			</a>
+			<a sec:authorize="isAuthenticated()" href="/members/mypage" class="logoA">
 				<img class="logo" src="img/person.png" alt="person">
 			</a>
 		</div>
