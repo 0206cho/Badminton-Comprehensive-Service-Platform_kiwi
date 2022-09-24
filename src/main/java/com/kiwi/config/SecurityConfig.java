@@ -1,5 +1,7 @@
 package com.kiwi.config;
 
+import javax.sql.DataSource;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -10,6 +12,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
+import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import com.kiwi.member.service.MemberService;
@@ -26,7 +30,10 @@ public class SecurityConfig {
 
    @Autowired
     MemberService memberService;
-
+   
+   @Autowired
+   	DataSource dataSource;
+   
     // 인증 or 인가에 대한 설정
     // 스프링 시큐리티 5.7 버전부터는 WebSecurityConfigurerAdapter가 Deprecated 되었기 때문에
     // 아래와 같이SecurityFilterChain 타입의 빈으로 대체
@@ -53,7 +60,11 @@ public class SecurityConfig {
 
         http.exceptionHandling()
                 .authenticationEntryPoint(new CustomAuthenticationEntryPoint());
-
+        
+        // 로그인 기억하기 
+        http.rememberMe()
+        		.userDetailsService(memberService)
+        		.tokenRepository(tokenRepository());
 
         return http.build();
     }
@@ -62,5 +73,13 @@ public class SecurityConfig {
     @Bean
     public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
+    }
+    
+    @Bean
+    public PersistentTokenRepository tokenRepository() {
+    	// JDBC 기반의 tokenRepository 구현체
+    	JdbcTokenRepositoryImpl jdbcTokenRepository = new JdbcTokenRepositoryImpl();
+    	jdbcTokenRepository.setDataSource(dataSource);
+    	return jdbcTokenRepository;
     }
 }

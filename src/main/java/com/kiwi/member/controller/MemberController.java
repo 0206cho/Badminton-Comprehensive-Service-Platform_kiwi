@@ -9,10 +9,17 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.kiwi.constant.Address;
+import com.kiwi.constant.Bank;
+import com.kiwi.constant.Gender;
 import com.kiwi.member.dto.MemberFormDto;
 import com.kiwi.member.entity.Member;
 import com.kiwi.member.service.MemberService;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.validation.Valid;
 
@@ -30,13 +37,26 @@ public class MemberController {
     // 회원 가입 로직
     @GetMapping(value = "/new")
     public String memberForm(Model model){
+    	
         model.addAttribute("memberFormDto", new MemberFormDto());
+        model.addAttribute("genders",Gender.values());
+        model.addAttribute("bnames", Bank.values());
+        model.addAttribute("local", Address.values());
+//        List<String> genders = new ArrayList<>();
+//        genders.add("남자");
+//        genders.add("여자");
+//        model.addAttribute("genders",genders);
+        
         return "member/memberForm"; 
     }
     
     @PostMapping(value = "/new")
     public String memberForm(@Valid MemberFormDto memberFormDto, BindingResult bindingResult, Model model){
         if(bindingResult.hasErrors()){
+        	System.out.println("============================바인딩에러");
+        	model.addAttribute("genders",Gender.values());
+            model.addAttribute("bnames", Bank.values());
+            model.addAttribute("local", Address.values());
             return "member/memberForm";
         }
         try{
@@ -47,7 +67,7 @@ public class MemberController {
             model.addAttribute("errorMessage", e.getMessage());
             return "member/memberForm";
         }
-        return "redirect:/";
+        return "redirect:/members/login";
     }
 
 //    //로그인 로직
@@ -68,7 +88,11 @@ public class MemberController {
         return "/member/memberLoginForm";
     }
 
-
+    // 마이페이지
+    @GetMapping(value = "/mypage")
+    public String mypage(){
+        return "/member/memberMypage";
+    }
 
 
 
