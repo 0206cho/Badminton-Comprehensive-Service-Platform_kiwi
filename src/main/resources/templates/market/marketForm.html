@@ -125,7 +125,8 @@ a {
 
 
 <div layout:fragment="content">
-	<form role="form" method="post" enctype="multipart/form-data" action="/admin/market/new" th:object="${marketDto}">
+	<form role="form" method="post" enctype="multipart/form-data"
+		action="/admin/market/new" th:object="${marketDto}">
 
 		<div class="head">
 			<!--지역 -->
@@ -180,8 +181,10 @@ a {
 				-->
 			<button type="button" class="btn btn-cancel" style="width: 120px;"
 				onclick="location.href='marketEdit'">취소</button>
-			<div th:if="${#strings.isEmpty(marketDto.market_id)}" style="text-align: center">
-				<button type="submit" class="btn btn-kiwi" style="width: 100px;">등록</button> <!--  data-bs-toggle="modal" data-bs-target="#exampleModal" -->
+			<div th:if="${#strings.isEmpty(marketDto.market_id)}"
+				style="text-align: center">
+				<button type="submit" class="btn btn-kiwi" style="width: 100px;">등록</button>
+				<!--  data-bs-toggle="modal" data-bs-target="#exampleModal" -->
 				<!-- th:formaction="@{/admin/market/new}"  -->
 			</div>
 		</div>
@@ -189,16 +192,18 @@ a {
 		<div class="edit">
 			<div class="row">
 
-				<textarea th:field="*{market_title}" class="form-control" cols="80px"
+				<textarea th:field="*{market_title}" class="form-control"
+					cols="80px"
 					style="width: 98%; height: 36px; border-style: none; font-weight: bold; font-size: x-large; margin-left: 10px;"
 					placeholder="제목을 입력해주세요."></textarea>
 			</div>
-		<!--	<p th:if="${#fields.hasErrors('market_title')}" th:errors="*{itemNm}"
+			<!--	<p th:if="${#fields.hasErrors('market_title')}" th:errors="*{itemNm}"
 				class="fieldError">Incorrect data</p>  -->
 
 			<hr>
 
-			<textarea th:field="*{market_detail}" name="text" id="editor" placeholder="내용을 입력해주세요."></textarea>
+			<textarea th:field="*{market_detail}" name="text" id="editor"
+				placeholder="내용을 입력해주세요."></textarea>
 			<!-- 
 			<p th:if="${#fields.hasErrors('itemDetail')}"
 				th:errors="*{itemDetail}" class="fieldError">Incorrect data</p>
@@ -231,14 +236,21 @@ a {
 			th:value="${_csrf.token}">
 
 	</form>
-			<script
-				src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/ckeditor.js"></script>
-			<script
-				src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/translations/ko.js"></script>
-			<script>
+	<script
+		src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/ckeditor.js"></script>
+	<script
+		src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/translations/ko.js"></script>
+	<script>
 			ClassicEditor.create(document.querySelector('#editor'), {
-				removePlugins : [ 'Heading' ],
-				language : "ko"
+				ckfinder: {
+					uploadUrl : '/image/upload'
+				}
+			})
+			.then(editor => {
+				console.log('Editor was initialized');
+			})
+			.catch(error => {
+				console.error(error);
 			});
 		</script>
 
@@ -259,13 +271,8 @@ a {
 						</div>
 					</div>
 				</div>
-
-
 			</div>
 		</div>
-
-
 	</div>
 </div>
-
 </html>
