@@ -232,8 +232,11 @@ a {
 
 
 		</div>
-		<input type="hidden" th:name="${_csrf.parameterName}"
+	
+		<input type="hidden" name="_csrf" id="_csrf"
 			th:value="${_csrf.token}">
+		 
+		
 
 	</form>
 	<script
@@ -241,9 +244,10 @@ a {
 	<script
 		src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/translations/ko.js"></script>
 	<script>
+	const $ckUploadPath = "/image/upload?_csrf=" + $('#_csrf').val();
 			ClassicEditor.create(document.querySelector('#editor'), {
 				ckfinder: {
-					uploadUrl : '/image/upload'
+					uploadUrl : $ckUploadPath
 				}
 			})
 			.then(editor => {
