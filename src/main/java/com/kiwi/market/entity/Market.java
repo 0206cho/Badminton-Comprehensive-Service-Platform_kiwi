@@ -26,18 +26,18 @@ public class Market extends BaseEntity{
 	@Id
     @Column(name="market_id")
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long market_id;       // 게시글 코드
+    private Long id;       // 게시글 코드
 
 	@Lob
-    @Column
-    private String market_title;  // 게시글 제목 
+    @Column(name="market_title")
+    private String title;  // 게시글 제목 
     
     @Lob
-    @Column
-    private String market_detail;  // 게시글 내용
+    @Column(name="market_detail")
+    private String detail;  // 게시글 내용
 
-    @Column
-    private int market_price;     // 가격
+    @Column(name="market_price")
+    private int price;     // 가격
 
     @Enumerated(EnumType.STRING)   //@Enumrated는 enum타입 매핑시 사용함!
     private MarketSellStatus marketSellStatus;  //상품 판매 상태

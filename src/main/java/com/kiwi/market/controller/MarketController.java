@@ -75,7 +75,6 @@ public class MarketController {
 		// jsonView 라고 쓴다고 무조건 json 형식으로 가는건 아니고 @Configuration 어노테이션을 단 
 		// WebConfig 파일에 MappingJackson2JsonView 객체를 리턴하는 jsonView 매서드를 만들어서 bean으로 등록해야 함 
 		ModelAndView mav = new ModelAndView("jsonView");
-		//System.out.println(">>>>>>>>>>>>>>>" + mav);
 
 		// ckeditor 에서 파일을 보낼 때 upload : [파일] 형식으로 해서 넘어오기 때문에 upload라는 키의 밸류를 받아서 uploadFile에 저장함
 		MultipartFile uploadFile = request.getFile("upload");
@@ -89,25 +88,18 @@ public class MarketController {
         // 서버에 저장될 때 중복된 파일 이름인 경우를 방지하기 위해 UUID에 확장자를 붙여 새로운 파일 이름을 생성
 		String newFileName = UUID.randomUUID() + ext;
 
-		
-
 		// 현재경로/upload/파일명이 저장 경로
 		String savePath = marketImgLocation + newFileName;
-		//System.out.println(">>>>>>>>>>>>>>>" + savePath);
 
 		// 브라우저에서 이미지 불러올 때 절대 경로로 불러오면 보안의 위험 있어 상대경로를 쓰거나 이미지 불러오는 jsp 또는 클래스 파일을 만들어 가져오는 식으로 우회해야 함
 		// 때문에 savePath와 별개로 상대 경로인 uploadPath 만들어줌
 		String uploadPath = "/image/upload/" + newFileName; 
-		//System.out.println(">>>>>>>>>>>>>>>" + uploadPath);
 
 		// 저장 경로로 파일 객체 생성
 		File file = new File(savePath);
-		//System.out.println(">>>>>>>>>>>>>>>" + file);
 
 		// 파일 업로드
 		uploadFile.transferTo(file);
-		
-		
 		
 		// uploaded, url 값을 modelandview를 통해 보냄
 		mav.addObject("uploaded", true); // 업로드 완료
