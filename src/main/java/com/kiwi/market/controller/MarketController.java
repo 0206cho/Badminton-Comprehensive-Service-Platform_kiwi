@@ -1,18 +1,23 @@
 package com.kiwi.market.controller;
 
 import java.io.File;
+import java.util.List;
 import java.util.UUID;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kiwi.market.dto.MarketDto;
+import com.kiwi.market.entity.Market;
 import com.kiwi.market.service.MarketService;
 
 import lombok.RequiredArgsConstructor;
@@ -20,6 +25,8 @@ import lombok.RequiredArgsConstructor;
 @Controller
 @RequiredArgsConstructor
 public class MarketController {
+	
+	private Logger log = LoggerFactory.getLogger(this.getClass());
 
 	private final MarketService marketService;
 	 
@@ -61,7 +68,7 @@ public class MarketController {
 			return "market/marketForm";
 		}
 		// 상품이 정상적으로 등록되었다면 메인 페이지로 이동
-		return "redirect:/";
+		return "redirect:/marketList"; // return "redirect:/";
 	}
 	
 	
@@ -106,6 +113,14 @@ public class MarketController {
 		mav.addObject("url", uploadPath); // 업로드 파일의 경로
 
 		return mav;
+	}
+	
+	@GetMapping("/marketList")
+	public String marketList(Model model) {
+		List<MarketDto> list = marketService.maketList();
+		model.addAttribute("list", list);
+		System.out.println("===============================================> list 크기 : " + list.size());
+		return "/market/marketList";
 	}
 
 }

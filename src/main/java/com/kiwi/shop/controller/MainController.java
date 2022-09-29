@@ -38,10 +38,10 @@ public class MainController {
     	return "main";
     }
     
-    @GetMapping(value = "/market")
-    public String market(){
-        return "market/market";
-    }
+//    @GetMapping(value = "/marketList")
+//    public String market(){
+//        return "market/marketList";
+//    }
     
     @GetMapping(value = "/marketDetail")
     public String marketDetail(){

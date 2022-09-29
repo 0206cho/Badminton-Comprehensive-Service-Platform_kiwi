@@ -13,7 +13,10 @@ import javax.persistence.Table;
 import com.kiwi.constant.MarketSellStatus;
 import com.kiwi.shop.entity.BaseEntity;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
@@ -22,6 +25,9 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Market extends BaseEntity{
 	@Id
     @Column(name="market_id")
@@ -38,8 +44,11 @@ public class Market extends BaseEntity{
 
     @Column(name="market_price")
     private int price;     // 가격
+    
+    @Column(name="market_status")
+    private String status; // 판매 여부
 
-    @Enumerated(EnumType.STRING)   //@Enumrated는 enum타입 매핑시 사용함!
-    private MarketSellStatus marketSellStatus;  //상품 판매 상태
+//    @Enumerated(EnumType.STRING)   //@Enumrated는 enum타입 매핑시 사용함!
+//    private MarketSellStatus marketSellStatus;  //상품 판매 상태
     
 }
