@@ -25,7 +25,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-@Builder
+//@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class Market extends BaseEntity{

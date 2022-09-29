@@ -10,6 +10,8 @@ import com.kiwi.market.entity.Market;
 
 @Repository
 public interface MarketRepository extends JpaRepository<Market,Long>{
+
+	List<Market> findAllByOrderByIdDesc();
 	
 
 }

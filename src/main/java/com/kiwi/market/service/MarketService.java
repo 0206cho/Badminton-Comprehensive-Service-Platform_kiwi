@@ -21,20 +21,23 @@ public class MarketService {
 	@Autowired
     MarketRepository marketRepository; // private final MarketRepository marketRepository;
     
-    public void saveMarket(MarketDto marketDto){
+    public Market saveMarket(MarketDto marketDto){
         // 상품 등록
-    	//Market market = marketDto.createMarket();       // 상품 등록 폼으로부터 입력 받은 데이터를 이용하여 item 객체를 생성
     	
-         marketRepository.save(marketDto.toEntity());                  // 상품 데이터 저장
+         //marketRepository.save(marketDto.toEntity());                  // 상품 데이터 저장 - builderd일 경우
+    	
+    	Market market = marketDto.createMarket();       // 상품 등록 폼으로부터 입력 받은 데이터를 이용하여 item 객체를 생성
+
+        return marketRepository.save(market); 
     }
 
-	public List<MarketDto> maketList() {
+	public List<Market> maketList() {
 		System.out.println("===============================================> 11111서비스");
 
-		List<Market> list =  marketRepository.findAll();
+		List<Market> list =  marketRepository.findAllByOrderByIdDesc();
 		System.out.println("===============================================> 서비스");
 		
-		return list.stream().map(MarketDto::new).collect(Collectors.toList());
+		return list;
 	}
 
 

@@ -117,7 +117,7 @@ public class MarketController {
 	
 	@GetMapping("/marketList")
 	public String marketList(Model model) {
-		List<MarketDto> list = marketService.maketList();
+		List<Market> list = marketService.maketList();
 		model.addAttribute("list", list);
 		System.out.println("===============================================> list 크기 : " + list.size());
 		return "/market/marketList";

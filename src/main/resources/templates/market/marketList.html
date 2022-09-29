@@ -9,13 +9,13 @@
 		<h1>게시판 목록</h1>
 		<table class="board_list">
 			<colgroup>
-				<col width="20%" />
-				<col width="20%" />
-				<col width="20%" />
+				<col width="*" />
+				<col width="30%" />
+				<col width="30%" />
 				<col width="*" />
 			</colgroup>
 			<thead>
-				<tr>
+				<tr th:if="${#lists.size(list)} >0" th:each="vo : ${list}">
 					<th scope="col">id</th>
 					<th scope="col">title</th>
 					<th scope="col">detail</th>
@@ -29,12 +29,12 @@
 					<td th:text="${vo.detail}"></td>
 					<td th:text="${vo.price}"></td>
 				</tr>
-				<tr>
+				<tr th:unless = "${#lists.size(list)} > 0">
 					<td colspan="4">조회된 결과 없음</td>
 				</tr>
 			</tbody>
 		</table>
-		<a href="/market/marketForm" class="btn">추가</a>
+		<a href="/admin/market/new" class="btn">추가</a>
 	</div>
 </body>
 </html>
