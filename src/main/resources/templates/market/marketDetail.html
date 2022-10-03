@@ -93,6 +93,22 @@ a {
 	gap: 5px;
 	margin-bottom: 50px;
 }
+.aa{
+	text-align:center;
+    display:table;
+    border:1px solid #cecece;
+    width:280px;
+    height:250px;
+}
+.detail {
+	display:table-cell;
+    vertical-align:middle;
+}
+
+img {
+	max-width:600px;
+    max-height:600px;
+}
 </style>
 </th:block>
 
@@ -112,7 +128,8 @@ a {
 			<div class="card" style="width: 90%; border: none;">
 				<div class="card-body" style="padding-top: 30px;">
 					<h5>인천광역시 연수구</h5>
-					<h4 class="card-title" style="font-weight: bold;" th:text="${market.title}">
+					<h4 class="card-title" style="font-weight: bold;"
+						th:text="${market.title}">
 						<!-- <p>최고급 라켓 라켓 라켓 라켓 라켓 라켓 라켓 라켓 라켓 라켓-->
 					</h4>
 					<p class="card-text" th:text="${market.price} +'원'">5000원</p/>
@@ -125,7 +142,8 @@ a {
 					<img src="/img/더보기.png" alt="더보기"
 						style="width: 80%; height: 50%; padding-bottom: 5px">
 					<p>
-						<img src="/img/하트.png" alt="좋아요" style="width: 80%; height: 50%; padding-bottom: 0px;">
+						<img src="/img/하트.png" alt="좋아요"
+							style="width: 80%; height: 50%; padding-bottom: 0px;">
 				</div>
 			</div>
 
@@ -140,7 +158,8 @@ a {
 			</div>
 			<div class="flex-container-col">
 				<div class="flex-container">
-					<h5 style="padding-right: 15px; font-weight: bold" th:text="${market.createdBy}">미니솔</h5>
+					<h5 style="padding-right: 15px; font-weight: bold"
+						th:text="${market.createdBy}">미니솔</h5>
 					<label
 						style="background-color: #C6F1E7; padding: 5px; border-color: black; border: 1px solid black; margin-right: 10px;">LEVEL-A</label>
 					<label
@@ -153,64 +172,64 @@ a {
 				</div>
 			</div>
 		</div>
-		</form>
+	</form>
 
-		<hr>
-		<h5 style="padding-left: 12px" th:utext="${market.detail}">
-			배드민턴 치려고 샀는데 저한테는 너무 커서 팝니다ㅜㅜ <br> 구매한지는 일주일 되었고 박스도 남아있습니다.박스도
-			남아있습니다.박스도 남아있습니다.박스도 남아있습니다.
-		</h5>
-		<!-- <img src="/img/라켓1.jpg" class="card-img-top" alt="이미지 로딩중"
+	<hr>
+	<div calss="aa">
+	<div calss="detail" style="padding-left: 12px"
+		th:utext="${market.detail}">
+		배드민턴 치려고 샀는데 저한테는 너무 커서 팝니다ㅜㅜ <br> 구매한지는 일주일 되었고 박스도 남아있습니다.박스도
+		남아있습니다.박스도 남아있습니다.박스도 남아있습니다.
+	</div></div>
+	<!-- <img src="/img/라켓1.jpg" class="card-img-top" alt="이미지 로딩중"
 			style="width: 15rem; height: 15rem; margin: auto; padding-top: 15px;"> -->
-		<br>
-		<hr>
-		<h4 style="font-weight: bold; padding-left: 12px; padding-bottom: 5px">댓글</h4>
+	<br>
+	<hr>
+	<h4 style="font-weight: bold; padding-left: 12px; padding-bottom: 5px">댓글</h4>
 
-		<div class="flex-container" style="padding-left: 12px;">
-			<div
-				style="display: flex; flex-direction: column; justify-content: flex-start; width: 8%; height: 100%">
-				<img class="logo" src="/img/kiwi.png" alt="kiwi"
-					style="margin-right: 10px;">
-			</div>
-
-			<div class="flex-container-col">
-				<div class="flex-container">
-					<h5
-						style="padding-right: 10px; font-weight: bold; margin-top: 5px;">꼬붕</h5>
-					<img src="/img/더보기.png" alt="더보기"
-						style="width: 5%; height: 5%; padding-bottom: 10px; float: right; margin-left: auto; text-align: center;">
-				</div>
-				<div style="width: 850px">직거래 가능할까요?직거래 가능할까요?직거래 가능할까요?직거래
-					가능할까요?직거래 가능할까요?직거래 가능할까요?직거래 가능할까요?</div>
-			</div>
+	<div class="flex-container" style="padding-left: 12px;">
+		<div
+			style="display: flex; flex-direction: column; justify-content: flex-start; width: 8%; height: 100%">
+			<img class="logo" src="/img/kiwi.png" alt="kiwi"
+				style="margin-right: 10px;">
 		</div>
 
-		<hr>
-		<div class="flex-container" style="padding-left: 12px;">
-			<div
-				style="display: flex; flex-direction: column; justify-content: flex-start; width: 8%; height: 100%">
-				<img class="logo" src="/img/kiwi.png" alt="kiwi"
-					style="margin-right: 10px;">
+		<div class="flex-container-col">
+			<div class="flex-container">
+				<h5 style="padding-right: 10px; font-weight: bold; margin-top: 5px;">꼬붕</h5>
+				<img src="/img/더보기.png" alt="더보기"
+					style="width: 5%; height: 5%; padding-bottom: 10px; float: right; margin-left: auto; text-align: center;">
 			</div>
+			<div style="width: 850px">직거래 가능할까요?직거래 가능할까요?직거래 가능할까요?직거래
+				가능할까요?직거래 가능할까요?직거래 가능할까요?직거래 가능할까요?</div>
+		</div>
+	</div>
 
-			<div class="flex-container-col">
-				<div class="flex-container">
-					<h5
-						style="padding-right: 10px; font-weight: bold; margin-top: 5px;">미니솔</h5>
-					<label
-						style="background-color: #70ACB1; padding: 5px; border-color: black; border: 1px solid black; color: white;">글쓴이</label>
-
-					<img src="/img/더보기.png" alt="더보기"
-						style="width: 5%; height: 5%; padding-bottom: 10px; float: right; margin-left: auto; text-align: center;">
-				</div>
-				<div style="width: 850px">네, 인천이면 가능합니다!</div>
-			</div>
+	<hr>
+	<div class="flex-container" style="padding-left: 12px;">
+		<div
+			style="display: flex; flex-direction: column; justify-content: flex-start; width: 8%; height: 100%">
+			<img class="logo" src="/img/kiwi.png" alt="kiwi"
+				style="margin-right: 10px;">
 		</div>
 
-		<hr>
-		<div class="ans">
-			<input type="text" id="keyword" style="width: 100%; height: 36px;">
-			<button class="btn btn-kiwi" id="search" style="width: 80px;">등록</button>
+		<div class="flex-container-col">
+			<div class="flex-container">
+				<h5 style="padding-right: 10px; font-weight: bold; margin-top: 5px;">미니솔</h5>
+				<label
+					style="background-color: #70ACB1; padding: 5px; border-color: black; border: 1px solid black; color: white;">글쓴이</label>
+
+				<img src="/img/더보기.png" alt="더보기"
+					style="width: 5%; height: 5%; padding-bottom: 10px; float: right; margin-left: auto; text-align: center;">
+			</div>
+			<div style="width: 850px">네, 인천이면 가능합니다!</div>
 		</div>
+	</div>
+
+	<hr>
+	<div class="ans">
+		<input type="text" id="keyword" style="width: 100%; height: 36px;">
+		<button class="btn btn-kiwi" id="search" style="width: 80px;">등록</button>
+	</div>
 </div>
 </html>
