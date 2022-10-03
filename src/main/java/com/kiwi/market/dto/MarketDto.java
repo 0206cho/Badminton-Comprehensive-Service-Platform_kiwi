@@ -1,6 +1,8 @@
 package com.kiwi.market.dto;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.modelmapper.ModelMapper;
@@ -24,7 +26,7 @@ public class MarketDto {
     private String detail;  // 게시글 내용
 
     private int price;     // 가격
-
+    
     private String status; // 판매 여부
     
     // 상품 저장 후 수정할 때 상품 정보를 저장하는 리스트

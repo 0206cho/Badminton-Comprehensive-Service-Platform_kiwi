@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
@@ -119,8 +120,15 @@ public class MarketController {
 	public String marketList(Model model) {
 		List<Market> list = marketService.maketList();
 		model.addAttribute("list", list);
-		System.out.println("===============================================> list 크기 : " + list.size());
 		return "/market/marketList";
+	}
+	
+	@GetMapping("/market/marketDetail/{id}")
+	public String marketDetail(@PathVariable("id") Long id, Model model) {
+		Market market = marketService.marketDetail(id);
+		model.addAttribute("market", market);
+		System.out.println("---------------------------->" + market);
+		return "/market/marketDetail";
 	}
 
 }

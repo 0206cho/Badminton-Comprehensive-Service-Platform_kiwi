@@ -1,6 +1,7 @@
 package com.kiwi.market.service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,12 +33,20 @@ public class MarketService {
     }
 
 	public List<Market> maketList() {
-		System.out.println("===============================================> 11111서비스");
 
 		List<Market> list =  marketRepository.findAllByOrderByIdDesc();
-		System.out.println("===============================================> 서비스");
 		
 		return list;
+	}
+
+	public Market marketDetail(Long id) {
+		Optional<Market> optional = marketRepository.findById(id);
+		if(optional.isPresent()) {
+			Market market = optional.get();
+			return market;
+		} else {
+			throw new NullPointerException();
+		}
 	}
 
 

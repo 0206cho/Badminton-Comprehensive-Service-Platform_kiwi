@@ -48,13 +48,10 @@ a {
 	justify-content: space-between;
 }
 
-/*임시로 해논 거. 없으면 지우기*/
-.nn {
-	display: flex;
-	background: blue;
-	justify-content: space-between;
-	width: 1268px;
-	text-align: left;
+.card-title { /*글자수 넘어가면 말줄임표 표시*/
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
 }
 </style>
 </th:block>
@@ -125,40 +122,40 @@ a {
 	</div>
 
 	<div class="container">
-	<div>
-		<div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-3">
-			<div class="col"></div>
-			<div class="col"></div>
-			<div class="col"></div>
-			<div class="col">
-				<!--검색창-->
+		<div>
+			<div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-3">
+				<div class="col"></div>
+				<div class="col"></div>
+				<div class="col"></div>
+				<div class="col">
+					<!--검색창-->
 
+				</div>
 			</div>
 		</div>
-	</div>
 
-	<!-- 마켓 카드 -->
-	<div class="row">
+		<!-- 마켓 카드 -->
+		<div class="row">
 
-		<div class="col col-xl-3 col-lg-3 col-md-6"
-			style="margin-bottom: 20px" th:each="vo : ${list}">
-			<a href="marketDetail" style="text-decoration: none; color: black">
-				<div class="card" style="width: 18rem; border-color: black;">
-					<img src="/img/라켓1.jpg" class="card-img-top" alt="이미지 로딩중"
-						style="width: 15rem; height: 15rem; margin: auto; padding-top: 15px;">
-					<div class="card-body">
-						<h5 class="card-title" style="font-weight: bold;"
-							th:text="${vo.title}">최고급 라켓</h5>
-						<p class="card-text" th:text="${vo.price}">
-							5000원 <br> 인천광역시 연수구
-						</p>
+			<div class="col col-xl-3 col-lg-3 col-md-6"
+				style="margin-bottom: 20px" th:each="vo : ${list}">
+				<a href="/market/marketDetail/" th:attrappend="href=${vo.id}" style="text-decoration: none; color: black"><!-- href="/market/marketDetail/" th:attrappend="href=${vo.id}" th:text="${vo:id}"  -->
+					<div class="card" style="width: 18rem; border-color: black;">
+						<img src="/img/셔틀콕.jpg" class="card-img-top" alt="이미지 로딩중"
+							style="width: 15rem; height: 15rem; margin: auto; padding-top: 15px;">
+						<div class="card-body">
+							<h5 class="card-title" style="font-weight: bold;"
+								th:text="${vo.title}">최고급 라켓</h5>
+							<p class="card-text" th:text="${vo.price}">
+								5000원 <br> 인천광역시 연수구
+							</p>
+						</div>
 					</div>
-				</div>
-			</a>
-		</div>
+				</a>
+			</div>
 
 
-		<!-- <div class="col col-lg-3 col-md-6 col-sm-12"
+			<!-- <div class="col col-lg-3 col-md-6 col-sm-12"
 			style="margin-bottom: 20px">
 			<a href="marketDetail" style="text-decoration: none; color: black">
 
@@ -217,28 +214,27 @@ a {
 			</div>
 		</div>
 		 -->
+		</div>
 	</div>
-</div>
 
-<br>
-<br>
-<nav aria-label="Page">
-	<ul class="pagination">
-		<li><a class="page-link" href="#" aria-label="Previous"> <span
-				aria-hidden="true" style="color: #70ACB1;">◀</span>
-		</a></li>
-		<li class="page-item"><a class="page-link" href="#"
-			style="color: black;">1</a></li>
-		<li class="page-item"><a class="page-link" href="#"
-			style="color: black;">2</a></li>
-		<li class="page-item"><a class="page-link" href="#"
-			style="color: black;">3</a></li>
-		<li class="page-item"><a class="page-link" href="#"
-			aria-label="Next" style="color: #70ACB1;"> <span
-				aria-hidden="true">▶</span>
-		</a></li>
-	</ul>
-</nav>
+	<br> <br>
+	<nav aria-label="Page">
+		<ul class="pagination">
+			<li><a class="page-link" href="#" aria-label="Previous"> <span
+					aria-hidden="true" style="color: #70ACB1;">◀</span>
+			</a></li>
+			<li class="page-item"><a class="page-link" href="#"
+				style="color: black;">1</a></li>
+			<li class="page-item"><a class="page-link" href="#"
+				style="color: black;">2</a></li>
+			<li class="page-item"><a class="page-link" href="#"
+				style="color: black;">3</a></li>
+			<li class="page-item"><a class="page-link" href="#"
+				aria-label="Next" style="color: #70ACB1;"> <span
+					aria-hidden="true">▶</span>
+			</a></li>
+		</ul>
+	</nav>
 </div>
 </div>
 </html>

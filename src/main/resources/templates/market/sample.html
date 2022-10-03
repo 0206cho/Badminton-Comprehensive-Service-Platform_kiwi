@@ -6,35 +6,26 @@
 </head>
 <body>
 	<div calss="container">
-		<h1>게시판 목록</h1>
-		<table class="board_list">
-			<colgroup>
-				<col width="*" />
-				<col width="30%" />
-				<col width="30%" />
-				<col width="*" />
-			</colgroup>
-			<thead>
-				<tr th:if="${#lists.size(list)} >0" th:each="vo : ${list}">
-					<th scope="col">id</th>
-					<th scope="col">title</th>
-					<th scope="col">detail</th>
-					<th scope="col">price</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr th:each="vo : ${list}">
-					<td th:text="${vo.id}"></td>
-					<td th:text="${vo.title}"></td>
-					<td th:text="${vo.detail}"></td>
-					<td th:text="${vo.price}"></td>
-				</tr>
-				<tr th:unless = "${#lists.size(list)} > 0">
-					<td colspan="4">조회된 결과 없음</td>
-				</tr>
-			</tbody>
+	<form id="frm" name="frm" method="POST" action="/market/marketDetail">
+		<table class="market_detail">
+			<tr>
+				<td>아이디</td>
+				<td><input type="text" id="id" name="id" th:value="${market.id}" disabled="disabled"/></td>
+			</tr>
+			<tr>
+				<td>제목</td>
+				<td><input type="text" id="id" name="id" th:value="${market.title}" disabled="disabled"/></td>
+			</tr>
+			<tr>
+				<td>내용</td>
+				<td><input type="text" id="id" name="id" th:value="${market.detail}" disabled="disabled"/></td>
+			</tr>
+			<tr>
+				<td>가격</td>
+				<td><input type="text" id="id" name="id" th:value="${market.price}" disabled="disabled"/></td>
+			</tr>
 		</table>
-		<a href="/admin/market/new" class="btn">추가</a>
+	</form>
 	</div>
 </body>
 </html>
