@@ -1,5 +1,10 @@
 package com.kiwi.market.service;
 
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,15 +18,36 @@ import lombok.RequiredArgsConstructor;
 @Transactional
 @RequiredArgsConstructor
 public class MarketService {
-    private final MarketRepository marketRepository;
+	
+	@Autowired
+    MarketRepository marketRepository; // private final MarketRepository marketRepository;
     
-    public Market saveMarket(MarketDto marketDto) throws Exception{
+    public Market saveMarket(MarketDto marketDto){
         // 상품 등록
+    	
+         //marketRepository.save(marketDto.toEntity());                  // 상품 데이터 저장 - builderd일 경우
+    	
     	Market market = marketDto.createMarket();       // 상품 등록 폼으로부터 입력 받은 데이터를 이용하여 item 객체를 생성
 
-        return marketRepository.save(market);                  // 상품 데이터 저장
-
+        return marketRepository.save(market); 
     }
+
+	public List<Market> maketList() {
+
+		List<Market> list =  marketRepository.findAllByOrderByIdDesc();
+		
+		return list;
+	}
+
+	public Market marketDetail(Long id) {
+		Optional<Market> optional = marketRepository.findById(id);
+		if(optional.isPresent()) {
+			Market market = optional.get();
+			return market;
+		} else {
+			throw new NullPointerException();
+		}
+	}
 
 
 }

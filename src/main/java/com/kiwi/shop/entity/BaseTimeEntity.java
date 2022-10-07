@@ -6,10 +6,16 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import javax.persistence.Column;
 import javax.persistence.EntityListeners;
 import javax.persistence.MappedSuperclass;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
+
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 // Auditing 적용할려면 @EntitiyListeners 어노테이션 추가함!
 @EntityListeners(value = {AuditingEntityListener.class})
@@ -20,9 +26,22 @@ import java.time.LocalDateTime;
 public abstract class BaseTimeEntity {
     @CreatedDate                            // 엔티티가 생성되어 저장될 때 시간을 자동으로 저장함
     @Column(updatable = false)              // update 시점에 컬럼 관련 타입이나 이름 변경 막는다.
-    private LocalDateTime regTime;
+    private String regTime;
 
     @LastModifiedDate                       // 엔티티의 값을 변경할 때 시간을 자동으로 저장함
-    private LocalDateTime updateTime;
+    private String updateTime;
+    
+    @PrePersist
+    public void onPrePersist(){
+        this.regTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        this.updateTime = this.regTime;
+    }
+    
+    @PreUpdate
+    public void onPreUpdate(){
+    this.updateTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+    }
+
+
 
 }

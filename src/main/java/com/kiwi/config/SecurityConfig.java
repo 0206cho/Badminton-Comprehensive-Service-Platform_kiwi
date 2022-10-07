@@ -44,6 +44,7 @@ public class SecurityConfig {
     // 아래와 같이SecurityFilterChain 타입의 빈으로 대체
     @Bean
     protected SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+
     	http.formLogin()
         
 
@@ -63,6 +64,7 @@ public class SecurityConfig {
         .mvcMatchers("/admin/**").hasRole("ADMIN")
         
         .anyRequest().authenticated();
+
 
         http.exceptionHandling()
                 .authenticationEntryPoint(new CustomAuthenticationEntryPoint());
