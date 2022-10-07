@@ -45,22 +45,14 @@ public class MemberService implements UserDetailsService {
     // 메서드 종료시 @AuthenticationPrincipal 어노테이션이 만들어진다.
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        Member member = memberRepository.findByEmail(email);
-
-//        if(member != null){
-//            throw new UsernameNotFoundException(email);
-//        }
-//
-//        return User.builder()       // UserDetail을 구현하고 있는 User객체를 반환합니다. User객체를 생성하기 위해서 생성자로 회원의이메일,패스워드,role을 넘겨준다.
-//                .username(member.getEmail())
-//                .password(member.getPassword())
-//                .roles(member.getRole().toString())
-//                .build();
-        
-        	if(member != null) {
+    	Member member = memberRepository.findByEmail(email);
+    	
+        	if(member == null) {
+        		System.out.println("DB에 유저가 없어용 ㅠ");
         		throw new UsernameNotFoundException(email);
-        	}
-         return new PrincipalDetails(member);
+    		}else {
+    			return new PrincipalDetails(member);
+    		}
 
         
     }

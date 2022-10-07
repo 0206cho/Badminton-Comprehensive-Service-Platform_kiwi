@@ -11,7 +11,7 @@ import org.springframework.test.context.TestPropertySource;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.kiwi.constant.ItemSellStatus;
+import com.kiwi.market.constant.ItemSellStatus;
 import com.kiwi.shop.dto.ItemFormDto;
 import com.kiwi.shop.entity.Item;
 import com.kiwi.shop.entity.ItemImg;

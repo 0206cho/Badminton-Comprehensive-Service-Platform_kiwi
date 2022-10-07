@@ -16,7 +16,7 @@ import javax.persistence.PrePersist;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.kiwi.constant.MarketSellStatus;
+import com.kiwi.member.constant.MarketSellStatus;
 import com.kiwi.shop.entity.BaseEntity;
 
 import lombok.AllArgsConstructor;
