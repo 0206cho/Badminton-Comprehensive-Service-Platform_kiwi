@@ -111,14 +111,6 @@ a {
 	width: 300px;
 	height: 300px;
 }
-
-.ck.ck-editor {
-    max-width: 800px;
-}
-.ck-editor__editable {
-    min-height: 800px;
-}
- 
 </style>
 </th:block>
 
@@ -181,7 +173,7 @@ a {
 				<option value="14">경상북도</option>
 				<option value="15">경상남도</option>
 				<option value="16">제주도</option>
-			</select> <input type="number" th:field="*{price}" class="form-control"
+			</select> <input type="number" th:field="*{market_price}" class="form-control"
 				style="width: 50%; height: 36px;" placeholder="가격을 입력해주세요.">
 			<!--  
 			<p th:if="${#fields.hasErrors('price')}" th:errors="*{price}"
@@ -189,18 +181,18 @@ a {
 				-->
 			<button type="button" class="btn btn-cancel" style="width: 120px;"
 				onclick="location.href='marketEdit'">취소</button>
-			<div th:if="${#strings.isEmpty(marketDto.id)}"
+			<div th:if="${#strings.isEmpty(marketDto.market_id)}"
 				style="text-align: center">
 				<button type="submit" class="btn btn-kiwi" style="width: 100px;">등록</button>
 				<!--  data-bs-toggle="modal" data-bs-target="#exampleModal" -->
 				<!-- th:formaction="@{/admin/market/new}"  -->
 			</div>
 		</div>
-		<input type="hidden" th:field="*{id}">
+		<input type="hidden" th:field="*{market_id}">
 		<div class="edit">
 			<div class="row">
 
-				<textarea th:field="*{title}" class="form-control"
+				<textarea th:field="*{market_title}" class="form-control"
 					cols="80px"
 					style="width: 98%; height: 36px; border-style: none; font-weight: bold; font-size: x-large; margin-left: 10px;"
 					placeholder="제목을 입력해주세요."></textarea>
@@ -210,7 +202,7 @@ a {
 
 			<hr>
 
-			<textarea th:field="*{detail}" name="text" id="editor"
+			<textarea th:field="*{market_detail}" name="text" id="editor"
 				placeholder="내용을 입력해주세요."></textarea>
 			<!-- 
 			<p th:if="${#fields.hasErrors('itemDetail')}"
@@ -264,8 +256,6 @@ a {
 			.catch(error => {
 				console.error(error);
 			});
-			
-		
 		</script>
 
 	<!--서버 추가하기 모달창-->
