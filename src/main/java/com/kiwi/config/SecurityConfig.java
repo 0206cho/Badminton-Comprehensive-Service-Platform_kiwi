@@ -56,8 +56,8 @@ public class SecurityConfig {
         .logout()
         .logoutRequestMatcher(new AntPathRequestMatcher("/members/logout"))
         .logoutSuccessUrl("/");
-//http.csrf().disable();        // 스프링 시큐리티에서는 CSRF공격을 방어하기 위해서 POST방식의 데이터 전송에는 반드시 CSRF토큰이 있어야함
-http.authorizeRequests()
+    //http.csrf().disable();        // 스프링 시큐리티에서는 CSRF공격을 방어하기 위해서 POST방식의 데이터 전송에는 반드시 CSRF토큰이 있어야함
+    http.authorizeRequests()
         .mvcMatchers("/css/**","/js/**","/img/**","/video/**","/login/**","/signup/**").permitAll()
         .mvcMatchers("/","/members/**","/item/**","/images/**","/marketList/**", "/market/marketDetail/**", "/marketEdit/**", "/admin/market/**","/image/upload/**").permitAll()
         .mvcMatchers("/admin/**").hasRole("ADMIN")
