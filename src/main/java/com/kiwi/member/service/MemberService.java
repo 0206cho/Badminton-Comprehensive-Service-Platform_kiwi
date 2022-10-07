@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.kiwi.config.auth.PrincipalDetails;
 import com.kiwi.member.entity.Member;
 import com.kiwi.member.repository.MemberRepository;
 
@@ -40,18 +41,27 @@ public class MemberService implements UserDetailsService {
     }
 
     // UserDetailsService 인터페이스의 오버라이딩한다. 로그인할 유저의 email을 파라미터로 전달함( 이름은 동명이인이 있을수 있기 때문에)
+    // 시큐리티 session(내부 Authentication(내부 UserDetails))
+    // 메서드 종료시 @AuthenticationPrincipal 어노테이션이 만들어진다.
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         Member member = memberRepository.findByEmail(email);
 
-        if(member == null){
-            throw new UsernameNotFoundException(email);
-        }
+//        if(member != null){
+//            throw new UsernameNotFoundException(email);
+//        }
+//
+//        return User.builder()       // UserDetail을 구현하고 있는 User객체를 반환합니다. User객체를 생성하기 위해서 생성자로 회원의이메일,패스워드,role을 넘겨준다.
+//                .username(member.getEmail())
+//                .password(member.getPassword())
+//                .roles(member.getRole().toString())
+//                .build();
+        
+        	if(member != null) {
+        		throw new UsernameNotFoundException(email);
+        	}
+         return new PrincipalDetails(member);
 
-        return User.builder()       // UserDetail을 구현하고 있는 User객체를 반환합니다. User객체를 생성하기 위해서 생성자로 회원의이메일,패스워드,role을 넘겨준다.
-                .username(member.getEmail())
-                .password(member.getPassword())
-                .roles(member.getRole().toString())
-                .build();
+        
     }
 }
