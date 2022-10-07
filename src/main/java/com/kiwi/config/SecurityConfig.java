@@ -55,13 +55,8 @@ public class SecurityConfig {
                 .and()
                 .logout()
                 .logoutRequestMatcher(new AntPathRequestMatcher("/members/logout"))
-                .logoutSuccessUrl("/")
-                .and()
-                .oauth2Login()
-                .loginPage("/members/login")	// 구글 로그인이 완료된후 후처리가 필요함. Oauth2-client 사용하면 코드x / 액세스토큰 + 사용자프로필정보 같이 받아옴
-                //.successHandler(loginSuccessHandler)
-                .userInfoEndpoint()
-        		.userService(principalOauth2UserService);
+                .logoutSuccessUrl("/");
+                
     
         		
 
