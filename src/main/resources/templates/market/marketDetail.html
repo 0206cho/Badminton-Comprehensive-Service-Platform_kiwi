@@ -130,7 +130,6 @@ img {
 					<h5>인천광역시 연수구</h5>
 					<h4 class="card-title" style="font-weight: bold;"
 						th:text="${market.title}">
-						<!-- <p>최고급 라켓 라켓 라켓 라켓 라켓 라켓 라켓 라켓 라켓 라켓-->
 					</h4>
 					<p class="card-text" th:text="${market.price} +'원'">5000원</p/>
 				</div>
@@ -159,14 +158,14 @@ img {
 			<div class="flex-container-col">
 				<div class="flex-container">
 					<h5 style="padding-right: 15px; font-weight: bold"
-						th:text="${market.createdBy}">미니솔</h5>
+						th:text="${market.createdBy}">작성자</h5>
 					<label
 						style="background-color: #C6F1E7; padding: 5px; border-color: black; border: 1px solid black; margin-right: 10px;">LEVEL-A</label>
 					<label
 						style="background-color: #70ACB1; padding: 5px; border-color: black; border: 1px solid black; color: white">골든키위</label>
 				</div>
 				<div class="flex-container" style="align-items: flex-end;">
-					<h5 th:text="${market.regTime}">2022-08-30 14:45:25</h5>
+					<h5 th:text="${market.regTime}">YYYY-MM-DD HH:mm:ss형식으로 출력할거에용</h5>
 					<button type="button" class="btn btn-kiwi"
 						style="margin-left: 15cm;">구매하기</button>
 				</div>
@@ -178,8 +177,7 @@ img {
 	<div calss="aa">
 	<div calss="detail" style="padding-left: 12px"
 		th:utext="${market.detail}">
-		배드민턴 치려고 샀는데 저한테는 너무 커서 팝니다ㅜㅜ <br> 구매한지는 일주일 되었고 박스도 남아있습니다.박스도
-		남아있습니다.박스도 남아있습니다.박스도 남아있습니다.
+		내용
 	</div></div>
 	<!-- <img src="/img/라켓1.jpg" class="card-img-top" alt="이미지 로딩중"
 			style="width: 15rem; height: 15rem; margin: auto; padding-top: 15px;"> -->
