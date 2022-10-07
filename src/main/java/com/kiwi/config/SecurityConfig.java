@@ -16,6 +16,7 @@ import org.springframework.security.web.authentication.rememberme.JdbcTokenRepos
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
+import com.kiwi.config.oauth.PrincipalOauth2UserService;
 import com.kiwi.member.service.MemberService;
 
 
@@ -29,10 +30,14 @@ public class SecurityConfig {
 //    }
 
    @Autowired
-    MemberService memberService;
+    private MemberService memberService;
    
    @Autowired
-   	DataSource dataSource;
+   	private DataSource dataSource;
+   
+   @Autowired
+    private PrincipalOauth2UserService principalOauth2UserService;
+   
    
     // 인증 or 인가에 대한 설정
     // 스프링 시큐리티 5.7 버전부터는 WebSecurityConfigurerAdapter가 Deprecated 되었기 때문에
@@ -50,11 +55,19 @@ public class SecurityConfig {
                 .and()
                 .logout()
                 .logoutRequestMatcher(new AntPathRequestMatcher("/members/logout"))
-                .logoutSuccessUrl("/");
+                .logoutSuccessUrl("/")
+                .and()
+                .oauth2Login()
+                .loginPage("/members/login")	// 구글 로그인이 완료된후 후처리가 필요함. Oauth2-client 사용하면 코드x / 액세스토큰 + 사용자프로필정보 같이 받아옴
+                //.successHandler(loginSuccessHandler)
+                .userInfoEndpoint()
+        		.userService(principalOauth2UserService);
+    
+        		
 
         http.authorizeRequests()
                 .mvcMatchers("/css/**","/js/**","/img/**","/video/**","/login/**","/signup/**").permitAll()
-                .mvcMatchers("/","/members/**","/item/**","/images/**","/market/**", "/marketDetail/**", "/marketEdit/**", "/admin/market/**").permitAll()
+                .mvcMatchers("/","/members/**","/item/**","/images/**","/market/**", "/marketDetail/**", "/marketEdit/**", "/admin/market/**","/oauth2/**","").permitAll()
                 .mvcMatchers("/admin/**").hasRole("ADMIN")
                 .anyRequest().authenticated();
 

@@ -1,6 +1,8 @@
 package com.kiwi.member.entity;
 
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -17,6 +19,7 @@ import javax.persistence.*;
 @Entity
 @Table(name="member")
 @Getter @Setter
+@NoArgsConstructor
 @ToString
 public class Member extends BaseEntity {
     @Id
@@ -66,7 +69,11 @@ public class Member extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private Role role;
     
+    // OAuth로그인 서비스 제공자
+    private String provider;
     
+    // OAuth로그인한 내 계정에 대한 Id
+    private String providerId;
 
     public static Member createMember(MemberFormDto memberFormDto, PasswordEncoder passwordEncoder){
         Member member = new Member();
@@ -83,4 +90,15 @@ public class Member extends BaseEntity {
         member.setBnumber(memberFormDto.getBnumber());
         return member;
     }
+    
+    @Builder
+	public Member(String email, String password, Role role, String provider, String providerId,String name) {
+		this.email = email;
+		this.password = password;
+		this.role = role;
+		this.provider = provider;
+		this.providerId = providerId;
+		this.name = name;
+	}
+    
 }

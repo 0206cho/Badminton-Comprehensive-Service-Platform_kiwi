@@ -8,9 +8,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import com.kiwi.shop.dto.ItemSearchDto;
-import com.kiwi.shop.dto.MainItemDto;
-import com.kiwi.shop.service.ItemService;
 
 import java.util.Optional;
 
@@ -18,7 +15,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class MainController {
 
-    private final ItemService itemService;
+//    private final ItemService itemService;
 
 //    기존 컨트롤러 주석 -> 페이징 처리할때 복사에서 넣기
 //    @GetMapping(value = "/")

@@ -31,39 +31,8 @@
             color: #bd2130;
         }
 	</style>
-	<script th:inline="javascript">
-        $(document).ready(function (){
-            var errorMessage = [[${errorMessage}]];
-            if(errorMessage != null){
-                alert(errorMessage);
-            }
-        });
-        
-        function same() {
-            var p1 = document.getElementById('password1').value;
-            var p2 = document.getElementById('password2').value;
-            if( p1 != p2 ) {
-            	document.getElementById('error').innerHTML='비밀번호가 일치하지 않습니다.';
-            	document.getElementById('error').style.color='red';
-              return false;
-            } else{
-            	document.getElementById('error').innerHTML='비밀번호가 일치합니다.';
-            	document.getElementById('error').style.color='blue';
-              return true;
-            }
-          }
-        
-        function formCheck(){
-        	var agree = document.getElementById('agree');
-        	if(!agree.checked){
-        		alert("약관 동의를 체크하세요.")
-        		agree.focus();
-        		return false;
-        	}
-        	document.join_form.submit();
-        }
-       
-    </script>
+	
+    
 </head>
 
 <body>
@@ -168,7 +137,8 @@
 					
 				
 							<div class="form-group">
-								<button type="button" onclick="formCheck();" class="btn btn-primary rounded submit p-3">완료</button>
+								<!--  <button type="button" onclick="formCheck();" class="btn btn-primary rounded submit p-3">완료</button> -->
+								<button type="button" onclick="formCheck();"  class="btn btn-primary rounded submit p-3">완료</button>
 							</div>
 							
 							<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
@@ -187,4 +157,45 @@
 
 </body>
 
+        <script th:inline="javascript">
+         $(document).ready(function (){
+            var errorMessage = [[${errorMessage}]];
+            
+            console.log(errorMessage);
+            if(errorMessage != null){
+                alert(errorMessage);
+            } 
+            
+            
+        }); 
+         
+         function same() {
+             var p1 = document.getElementById('password1').value;
+             var p2 = document.getElementById('password2').value;
+             if( p1 != p2 ) {
+             	document.getElementById('error').innerHTML='비밀번호가 일치하지 않습니다.';
+             	document.getElementById('error').style.color='red';
+               return false;
+             } else{
+             	document.getElementById('error').innerHTML='비밀번호가 일치합니다.';
+             	document.getElementById('error').style.color='blue';
+               return true;
+             }
+           }
+         
+          function formCheck(){
+         	var agree = document.getElementById('agree');
+         	
+         	if(!agree.checked){
+         		alert("약관 동의를 체크하세요.");
+         		agree.focus();
+         		return false;
+         	}
+         	document.join_form.submit();
+         	var Message = [[${Message}]];
+         	if(Message != null){
+         		alert(Message);
+         	}
+         } 
+        </script>
 </html>

@@ -3,8 +3,6 @@ package com.kiwi.market.dto;
 import org.modelmapper.ModelMapper;
 
 import com.kiwi.market.entity.Market;
-import com.kiwi.shop.dto.ItemFormDto;
-import com.kiwi.shop.entity.Item;
 
 import lombok.Getter;
 import lombok.Setter;
