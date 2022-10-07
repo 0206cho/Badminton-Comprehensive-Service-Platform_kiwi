@@ -67,7 +67,7 @@ public class SecurityConfig {
 
         http.authorizeRequests()
                 .mvcMatchers("/css/**","/js/**","/img/**","/video/**","/login/**","/signup/**").permitAll()
-                .mvcMatchers("/","/members/**","/item/**","/images/**","/marketList/**", "/market/marketDetail/**", "/marketEdit/**", "/admin/market/**","/oauth2/**","").permitAll()
+                .mvcMatchers("/","/members/**","/item/**","/images/**","/marketList/**", "/market/marketDetail/**", "/image/upload/**", "/marketEdit/**", "/admin/market/**","/oauth2/**","").permitAll()
                 .mvcMatchers("/admin/**").hasRole("ADMIN")
                 .anyRequest().authenticated();
 
