@@ -17,7 +17,7 @@ import org.springframework.security.web.authentication.rememberme.PersistentToke
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import com.kiwi.config.oauth.PrincipalOauth2UserService;
-import com.kiwi.handler.loginSuccessHandler;
+import com.kiwi.handler.LoginSuccessHandler;
 import com.kiwi.member.service.MemberService;
 
 
@@ -40,7 +40,7 @@ public class SecurityConfig {
     private PrincipalOauth2UserService principalOauth2UserService;
    
    @Autowired
-   	private loginSuccessHandler loginSuccessHandler;
+   	private LoginSuccessHandler LoginSuccessHandler;
    
    
     // 인증 or 인가에 대한 설정
@@ -63,7 +63,7 @@ public class SecurityConfig {
                 .and()
                 .oauth2Login()
                 .loginPage("/members/login")	// 구글 로그인이 완료된후 후처리가 필요함. Oauth2-client 사용하면 코드x / 액세스토큰 + 사용자프로필정보 같이 받아옴
-                .successHandler(new loginSuccessHandler())
+                .successHandler(new LoginSuccessHandler())
                 .userInfoEndpoint()
         		.userService(principalOauth2UserService);
     

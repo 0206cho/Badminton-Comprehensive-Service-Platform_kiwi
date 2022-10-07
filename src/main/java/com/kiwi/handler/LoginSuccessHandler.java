@@ -20,7 +20,7 @@ import com.kiwi.member.service.MemberService;
  *
  */
 @Service
-public class loginSuccessHandler implements AuthenticationSuccessHandler {
+public class LoginSuccessHandler implements AuthenticationSuccessHandler {
 	
 	@Autowired
     private MemberService memberService;
@@ -33,12 +33,10 @@ public class loginSuccessHandler implements AuthenticationSuccessHandler {
 			Authentication authentication) throws IOException, ServletException {
 		
 			PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
-			System.out.println("================" + principalDetails.getUsername());
 			String user = principalDetails.getUsername();
-			String birthday = principalDetails.getMember().getBirthday();
-			if(birthday == null) {
+			String phone = principalDetails.getMember().getPnum();
+			if(phone == null) {
 				response.sendRedirect("/members/login/addInfo");
-				//response.sendRedirect("/");
 			} else {
 				response.sendRedirect("/");
 			}
