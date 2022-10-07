@@ -29,9 +29,9 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kiwi.config.auth.PrincipalDetails;
-import com.kiwi.constant.Address;
-import com.kiwi.constant.Bank;
-import com.kiwi.constant.Gender;
+import com.kiwi.member.constant.Address;
+import com.kiwi.member.constant.Bank;
+import com.kiwi.member.constant.Gender;
 import com.kiwi.member.dto.MemberFormDto;
 import com.kiwi.member.entity.KakaoProfile;
 import com.kiwi.member.entity.Member;
@@ -53,7 +53,8 @@ public class MemberController {
 
 	@Autowired
 	private PasswordEncoder passwordEncoder;
-
+	
+	
 	// 회원 가입 로직
 	@GetMapping(value = "/new")
 	public String memberForm(Model model) {
@@ -111,20 +112,21 @@ public class MemberController {
 	}
 
 	@GetMapping("/test/login")
-	public @ResponseBody String testLogin(Authentication authentication,
-			@AuthenticationPrincipal PrincipalDetails userDetails) {
+	@ResponseBody
+	public String testLogin(Authentication authentication,
+			@AuthenticationPrincipal PrincipalDetails principalDetails2) {
 		System.out.println("/test/login ===============");
 		// PrincipalDetail
 		PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
 		System.out.println("authentication : " + principalDetails.getMember());
-
-		System.out.println("userDetails : " + userDetails.getMember());
+		System.out.println("userDetails : " + principalDetails2.getMember());
 		return "세션 정보 확인하기";
 	}
-
+	
 	@GetMapping("/test/oauth/login")
-	public @ResponseBody String testLogin(Authentication authentication, @AuthenticationPrincipal OAuth2User oauth) {
-		System.out.println("/test/login ===============");
+	@ResponseBody
+	public String testLogin(Authentication authentication, @AuthenticationPrincipal OAuth2User oauth) {
+		System.out.println("/test/oauth/login ===============");
 		OAuth2User oAuth2User = (OAuth2User) authentication.getPrincipal();
 		System.out.println("authentication : " + oAuth2User.getAttributes());
 		System.out.println("OAuth2User : " + oauth.getAttributes());
@@ -136,5 +138,41 @@ public class MemberController {
 	public String addInfo() {
 		return "/member/memberAddInfo";
 	}
+	
+//	// 회원 가입 로직
+//	@GetMapping(value = "/new")
+//	public String memberForm(Model model) {
+//
+//		model.addAttribute("memberFormDto", new MemberFormDto());
+//		model.addAttribute("genders", Gender.values());
+//		model.addAttribute("bnames", Bank.values());
+//		model.addAttribute("local", Address.values());
+//
+//		return "member/memberForm";
+//	}
+//
+//	@PostMapping(value = "/new")
+//	public String memberForm(@Valid MemberFormDto memberFormDto, BindingResult bindingResult, Model model) {
+//		if (bindingResult.hasErrors()) {
+//			System.out.println("============================바인딩에러");
+//			model.addAttribute("genders", Gender.values());
+//			model.addAttribute("bnames", Bank.values());
+//			model.addAttribute("local", Address.values());
+//			return "member/memberForm";
+//		}
+//		try {
+//			Member member = Member.createMember(memberFormDto, passwordEncoder);
+//			memberService.saveMember(member);
+//			model.addAttribute("Message", "회원가입이 완료되었습니다.");
+//		} catch (IllegalStateException e) {
+//			System.out.println("에러 메시지 전이야!");
+//			model.addAttribute("errorMessage", e.getMessage());
+//			System.out.println("에러 메시지 후야!");
+//			return "member/memberForm";
+//		}
+//		return "redirect:/members/login";
+//	}
+	
+	
 
 }

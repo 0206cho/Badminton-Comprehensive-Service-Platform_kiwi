@@ -14,7 +14,7 @@ import com.kiwi.config.auth.PrincipalDetails;
 import com.kiwi.config.oauth.provider.GoogleUserInfo;
 import com.kiwi.config.oauth.provider.KakaoUserInfo;
 import com.kiwi.config.oauth.provider.OAuth2UserInfo;
-import com.kiwi.constant.Role;
+import com.kiwi.member.constant.Role;
 import com.kiwi.member.entity.Member;
 import com.kiwi.member.repository.MemberRepository;
 

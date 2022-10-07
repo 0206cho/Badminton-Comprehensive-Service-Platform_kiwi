@@ -7,10 +7,10 @@ import lombok.Setter;
 import lombok.ToString;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import com.kiwi.constant.Address;
-import com.kiwi.constant.Bank;
-import com.kiwi.constant.Gender;
-import com.kiwi.constant.Role;
+import com.kiwi.member.constant.Address;
+import com.kiwi.member.constant.Bank;
+import com.kiwi.member.constant.Gender;
+import com.kiwi.member.constant.Role;
 import com.kiwi.member.dto.MemberFormDto;
 import com.kiwi.shop.entity.BaseEntity;
 

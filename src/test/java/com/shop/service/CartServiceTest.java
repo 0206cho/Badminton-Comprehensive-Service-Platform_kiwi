@@ -8,10 +8,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.kiwi.constant.ItemSellStatus;
 import com.kiwi.shop.dto.CartItemDto;
 import com.kiwi.shop.entity.CartItem;
 import com.kiwi.shop.entity.Item;
+import com.kiwi.market.constant.ItemSellStatus;
 import com.kiwi.member.entity.Member;
 import com.kiwi.shop.repository.CartItemRepository;
 import com.kiwi.shop.repository.ItemRepository;

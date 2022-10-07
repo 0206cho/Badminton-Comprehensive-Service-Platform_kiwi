@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestPropertySource;
 
-import com.kiwi.constant.ItemSellStatus;
+import com.kiwi.market.constant.ItemSellStatus;
 import com.kiwi.shop.entity.Item;
 import com.kiwi.shop.repository.ItemRepository;
 

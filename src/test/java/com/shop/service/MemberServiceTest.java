@@ -9,8 +9,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.kiwi.constant.ItemSellStatus;
-import com.kiwi.constant.Role;
+import com.kiwi.market.constant.ItemSellStatus;
+import com.kiwi.member.constant.Role;
 import com.kiwi.member.dto.MemberFormDto;
 import com.kiwi.shop.entity.Item;
 import com.kiwi.member.entity.Member;

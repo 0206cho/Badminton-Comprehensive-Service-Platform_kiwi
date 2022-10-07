@@ -4,9 +4,9 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
 
-import com.kiwi.constant.Address;
-import com.kiwi.constant.Bank;
-import com.kiwi.constant.Gender;
+import com.kiwi.member.constant.Address;
+import com.kiwi.member.constant.Bank;
+import com.kiwi.member.constant.Gender;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -35,7 +35,7 @@ public class MemberFormDto {
     
     
     @NotEmpty(message = "생년월일은 반드시 입력해주세요.")
-    @Length(min=6, max=6, message = "생년월일 형식을 맞춰주세요. ex) yy-mm-dd")
+    @Length(min=6, max=6, message = "생년월일 형식을 맞춰주세요. ex) yymmdd")
     private String birthday;
     
     @NotNull(message = "성별은 반드시 선택해주세요.")
