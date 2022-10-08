@@ -1,15 +1,21 @@
 package com.kiwi.member.service;
 
 import lombok.RequiredArgsConstructor;
+
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.kiwi.config.auth.PrincipalDetails;
+import com.kiwi.member.dto.OauthAddInfoDto;
 import com.kiwi.member.entity.Member;
 import com.kiwi.member.repository.MemberRepository;
 
@@ -39,6 +45,18 @@ public class MemberService implements UserDetailsService {
             throw new IllegalStateException("이미 가입된 회원입니다.");
         }
     }
+    
+    // OAuth2 추가정보 등록
+    public Member addInfo(@AuthenticationPrincipal PrincipalDetails principalDetails,OauthAddInfoDto addInfoDto) {
+    	Map<String,Object> attributes = principalDetails.getAttributes();
+    	System.out.println(attributes.get("id"));
+    	String providerId = String.valueOf(attributes.get("id"));
+    	Member member = memberRepository.findByProviderId(providerId);
+    	member.addInfoOAuth2(addInfoDto);
+    	return member;
+    }
+    
+    //public Member saveOAuth2()
 
     // UserDetailsService 인터페이스의 오버라이딩한다. 로그인할 유저의 email을 파라미터로 전달함( 이름은 동명이인이 있을수 있기 때문에)
     // 시큐리티 session(내부 Authentication(내부 UserDetails))
@@ -46,14 +64,11 @@ public class MemberService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
     	Member member = memberRepository.findByEmail(email);
-    	
         	if(member == null) {
         		System.out.println("DB에 유저가 없어용 ㅠ");
         		throw new UsernameNotFoundException(email);
     		}else {
     			return new PrincipalDetails(member);
     		}
-
-        
     }
 }
