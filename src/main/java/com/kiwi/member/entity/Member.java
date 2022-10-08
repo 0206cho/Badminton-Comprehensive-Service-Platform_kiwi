@@ -12,6 +12,7 @@ import com.kiwi.member.constant.Bank;
 import com.kiwi.member.constant.Gender;
 import com.kiwi.member.constant.Role;
 import com.kiwi.member.dto.MemberFormDto;
+import com.kiwi.member.dto.OauthAddInfoDto;
 import com.kiwi.shop.entity.BaseEntity;
 
 import javax.persistence.*;
@@ -72,6 +73,7 @@ public class Member extends BaseEntity {
     // OAuth로그인 서비스 제공자
     private String provider;
     
+    @Column(unique = true)
     // OAuth로그인한 내 계정에 대한 Id
     private String providerId;
 
@@ -91,6 +93,13 @@ public class Member extends BaseEntity {
         return member;
     }
     
+    public void addInfoOAuth2(OauthAddInfoDto addInfoDto) {
+    	this.pnum = addInfoDto.getPnum();
+    	this.bname = addInfoDto.getBname();
+    	this.bnumber = addInfoDto.getBnumber();
+    	this.address = addInfoDto.getAddress();
+    }
+    
     @Builder
 	public Member(String email, String password, Role role, String provider, String providerId,String name) {
 		this.email = email;
@@ -100,5 +109,7 @@ public class Member extends BaseEntity {
 		this.providerId = providerId;
 		this.name = name;
 	}
+    
+    
     
 }

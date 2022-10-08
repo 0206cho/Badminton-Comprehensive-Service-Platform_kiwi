@@ -1,47 +1,30 @@
 package com.kiwi.member.controller;
 
-import lombok.RequiredArgsConstructor;
+import javax.validation.Valid;
 
-import org.apache.catalina.authenticator.SpnegoAuthenticator.AuthenticateAction;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.client.RestTemplate;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kiwi.config.auth.PrincipalDetails;
 import com.kiwi.member.constant.Address;
 import com.kiwi.member.constant.Bank;
 import com.kiwi.member.constant.Gender;
 import com.kiwi.member.dto.MemberFormDto;
-import com.kiwi.member.entity.KakaoProfile;
+import com.kiwi.member.dto.OauthAddInfoDto;
 import com.kiwi.member.entity.Member;
-import com.kiwi.member.entity.OAuthToken;
 import com.kiwi.member.service.MemberService;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.validation.Valid;
+import lombok.RequiredArgsConstructor;
 
 @RequestMapping("/members")
 @Controller
@@ -110,7 +93,8 @@ public class MemberController {
 	public String mypage() {
 		return "/member/memberMypage";
 	}
-
+	
+	// form로그인 테스트
 	@GetMapping("/test/login")
 	@ResponseBody
 	public String testLogin(Authentication authentication,
@@ -123,6 +107,7 @@ public class MemberController {
 		return "세션 정보 확인하기";
 	}
 	
+	// 소셜로그인 테스트
 	@GetMapping("/test/oauth/login")
 	@ResponseBody
 	public String testLogin(Authentication authentication, @AuthenticationPrincipal OAuth2User oauth) {
@@ -134,45 +119,21 @@ public class MemberController {
 		return "OAuth 세션 정보 확인하기";
 	}
 	
+	// 소셜로그인 추가정보
 	@GetMapping("/login/addInfo")
-	public String addInfo() {
-		return "/member/memberAddInfo";
+	public String addInfo(Model model,@AuthenticationPrincipal OAuth2User oauth) {
+		model.addAttribute("oauthAddInfoDto", new OauthAddInfoDto());
+		model.addAttribute("bnames",Bank.values());
+		model.addAttribute("local",Address.values());
+		return "member/memberAddInfo";
 	}
 	
-//	// 회원 가입 로직
-//	@GetMapping(value = "/new")
-//	public String memberForm(Model model) {
-//
-//		model.addAttribute("memberFormDto", new MemberFormDto());
-//		model.addAttribute("genders", Gender.values());
-//		model.addAttribute("bnames", Bank.values());
-//		model.addAttribute("local", Address.values());
-//
-//		return "member/memberForm";
-//	}
-//
-//	@PostMapping(value = "/new")
-//	public String memberForm(@Valid MemberFormDto memberFormDto, BindingResult bindingResult, Model model) {
-//		if (bindingResult.hasErrors()) {
-//			System.out.println("============================바인딩에러");
-//			model.addAttribute("genders", Gender.values());
-//			model.addAttribute("bnames", Bank.values());
-//			model.addAttribute("local", Address.values());
-//			return "member/memberForm";
-//		}
-//		try {
-//			Member member = Member.createMember(memberFormDto, passwordEncoder);
-//			memberService.saveMember(member);
-//			model.addAttribute("Message", "회원가입이 완료되었습니다.");
-//		} catch (IllegalStateException e) {
-//			System.out.println("에러 메시지 전이야!");
-//			model.addAttribute("errorMessage", e.getMessage());
-//			System.out.println("에러 메시지 후야!");
-//			return "member/memberForm";
-//		}
-//		return "redirect:/members/login";
-//	}
+	// 소셜로그인 추가정보 등록
+	@PostMapping("/login/addInfo")
+	public String addInfo(@AuthenticationPrincipal PrincipalDetails principalDetails, OauthAddInfoDto oauthAddInfoDto, Model model) {
+		memberService.addInfo(principalDetails, oauthAddInfoDto);
+		return "redirect:/";
+	}
 	
 	
-
 }

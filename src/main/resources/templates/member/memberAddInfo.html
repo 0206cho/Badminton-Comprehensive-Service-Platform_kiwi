@@ -54,7 +54,7 @@
 					</h3>
 						
 						<!-- <a href="#" class="img d-flex align-items-center justify-content-center"><span class="fa fa-user-o"></span></a> -->
-						<form class="signup-form" >
+						<form class="signup-form" th:object="${oauthAddInfoDto}" action="/members/login/addInfo" role="form" method="post" name="join_form">
 							
 							<div class="form-group mb-4">
 								<label class="label" >전화번호</label>
@@ -64,29 +64,36 @@
 							<div class="form-group mb-4" >
 								  <label class="label" th:for="bname" style="margin-bottom: 15px">환불 계좌은행</label>
 								  <br>
-								  <select class="form-select"  aria-label="Default select example" style="padding-top:5px">
+								  <select class="form-select" th:field="*{bname}" aria-label="Default select example" style="padding-top:5px">
 								  <option value="">은행</option>
-									
+									<option th:each="bname : ${bnames}" th:value="${bname}" th:text="${bname}"></option>
 								  </select>
 								  <br>
 								  <br>
-								  <label class="label" th:for="bnumber" >환불 계좌번호</label>
-								  <input type="text"  class="form-control" placeholder="계좌번호">
+								   <label class="label" th:for="bnumber" >환불 계좌번호</label>
+								  <input type="text" th:field="*{bnumber}" class="form-control" placeholder="계좌번호">
 								  <br>
 								  <label class="label" th:for="address" style="margin-bottom: 15px">위치</label>
 								  <br>
 								  
-								  <select class="form-select "  aria-label="Default select example" style="padding-top:5px">
+								  <select class="form-select " th:field="*{address}" aria-label="Default select example" style="padding-top:5px">
 									<option value="">지역</option>
+									<option th:each="address : ${local}" th:value="${address}" th:text="${address}"></option>
 								  </select>
 								  
 							</div>
 							
+							<div class="d-flex mb-4 align-items-center">
+								<label class="control control--checkbox mb-0">
+									<input type="checkbox" id="agree" />
+									<span class="caption">키위 이용약관, 개인정보 수집 및 이용 위치기반서비스 이용약관에 모두 동의합니다.</span>
+								</label>
+							  </div>
 					
 				
 							<div class="form-group">
 								<!--  <button type="button" onclick="formCheck();" class="btn btn-primary rounded submit p-3">완료</button> -->
-								<button type="button" class="btn btn-primary rounded submit p-4">완료</button>
+								<button type="button" onclick="formCheck()" class="btn btn-primary rounded submit p-4">완료</button>
 							</div>
 							
 							
@@ -104,5 +111,33 @@
 	<script src="/signup/js/main.js"></script>
 
 </body>
+ <script th:inline="javascript">
+         $(document).ready(function (){
+            var errorMessage = [[${errorMessage}]];
+            
+            console.log(errorMessage);
+            if(errorMessage != null){
+                alert(errorMessage);
+            } 
+            
+            
+        }); 
+         
+         
+          function formCheck(){
+         	var agree = document.getElementById('agree');
+         	
+         	if(!agree.checked){
+         		alert("약관 동의를 체크하세요.");
+         		agree.focus();
+         		return false;
+         	}
+         	document.join_form.submit();
+         	var Message = [[${Message}]];
+         	if(Message != null){
+         		alert(Message);
+         	}
+         } 
+        </script>
 
 </html>
