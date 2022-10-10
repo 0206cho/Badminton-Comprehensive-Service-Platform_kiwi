@@ -55,5 +55,10 @@ public class MarketService {
 		}
 	}
 
+//	// 마켓 글 수정
+//	public void updateMarket(MarketDto marketDto) throws Exception{
+//		
+//	}
+
 
 }

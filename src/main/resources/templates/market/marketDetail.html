@@ -93,21 +93,23 @@ a {
 	gap: 5px;
 	margin-bottom: 50px;
 }
-.aa{
-	text-align:center;
-    display:table;
-    border:1px solid #cecece;
-    width:280px;
-    height:250px;
+
+.aa {
+	text-align: center;
+	display: table;
+	border: 1px solid #cecece;
+	width: 280px;
+	height: 250px;
 }
+
 .detail {
-	display:table-cell;
-    vertical-align:middle;
+	display: table-cell;
+	vertical-align: middle;
 }
 
 img {
-	max-width:600px;
-    max-height:600px;
+	max-width: 600px;
+	max-height: 600px;
 }
 </style>
 </th:block>
@@ -129,8 +131,7 @@ img {
 				<div class="card-body" style="padding-top: 30px;">
 					<h5>인천광역시 연수구</h5>
 					<h4 class="card-title" style="font-weight: bold;"
-						th:text="${market.title}">
-					</h4>
+						th:text="${market.title}"></h4>
 					<p class="card-text" th:text="${market.price} +'원'">5000원</p/>
 				</div>
 			</div>
@@ -140,6 +141,7 @@ img {
 
 					<img src="/img/더보기.png" alt="더보기"
 						style="width: 80%; height: 50%; padding-bottom: 5px">
+						<a href="/market/mDetail/" th:attrappend="href=${market.id}" > 수정</a>
 					<p>
 						<img src="/img/하트.png" alt="좋아요"
 							style="width: 80%; height: 50%; padding-bottom: 0px;">
@@ -175,10 +177,9 @@ img {
 
 	<hr>
 	<div calss="aa">
-	<div calss="detail" style="padding-left: 12px"
-		th:utext="${market.detail}">
-		내용
-	</div></div>
+		<div calss="detail" style="padding-left: 12px"
+			th:utext="${market.detail}">내용</div>
+	</div>
 	<!-- <img src="/img/라켓1.jpg" class="card-img-top" alt="이미지 로딩중"
 			style="width: 15rem; height: 15rem; margin: auto; padding-top: 15px;"> -->
 	<br>

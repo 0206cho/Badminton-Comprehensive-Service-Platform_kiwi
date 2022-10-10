@@ -1,0 +1,62 @@
+<!-- 테스트용 코드 -->
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>게시판 리스트</title>
+</head>
+<body>
+	<div calss="container">
+		<form id="frm" name="frm" method="POST" action="/market/mDetail">
+			<table class="market_detail">
+				<tr>
+					<td>아이디</td>
+					<!-- <td><input type="text" id="id" name="id"
+						th:value="${market.id}" disabled="disabled" /></td> -->
+					<td><textarea th:text="${market.title}" class="form-control" cols="80px"
+							style="width: 98%; height: 36px; border-style: none; font-weight: bold; font-size: x-large; margin-left: 10px;"
+							placeholder="제목을 입력해주세요."></textarea></td>
+				</tr>
+				<tr>
+					<td>제목</td>
+					<td><input type="text" id="id" name="id"
+						th:value="${market.title}" disabled="disabled" /></td>
+				</tr>
+				<tr>
+					<td>내용</td>
+					<td><input type="text" id="id" name="id" th:value="${market.detail}" disabled="disabled" /></td>
+				</tr>
+				<tr>
+					<td>가격</td>
+					<td><input type="text" th:value="${market.price}" disabled="disabled" /></td> 
+					<td><input type="number" th:value="${market.price}" class="form-control"
+				style="width: 50%; height: 36px;" placeholder="가격을 입력해주세요."></td>
+					<!-- <td><input type="text" th:value="{market.price}"></td> -->
+				</tr>
+				<tr>
+					<td><input th:src="${market.filepath}" type="file"
+						class="file-input files" name="file" id="file"></td>
+					<td><img th:src="${market.filepath}" id="previewImg"
+						width="700" alt="대표이미지 영역" /></td>
+				</tr>
+			</table>
+		</form>
+		<script>
+	// 대표이미지 띄어주기
+	const fileInput = document.getElementById("file");
+	const handleFiles = (e) => {
+			const selectedFile = [...fileInput.files];
+			  const fileReader = new FileReader();
+
+			  fileReader.readAsDataURL(selectedFile[0]); // 특정 파일 읽기
+
+			  fileReader.onload = function () {
+			    document.getElementById("previewImg").src = fileReader.result;
+			    // 파일 내용 img태그의 src로 돌려줌
+			  };
+	};
+	</script>
+	</div>
+</body>
+
+</html>
