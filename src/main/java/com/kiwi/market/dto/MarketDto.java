@@ -29,6 +29,10 @@ public class MarketDto {
     
     private String status; // 판매 여부
     
+    private String filename;
+    
+	private String filepath;
+    
     // 상품 저장 후 수정할 때 상품 정보를 저장하는 리스트
 //    private List<MarketDto> marketDtoList = new ArrayList<>();
     
@@ -48,14 +52,16 @@ public class MarketDto {
     
     
     // builder로 하는 방식
-//    public Market toEntity() {
-//    	return Market.builder()
-//    			.title(title)
-//    			.detail(detail)
-//    			.price(price)
-//    			.status(status)
-//    			.build();
-//    }
+    public Market toEntity() {
+    	return Market.builder()
+    			.title(title)
+    			.detail(detail)
+    			.price(price)
+    			.status(status)
+    			.filename(filename)
+    			.filepath(filepath)
+    			.build();
+    }
 
 	public MarketDto(Market entity) {
 		this.id = entity.getId();
@@ -63,6 +69,9 @@ public class MarketDto {
 		this.detail = entity.getDetail();
 		this.price = entity.getPrice();
 		this.status = entity.getStatus();
+		
+		this.filename = entity.getFilename();
+		this.filepath = entity.getFilepath();
 	}
 
 }
