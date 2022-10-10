@@ -115,9 +115,8 @@ a {
 	</style>
 </th:block>
 
-
 <div layout:fragment="content">
-	<form id="frm" role="form" method="post" enctype="multipart/form-data" th:action="'/market/marketUpdate/' + ${market.id}">
+	<form id="frm" role="form" method="post" enctype="multipart/form-data" th:action="@{'/market/marketUpdate/' + ${market.id}}" th:object="${market}">
 
 		<div class="head">
 			<!--지역 -->

@@ -111,7 +111,7 @@ public class MarketController {
 		return "/market/marketDetail";
 	}
 
-	@GetMapping("/market/mDetail/{id}")
+	@GetMapping("/market/marketUpdate/{id}")
 	public String mDetail(@PathVariable("id") Long id, Model model) {
 		Market market = marketService.marketDetail(id);
 		model.addAttribute("market", market);
@@ -120,10 +120,15 @@ public class MarketController {
 
 	// 수정페이지
 	@PostMapping(value = "/market/marketUpdate/{id}")
-	public String marketUpdate(@PathVariable("id") Long id, MarketDto marketDto, Model model) throws Exception {		
-		marketDto.setId(marketDto.getId());
-		System.out.println(">>>>>>>>>>>>>> marketDto : " + marketDto.getId());
-		marketService.saveMarket(marketDto);
+	public String marketUpdate(Market market,MultipartFile file) throws Exception {		
+		marketService.updateMarket2(market,file);
+		System.out.println(">>>>>>>>>>>>>>>>>>>>>> ID : "+ market.getId());
+		System.out.println(">>>>>>>>>>>>>>>>>>>>>> Detail : "+ market.getDetail());
+		System.out.println(">>>>>>>>>>>>>>>>>>>>>> Title : "+ market.getTitle());
+		System.out.println(">>>>>>>>>>>>>>>>>>>>>> Price : "+ market.getPrice());
+		System.out.println(">>>>>>>>>>>>>>>>>>>>>> Filename : "+ market.getFilename());
+		System.out.println(">>>>>>>>>>>>>>>>>>>>>> Filepath : "+ market.getFilepath());
+		
 //		marketDto.setId(marketDto.getId());
 //		try {
 //			marketService.saveMarket(marketDto, file);

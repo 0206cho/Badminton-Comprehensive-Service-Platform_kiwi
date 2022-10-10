@@ -1,5 +1,6 @@
 package com.kiwi.market.service;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -62,10 +63,29 @@ public class MarketService {
 		}
 	}
 
+	public Long updateMarket(MarketDto marketDto, MultipartFile file) throws IOException {
+		if(file.isEmpty()) {
+			String img = "";
+			marketDto.setFilepath(img);
+		} else {
+			uploadFile.fildUpload(marketDto, file);
+		}
+		return marketRepository.save(marketDto.toEntity()).getId();
+	}
+
 //	// 마켓 글 수정
 //	public void updateMarket(MarketDto marketDto) throws Exception{
 //		
 //	}
+	public Long updateMarket2(Market market, MultipartFile file) throws IOException {
+		if(file.isEmpty()) {
+			String img = "";
+			market.setFilepath(img);
+		} else {
+			uploadFile.fildUpload2(market, file);
+		}
+		return marketRepository.save(market).getId();
+	}
 
 
 }
