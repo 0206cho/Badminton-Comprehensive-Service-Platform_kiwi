@@ -49,7 +49,10 @@ public class UploadFile {
 		FileCopyUtils.copy(file.getBytes(), uploadFile);
 		
 		dto.setFilename(fileName);
+		System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>fileName" + fileName);
+//		dto.setFilepath("C" + File.separator + "shop" + dir + fileName);
 		dto.setFilepath(File.separator + "upload" + dir + fileName);
+		System.out.println(">>>>>>>>>>>>>filePath : " + File.separator + "upload" + dir + fileName);
 		
 	}
 }

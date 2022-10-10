@@ -58,6 +58,8 @@ public class MarketDto {
     			.detail(detail)
     			.price(price)
     			.status(status)
+    			.filename(filename)
+    			.filepath(filepath)
     			.build();
     }
 
