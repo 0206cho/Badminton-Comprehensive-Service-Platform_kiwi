@@ -9,7 +9,6 @@ public class FileDto {
 	private int marketIdx;
 	private String originalFileName;
 	private String storedFilePath;
-	private long fileSize;
-	
+	private long fileSize;	
 
 }
