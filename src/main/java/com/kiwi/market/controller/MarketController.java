@@ -110,28 +110,31 @@ public class MarketController {
 		model.addAttribute("market", market);
 		return "/market/marketDetail";
 	}
-	
-	// 수정페이지
-//	@PostMapping(value = "/market/marketUpdate")
-//	public String marketUpdate(MarketDto marketDto, Model model, MultipartFile file) throws Exception {
-////		marketDto.setId(marketDto.getId());
-//		try {
-//			marketService.saveMarket(marketDto, file);
-//		} catch (Exception e) {
-//			model.addAttribute("errorMessage", "상품 등록 중 에러가 발생하였습니다.");
-//			return "market/marketForm";
-//		}
-//		// 상품이 정상적으로 수정되었다면 메인 페이지로 이동
-//		return "redirect:/marketList"; // return "redirect:/";
-//	}
-	
+
 	@GetMapping("/market/mDetail/{id}")
 	public String mDetail(@PathVariable("id") Long id, Model model) {
 		Market market = marketService.marketDetail(id);
 		model.addAttribute("market", market);
 		return "/market/marketUpdate";
 	}
-	
+
+	// 수정페이지
+	@PostMapping(value = "/market/marketUpdate/{id}")
+	public String marketUpdate(@PathVariable("id") Long id, MarketDto marketDto, Model model) throws Exception {		
+		marketDto.setId(marketDto.getId());
+		System.out.println(">>>>>>>>>>>>>> marketDto : " + marketDto.getId());
+		marketService.saveMarket(marketDto);
+//		marketDto.setId(marketDto.getId());
+//		try {
+//			marketService.saveMarket(marketDto, file);
+//		} catch (Exception e) {
+//			model.addAttribute("errorMessage", "상품 등록 중 에러가 발생하였습니다.");
+//			return "market/marketUpdate";
+//		}
+		// 상품이 정상적으로 수정되었다면 메인 페이지로 이동
+		return "redirect:/marketList"; // return "redirect:/";
+	}
+
 //	@RequestMapping("/market/marketUpdate/{id}")
 //    public String marketUpdate(@PathVariable("id") Long id, MarketDto marketDto) throws Exception {
 //		// 어떤걸 수정할지 ID 수정

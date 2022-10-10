@@ -37,6 +37,13 @@ public class MarketService {
     	marketRepository.save(marketDto.toEntity());
     	
     }
+    
+    public void saveMarket(MarketDto marketDto) {
+        // 상품 등록
+    	
+    	marketRepository.save(marketDto.toEntity());
+    	
+    }
 
 	public List<Market> maketList() {
 

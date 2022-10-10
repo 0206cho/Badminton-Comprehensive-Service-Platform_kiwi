@@ -117,8 +117,7 @@ a {
 
 
 <div layout:fragment="content">
-	<form id="frm" role="form" method="post" enctype="multipart/form-data"
-		action="/market/mDetail">
+	<form id="frm" role="form" method="post" enctype="multipart/form-data" th:action="'/market/marketUpdate/' + ${market.id}">
 
 		<div class="head">
 			<!--지역 -->
@@ -183,7 +182,6 @@ a {
 
 	<hr>
 	<h5>대표이미지를 선택해주세요.</h5>
-	<label class="custom-file-label" data-browse="Browse"></label><br>
 	<input type="file" class="file-input files" name="file" id="file">
 	<br> <br>
 	<hr>
