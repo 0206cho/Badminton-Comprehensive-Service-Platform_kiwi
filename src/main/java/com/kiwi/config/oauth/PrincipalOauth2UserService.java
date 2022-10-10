@@ -60,6 +60,7 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
 		String email = oauth2UserInfo.getEmail();
 		String password = passwordEncoder.encode("키위");
 		String name = oauth2UserInfo.getName();
+		String image = oauth2UserInfo.getImage();
 		
 		Member memberEntity = memberRepository.findByEmail(email);
 		
@@ -74,6 +75,10 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
 					.providerId(providerId)
 					.role(Role.ADMIN)
 					.name(name)
+					.cash(0)
+					.level(1)
+					.point(100)
+					.image(image)
 					.build();
 			memberRepository.save(memberEntity);
 		} else {

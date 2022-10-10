@@ -76,6 +76,18 @@ public class Member extends BaseEntity {
     @Column(unique = true)
     // OAuth로그인한 내 계정에 대한 Id
     private String providerId;
+    
+    // 마일리지 
+    private int cash;
+    
+    // 레벨
+    private int level;
+    
+    // 매너점수
+    private int point;
+    
+    // 프로필 사진
+    private String image;
 
     public static Member createMember(MemberFormDto memberFormDto, PasswordEncoder passwordEncoder){
         Member member = new Member();
@@ -90,6 +102,10 @@ public class Member extends BaseEntity {
         member.setGender(memberFormDto.getGender());
         member.setBname(memberFormDto.getBname());
         member.setBnumber(memberFormDto.getBnumber());
+        member.setCash(0);
+        member.setLevel(1);
+        member.setPoint(100);
+        member.setImage(memberFormDto.getImage());
         return member;
     }
     
@@ -101,13 +117,17 @@ public class Member extends BaseEntity {
     }
     
     @Builder
-	public Member(String email, String password, Role role, String provider, String providerId,String name) {
+	public Member(String email, String password, Role role, String provider, String providerId,String name, int cash, int level, int point,String image) {
 		this.email = email;
 		this.password = password;
 		this.role = role;
 		this.provider = provider;
 		this.providerId = providerId;
 		this.name = name;
+		this.cash = cash;
+		this.level = level;
+		this.point = point;
+		this.image = image;
 	}
     
     
