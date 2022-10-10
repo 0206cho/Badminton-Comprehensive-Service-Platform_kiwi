@@ -46,4 +46,16 @@ public class MemberFormDto {
     
     @NotEmpty(message = "계좌번호는 반드시 입력해주세요.")
     private String bnumber;
+    
+    // 마일리지 
+    private int cash;
+    
+    // 레벨
+    private String level;
+    
+    // 매너점수
+    private String point;
+    
+ // 프로필 사진
+    private String image;
 }

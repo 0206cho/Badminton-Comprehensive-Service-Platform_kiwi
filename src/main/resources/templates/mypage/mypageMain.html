@@ -29,14 +29,25 @@ a {
 	text-decoration: none;
 }
 
-
-
 .btn-kiwi {
 	background-color: #70ACB1;
 	color: white;
 	border-color: #666;
 }
 
+.box {
+	width: 150px;
+	height: 150px;
+	border-radius: 30%;
+	overflow: hidden;
+	text-align: center;
+}
+
+.profile {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
 </style>
 </th:block>
 
@@ -51,18 +62,24 @@ a {
 
 <div layout:fragment="content">
 	<div class="container" th:object="${member}">
-		<div style="border: 1px solid black; float: left; width: 25%; margin-right: 80px; margin-left:55px;text-align: center;">
-			<img class="logo" src="/img/kiwi.png" alt="kiwi"
-				style="margin-top: 30px;width:110px;height:110px">
-			<div style="font-weight: bold; font-size:1.7em; margin-top: 10px;" th:text="*{name}"> 홍길동</div>
+		<div
+			style="border: 1px solid black; float: left; width: 25%; margin-right: 80px; margin-left: 55px; text-align: center;">
 			
-			<div th:text="*{address} != null ? *{address} : '프로필 설정에서 지역을 선택해주세요.'"></div>
-			<br>
-			<br> 
-			
+				<img class="profile" th:src="*{image}" alt="kiwi"
+					style="margin-top: 30px; width: 110px; height: 110px;object-fit: cover;border-radius: 30%;
+    overflow: hidden;">
+			<div style="font-weight: bold; font-size: 1.7em; margin-top: 10px;"
+				th:text="*{name}">홍길동</div>
+
+			<div
+				th:text="*{address} != null ? *{address} : '프로필 설정에서 지역을 선택해주세요.'"></div>
+			<br> <br>
+
 			<div style="float: left; width: 55%;">
-				<div style="text-align: left; margin-left: 40px;font-size:large; ">키위캐시</div>
-				<div style="text-align: left; margin-left: 40px; font-weight: bold;">2500원</div>
+				<div style="text-align: left; margin-left: 40px;">키위캐시</div>
+				<div
+					style="text-align: left; margin-left: 40px; font-weight: bold; font-size: large;"
+					th:text="*{cash} + '원'">2500원</div>
 			</div>
 
 
@@ -73,12 +90,18 @@ a {
 			<br> <BR>
 
 
-			<div style="float: left; width: 50%; margin-top: 20px; ">
+			<div style="float: left; width: 50%; margin-top: 20px;">
 				<div style="text-align: left; margin-left: 40px;">레벨</div>
 			</div>
 
 			<div style="float: left; width: 50%; margin-top: 20px;">
-				<div style="font-weight: bold; float: right; margin-right: 40px;">LEVEL	1</div>
+				<div
+					style="font-weight: bold; float: right; margin-right: 40px; font-size: large;"
+					th:text="'LEVEL ' + *{level}">1</div>
+
+
+
+
 			</div>
 			<br>
 
@@ -87,8 +110,9 @@ a {
 			</div>
 
 			<div style="float: left; width: 50%; margin-top: 20px;">
-				<div style="font-weight: bold; float: right; margin-right: 40px;">100Point</div>
-
+				<div th:text="*{point} + ' Point'"
+					style="font-weight: bold; float: right; margin-right: 40px; font-size: large;">100
+					Point</div>
 				<br> <Br> <br>
 			</div>
 
@@ -97,9 +121,10 @@ a {
 
 
 		<div style="float: left; width: 55%;">
-			<h4 style="font-weight: bold; margin-left: 30px; margin-top:15px;">나의 키위</h4>
+			<h4 style="font-weight: bold; margin-left: 30px; margin-top: 15px;">나의
+				키위</h4>
 			<br>
-			<div style="margin-left: 30px; margin-right:20px;">
+			<div style="margin-left: 30px; margin-right: 20px;">
 				<div style="float: left; width: 98%; font-weight: bold;">신청 내역</div>
 				<div style="float: left; width: 2%;">▶</div>
 				<Br>
@@ -110,12 +135,14 @@ a {
 				<Br>
 				<hr>
 				<Br>
-				<div style="float: left; width: 98%; font-weight: bold;">마켓 좋아요 목록</div>
+				<div style="float: left; width: 98%; font-weight: bold;">마켓
+					좋아요 목록</div>
 				<div style="float: left; width: 2%;">▶</div>
 				<Br>
 				<hr>
 				<Br>
-				<div style="float: left; width: 98%; font-weight: bold;">프로필 설정</div>
+				<div style="float: left; width: 98%; font-weight: bold;">프로필
+					설정</div>
 				<div style="float: left; width: 2%;">▶</div>
 				<Br>
 				<hr>
@@ -123,7 +150,7 @@ a {
 
 
 			</div>
-			
+
 
 
 
