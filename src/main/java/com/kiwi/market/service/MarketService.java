@@ -28,17 +28,11 @@ public class MarketService {
 	
     public void saveMarket(MarketDto marketDto, MultipartFile file) throws Exception{
         // 상품 등록
-    	System.out.println("---------------> 서비스 접근");
     	if(file.isEmpty()) {
 			String img = "";
 			marketDto.setFilepath(img);
-			System.out.println("===================>" + img);
 		} else {
 			uploadFile.fildUpload(marketDto, file);
-			System.out.println("-----------------> name : " + file.getName());
-			System.out.println("-----------------> size : " + file.getSize());
-			System.out.println("-----------------> type : " + file.getContentType());
-			System.out.println("-----------------> old name : " + file.getOriginalFilename()); 
 		}
     	marketRepository.save(marketDto.toEntity());
     	
