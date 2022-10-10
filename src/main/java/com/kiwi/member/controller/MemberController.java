@@ -41,16 +41,10 @@ public class MemberController {
 	// 회원 가입 로직
 	@GetMapping(value = "/new")
 	public String memberForm(Model model) {
-
 		model.addAttribute("memberFormDto", new MemberFormDto());
 		model.addAttribute("genders", Gender.values());
 		model.addAttribute("bnames", Bank.values());
 		model.addAttribute("local", Address.values());
-//        List<String> genders = new ArrayList<>();
-//        genders.add("남자");
-//        genders.add("여자");
-//        model.addAttribute("genders",genders);
-
 		return "member/memberForm";
 	}
 
@@ -89,9 +83,11 @@ public class MemberController {
 	}
 
 	// 마이페이지
-	@GetMapping(value = "/mypage")
-	public String mypage() {
-		return "/member/memberMypage";
+	@GetMapping("/mypage")
+	public String mypage(@AuthenticationPrincipal PrincipalDetails principalDetails, Model model) {
+		Member member = memberService.mypageInfo(principalDetails);
+		model.addAttribute("member", member);
+		return "mypage/mypageMain";
 	}
 	
 	// form로그인 테스트
@@ -121,13 +117,13 @@ public class MemberController {
 	
 	// 소셜로그인 추가정보
 	@GetMapping("/login/addInfo")
-	public String addInfo(Model model,@AuthenticationPrincipal OAuth2User oauth) {
+	public String addInfo(Model model,@AuthenticationPrincipal PrincipalDetails principalDetails) {
 		model.addAttribute("oauthAddInfoDto", new OauthAddInfoDto());
 		model.addAttribute("bnames",Bank.values());
 		model.addAttribute("local",Address.values());
 		return "member/memberAddInfo";
 	}
-	
+	 
 	// 소셜로그인 추가정보 등록
 	@PostMapping("/login/addInfo")
 	public String addInfo(@AuthenticationPrincipal PrincipalDetails principalDetails, OauthAddInfoDto oauthAddInfoDto, Model model) {

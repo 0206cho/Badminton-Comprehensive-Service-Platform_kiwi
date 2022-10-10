@@ -49,10 +49,19 @@ public class MemberService implements UserDetailsService {
     // OAuth2 추가정보 등록
     public Member addInfo(@AuthenticationPrincipal PrincipalDetails principalDetails,OauthAddInfoDto addInfoDto) {
     	Map<String,Object> attributes = principalDetails.getAttributes();
-    	System.out.println(attributes.get("id"));
     	String providerId = String.valueOf(attributes.get("id"));
     	Member member = memberRepository.findByProviderId(providerId);
     	member.addInfoOAuth2(addInfoDto);
+    	return member;
+    }
+    
+    // mypage 정보 출력
+    public Member mypageInfo(@AuthenticationPrincipal PrincipalDetails principalDetails) {
+    	System.out.println("==================== getAttributes() : " + principalDetails.getAttributes());
+    	System.out.println("==================== getMember() : " + principalDetails.getMember());
+    	System.out.println("=============== getMember().getEmail()  : " + principalDetails.getMember().getEmail());
+    	String email = principalDetails.getMember().getEmail();
+    	Member member = memberRepository.findByEmail(email);
     	return member;
     }
     
