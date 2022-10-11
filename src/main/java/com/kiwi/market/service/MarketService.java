@@ -63,21 +63,8 @@ public class MarketService {
 		}
 	}
 
-	public Long updateMarket(MarketDto marketDto, MultipartFile file) throws IOException {
-		if(file.isEmpty()) {
-			String img = "";
-			marketDto.setFilepath(img);
-		} else {
-			uploadFile.fildUpload(marketDto, file);
-		}
-		return marketRepository.save(marketDto.toEntity()).getId();
-	}
-
-//	// 마켓 글 수정
-//	public void updateMarket(MarketDto marketDto) throws Exception{
-//		
-//	}
-	public Long updateMarket2(Market market, MultipartFile file) throws IOException {
+	// 수정
+	public Long updateMarket(Market market, MultipartFile file) throws IOException {
 		if(file.isEmpty()) {
 			String img = "";
 			market.setFilepath(img);
@@ -85,6 +72,12 @@ public class MarketService {
 			uploadFile.fildUpload2(market, file);
 		}
 		return marketRepository.save(market).getId();
+	}
+
+	public void deleteMarket(Long id) {
+		marketRepository.deleteById(id);
+		// TODO Auto-generated method stub
+		
 	}
 
 

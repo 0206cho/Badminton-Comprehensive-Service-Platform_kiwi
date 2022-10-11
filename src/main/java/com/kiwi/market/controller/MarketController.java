@@ -118,43 +118,27 @@ public class MarketController {
 		return "/market/marketUpdate";
 	}
 
-	// 수정페이지
+	// 수정
 	@PostMapping(value = "/market/marketUpdate/{id}")
-	public String marketUpdate(Market market,MultipartFile file) throws Exception {		
+	public String marketUpdate(Market market, MultipartFile file) throws Exception {		
 		System.out.println(">>>>>>>>>>>>>>>>>>>>>> ID : "+ market.getId());
 		System.out.println(">>>>>>>>>>>>>>>>>>>>>> Detail : "+ market.getDetail());
 		System.out.println(">>>>>>>>>>>>>>>>>>>>>> Title : "+ market.getTitle());
 		System.out.println(">>>>>>>>>>>>>>>>>>>>>> Price : "+ market.getPrice());
 		System.out.println(">>>>>>>>>>>>>>>>>>>>>> Filename : "+ market.getFilename());
 		System.out.println(">>>>>>>>>>>>>>>>>>>>>> Filepath : "+ market.getFilepath());
-		marketService.updateMarket2(market,file);
+		marketService.updateMarket(market,file);
 		
-		
-//		marketDto.setId(marketDto.getId());
-//		try {
-//			marketService.saveMarket(marketDto, file);
-//		} catch (Exception e) {
-//			model.addAttribute("errorMessage", "상품 등록 중 에러가 발생하였습니다.");
-//			return "market/marketUpdate";
-//		}
-		// 상품이 정상적으로 수정되었다면 메인 페이지로 이동
+		return "redirect:/marketList"; // return "redirect:/";
+	}
+	
+	// 삭제
+	@GetMapping(value = "/market/marketDelete/{id}")
+	public String marketDelete(@PathVariable("id")Long id) {		
+		marketService.deleteMarket(id);
 		return "redirect:/marketList"; // return "redirect:/";
 	}
 
-//	@RequestMapping("/market/marketUpdate/{id}")
-//    public String marketUpdate(@PathVariable("id") Long id, MarketDto marketDto) throws Exception {
-//		// 어떤걸 수정할지 ID 수정
-//		marketDto.setId(id);
-//		marketService.updateMarket(marketDto);
-//		
-//        return "redirect:/marketList";
-//    }
 
-//    @RequestMapping("/market/marketDelete")
-//    public String deleteBoard(int boardIdx) throws Exception {
-//        boardService.deleteBoard(boardIdx);
-//        return "redirect:/board/openBoardList.do";
-//    }
-//	
 
 }
