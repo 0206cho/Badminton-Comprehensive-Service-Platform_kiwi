@@ -13,6 +13,8 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 import org.springframework.stereotype.Service;
 
 import com.kiwi.config.auth.PrincipalDetails;
+import com.kiwi.member.constant.Address;
+import com.kiwi.member.constant.Bank;
 import com.kiwi.member.service.MemberService;
 /**
  * 로그인 성공 핸들러 
@@ -28,6 +30,9 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
 	/**
 	 * 로그인 성공 메서드
 	 */
+	
+	
+	
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
 			Authentication authentication) throws IOException, ServletException {
@@ -35,12 +40,21 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
 			PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
 			String user = principalDetails.getUsername();
 			String phone = principalDetails.getMember().getPnum();
-			if(phone == null) {
-				response.sendRedirect("/members/login/addInfo");
-			} else {
-				response.sendRedirect("/");
-			}
+			Bank bname = principalDetails.getMember().getBname();
+			String bnum = principalDetails.getMember().getBnumber();
+			Address address = principalDetails.getMember().getAddress();
 			
+			if(phone != null) {
+				response.sendRedirect("/");
+			} else if (bname != null ) {
+				response.sendRedirect("/");
+			} else if (bnum != null) {
+				response.sendRedirect("/");
+			} else if (address != null) {
+				response.sendRedirect("/");
+			} else {
+				response.sendRedirect("/members/login/addInfo");
+			}
 		
 	}
  
