@@ -26,9 +26,9 @@
 					<!-- isAuthenticated() --> <a href="/orders">소곤소곤</a>
 				</li>
 				<li sec:authorize="isAnonymous()"><a href="/members/login">로그인</a>
-					<a href="/members/new">/회원가입</a></li>
+					<a href="/members/new">/ 회원가입</a></li>
 				<li sec:authorize="isAuthenticated()"><a href="/members/mypage">프로필</a>
-					<a href="/members/logout">/로그아웃</a></li>
+					<a href="/members/logout">/ 로그아웃</a></li>
 			</ul>
 			<i></i>
 		</article>
