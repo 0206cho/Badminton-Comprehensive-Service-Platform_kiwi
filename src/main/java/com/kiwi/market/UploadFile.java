@@ -12,6 +12,7 @@ import org.springframework.util.FileCopyUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.kiwi.market.dto.MarketDto;
+import com.kiwi.market.entity.Market;
 
 
 @Component
@@ -21,6 +22,24 @@ public class UploadFile {
 	private String path;
 	
 	public void fildUpload(MarketDto dto, MultipartFile file) throws IOException {
+		
+		UUID uuid = UUID.randomUUID();
+		
+		String fileName = File.separator + uuid + "_" + file.getOriginalFilename();
+		
+		
+		File uploadFile = new File(path, fileName);
+		
+		uploadFile.createNewFile();
+		
+		FileCopyUtils.copy(file.getBytes(), uploadFile);
+		
+		dto.setFilename(fileName);
+		dto.setFilepath(File.separator + "image\\title" + fileName);
+		
+	}
+	
+	public void fildUpload2(Market dto, MultipartFile file) throws IOException {
 		
 		UUID uuid = UUID.randomUUID();
 		
