@@ -116,7 +116,7 @@ a {
 </th:block>
 
 <div layout:fragment="content">
-	<form id="frm" role="form" method="post" enctype="multipart/form-data" th:action="@{'/market/marketUpdate/' + ${market.id}}" th:object="${market}">
+	<form id="frm" role="form" method="post" enctype="multipart/form-data" th:action="@{'/market/marketUpdate/' + ${market.id}}" >
 
 		<div class="head">
 			<!--지역 -->
@@ -163,7 +163,7 @@ a {
 				<option value="14">경상북도</option>
 				<option value="15">경상남도</option>
 				<option value="16">제주도</option>
-			</select> <input type="number" th:value="${market.price}" class="form-control"
+			</select> <input type="number" th:value="${market.price}" class="form-control" id="price" name="price"
 				style="width: 50%; height: 36px;" placeholder="가격을 입력해주세요.">
 			<button type="button" class="btn btn-cancel" style="width: 120px;"
 				onclick="location.href='../marketList'">취소</button>
@@ -174,7 +174,7 @@ a {
 <!-- <input type="hidden" th:text="${market.id}"> -->
 <div class="edit">
 	<div class="row">
-		<textarea th:text="${market.title}" class="form-control" cols="80px"
+		<textarea th:text="${market.title}" class="form-control" cols="80px" id ="title" name="title"
 			style="width: 98%; height: 36px; border-style: none; font-weight: bold; font-size: x-large; margin-left: 10px;"
 			placeholder="제목을 입력해주세요."></textarea>
 	</div>
@@ -186,7 +186,7 @@ a {
 	<hr>
 
 
-	<textarea th:text="${market.detail}" name="text" id="editor"
+	<textarea th:text="${market.detail}" name="detail" id="detail"
 		placeholder="내용을 입력해주세요."></textarea>
 
 
@@ -206,7 +206,7 @@ a {
 <!-- jQuery사용하기 위한 라이브러리 추가 -->
 <script>
 	const $ckUploadPath = "/image/upload?_csrf=" + $('#_csrf').val();
-			ClassicEditor.create(document.querySelector('#editor'), {
+			ClassicEditor.create(document.querySelector('#detail'), {
 				ckfinder: {
 					uploadUrl : $ckUploadPath
 				}

@@ -121,13 +121,14 @@ public class MarketController {
 	// 수정페이지
 	@PostMapping(value = "/market/marketUpdate/{id}")
 	public String marketUpdate(Market market,MultipartFile file) throws Exception {		
-		marketService.updateMarket2(market,file);
 		System.out.println(">>>>>>>>>>>>>>>>>>>>>> ID : "+ market.getId());
 		System.out.println(">>>>>>>>>>>>>>>>>>>>>> Detail : "+ market.getDetail());
 		System.out.println(">>>>>>>>>>>>>>>>>>>>>> Title : "+ market.getTitle());
 		System.out.println(">>>>>>>>>>>>>>>>>>>>>> Price : "+ market.getPrice());
 		System.out.println(">>>>>>>>>>>>>>>>>>>>>> Filename : "+ market.getFilename());
 		System.out.println(">>>>>>>>>>>>>>>>>>>>>> Filepath : "+ market.getFilepath());
+		marketService.updateMarket2(market,file);
+		
 		
 //		marketDto.setId(marketDto.getId());
 //		try {
