@@ -48,10 +48,11 @@ public class MemberService implements UserDetailsService {
     
     // OAuth2 추가정보 등록
     public Member addInfo(@AuthenticationPrincipal PrincipalDetails principalDetails,OauthAddInfoDto addInfoDto) {
-    	//Map<String,Object> attributes = principalDetails.getAttributes();
     	String email = principalDetails.getMember().getEmail();
     	Member member = memberRepository.findByEmail(email);
+    	System.out.println("첫번째");
     	member.addInfoOAuth2(addInfoDto);
+    	System.out.println("두번째");
     	return member;
     }
     
@@ -64,6 +65,7 @@ public class MemberService implements UserDetailsService {
     	Member member = memberRepository.findByEmail(email);
     	return member;
     }
+    
     
     //public Member saveOAuth2()
 

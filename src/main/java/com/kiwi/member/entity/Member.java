@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+
+import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.kiwi.member.constant.Address;
@@ -18,6 +20,7 @@ import com.kiwi.shop.entity.BaseEntity;
 import javax.persistence.*;
 
 @Entity
+@DynamicUpdate
 @Table(name="member")
 @Getter @Setter
 @NoArgsConstructor
@@ -88,6 +91,9 @@ public class Member extends BaseEntity {
     
     // 프로필 사진
     private String image;
+    
+    // OAuth2 추가정보 여부
+    private String updateOauthYn;
 
     public static Member createMember(MemberFormDto memberFormDto, PasswordEncoder passwordEncoder){
         Member member = new Member();
@@ -115,9 +121,9 @@ public class Member extends BaseEntity {
     	this.bnumber = addInfoDto.getBnumber();
     	this.address = addInfoDto.getAddress();
     }
-    
+     
     @Builder
-	public Member(String email, String password, Role role, String provider, String providerId,String name, int cash, int level, int point,String image) {
+	public Member(String email, String password, Role role, String provider, String providerId,String name, int cash, int level, int point,String image,String updateYn) {
 		this.email = email;
 		this.password = password;
 		this.role = role;
@@ -129,7 +135,5 @@ public class Member extends BaseEntity {
 		this.point = point;
 		this.image = image;
 	}
-    
-    
     
 }

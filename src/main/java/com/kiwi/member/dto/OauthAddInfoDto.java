@@ -1,8 +1,5 @@
 package com.kiwi.member.dto;
 
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
-
 import com.kiwi.member.constant.Address;
 import com.kiwi.member.constant.Bank;
 
