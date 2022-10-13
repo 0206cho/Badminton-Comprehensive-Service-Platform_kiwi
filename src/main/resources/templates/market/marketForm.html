@@ -8,15 +8,7 @@
 <th:block layout:fragment="script">
 
 	<script th:inline="javascript">
-        $(document).ready(function(){
-            var errorMessage = [[${errorMessage}]];
-            if(errorMessage != null){
-                alert(errorMessage);
-            }
-
-            bindDomEvent();
-
-        });
+       
 
         /*function bindDomEvent(){
             $(".custom-file-input").on("change", function() {
@@ -133,7 +125,8 @@ a {
 
 
 <div layout:fragment="content">
-	<form role="form" method="post" enctype="multipart/form-data" action="/admin/market/new" th:object="${marketDto}">
+	<form role="form" method="post" enctype="multipart/form-data"
+		action="/admin/market/new" th:object="${marketDto}">
 
 		<div class="head">
 			<!--지역 -->
@@ -202,13 +195,15 @@ a {
 				<textarea th:field="*{title}" class="form-control" cols="80px"
 					style="width: 98%; height: 36px; border-style: none; font-weight: bold; font-size: x-large; margin-left: 10px;"
 					placeholder="제목을 입력해주세요."></textarea>
+				<p th:if="${#fields.hasErrors('title')}" th:errors="*{title}"
+					class="fieldError">Incorrect data</p>
+
 			</div>
 
 			<hr>
 			<h5>대표이미지를 선택해주세요.</h5>
-			<input type="file" class="file-input files" name="file" id="file"> <br>
-			<img id="previewImg" width="700" alt="대표이미지 영역"/>
-			<br>
+			<input type="file" class="file-input files" name="file" id="file">
+			<br> <img id="previewImg" width="700" alt="대표이미지 영역" /> <br>
 			<hr>
 
 

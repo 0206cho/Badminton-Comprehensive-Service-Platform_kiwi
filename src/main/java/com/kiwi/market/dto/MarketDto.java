@@ -1,9 +1,7 @@
 package com.kiwi.market.dto;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 
 import org.modelmapper.ModelMapper;
 
@@ -21,6 +19,7 @@ public class MarketDto {
 	
     private Long id;       // 게시글 코드
 
+    @NotEmpty(message = "제목을 반드시 입력해주세요.")
     private String title;  // 게시글 제목 
     
     private String detail;  // 게시글 내용

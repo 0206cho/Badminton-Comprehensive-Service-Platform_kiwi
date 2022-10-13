@@ -4,11 +4,15 @@ import java.io.File;
 import java.util.List;
 import java.util.UUID;
 
+import javax.validation.Valid;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -42,11 +46,16 @@ public class MarketController {
 	}
 
 	@PostMapping(value = "/admin/market/new")
-	public String marketNew(MarketDto marketDto, Model model, MultipartFile file) throws Exception {
+	public String marketNew(@Valid MarketDto marketDto, Model model, MultipartFile file, BindingResult bindingResult)
+			throws Exception {
+		if (bindingResult.hasErrors()) {
+			return "market/marketForm";
+		}
+
 		try {
 			marketService.saveMarket(marketDto, file);
 		} catch (Exception e) {
-			model.addAttribute("errorMessage", "상품 등록 중 에러가 발생하였습니다.");
+			//model.addAttribute("errorMessage", "상품 등록 중 에러가 발생하였습니다.");
 			return "market/marketForm";
 		}
 		// 상품이 정상적으로 등록되었다면 메인 페이지로 이동
@@ -120,25 +129,23 @@ public class MarketController {
 
 	// 수정
 	@PostMapping(value = "/market/marketUpdate/{id}")
-	public String marketUpdate(Market market, MultipartFile file) throws Exception {		
-		System.out.println(">>>>>>>>>>>>>>>>>>>>>> ID : "+ market.getId());
-		System.out.println(">>>>>>>>>>>>>>>>>>>>>> Detail : "+ market.getDetail());
-		System.out.println(">>>>>>>>>>>>>>>>>>>>>> Title : "+ market.getTitle());
-		System.out.println(">>>>>>>>>>>>>>>>>>>>>> Price : "+ market.getPrice());
-		System.out.println(">>>>>>>>>>>>>>>>>>>>>> Filename : "+ market.getFilename());
-		System.out.println(">>>>>>>>>>>>>>>>>>>>>> Filepath : "+ market.getFilepath());
-		marketService.updateMarket(market,file);
-		
+	public String marketUpdate(Market market, MultipartFile file) throws Exception {
+		System.out.println(">>>>>>>>>>>>>>>>>>>>>> ID : " + market.getId());
+		System.out.println(">>>>>>>>>>>>>>>>>>>>>> Detail : " + market.getDetail());
+		System.out.println(">>>>>>>>>>>>>>>>>>>>>> Title : " + market.getTitle());
+		System.out.println(">>>>>>>>>>>>>>>>>>>>>> Price : " + market.getPrice());
+		System.out.println(">>>>>>>>>>>>>>>>>>>>>> Filename : " + market.getFilename());
+		System.out.println(">>>>>>>>>>>>>>>>>>>>>> Filepath : " + market.getFilepath());
+		marketService.updateMarket(market, file);
+
 		return "redirect:/marketList"; // return "redirect:/";
 	}
-	
+
 	// 삭제
 	@GetMapping(value = "/market/marketDelete/{id}")
-	public String marketDelete(@PathVariable("id")Long id) {		
+	public String marketDelete(@PathVariable("id") Long id) {
 		marketService.deleteMarket(id);
 		return "redirect:/marketList"; // return "redirect:/";
 	}
-
-
 
 }
