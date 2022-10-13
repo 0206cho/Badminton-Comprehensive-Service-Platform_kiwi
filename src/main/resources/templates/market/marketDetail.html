@@ -127,7 +127,7 @@ img {
 	<form id="frm" name="frm" method="POST" action="/market/marketDetail">
 
 		<div class="row">
-			<div class="card" style="width: 90%; border: none;">
+			<div class="card" style="width: 87%; border: none;">
 				<div class="card-body" style="padding-top: 30px;">
 					<h5>인천광역시 연수구</h5>
 					<h4 class="card-title" style="font-weight: bold;"
@@ -136,16 +136,22 @@ img {
 				</div>
 			</div>
 
-			<div class="card" style="width: 10%; border: none;">
+			<div class="card" style="width: 13%; border: none;">
 				<div class="card-body" style="padding: 10px; padding-bottom: 0px;">
 
-					<img src="/img/더보기.png" alt="더보기"
-						style="width: 80%; height: 50%; padding-bottom: 5px">
-						<a href="/market/marketUpdate/" th:attrappend="href=${market.id}" > 수정</a>
-						<a href="/market/marketDelete/" th:attrappend="href=${market.id}" > 삭제</a>
+					<div class="btn-group dropstart" style="padding-bottom:10px;">
+						<button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" style="padding:0px; background-color:transparent; border: none;">
+						<img src="/img/더보기.png" style="width:50px; height:50px; padding-bottom: 5px;"></button>
+						<ul class="dropdown-menu">
+							<li><a class="dropdown-item" href="/market/marketUpdate/" th:attrappend="href=${market.id}">수정</a></li>
+							<li><a class="dropdown-item" href="/market/marketDelete/" th:attrappend="href=${market.id}">삭제</a></li>
+						</ul>
+					</div>
+
 					<p>
-						<img src="/img/하트.png" alt="좋아요"
-							style="width: 80%; height: 50%; padding-bottom: 0px;">
+						<!-- <img src="/img/하트.png" alt="좋아요" style="width: 80%; height: 80%; padding-bottom: 0px; padding-left:10px; "> -->
+						<button type="button" class="btm_image" id="img_btn" style="background-color:transparent; border: none;"><img src="/img/하트.png" alt="좋아요" style="width: 80%; height: 80%; padding-bottom: 0px; padding-right:5px; "></button>
+						<!-- <img src="/img/하트.png" alt="좋아요" style="width: 80%; height: 50%; padding-bottom: 0px;"> -->
 				</div>
 			</div>
 
@@ -178,8 +184,8 @@ img {
 
 	<hr>
 	<div calss="aa">
-	<img th:src="${market.filepath}" class="card-img-top" alt="이미지 로딩중" >
-	<hr>
+		<img th:src="${market.filepath}" class="card-img-top" alt="이미지 로딩중">
+		<br> <br>
 		<div calss="detail" style="padding-left: 12px"
 			th:utext="${market.detail}">내용</div>
 	</div>
@@ -187,7 +193,8 @@ img {
 			style="width: 15rem; height: 15rem; margin: auto; padding-top: 15px;"> -->
 	<br>
 	<hr style="height: 5px; color: black;">
-	<h4 style="font-weight: bold; padding-left: 12px; padding-bottom: 5px; background-color: #C6F1E7; padding: 10px">댓글</h4>
+	<h4
+		style="font-weight: bold; padding-left: 12px; padding-bottom: 5px; background-color: #C6F1E7; padding: 10px">댓글</h4>
 
 	<div class="flex-container" style="padding-left: 12px;">
 		<div
