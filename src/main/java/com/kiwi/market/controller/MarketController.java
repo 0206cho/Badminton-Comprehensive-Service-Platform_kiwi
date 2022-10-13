@@ -46,16 +46,16 @@ public class MarketController {
 	}
 
 	@PostMapping(value = "/admin/market/new")
-	public String marketNew(@Valid MarketDto marketDto, Model model, MultipartFile file, BindingResult bindingResult)
-			throws Exception {
+	public String marketNew(@Valid MarketDto marketDto, BindingResult bindingResult, Model model, MultipartFile file) throws Exception {
 		if (bindingResult.hasErrors()) {
+			System.out.println("-------------------->바인딩에러");
 			return "market/marketForm";
 		}
 
 		try {
 			marketService.saveMarket(marketDto, file);
 		} catch (Exception e) {
-			//model.addAttribute("errorMessage", "상품 등록 중 에러가 발생하였습니다.");
+			model.addAttribute("errorMessage", "상품 등록 중 에러가 발생하였습니다.");
 			return "market/marketForm";
 		}
 		// 상품이 정상적으로 등록되었다면 메인 페이지로 이동
