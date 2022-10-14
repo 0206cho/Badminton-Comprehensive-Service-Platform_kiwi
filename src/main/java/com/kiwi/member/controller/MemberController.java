@@ -89,6 +89,23 @@ public class MemberController {
 		model.addAttribute("member", member);
 		return "mypage/mypageMain";
 	}
+    
+	// 소셜로그인 추가정보
+	@GetMapping("/login/addInfo")
+	public String addInfo(Model model,@AuthenticationPrincipal PrincipalDetails principalDetails) {
+		model.addAttribute("oauthAddInfoDto", new OauthAddInfoDto());
+		model.addAttribute("bnames",Bank.values());
+		model.addAttribute("local",Address.values());
+		return "member/memberAddInfo";
+	}
+	 
+	// 소셜로그인 추가정보 등록
+	@PostMapping("/login/addInfo")
+	public String addInfo(@AuthenticationPrincipal PrincipalDetails principalDetails, OauthAddInfoDto oauthAddInfoDto, Model model) {
+		memberService.addInfo(principalDetails, oauthAddInfoDto);
+		return "redirect:/";
+	}
+
 	
 	// form로그인 테스트
 	@GetMapping("/test/login")
@@ -115,21 +132,7 @@ public class MemberController {
 		return "OAuth 세션 정보 확인하기";
 	}
 	
-	// 소셜로그인 추가정보
-	@GetMapping("/login/addInfo")
-	public String addInfo(Model model,@AuthenticationPrincipal PrincipalDetails principalDetails) {
-		model.addAttribute("oauthAddInfoDto", new OauthAddInfoDto());
-		model.addAttribute("bnames",Bank.values());
-		model.addAttribute("local",Address.values());
-		return "member/memberAddInfo";
-	}
-	 
-	// 소셜로그인 추가정보 등록
-	@PostMapping("/login/addInfo")
-	public String addInfo(@AuthenticationPrincipal PrincipalDetails principalDetails, OauthAddInfoDto oauthAddInfoDto, Model model) {
-		memberService.addInfo(principalDetails, oauthAddInfoDto);
-		return "redirect:/";
-	}
+
 	
 	
 }

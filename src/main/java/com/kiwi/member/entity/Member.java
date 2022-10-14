@@ -94,6 +94,8 @@ public class Member extends BaseEntity {
     
     // OAuth2 추가정보 여부
     private String updateOauthYn;
+    
+    
 
     public static Member createMember(MemberFormDto memberFormDto, PasswordEncoder passwordEncoder){
         Member member = new Member();

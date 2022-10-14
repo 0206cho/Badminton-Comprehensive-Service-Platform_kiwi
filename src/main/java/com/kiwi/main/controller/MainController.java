@@ -50,9 +50,9 @@ public class MainController {
 //    	return "mypage/mypageMain";
 //    }
     
-    @GetMapping(value = "/pay")
-    public String pay(){
-    	return "pay/pay";
-    }
+//    @GetMapping(value = "/pay")
+//    public String pay(){
+//    	return "pay/pay";
+//    }
     
 }

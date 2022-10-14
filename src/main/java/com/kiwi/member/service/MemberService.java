@@ -50,22 +50,21 @@ public class MemberService implements UserDetailsService {
     public Member addInfo(@AuthenticationPrincipal PrincipalDetails principalDetails,OauthAddInfoDto addInfoDto) {
     	String email = principalDetails.getMember().getEmail();
     	Member member = memberRepository.findByEmail(email);
-    	System.out.println("첫번째");
     	member.addInfoOAuth2(addInfoDto);
-    	System.out.println("두번째");
     	return member;
     }
     
     // mypage 정보 출력
     public Member mypageInfo(@AuthenticationPrincipal PrincipalDetails principalDetails) {
-    	System.out.println("==================== getAttributes() : " + principalDetails.getAttributes());
-    	System.out.println("==================== getMember() : " + principalDetails.getMember());
-    	System.out.println("=============== getMember().getEmail()  : " + principalDetails.getMember().getEmail());
     	String email = principalDetails.getMember().getEmail();
     	Member member = memberRepository.findByEmail(email);
     	return member;
     }
     
+    // 로그인한 회원 ID 출력
+    public Long getIdFromAuth() {
+    	return null;
+    }
     
     //public Member saveOAuth2()
 
