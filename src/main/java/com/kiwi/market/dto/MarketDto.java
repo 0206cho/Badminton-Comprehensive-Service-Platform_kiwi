@@ -34,6 +34,8 @@ public class MarketDto {
     private String filename;
     
 	private String filepath;
+	
+	private String oriImgName;
     
     // 상품 저장 후 수정할 때 상품 정보를 저장하는 리스트
 //    private List<MarketDto> marketDtoList = new ArrayList<>();
@@ -62,6 +64,7 @@ public class MarketDto {
     			.status(status)
     			.filename(filename)
     			.filepath(filepath)
+    			.oriImgName(oriImgName)
     			.build();
     }
 
@@ -74,6 +77,7 @@ public class MarketDto {
 		
 		this.filename = entity.getFilename();
 		this.filepath = entity.getFilepath();
+		this.oriImgName = entity.getOriImgName();
 	}
 
 }

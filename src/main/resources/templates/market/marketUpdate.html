@@ -181,9 +181,19 @@ a {
 
 	<hr>
 	<h5>대표이미지를 선택해주세요.</h5>
-	${market.filename}
-	<input type="file" class="file-input files" name="file" id="file">
-	<br> <br>
+	<a ></a>
+	<!-- <input type="file" class="file-input files" name="file" id="file" th:text="${market.oriImgName}"> -->
+	<!-- 
+	<label class="form-label mt-4">대표 이미지</label> <br> <label
+					class="custom-file-label" data-browse="Browse"></label> <input
+					type="file" class="custom-file-input files" name="file">
+	 -->
+	 <div class="custom-file img-div">
+                    <input type="file" class="custom-file-input" name="file" id="file">
+                    <label class="custom-file-label" th:text="${market.oriImgName}"></label>
+                </div>
+	
+	<br> <img id="previewImg" width="700" alt="대표이미지 영역" th:src="${market.filepath}" /><br>
 	<hr>
 
 

@@ -147,5 +147,5 @@ public class MarketController {
 		marketService.deleteMarket(id);
 		return "redirect:/marketList"; // return "redirect:/";
 	}
-
+	
 }

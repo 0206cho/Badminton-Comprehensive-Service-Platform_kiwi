@@ -44,12 +44,16 @@ public class Market extends BaseEntity {
 
 	@Column(name = "market_status")
 	private String status; // 판매 여부
-
+	
 	private String filename;
-
+	
 	private String filepath;
+	 
+	// 원본 이미지 파일명
+	@Column(name = "oriImgName")
+	private String oriImgName;
 
-//    @Enumerated(EnumType.STRING)   //@Enumrated는 enum타입 매핑시 사용함!
-//    private MarketSellStatus marketSellStatus;  //상품 판매 상태
+//  @Enumerated(EnumType.STRING)   //@Enumrated는 enum타입 매핑시 사용함!
+//  private MarketSellStatus marketSellStatus;  //상품 판매 상태
 
 }

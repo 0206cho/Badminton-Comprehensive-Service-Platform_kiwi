@@ -73,6 +73,8 @@ public class MarketService {
 		}
 		return marketRepository.save(market).getId();
 	}
+	
+	
 
 	public void deleteMarket(Long id) {
 		marketRepository.deleteById(id);
