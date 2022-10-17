@@ -62,8 +62,9 @@ public class MemberService implements UserDetailsService {
     }
     
     // 로그인한 회원 ID 출력
-    public Long getIdFromAuth() {
-    	return null;
+    public Long getIdFromAuth(@AuthenticationPrincipal PrincipalDetails principalDetails) {
+    	Long id = principalDetails.getMember().getId();
+    	return id;
     }
     
     //public Member saveOAuth2()

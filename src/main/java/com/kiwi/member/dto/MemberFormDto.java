@@ -48,7 +48,7 @@ public class MemberFormDto {
     private String bnumber;
     
     // 마일리지 
-    private int cash;
+    private int kiwicash;
     
     // 레벨
     private String level;

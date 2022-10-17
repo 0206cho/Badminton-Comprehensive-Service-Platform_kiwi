@@ -71,12 +71,11 @@
 					msg += '카드 승인번호 : ' + rsp.apply_num;
 					$.ajax({
 						type: "GET",
-						url: "/cash/test/pay", //충전 금액값을 보낼 url 설정
+						url: "/cash/test/charge", //충전 금액값을 보낼 url 설정
 						data: {
 							"amount": money,	
 							"merchant_uid" : rsp.merchant_uid,
 							"imp_uid" : rsp.imp_uid,
-							"paid_amount" : rsp.paid_amount,
 							"apply_num" : rsp.apply_num
 						},
 					});
@@ -113,7 +112,7 @@
 		<div style="margin-left: 55px; margin-right: 80px; margin-top: 20px; width: 100%;">
 			<div style="float: left; width: 98%; font-weight: bold;">소셜 매치</div>
 			<Br>
-			<hr style="margin-bottom: 0px">
+			<hr>
 			<br>
 			<div style="float: left; width: 80%; font-weight: bold;">결제 금액</div>
 			<div style="float: right; font-weight: bold; margin-right: 10px;">
@@ -125,8 +124,6 @@
 				<div style="float: left; width: 88%; font-weight: bold; height: 50px; margin-top: 7px;">사용
 					가능 캐시</div>
 			</div>
-
-
 
 			<div style="float: left; width: 50%; height: 100px">
 				<!-- <button type="button" class="btn btn-kiwi" style="float: right; margin-right: 10px;">충전</button>
