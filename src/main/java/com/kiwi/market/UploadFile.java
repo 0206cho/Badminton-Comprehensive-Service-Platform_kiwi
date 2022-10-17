@@ -23,10 +23,11 @@ public class UploadFile {
 	
 	public void fildUpload(MarketDto dto, MultipartFile file) throws IOException {
 		
+		String oriFileName = file.getOriginalFilename();
+		
 		UUID uuid = UUID.randomUUID();
 		
 		String fileName = File.separator + uuid + "_" + file.getOriginalFilename();
-		
 		
 		File uploadFile = new File(path, fileName);
 		
@@ -36,15 +37,15 @@ public class UploadFile {
 		
 		dto.setFilename(fileName);
 		dto.setFilepath(File.separator + "image\\title" + fileName);
-		
+		dto.setOriImgName(oriFileName);
 	}
 	
-	public void fildUpload2(Market dto, MultipartFile file) throws IOException {
+	public void fildUpload2(Market market, MultipartFile file) throws IOException {
 		
 		UUID uuid = UUID.randomUUID();
 		
 		String fileName = File.separator + uuid + "_" + file.getOriginalFilename();
-		
+		String origin = file.getOriginalFilename();
 		
 		File uploadFile = new File(path, fileName);
 		
@@ -52,8 +53,8 @@ public class UploadFile {
 		
 		FileCopyUtils.copy(file.getBytes(), uploadFile);
 		
-		dto.setFilename(fileName);
-		dto.setFilepath(File.separator + "image\\title" + fileName);
-		
+		market.setFilename(fileName);
+		market.setFilepath(File.separator + "image\\title" + fileName);
+		market.setOriImgName(origin);
 	}
 }

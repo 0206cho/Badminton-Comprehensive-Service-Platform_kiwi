@@ -1,9 +1,8 @@
 package com.kiwi.market.dto;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 import org.modelmapper.ModelMapper;
 
@@ -21,17 +20,22 @@ public class MarketDto {
 	
     private Long id;       // 게시글 코드
 
+    @NotBlank(message = "제목을 반드시 입력해주세요.")
     private String title;  // 게시글 제목 
     
+    @NotBlank(message = "내용을 반드시 입력해주세요.")
     private String detail;  // 게시글 내용
 
-    private int price;     // 가격
+    @NotBlank(message = "가격을 반드시 입력해주세요.")
+    private String price;     // 가격
     
     private String status; // 판매 여부
     
     private String filename;
     
 	private String filepath;
+	
+	private String oriImgName;
     
     // 상품 저장 후 수정할 때 상품 정보를 저장하는 리스트
 //    private List<MarketDto> marketDtoList = new ArrayList<>();
@@ -60,6 +64,7 @@ public class MarketDto {
     			.status(status)
     			.filename(filename)
     			.filepath(filepath)
+    			.oriImgName(oriImgName)
     			.build();
     }
 
@@ -72,6 +77,7 @@ public class MarketDto {
 		
 		this.filename = entity.getFilename();
 		this.filepath = entity.getFilepath();
+		this.oriImgName = entity.getOriImgName();
 	}
 
 }

@@ -1,22 +1,13 @@
 package com.kiwi.market.entity;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.Date;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
-import javax.persistence.PrePersist;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.kiwi.member.constant.MarketSellStatus;
 import com.kiwi.shop.entity.BaseEntity;
 
 import lombok.AllArgsConstructor;
@@ -49,16 +40,20 @@ public class Market extends BaseEntity {
 	private String detail; // 게시글 내용
 
 	@Column(name = "market_price")
-	private int price; // 가격
+	private String price; // 가격
 
 	@Column(name = "market_status")
 	private String status; // 판매 여부
-
+	
 	private String filename;
-
+	
 	private String filepath;
+	 
+	// 원본 이미지 파일명
+	@Column(name = "oriImgName")
+	private String oriImgName;
 
-//    @Enumerated(EnumType.STRING)   //@Enumrated는 enum타입 매핑시 사용함!
-//    private MarketSellStatus marketSellStatus;  //상품 판매 상태
+//  @Enumerated(EnumType.STRING)   //@Enumrated는 enum타입 매핑시 사용함!
+//  private MarketSellStatus marketSellStatus;  //상품 판매 상태
 
 }

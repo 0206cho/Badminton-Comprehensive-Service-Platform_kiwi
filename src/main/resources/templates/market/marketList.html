@@ -32,7 +32,7 @@ a {
 	display: flex;
 	align-items: center;
 	gap: 5px;
-	margin-bottom: 50px;
+	margin-bottom: 35px;
 }
 
 .btn-kiwi {
@@ -65,11 +65,10 @@ a {
 </th:block>
 
 
-<div layout:fragment="content">
-	<div class="head">
+<div layout:fragment="content" style="margin-top: 25px;">
+	<div class="head" style="margin-bottom: 0x; padding-bottom: 0px;">
 		<!--지역 -->
-		<select class="select" name="region"
-			style="padding: 6px; margin-right: 20px;">
+		<select class="select" name="region" style="padding: 6px; margin-right: 20px;">
 			<option value="region" selected>지역</option>
 			<option value="0">서울특별시</option>
 			<option value="1">부산광역시</option>
@@ -114,21 +113,20 @@ a {
 		</select>
 
 		<!-- 검색창 -->
-		<input type="text" id="keyword" style="width: 50%; height: 36px;">
+		<input type="text" id="keyword" style="width: 50%; height: 36px; margin-bottom: 0x; padding-bottom: 0px;">
 		<button class="btn btn-outline-success" id="search"
 			style="width: 100px; margin-right: 30px">검색</button>
 		<button type="button" class="btn btn-kiwi" style="width: 120px;"
 			onclick="location.href='/admin/market/new'">글쓰기</button>
 	</div>
 
-	<div class="container">
+	<div class="container" style="margin-top: 0x; padding-top: 0px;">
 		<div>
-			<div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-3">
+			<div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-3" >
 				<div class="col"></div>
 				<div class="col"></div>
 				<div class="col"></div>
 				<div class="col">
-					<!--검색창-->
 
 				</div>
 			</div>
@@ -146,7 +144,7 @@ a {
 						<div class="card-body">
 							<h5 class="card-title" style="font-weight: bold;"
 								th:text="${vo.title}">최고급 라켓</h5>
-							<p class="card-text" th:text="${vo.price}">
+							<p class="card-text" th:text="${vo.price} +'원'">
 								5000원 <br> 인천광역시 연수구
 							</p>
 						</div>
@@ -217,7 +215,6 @@ a {
 		</div>
 	</div>
 
-	<br> <br>
 	<nav aria-label="Page">
 		<ul class="pagination">
 			<li><a class="page-link" href="#" aria-label="Previous"> <span
