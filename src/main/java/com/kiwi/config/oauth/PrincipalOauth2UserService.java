@@ -40,8 +40,6 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
 		// userRequest정보 -> loadUser함수 호출 -> 구글로부터 회원프로필 받아준다.
 		System.out.println("getAttributes : " + oAuth2User.getAttributes());
 		
-		
-		
 		// 회원가입 강제로 함
 		OAuth2UserInfo oauth2UserInfo = null;
 		if(userRequest.getClientRegistration().getRegistrationId().equals("google")) {
@@ -83,7 +81,6 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
 			memberRepository.save(memberEntity);
 		} else {
 			System.out.println("OAuth2 로그인한 적이 있습니다. 자동회원가입이 되어있습니다.");
-			
 		}
 		
 		

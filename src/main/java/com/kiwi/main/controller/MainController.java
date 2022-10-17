@@ -8,7 +8,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-
 import java.util.Optional;
 
 @Controller
@@ -27,32 +26,12 @@ public class MainController {
 //        model.addAttribute("maxPage", 5);
 //        return "/main/main_test2";
 //    }
-    
-    // 메인 컨트롤러(동영상)
-    @GetMapping(value = "/")
-    public String test(Model model) {
-    	model.addAttribute("videoUrl", "/video/main.mp4");
-    	return "main";
-    }
-    
-//    @GetMapping(value = "/marketList")
-//    public String market(){
-//        return "market/marketList";
-//    }
-    
-//    @GetMapping(value = "/marketDetail")
-//    public String marketDetail(){
-//        return "market/marketDetail";
-//    }
-    
-//    @GetMapping(value = "/mypage")
-//    public String mypage(){
-//    	return "mypage/mypageMain";
-//    }
-    
-    @GetMapping(value = "/pay")
-    public String pay(){
-    	return "pay/pay";
-    }
-    
+
+	// 메인 컨트롤러(동영상)
+	@GetMapping(value = "/")
+	public String test(Model model) {
+		model.addAttribute("videoUrl", "/video/main.mp4");
+		return "main";
+	}
+
 }

@@ -57,13 +57,25 @@ a {
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
 		integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
 		crossorigin="anonymous"></script>
+		
+		<script>
+		function openPopup(){
+			var width = '480';
+			var height = '900';
+			
+			var left = Math.ceil(( window.screen.width - width )/2);
+			var top = Math.ceil(( window.screen.height - height )/2);
+			
+			window.open('http://localhost/cash/charge', 'popup-test', 'width='+ width +', height='+ height +', left=' + left + ', top='+ top );
+		}
+		</script>
 </th:block>
 
 
 <div layout:fragment="content">
 	<div class="container" th:object="${member}">
 		<div
-			style="border: 1px solid black; float: left; width: 25%; margin-right: 80px; margin-left: 55px; text-align: center;">
+			style="border: 1px solid black; float: left; width: 25%; margin-right: 80px; margin-left: 55px; text-align: center;margin-bottom:200px">
 			
 				<img class="profile" th:src="*{image} != null ? *{image} : @{/img/kiwi.png}" alt="kiwi"
 					style="margin-top: 30px; width: 110px; height: 110px;object-fit: cover;border-radius: 30%;
@@ -79,13 +91,15 @@ a {
 				<div style="text-align: left; margin-left: 40px;">키위캐시</div>
 				<div
 					style="text-align: left; margin-left: 40px; font-weight: bold; font-size: large;"
-					th:text="*{cash} + '원'">2500원</div>
+					th:text="*{kiwicash} + '원' ">2500원</div>
+					<!-- th:text="${amount} != null ?  ${amount} + '원' : '0원'"  -->
 			</div>
 
 
-			<div style="float: left; width: 45%;">
-				<button type="button" class="btn btn-kiwi"
-					style="margin-top: 10px; float: right; margin-right: 40px;">충전하기</button>
+			<div style="float: left; width: 45%;" >
+				<!-- <button type="button" class="btn btn-kiwi" onclick="location.href='/cash/pay'"
+					style="margin-top: 10px; float: right; margin-right: 40px;">충전하기</button> -->
+					<button class="btn btn-kiwi" type="button" style="height:50px;margin-right:20px" onclick="openPopup()">충전하기</button>
 			</div>
 			<br> <BR>
 
@@ -125,25 +139,31 @@ a {
 				키위</h4>
 			<br>
 			<div style="margin-left: 30px; margin-right: 20px;">
-				<div style="float: left; width: 98%; font-weight: bold;">신청 내역</div>
-				<div style="float: left; width: 2%;">▶</div>
+				
+				<img class="logo" src="/img/kiwi.png"  alt="kiwi" style="float: left; width: 5%;margin-bottom:10px">
+				<div style="float: left; width: 90%; font-weight: bold;padding-top:7px">신청 내역
+				</div>
+				<div style="float: left; width: 5%;padding-top:10px">▶</div>
 				<Br>
 				<hr>
 				<Br>
-				<div style="float: left; width: 98%; font-weight: bold;">충전 내역</div>
-				<div style="float: left; width: 2%;">▶</div>
+				<img class="logo" src="/img/kiwi.png"  alt="kiwi" style="float: left; width: 5%;margin-bottom:10px">
+				<div style="float: left; width: 90%; font-weight: bold;padding-top:7px">충전 내역</div>
+				<div style="float: left; width: 5%;padding-top:10px">▶</div>
 				<Br>
 				<hr>
 				<Br>
-				<div style="float: left; width: 98%; font-weight: bold;">마켓
+				<img class="logo" src="/img/kiwi.png"  alt="kiwi" style="float: left; width: 5%;margin-bottom:10px">
+				<div style="float: left; width: 90%; font-weight: bold;padding-top:7px">마켓
 					좋아요 목록</div>
-				<div style="float: left; width: 2%;">▶</div>
+				<div style="float: left; width: 5%;padding-top:10px">▶</div>
 				<Br>
 				<hr>
 				<Br>
-				<div style="float: left; width: 98%; font-weight: bold;">프로필
+				<img class="logo" src="/img/kiwi.png"  alt="kiwi" style="float: left; width: 5%;margin-bottom:10px">
+				<div style="float: left; width: 90%; font-weight: bold;padding-top:7px">프로필
 					설정</div>
-				<div style="float: left; width: 2%;">▶</div>
+				<div style="float: left; width: 5%;padding-top:10px">▶</div>
 				<Br>
 				<hr>
 				<Br>
@@ -158,4 +178,5 @@ a {
 
 	</div>
 </div>
+
 </html>
