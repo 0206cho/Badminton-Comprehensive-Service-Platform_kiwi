@@ -189,8 +189,8 @@ a {
 					type="file" class="custom-file-input files" name="file">
 	 -->
 	 <div class="custom-file img-div">
-                    <input type="file" class="custom-file-input" name="file" id="file">
-                    <label class="custom-file-label" th:text="${market.oriImgName}"></label>
+                    <input type="file"  name="file" id="file" >
+                   <!--  <label class="custom-file-label" th:value="${market.oriImgName}"></label> -->
                 </div>
 	
 	<br> <img id="previewImg" width="700" alt="대표이미지 영역" th:src="${market.filepath}" /><br>
@@ -235,6 +235,9 @@ a {
 			const selectedFile = [...fileInput.files];
 			  const fileReader = new FileReader();
 
+			  fileReader.readAsDataURL(selectedFile[0]); // 특정 파일 읽기
+			  console.log(">>>>>>>>>>>>>>>"+ selectedFile[0].name);
+			  const finleName = selectedFile[0].name;
 			  fileReader.readAsDataURL(selectedFile[0]); // 특정 파일 읽기
 
 			  fileReader.onload = function () {
