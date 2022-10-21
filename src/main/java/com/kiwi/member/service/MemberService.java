@@ -3,6 +3,7 @@ package com.kiwi.member.service;
 import lombok.RequiredArgsConstructor;
 
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -66,6 +67,7 @@ public class MemberService implements UserDetailsService {
     	Long id = principalDetails.getMember().getId();
     	return id;
     }
+    
     
     //public Member saveOAuth2()
 

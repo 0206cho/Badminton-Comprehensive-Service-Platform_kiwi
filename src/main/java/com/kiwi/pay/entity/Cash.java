@@ -30,11 +30,6 @@ import lombok.ToString;
 @NoArgsConstructor
 @ToString
 public class Cash {
-	
-	
-
-	
-
 	@Id
     @Column(name="cash_id")
     @GeneratedValue(strategy = GenerationType.AUTO)

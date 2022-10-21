@@ -24,19 +24,29 @@ public class CashService {
 	public Cash chargeCash(Cash cash, Long id) {
 		Member member = memberRepository.findMemberById(id);
 		cash.setMember(member);
+//		member.setKiwicash(0);
+//		int memberOriCash = member.getKiwicash();
+//		member.setKiwicash(memberOriCash + cashRepository.amountSum(member));
 		return cashRepository.save(cash);
 	}
 	
-	// 유저 캐시 잔액 
-	public int amountSum(Member member) {
-		int sum = cashRepository.amountSum(member);
-		return sum;
-	}
+//	// 유저 캐시 잔액 
+//	public int amountSum(Member member) {
+//		int sum = cashRepository.amountSum(member);
+//		return sum;
+//	}
 	
 	// 유저 캐시 필드 매핑
-	public void cashMapping(Long id) {
+	public void cashMapping(Long id, int amount) {
 		Member member = memberRepository.findMemberById(id);
-		member.setKiwicash(cashRepository.amountSum(member));
+		member.setKiwicash(member.getKiwicash() + amount);
+	}
+	
+	// 유저 캐시 잔액
+	public int cashSearch(Long id) {
+		Member member = memberRepository.findMemberById(id);
+		int kiwicash = member.getKiwicash();
+		return kiwicash;
 	}
 	
 }
