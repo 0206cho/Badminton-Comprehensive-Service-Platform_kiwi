@@ -10,7 +10,7 @@ import com.kiwi.pay.entity.Cash;
 
 public interface CashRepository extends JpaRepository<Cash,Long> {
 	
-	@Transactional
-	@Query("select sum(c.amount) from Cash c where c.member = ?1")
-	Integer amountSum(Member member);
+//	@Transactional
+//	@Query("select sum(c.amount) from Cash c where c.member = ?1")
+//	Integer amountSum(Member member);
 }
