@@ -139,18 +139,28 @@ img {
 			<div class="card" style="width: 13%; border: none;">
 				<div class="card-body" style="padding: 10px; padding-bottom: 0px;">
 
-					<div class="btn-group dropstart" style="padding-bottom:10px;">
-						<button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" style="padding:0px; background-color:transparent; border: none;">
-						<img src="/img/더보기.png" style="width:50px; height:50px; padding-bottom: 5px;"></button>
+					<div class="btn-group dropstart" style="padding-bottom: 10px;">
+						<button type="button" class="btn btn-secondary dropdown-toggle"
+							data-bs-toggle="dropdown" aria-expanded="false"
+							style="padding: 0px; background-color: transparent; border: none;">
+							<img src="/img/더보기.png"
+								style="width: 50px; height: 50px; padding-bottom: 5px;">
+						</button>
 						<ul class="dropdown-menu">
-							<li><a class="dropdown-item" href="/market/marketUpdate/" th:attrappend="href=${market.id}">수정</a></li>
-							<li><a class="dropdown-item" href="/market/marketDelete/" th:attrappend="href=${market.id}">삭제</a></li>
+							<li><a class="dropdown-item" href="/market/marketUpdate/"
+								th:attrappend="href=${market.id}">수정</a></li>
+							<li><a class="dropdown-item" href="/market/marketDelete/"
+								th:attrappend="href=${market.id}">삭제</a></li>
 						</ul>
 					</div>
 
 					<p>
 						<!-- <img src="/img/하트.png" alt="좋아요" style="width: 80%; height: 80%; padding-bottom: 0px; padding-left:10px; "> -->
-						<button type="button" class="btm_image" id="img_btn" style="background-color:transparent; border: none;"><img src="/img/하트.png" alt="좋아요" style="width: 80%; height: 80%; padding-bottom: 0px; padding-right:5px; "></button>
+						<button type="button" class="btm_image" id="img_btn"
+							style="background-color: transparent; border: none;">
+							<img src="/img/하트.png" alt="좋아요"
+								style="width: 80%; height: 80%; padding-bottom: 0px; padding-right: 5px;">
+						</button>
 						<!-- <img src="/img/하트.png" alt="좋아요" style="width: 80%; height: 50%; padding-bottom: 0px;"> -->
 				</div>
 			</div>
@@ -236,9 +246,78 @@ img {
 	</div>
 
 	<hr>
+	<div class="card mb-2 mt-5">
+
+        <div class="card-header bg-light">
+            <i class="fa fa-comment fa"></i> 댓글
+        </div>
+        <form>
+            <div class="card-body">
+                <input type="hidden" id="market_id" th:value="${market.id}">
+                <!-- <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        <textarea class="form-control" id="comment-content" rows="1"></textarea>
+                        <button id="market-btn-save" type="button" class="btn btn-dark mt-3">등록</button>
+                    </li>
+                </ul>-->
+            </div>
+        </form>
+    </div>
+    <br/>
+    <div class="card">
+        <div class="card-header">댓글</div>
+        <ul id="reply--box" class="list-group" th:each="market : ${market.commentList}">
+            <li th:id="'reply--' + ${comment.id}" class="list-group-item d-flex justify-content-between">
+                <div th:text="${comment.content}"></div>
+                <div class="d-flex">
+                    <span class="text-monospace mr-1">작성자: &nbsp;</span><div class="text-monospace mr-1" ></div><!-- th:text="${reply.user.username}"-->
+                    <button class="badge btn-warning">수정</button><span> | </span>
+                    <button class="badge btn-danger">삭제</button>
+                </div>
+            </li>
+        </ul>
+    </div>
+    
 	<div class="ans">
-		<input type="text" id="keyword" style="width: 100%; height: 36px;">
-		<button class="btn btn-kiwi" id="search" style="width: 80px;">등록</button>
+		<input type="text" id="comment-content" style="width: 100%; height: 36px;">
+		<button class="btn btn-kiwi" id="market-btn-save" style="width: 80px;">등록</button>
 	</div>
+
+	<script type="text/javascript">
+	'use strict';
+	let commentIndex = {
+    	init: function () {
+       	 $("#market-btn-save").on("click", () => {
+            this.commentSave();
+        });
+    },
+
+    commentSave: function () {
+        let marketId = $("#market_id").val();
+        console.log(marketId);
+        let comment = $("#comment-content").val();
+        console.log(">> marketId: " + marketId + ", comment: " + comment);
+        $.ajax({
+            type: "GET",
+            url: "/market/comment/${marketId}",
+            data: {
+				"marketId": marketId,
+				"content" : comment
+			},
+			success:function(){
+				 alert("댓글작성이 완료되었습니다.");
+				 //location.href = `/market/${marketId}`;
+			},
+			error:function(){
+				alert("실패");
+	            alert(JSON.stringify(err));
+			}
+        });
+    }
+}
+commentIndex.init();
+</script>
+
 </div>
+
 </html>

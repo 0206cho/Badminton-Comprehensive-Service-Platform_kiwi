@@ -84,7 +84,7 @@ public class MarketController {
 
 		// 서버에 저장될 때 중복된 파일 이름인 경우를 방지하기 위해 UUID에 확장자를 붙여 새로운 파일 이름을 생성
 		String newFileName = UUID.randomUUID() + ext;
-
+	
 		// 현재경로/upload/파일명이 저장 경로
 		String savePath = marketImgLocation + newFileName;
 

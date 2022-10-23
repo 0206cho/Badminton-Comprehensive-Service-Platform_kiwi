@@ -1,11 +1,16 @@
 package com.kiwi.market.entity;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.kiwi.shop.entity.BaseEntity;
@@ -52,7 +57,14 @@ public class Market extends BaseEntity {
 	// 원본 이미지 파일명
 	@Column(name = "oriImgName")
 	private String oriImgName;
-
+	
+	// 댓글 - 마켓 테이블에 댓글 리스트를 추가. 
+	// mappendBy : 연관관계의 주인이 아니므로 DB의 FK가 아님
+	// DB에는 하나의 raw 데이터에 하나의 값만 들어갈 수 있음. 
+	// 만약 여러 개의 데이터가 들어간다면 원자성이 깨지므로 commentList는 DB에 FK로 생성되면 안되기 때문에 mappedBy를 사용
+	@OneToMany(mappedBy = "market", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
+	private List<Comment> commentList;
+	
 //  @Enumerated(EnumType.STRING)   //@Enumrated는 enum타입 매핑시 사용함!
 //  private MarketSellStatus marketSellStatus;  //상품 판매 상태
 
