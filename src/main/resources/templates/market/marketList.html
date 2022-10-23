@@ -121,10 +121,20 @@ a {
 		</select>
 
 		<!-- 검색창 -->
-		<input type="text" id="keyword"
+		<form class="form-inline" method="get" th:action="@{/marketList}">
+		<div class="form-group mx-sm-3 mb-2">
+			<label for ="searchText" class="sr-only">검색</label>
+			<input class="form-control" type="text" id="searchText" name="searchText" th:value="${param.searchText}">
+		</div>
+		<button class="btn btn-outline-success" type="submit">Search</button>		
+		</form>
+		
+    	
+    
+		<!-- <input type="text" id="keyword"
 			style="width: 50%; height: 36px; margin-bottom: 0x; padding-bottom: 0px;">
-		<button class="btn btn-outline-success" id="search"
-			style="width: 100px; margin-right: 30px">검색</button>
+		<button class="btn btn-outline-success" id="search" name="search"
+			style="width: 100px; margin-right: 30px">검색</button> -->
 		<button type="button" class="btn btn-kiwi" style="width: 120px;"
 			onclick="location.href='/admin/market/new'">글쓰기</button>
 	</div>
@@ -170,7 +180,7 @@ a {
 			<li class="page-item"
 				th:classappend="${1 == list.pageable.pageNumber + 1} ? 'disabled' : '' ">
 				<a class="page-link" aria-label="Previous"
-				th:href="@{/marketList/(page=${list.pageable.pageNumber - 1})}">
+				th:href="@{/marketList/(page=${list.pageable.pageNumber - 1}, search=${param.searchText})}">
 					<span aria-hidden="true" style="color: #70ACB1;">◀</span>
 			</a>
 			</li>
@@ -178,11 +188,11 @@ a {
 				th:classappend="${i == list.pageable.pageNumber + 1} ? 'active' : '' "
 				th:each="i : ${#numbers.sequence(startPage, endPage)}"><a
 				class="page-link" style="color: black;"
-				th:href="@{/marketList/(page=${i - 1})}" th:text="${i}">1</a></li>
+				th:href="@{/marketList/(page=${i - 1}, search=${param.searchText})}" th:text="${i}">1</a></li>
 			<li class="page-item"
 				th:classappend="${list.totalPages == list.pageable.pageNumber + 1} ? 'disabled' : '' ">
 				<a class="page-link" aria-label="Next" style="color: #70ACB1;"
-				th:href="@{/marketList/(page=${list.pageable.pageNumber + 1})}">
+				th:href="@{/marketList/(page=${list.pageable.pageNumber + 1}, search=${param.searchText})}">
 					<span aria-hidden="true">▶</span>
 			</a>
 			</li>

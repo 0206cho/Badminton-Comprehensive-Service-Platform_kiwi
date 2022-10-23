@@ -82,8 +82,15 @@ public class MarketService {
 		marketRepository.deleteById(id);		
 	}
 
+	// 마켓 조회 -> 페이지
 	public Page<Market> findAll(PageRequest of) {
 		return null;
 	}
+
+	// 마켓 조회 -> 페이지 -> 검색 (최종 사용)
+//	public Page<Market> findByTitleContainingOrContentContaining(String search, String search2, Pageable pageable) {
+//		return marketRepository.findByTitleContainingOrContentContaining(title, content, pageable);
+//	}
+	
 	
 }
