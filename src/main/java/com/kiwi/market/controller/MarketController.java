@@ -23,7 +23,9 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kiwi.market.dto.MarketDto;
+import com.kiwi.market.entity.Comment;
 import com.kiwi.market.entity.Market;
+import com.kiwi.market.service.CommentService;
 import com.kiwi.market.service.MarketService;
 
 import lombok.RequiredArgsConstructor;
@@ -35,6 +37,7 @@ public class MarketController {
 	private Logger log = LoggerFactory.getLogger(this.getClass());
 
 	private final MarketService marketService;
+	private final CommentService commentService;
 
 	@Value("${marketImgLocation}")
 	private String marketImgLocation;
@@ -84,7 +87,7 @@ public class MarketController {
 
 		// 서버에 저장될 때 중복된 파일 이름인 경우를 방지하기 위해 UUID에 확장자를 붙여 새로운 파일 이름을 생성
 		String newFileName = UUID.randomUUID() + ext;
-
+	
 		// 현재경로/upload/파일명이 저장 경로
 		String savePath = marketImgLocation + newFileName;
 
@@ -110,6 +113,7 @@ public class MarketController {
 	public String marketList(Model model) {
 		List<Market> list = marketService.maketList();
 		model.addAttribute("list", list);
+		System.out.println(">>>>>>>>>>>>>>>>>>>>> market list : " + list);
 		return "/market/marketList";
 	}
 
@@ -117,6 +121,9 @@ public class MarketController {
 	public String marketDetail(@PathVariable("id") Long id, Model model) {
 		Market market = marketService.marketDetail(id);
 		model.addAttribute("market", market);
+		List<Comment> list = commentService.commentList();
+		model.addAttribute("list", list);
+		System.out.println(">>>>>>>>>>>>>>>>>>>>> list : " + list);
 		return "/market/marketDetail";
 	}
 
@@ -130,12 +137,12 @@ public class MarketController {
 	// 수정
 	@PostMapping(value = "/market/marketUpdate/{id}")
 	public String marketUpdate(Market market, MultipartFile file) throws Exception {
-		System.out.println(">>>>>>>>>>>>>>>>>>>>>> ID : " + market.getId());
-		System.out.println(">>>>>>>>>>>>>>>>>>>>>> Detail : " + market.getDetail());
-		System.out.println(">>>>>>>>>>>>>>>>>>>>>> Title : " + market.getTitle());
-		System.out.println(">>>>>>>>>>>>>>>>>>>>>> Price : " + market.getPrice());
-		System.out.println(">>>>>>>>>>>>>>>>>>>>>> Filename : " + market.getFilename());
-		System.out.println(">>>>>>>>>>>>>>>>>>>>>> Filepath : " + market.getFilepath());
+//		System.out.println(">>>>>>>>>>>>>>>>>>>>>> ID : " + market.getId());
+//		System.out.println(">>>>>>>>>>>>>>>>>>>>>> Detail : " + market.getDetail());
+//		System.out.println(">>>>>>>>>>>>>>>>>>>>>> Title : " + market.getTitle());
+//		System.out.println(">>>>>>>>>>>>>>>>>>>>>> Price : " + market.getPrice());
+//		System.out.println(">>>>>>>>>>>>>>>>>>>>>> Filename : " + market.getFilename());
+//		System.out.println(">>>>>>>>>>>>>>>>>>>>>> Filepath : " + market.getFilepath());
 		marketService.updateMarket(market, file);
 
 		return "redirect:/marketList"; // return "redirect:/";
