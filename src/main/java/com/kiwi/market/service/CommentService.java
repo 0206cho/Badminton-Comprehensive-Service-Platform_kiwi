@@ -19,19 +19,25 @@ public class CommentService {
 	private final CommentRepository commentRepository;
 	private final MarketRepository marketRepository;
 
+	// 댓글 작성
 	@Transactional
 	public void commentSave(Long marketId, String content, Comment comment) { // Member member
 		Market market = marketRepository.findById(marketId)
 				.orElseThrow(() -> new IllegalArgumentException("해당 marketId가 없습니다. id=" + marketId));
 
 		comment.save(market, content); // , member
-
 		commentRepository.save(comment);
 	}
 
+	// 댓글 리스트
 	public List<Comment> commentList() {
 		List<Comment> list = commentRepository.findAllByOrderByIdDesc();
 		return list;
+	}
+
+	// 댓글 삭제
+	public void deleteComment(Long id) {
+		commentRepository.deleteById(id);
 	}
 
 }

@@ -206,10 +206,8 @@ img {
 
 	<!-- 댓글 -->
 	<div th:each="vo : ${list}">
-
 		<div class="flex-container" style="padding-left: 12px;">
-			<div
-				style="display: flex; flex-direction: column; justify-content: flex-start; width: 8%; height: 100%">
+			<div style="display: flex; flex-direction: column; justify-content: flex-start; width: 8%; height: 100%">
 				<img class="logo" src="/img/kiwi.png" alt="kiwi"
 					style="margin-right: 10px;">
 			</div>
@@ -217,8 +215,10 @@ img {
 				<div class="flex-container">
 					<h5
 						style="padding-right: 10px; font-weight: bold; margin-top: 5px;" th:text="${vo.createdBy}">작성자</h5>
-					<img src="/img/더보기.png" alt="더보기"
-						style="width: 5%; height: 5%; padding-bottom: 10px; float: right; margin-left: auto; text-align: center;">
+					<!-- <img src="/img/더보기.png" alt="더보기"
+						style="width: 5%; height: 5%; padding-bottom: 10px; float: right; margin-left: auto; text-align: center;"> -->
+						<input type="hidden" id="comment_id" th:value="${vo.id}"/>
+						<a type="button" id="comment-btn-delete" class="btn btn-kiwi" >삭제하기</a>
 				</div>
 				<div style="width: 850px" th:text="${vo.content}">댓글 내용 출력되어야 정상</div>
 			</div>
@@ -255,10 +255,15 @@ img {
        	 $("#market-btn-save").on("click", () => {
             this.commentSave();
         });
+       	
+        $("#comment-btn-delete").on("click", () => {
+            this.commentDelete();
+        });
     },
 
+    // 댓글 작성
     commentSave: function () {
-        let marketId = $("#market_id").val();
+    	let marketId = $("#market_id").val();
         console.log(marketId);
         let comment = $("#comment-content").val();
         console.log(">> marketId: " + marketId + ", comment: " + comment);
@@ -273,6 +278,28 @@ img {
 				 alert("댓글작성이 완료되었습니다.");
 				 window.location.reload(); // 페이지 자동 새로고침
 				 //location.href = `/market/${marketId}`;
+			},
+			error:function(){
+				alert("실패");
+	            alert(JSON.stringify(err));
+			}
+        });
+        
+        
+    },
+    // 댓글 삭제
+    commentDelete: function () {
+        let commentId = $("#comment_id").val();
+        console.log("commentId: >>" + commentId);
+        $.ajax({
+            type: "GET",
+            url: "/market/commentDelete/${commentId}",
+            data: {
+				"commentId" : commentId
+			},
+			success:function(){
+				 alert("댓글이 삭제되었습니다.");
+				 window.location.reload(); // 페이지 자동 새로고침
 			},
 			error:function(){
 				alert("실패");
