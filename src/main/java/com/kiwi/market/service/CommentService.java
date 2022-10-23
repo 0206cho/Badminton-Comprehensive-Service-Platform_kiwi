@@ -1,5 +1,7 @@
 package com.kiwi.market.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -12,7 +14,7 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @Service
-public class CommnetService {
+public class CommentService {
 
 	private final CommentRepository commentRepository;
 	private final MarketRepository marketRepository;
@@ -25,6 +27,11 @@ public class CommnetService {
 		comment.save(market, content); // , member
 
 		commentRepository.save(comment);
+	}
+
+	public List<Comment> commentList() {
+		List<Comment> list = commentRepository.findAllByOrderByIdDesc();
+		return list;
 	}
 
 }

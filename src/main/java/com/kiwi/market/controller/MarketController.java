@@ -23,7 +23,9 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kiwi.market.dto.MarketDto;
+import com.kiwi.market.entity.Comment;
 import com.kiwi.market.entity.Market;
+import com.kiwi.market.service.CommentService;
 import com.kiwi.market.service.MarketService;
 
 import lombok.RequiredArgsConstructor;
@@ -35,6 +37,7 @@ public class MarketController {
 	private Logger log = LoggerFactory.getLogger(this.getClass());
 
 	private final MarketService marketService;
+	private final CommentService commentService;
 
 	@Value("${marketImgLocation}")
 	private String marketImgLocation;
@@ -110,6 +113,7 @@ public class MarketController {
 	public String marketList(Model model) {
 		List<Market> list = marketService.maketList();
 		model.addAttribute("list", list);
+		System.out.println(">>>>>>>>>>>>>>>>>>>>> market list : " + list);
 		return "/market/marketList";
 	}
 
@@ -117,6 +121,9 @@ public class MarketController {
 	public String marketDetail(@PathVariable("id") Long id, Model model) {
 		Market market = marketService.marketDetail(id);
 		model.addAttribute("market", market);
+		List<Comment> list = commentService.commentList();
+		model.addAttribute("list", list);
+		System.out.println(">>>>>>>>>>>>>>>>>>>>> list : " + list);
 		return "/market/marketDetail";
 	}
 

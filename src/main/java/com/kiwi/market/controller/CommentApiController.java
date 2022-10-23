@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.kiwi.config.auth.PrincipalDetails;
 import com.kiwi.market.entity.Comment;
-import com.kiwi.market.service.CommnetService;
+import com.kiwi.market.service.CommentService;
+import com.kiwi.member.entity.Member;
+import com.kiwi.member.service.MemberService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -17,18 +19,16 @@ import lombok.RequiredArgsConstructor;
 @RestController
 public class CommentApiController {
 
-	private final CommnetService commentService;
+	private final CommentService commentService;
+	//private final MemberService memberService;
 
-//	@PostMapping("/api/v1/market/{marketId}/comment")
-//	public void save(@PathVariable Long marketId, @RequestBody Comment comment) { // ,	@AuthenticationPrincipal PrincipalDetail principalDetail
-//		System.out.println(">>>>>>>>>>>>>>>>>>>>>> 출력");
-//		commentService.commentSave(marketId, comment); //, principalDetail.getMember()
-//	}
-	
+
 	@GetMapping("/market/comment/{marketId}")
-	public void save(Long marketId, String content, Comment comment) { // ,	, @AuthenticationPrincipal PrincipalDetails principalDetails- 로그인 한 유저 정보 가져오기
-		System.out.println(">>>>>>>>>>>>>>>>>>>>>> save 들어옴");
+	public void save(@AuthenticationPrincipal PrincipalDetails principalDetails, Long marketId, String content, Comment comment) { // ,	, @AuthenticationPrincipal PrincipalDetails principalDetails- 로그인 한 유저 정보 가져오기
+		//Long memberId = memberService.getIdFromAuth(principalDetails); 
+		//System.out.println("==================>"+ memberId);
 		commentService.commentSave(marketId, content ,comment); //, principalDetail.getMember()
+		//System.out.println(">>>>>>>>>>>>>>>>>>>>>>" + principalDetails.getMember());
 	}
 
 }
