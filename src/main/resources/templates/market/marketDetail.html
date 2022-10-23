@@ -217,8 +217,10 @@ img {
 						style="padding-right: 10px; font-weight: bold; margin-top: 5px;" th:text="${vo.createdBy}">작성자</h5>
 					<!-- <img src="/img/더보기.png" alt="더보기"
 						style="width: 5%; height: 5%; padding-bottom: 10px; float: right; margin-left: auto; text-align: center;"> -->
+						<label
+					style="background-color: #70ACB1; padding: 5px; border-color: black; border: 1px solid black; color: white;">글쓴이</label>
 						<input type="hidden" id="comment_id" th:value="${vo.id}"/>
-						<a type="button" id="comment-btn-delete" class="btn btn-kiwi" >삭제하기</a>
+						<a type="button" id="comment-btn-delete" class="btn btn-kiwi" style="float: right; margin-left: auto; margin-right:0px;">삭제하기</a>
 				</div>
 				<div style="width: 850px" th:text="${vo.content}">댓글 내용 출력되어야 정상</div>
 			</div>
