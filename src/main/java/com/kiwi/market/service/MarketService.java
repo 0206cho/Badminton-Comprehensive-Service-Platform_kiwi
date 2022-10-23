@@ -5,6 +5,9 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -40,8 +43,7 @@ public class MarketService {
     }
     
     public void saveMarket(MarketDto marketDto) {
-        // 상품 등록
-    	
+        // 상품 등록    	
     	marketRepository.save(marketDto.toEntity());
     	
     }
@@ -75,12 +77,13 @@ public class MarketService {
 	}
 	
 	
-
+	// 마켓 글 삭제
 	public void deleteMarket(Long id) {
-		marketRepository.deleteById(id);
-		// TODO Auto-generated method stub
-		
+		marketRepository.deleteById(id);		
 	}
 
-
+	public Page<Market> findAll(PageRequest of) {
+		return null;
+	}
+	
 }

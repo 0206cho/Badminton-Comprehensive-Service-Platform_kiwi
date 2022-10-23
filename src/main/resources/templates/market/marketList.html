@@ -53,6 +53,13 @@ a {
 	text-overflow: ellipsis;
 	white-space: nowrap;
 }
+
+.my.pagination>.active>a, .my.pagination>.active>span, .my.pagination>.active>a:hover,
+	.my.pagination>.active>span:hover, .my.pagination>.active>a:focus, .my.pagination>.active>span:focus
+	{
+	background: #C6F1E7;
+	border-color: #C6F1E7;
+}
 </style>
 </th:block>
 
@@ -68,7 +75,8 @@ a {
 <div layout:fragment="content" style="margin-top: 25px;">
 	<div class="head" style="margin-bottom: 0x; padding-bottom: 0px;">
 		<!--지역 -->
-		<select class="select" name="region" style="padding: 6px; margin-right: 20px;">
+		<select class="select" name="region"
+			style="padding: 6px; margin-right: 20px;">
 			<option value="region" selected>지역</option>
 			<option value="0">서울특별시</option>
 			<option value="1">부산광역시</option>
@@ -113,7 +121,8 @@ a {
 		</select>
 
 		<!-- 검색창 -->
-		<input type="text" id="keyword" style="width: 50%; height: 36px; margin-bottom: 0x; padding-bottom: 0px;">
+		<input type="text" id="keyword"
+			style="width: 50%; height: 36px; margin-bottom: 0x; padding-bottom: 0px;">
 		<button class="btn btn-outline-success" id="search"
 			style="width: 100px; margin-right: 30px">검색</button>
 		<button type="button" class="btn btn-kiwi" style="width: 120px;"
@@ -122,22 +131,23 @@ a {
 
 	<div class="container" style="margin-top: 0x; padding-top: 0px;">
 		<div>
-			<div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-3" >
+			<div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-3">
 				<div class="col"></div>
 				<div class="col"></div>
 				<div class="col"></div>
-				<div class="col">
-
-				</div>
+				<div class="col"></div>
 			</div>
 		</div>
 
 		<!-- 마켓 카드 -->
 		<div class="row">
-
+			<div>
+				<!-- 	총 건수 : <span th:text="${list.totalElements}"></span>  -->
+			</div>
 			<div class="col col-xl-3 col-lg-3 col-md-6"
 				style="margin-bottom: 20px" th:each="vo : ${list}">
-				<a href="/market/marketDetail/" th:attrappend="href=${vo.id}" style="text-decoration: none; color: black"><!-- href="/market/marketDetail/" th:attrappend="href=${vo.id}" th:text="${vo:id}"  -->
+				<a href="/market/marketDetail/" th:attrappend="href=${vo.id}"
+					style="text-decoration: none; color: black"> <!-- href="/market/marketDetail/" th:attrappend="href=${vo.id}" th:text="${vo:id}"  -->
 					<div class="card" style="width: 18rem; border-color: black;">
 						<img th:src="${vo.filepath}" class="card-img-top" alt="이미지 로딩중"
 							style="width: 15rem; height: 15rem; margin: auto; padding-top: 15px;">
@@ -152,86 +162,36 @@ a {
 				</a>
 			</div>
 
-
-			<!-- <div class="col col-lg-3 col-md-6 col-sm-12"
-			style="margin-bottom: 20px">
-			<a href="marketDetail" style="text-decoration: none; color: black">
-
-				<div class="card" style="width: 18rem; border-color: black;">
-					<img src="/img/셔틀콕.jpg" class="card-img-top" alt="이미지 로딩중"
-						style="width: 15rem; height: 15rem; margin: auto; padding-top: 15px;">
-					<div class="card-body">
-						<h5 class="card-title" style="font-weight: bold;">최고급 셔틀콕</h5>
-						<p class="card-text">
-							2000원 <br> 인천광역시 남동구
-						</p>
-					</div>
-				</div>
-			</a>
-		</div>
-
-		<div class="col col-lg-3 col-md-6 col-sm-12"
-			style="margin-bottom: 20px">
-			<div class="card" style="width: 18rem; border-color: black;">
-				<img src="/img/셔틀콕.jpg" class="card-img-top" alt="이미지 로딩중"
-					style="width: 15rem; height: 15rem; margin: auto; padding-top: 15px;">
-				<div class="card-body">
-					<h5 class="card-title" style="font-weight: bold;">최고급 셔틀콕</h5>
-					<p class="card-text">
-						2000원 <br> 인천광역시 남동구
-					</p>
-				</div>
-			</div>
-		</div>
-
-		<div class="col col-lg-3 col-md-6 col-sm-12"
-			style="margin-bottom: 20px">
-			<div class="card" style="width: 18rem; border-color: black;">
-				<img src="/img/셔틀콕.jpg" class="card-img-top" alt="이미지 로딩중"
-					style="width: 15rem; height: 15rem; margin: auto; padding-top: 15px;">
-				<div class="card-body">
-					<h5 class="card-title" style="font-weight: bold;">최고급 셔틀콕</h5>
-					<p class="card-text">
-						2000원 <br> 인천광역시 남동구
-					</p>
-				</div>
-			</div>
-		</div>
-
-		<div class="col col-lg-3 col-md-6 col-sm-12"
-			style="margin-bottom: 20px">
-			<div class="card" style="width: 18rem; border-color: black;">
-				<img src="/img/셔틀콕.jpg" class="card-img-top" alt="이미지 로딩중"
-					style="width: 15rem; height: 15rem; margin: auto; padding-top: 15px;">
-				<div class="card-body">
-					<h5 class="card-title" style="font-weight: bold;">최고급 셔틀콕</h5>
-					<p class="card-text">
-						2000원 <br> 인천광역시 남동구
-					</p>
-				</div>
-			</div>
-		</div>
-		 -->
 		</div>
 	</div>
 
-	<nav aria-label="Page">
-		<ul class="pagination">
-			<li><a class="page-link" href="#" aria-label="Previous"> <span
-					aria-hidden="true" style="color: #70ACB1;">◀</span>
-			</a></li>
-			<li class="page-item"><a class="page-link" href="#"
-				style="color: black;">1</a></li>
-			<li class="page-item"><a class="page-link" href="#"
-				style="color: black;">2</a></li>
-			<li class="page-item"><a class="page-link" href="#"
-				style="color: black;">3</a></li>
-			<li class="page-item"><a class="page-link" href="#"
-				aria-label="Next" style="color: #70ACB1;"> <span
-					aria-hidden="true">▶</span>
-			</a></li>
+	<nav aria-label="Page navigation example">
+		<ul class="pagination my">
+			<li class="page-item"
+				th:classappend="${1 == list.pageable.pageNumber + 1} ? 'disabled' : '' ">
+				<a class="page-link" aria-label="Previous"
+				th:href="@{/marketList/(page=${list.pageable.pageNumber - 1})}">
+					<span aria-hidden="true" style="color: #70ACB1;">◀</span>
+			</a>
+			</li>
+			<li class="page-item"
+				th:classappend="${i == list.pageable.pageNumber + 1} ? 'active' : '' "
+				th:each="i : ${#numbers.sequence(startPage, endPage)}"><a
+				class="page-link" style="color: black;"
+				th:href="@{/marketList/(page=${i - 1})}" th:text="${i}">1</a></li>
+			<li class="page-item"
+				th:classappend="${list.totalPages == list.pageable.pageNumber + 1} ? 'disabled' : '' ">
+				<a class="page-link" aria-label="Next" style="color: #70ACB1;"
+				th:href="@{/marketList/(page=${list.pageable.pageNumber + 1})}">
+					<span aria-hidden="true">▶</span>
+			</a>
+			</li>
 		</ul>
 	</nav>
-</div>
+<!-- 
+th:each="i : ${#numbers.sequence(startPage, endPage)}" : 시작 페이지부터 끝 페이지까지 Loop 돔
+th:classappend="${i == markets.pageable.pageNumber + 1} ? 'active' : '' " - JPA에서는 페이지 번호가 0부터 시작하므로 1부터 카운트되게 하기 위해 +1, 서로 비교를 해서 같으면 'active' 를 추가
+th:href="@{/(page=${i - 1})}" - thymeleaf에서 쿼리스트링을 사용하려면 () 안에 파라미터=${} 이런식으로 값을 넣어주시면 됨. 페이지 번호가 0부터 시작하므로 -1
+ -->
 </div>
 </html>
