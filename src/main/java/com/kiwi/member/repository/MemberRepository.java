@@ -10,4 +10,6 @@ public interface MemberRepository extends JpaRepository<Member,Long> {
     Member findByEmail(String email);
     Member findByProviderId(String ProviderId);
     
+    // optional 타입으로 하고 findById(Long id)하는게 맞는데 빠르게 작업하기 위해 일단 이렇게 추후 변경
+    Member findMemberById(Long id);
 }

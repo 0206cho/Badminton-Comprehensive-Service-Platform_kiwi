@@ -11,6 +11,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.kiwi.config.auth.PrincipalDetails;
 import com.kiwi.member.constant.Address;
@@ -30,9 +31,6 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
 	/**
 	 * 로그인 성공 메서드
 	 */
-	
-	
-	
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
 			Authentication authentication) throws IOException, ServletException {
@@ -43,14 +41,9 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
 			Bank bname = principalDetails.getMember().getBname();
 			String bnum = principalDetails.getMember().getBnumber();
 			Address address = principalDetails.getMember().getAddress();
+			String email = principalDetails.getMember().getEmail();
 			
-			if(phone != null) {
-				response.sendRedirect("/");
-			} else if (bname != null ) {
-				response.sendRedirect("/");
-			} else if (bnum != null) {
-				response.sendRedirect("/");
-			} else if (address != null) {
+			if(bnum != null) {
 				response.sendRedirect("/");
 			} else {
 				response.sendRedirect("/members/login/addInfo");

@@ -3,6 +3,7 @@ package com.kiwi.member.service;
 import lombok.RequiredArgsConstructor;
 
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -48,7 +49,6 @@ public class MemberService implements UserDetailsService {
     
     // OAuth2 추가정보 등록
     public Member addInfo(@AuthenticationPrincipal PrincipalDetails principalDetails,OauthAddInfoDto addInfoDto) {
-    	//Map<String,Object> attributes = principalDetails.getAttributes();
     	String email = principalDetails.getMember().getEmail();
     	Member member = memberRepository.findByEmail(email);
     	member.addInfoOAuth2(addInfoDto);
@@ -57,13 +57,17 @@ public class MemberService implements UserDetailsService {
     
     // mypage 정보 출력
     public Member mypageInfo(@AuthenticationPrincipal PrincipalDetails principalDetails) {
-    	System.out.println("==================== getAttributes() : " + principalDetails.getAttributes());
-    	System.out.println("==================== getMember() : " + principalDetails.getMember());
-    	System.out.println("=============== getMember().getEmail()  : " + principalDetails.getMember().getEmail());
     	String email = principalDetails.getMember().getEmail();
     	Member member = memberRepository.findByEmail(email);
     	return member;
     }
+    
+    // 로그인한 회원 ID 출력
+    public Long getIdFromAuth(@AuthenticationPrincipal PrincipalDetails principalDetails) {
+    	Long id = principalDetails.getMember().getId();
+    	return id;
+    }
+    
     
     //public Member saveOAuth2()
 

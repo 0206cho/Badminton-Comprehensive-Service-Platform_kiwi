@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+
+import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.kiwi.member.constant.Address;
@@ -13,11 +15,16 @@ import com.kiwi.member.constant.Gender;
 import com.kiwi.member.constant.Role;
 import com.kiwi.member.dto.MemberFormDto;
 import com.kiwi.member.dto.OauthAddInfoDto;
+import com.kiwi.pay.entity.Cash;
 import com.kiwi.shop.entity.BaseEntity;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.*;
 
 @Entity
+@DynamicUpdate
 @Table(name="member")
 @Getter @Setter
 @NoArgsConstructor
@@ -78,7 +85,7 @@ public class Member extends BaseEntity {
     private String providerId;
     
     // 마일리지 
-    private int cash;
+    private int kiwicash;
     
     // 레벨
     private int level;
@@ -88,6 +95,12 @@ public class Member extends BaseEntity {
     
     // 프로필 사진
     private String image;
+    
+    // OAuth2 추가정보 여부
+    private String updateOauthYn;
+    
+//    @OneToMany(mappedBy = "member")
+//    private List<Cash> cashs = new ArrayList<>();
 
     public static Member createMember(MemberFormDto memberFormDto, PasswordEncoder passwordEncoder){
         Member member = new Member();
@@ -102,7 +115,7 @@ public class Member extends BaseEntity {
         member.setGender(memberFormDto.getGender());
         member.setBname(memberFormDto.getBname());
         member.setBnumber(memberFormDto.getBnumber());
-        member.setCash(0);
+        member.setKiwicash(0);
         member.setLevel(1);
         member.setPoint(100);
         member.setImage(memberFormDto.getImage());
@@ -115,21 +128,19 @@ public class Member extends BaseEntity {
     	this.bnumber = addInfoDto.getBnumber();
     	this.address = addInfoDto.getAddress();
     }
-    
+     
     @Builder
-	public Member(String email, String password, Role role, String provider, String providerId,String name, int cash, int level, int point,String image) {
+	public Member(String email, String password, Role role, String provider, String providerId,String name, int cash, int level, int point,String image,String updateYn) {
 		this.email = email;
 		this.password = password;
 		this.role = role;
 		this.provider = provider;
 		this.providerId = providerId;
 		this.name = name;
-		this.cash = cash;
+		this.kiwicash = cash;
 		this.level = level;
 		this.point = point;
 		this.image = image;
 	}
-    
-    
     
 }
