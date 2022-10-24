@@ -8,15 +8,18 @@ import javax.validation.Valid;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -25,6 +28,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.kiwi.market.dto.MarketDto;
 import com.kiwi.market.entity.Comment;
 import com.kiwi.market.entity.Market;
+import com.kiwi.market.repository.MarketRepository;
 import com.kiwi.market.service.CommentService;
 import com.kiwi.market.service.MarketService;
 
@@ -41,6 +45,9 @@ public class MarketController {
 
 	@Value("${marketImgLocation}")
 	private String marketImgLocation;
+
+	@Autowired
+	private MarketRepository marketRepository;
 
 	@GetMapping(value = "/admin/market/new")
 	public String market(Model model) {
@@ -109,9 +116,29 @@ public class MarketController {
 		return mav;
 	}
 
+	// 마켓 리스트
+//	@GetMapping("/marketList")
+//	public String marketList(Model model) {
+//		List<Market> list = marketService.maketList();
+//		model.addAttribute("list", list);
+//		System.out.println(">>>>>>>>>>>>>>>>>>>>> market list : " + list);
+//		return "/market/marketList";
+//	}
+	
+	// 마켓 리스트 - 페이지
 	@GetMapping("/marketList")
-	public String marketList(Model model) {
-		List<Market> list = marketService.maketList();
+	public String marketList(Model model, @PageableDefault(size = 8, sort = "id", direction = Sort.Direction.DESC) Pageable pageable, @RequestParam(required = false, defaultValue = "") String searchText) {
+		//list.getPageable().getPageNumber(); //: 현재 페이지 번호
+		// getTotalElements() : 전체 데이터 건수
+		// getTotalPages() : 총 페이지 개수
+		Page<Market> list = marketRepository.findByTitleContainingOrDetailContaining(searchText, searchText, pageable);
+		System.out.println(searchText);
+		int startPage = Math.max(1, list.getPageable().getPageNumber() - 7);
+		int endPage = Math.min(list.getTotalPages(), list.getPageable().getPageNumber() + 7);
+		model.addAttribute("startPage", startPage);
+        model.addAttribute("endPage", endPage);
+        model.addAttribute("markets", list);
+		
 		model.addAttribute("list", list);
 		System.out.println(">>>>>>>>>>>>>>>>>>>>> market list : " + list);
 		return "/market/marketList";
