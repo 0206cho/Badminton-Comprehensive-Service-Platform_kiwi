@@ -60,6 +60,9 @@ a {
 	background: #C6F1E7;
 	border-color: #C6F1E7;
 }
+.pageno{
+	display : none;
+}
 </style>
 </th:block>
 
@@ -120,16 +123,6 @@ a {
 			<option value="16">제주도</option>
 		</select>
 
-		<!-- 검색창
-		<form class="form-inline" method="get" th:action="@{/marketList}">
-		<div class="form-group mx-sm-3 mb-2">
-			<label for ="searchText" class="sr-only">검색</label>
-			<input class="form-control" type="text" id="searchText" name="searchText" th:value="${param.searchText}">
-		</div>
-		<button class="btn btn-outline-success" type="submit">Search</button>		
-		</form> -->
-		
-    	
     	<form class="form-inline" method="get" th:action="@{/marketList}">
     	<label for ="searchText" class="sr-only">검색</label>
 		<input type="text" id="searchText" name="searchText" th:value="${param.searchText}" style="width: 280px; height: 36px; margin-bottom: 0x; padding-bottom: 0px; margin-right: 10px;">
@@ -151,21 +144,16 @@ a {
 		<!-- 마켓 카드 -->
 		<div class="row">
 			<div>
-				<!-- 	총 건수 : <span th:text="${list.totalElements}"></span>  -->
+				<!-- 총 건수 : <span th:text="${list.totalElements}"></span> --> 
 			</div>
 			<div class="col col-xl-3 col-lg-3 col-md-6"
 				style="margin-bottom: 20px" th:each="vo : ${list}">
-				<a href="/market/marketDetail/" th:attrappend="href=${vo.id}"
-					style="text-decoration: none; color: black"> <!-- href="/market/marketDetail/" th:attrappend="href=${vo.id}" th:text="${vo:id}"  -->
+				<a href="/market/marketDetail/" th:attrappend="href=${vo.id}" style="text-decoration: none; color: black"> <!-- href="/market/marketDetail/" th:attrappend="href=${vo.id}" th:text="${vo:id}"  -->
 					<div class="card" style="width: 18rem; border-color: black;">
-						<img th:src="${vo.filepath}" class="card-img-top" alt="이미지 로딩중"
-							style="width: 15rem; height: 15rem; margin: auto; padding-top: 15px;">
+						<img th:src="${vo.filepath}" class="card-img-top" alt="이미지 로딩중" style="width: 15rem; height: 15rem; margin: auto; padding-top: 15px;">
 						<div class="card-body">
-							<h5 class="card-title" style="font-weight: bold;"
-								th:text="${vo.title}">최고급 라켓</h5>
-							<p class="card-text" th:text="${vo.price} +'원'">
-								5000원 <br> 인천광역시 연수구
-							</p>
+							<h5 class="card-title" style="font-weight: bold;" th:text="${vo.title}">최고급 라켓</h5>
+							<p class="card-text" th:text="${vo.price} +'원'">5000원 <br> 인천광역시 연수구</p>
 						</div>
 					</div>
 				</a>
@@ -176,24 +164,20 @@ a {
 
 	<nav aria-label="Page navigation example">
 		<ul class="pagination my">
-			<li class="page-item"
-				th:classappend="${1 == list.pageable.pageNumber + 1} ? 'disabled' : '' ">
-				<a class="page-link" aria-label="Previous"
-				th:href="@{/marketList/(page=${list.pageable.pageNumber - 1}, search=${param.searchText})}">
+			<li class="page-item" th:classappend="${1 == list.pageable.pageNumber + 1} ? 'disabled' : '' ">
+				<a class="page-link" aria-label="Previous" th:href="@{/marketList/(page=${list.pageable.pageNumber - 1}, search=${param.searchText})}">
 					<span aria-hidden="true" style="color: #70ACB1;">◀</span>
-			</a>
+				</a>
 			</li>
-			<li class="page-item"
-				th:classappend="${i == list.pageable.pageNumber + 1} ? 'active' : '' "
-				th:each="i : ${#numbers.sequence(startPage, endPage)}"><a
-				class="page-link" style="color: black;"
-				th:href="@{/marketList/(page=${i - 1}, search=${param.searchText})}" th:text="${i}">1</a></li>
-			<li class="page-item"
-				th:classappend="${list.totalPages == list.pageable.pageNumber + 1} ? 'disabled' : '' ">
-				<a class="page-link" aria-label="Next" style="color: #70ACB1;"
-				th:href="@{/marketList/(page=${list.pageable.pageNumber + 1}, search=${param.searchText})}">
+			
+			<li class="page-item" th:classappend="${i == list.pageable.pageNumber + 1} ? 'active' : '' " th:each="i : ${#numbers.sequence(startPage, endPage)}">
+				<a class="page-link" style="color: black;" th:href="@{/marketList/(page=${i-  1}, search=${param.searchText})}"	th:classappend="${i - 1} == -1 ? 'pageno' : '' " th:text="${i}">1</a>
+			</li>
+			
+			<li class="page-item" th:classappend="${list.totalPages == list.pageable.pageNumber + 1} ? 'disabled' : '' ">
+				<a class="page-link" aria-label="Next" style="color: #70ACB1;" th:href="@{/marketList/(page=${list.pageable.pageNumber + 1}, search=${param.searchText})}">
 					<span aria-hidden="true">▶</span>
-			</a>
+				</a>
 			</li>
 		</ul>
 	</nav>

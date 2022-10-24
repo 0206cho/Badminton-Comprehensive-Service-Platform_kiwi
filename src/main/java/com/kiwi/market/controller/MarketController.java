@@ -135,12 +135,14 @@ public class MarketController {
 		System.out.println(searchText);
 		int startPage = Math.max(1, list.getPageable().getPageNumber() - 7);
 		int endPage = Math.min(list.getTotalPages(), list.getPageable().getPageNumber() + 7);
+		
 		model.addAttribute("startPage", startPage);
         model.addAttribute("endPage", endPage);
         model.addAttribute("markets", list);
 		
 		model.addAttribute("list", list);
-		System.out.println(">>>>>>>>>>>>>>>>>>>>> market list : " + list);
+		//System.out.println(">>>>>>>>>>>>>>>>>>>>> market list : " + list);
+		
 		return "/market/marketList";
 	}
 
