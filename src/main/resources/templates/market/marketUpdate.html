@@ -116,7 +116,8 @@ a {
 </th:block>
 
 <div layout:fragment="content">
-	<form id="frm" role="form" method="post" enctype="multipart/form-data" th:action="@{'/market/marketUpdate/' + ${market.id}}" >
+	<form id="frm" role="form" method="post" enctype="multipart/form-data"
+		th:action="@{'/market/marketUpdate/' + ${market.id}}">
 
 		<div class="head">
 			<!--지역 -->
@@ -163,59 +164,57 @@ a {
 				<option value="14">경상북도</option>
 				<option value="15">경상남도</option>
 				<option value="16">제주도</option>
-			</select> <input type="number" th:value="${market.price}" class="form-control" id="price" name="price"
-				style="width: 50%; height: 36px;" placeholder="가격을 입력해주세요.">
+			</select> <input type="number" th:value="${market.price}" class="form-control"
+				id="price" name="price" style="width: 50%; height: 36px;"
+				placeholder="가격을 입력해주세요.">
 			<button type="button" class="btn btn-cancel" style="width: 120px;"
 				onclick="location.href='../marketList'">취소</button>
 			<!-- <div th:if="${#strings.isEmpty(marketDto.id)}" style="text-align: center"> -->
 			<button type="submit" class="btn btn-kiwi" style="width: 100px;">수정</button>
-			<!-- <button type="submit" id="delete" class="btn btn-kiwi" style="width: 100px;">삭제</button> -->
 		</div>
-<!-- <input type="hidden" th:text="${market.id}"> -->
-<div class="edit">
-	<div class="row">
-		<textarea th:text="${market.title}" class="form-control" cols="80px" id ="title" name="title"
-			style="width: 98%; height: 36px; border-style: none; font-weight: bold; font-size: x-large; margin-left: 10px;"
-			placeholder="제목을 입력해주세요."></textarea>
-	</div>
+		<!-- <input type="hidden" th:text="${market.id}"> -->
+		<div class="edit">
+			<div class="row">
+				<textarea th:text="${market.title}" class="form-control" cols="80px"
+					id="title" name="title"
+					style="width: 98%; height: 36px; border-style: none; font-weight: bold; font-size: x-large; margin-left: 10px;"
+					placeholder="제목을 입력해주세요."></textarea>
+			</div>
 
-	<hr>
-	<h5>대표이미지를 선택해주세요.</h5>
-	<a ></a>
-	<!-- <input type="file" class="file-input files" name="file" id="file" th:text="${market.oriImgName}"> -->
-	<!-- 
-	<label class="form-label mt-4">대표 이미지</label> <br> <label
+			<hr>
+			<h5>대표이미지를 선택해주세요.</h5>
+			<a></a>
+			<!-- <input type="file" class="file-input files" name="file" id="file" th:text="${market.oriImgName}"> -->
+			<!-- <label class="form-label mt-4">대표 이미지</label> <br> <label
 					class="custom-file-label" data-browse="Browse"></label> <input
-					type="file" class="custom-file-input files" name="file">
-	 -->
-	 <div class="custom-file img-div">
-                    <input type="file"  name="file" id="file" >
-                   <!--  <label class="custom-file-label" th:value="${market.oriImgName}"></label> -->
-                </div>
-	
-	<br> <img id="previewImg" width="700" alt="대표이미지 영역" th:src="${market.filepath}" /><br>
-	<hr>
+					type="file" class="custom-file-input files" name="file"> -->
+					
+			<div class="custom-file img-div">
+				<input type="file" class="custom-file-input" name="file" id="file">
+				<label class="custom-file-label" id="fileName"
+					th:text="${market.oriImgName}"></label>
+			</div>
+
+			<br> <img id="previewImg" width="700" alt="대표이미지 영역"
+				th:src="${market.filepath}" /><br>
+			<hr>
 
 
-	<textarea th:text="${market.detail}" name="detail" id="detail"
-		placeholder="내용을 입력해주세요."></textarea>
+			<textarea th:text="${market.detail}" name="detail" id="detail"
+				placeholder="내용을 입력해주세요."></textarea>
 
+		</div>
+		<input type="hidden" name="_csrf" id="_csrf" th:value="${_csrf.token}">
 
-</div>
-
-<input type="hidden" name="_csrf" id="_csrf" th:value="${_csrf.token}">
-
-
-
-</form>
-<script
-	src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/ckeditor.js"></script>
-<script
-	src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/translations/ko.js"></script>
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<!-- jQuery사용하기 위한 라이브러리 추가 -->
-<script>
+	</form>
+	<script
+		src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/ckeditor.js"></script>
+	<script
+		src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/translations/ko.js"></script>
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<!-- jQuery사용하기 위한 라이브러리 추가 -->
+	<script>
 	const $ckUploadPath = "/image/upload?_csrf=" + $('#_csrf').val();
 			ClassicEditor.create(document.querySelector('#detail'), {
 				ckfinder: {
@@ -236,10 +235,7 @@ a {
 			  const fileReader = new FileReader();
 
 			  fileReader.readAsDataURL(selectedFile[0]); // 특정 파일 읽기
-			  console.log(">>>>>>>>>>>>>>>"+ selectedFile[0].name);
-			  const finleName = selectedFile[0].name;
-			  fileReader.readAsDataURL(selectedFile[0]); // 특정 파일 읽기
-
+			  document.getElementById("fileName").innerText = selectedFile[0].name; // 파일명 view 변경
 			  fileReader.onload = function () {
 			    document.getElementById("previewImg").src = fileReader.result;
 			    // 파일 내용 img태그의 src로 돌려줌
@@ -251,25 +247,25 @@ a {
 		
 		</script>
 
-<!--서버 추가하기 모달창-->
-<div class="modal fade" id="exampleModal" tabindex="-1"
-	aria-labelledby="exampleModalLabel" aria-hidden="true">
-	<div class="modal-dialog modal-dialog-centered">
-		<div class="modal-content">
-			<div class="modal-body">
-				<div class="mb-3">
-					<p>
-					<div
-						style="text-align: center; font-weight: bold; font-size: x-large;">글쓰기
-						완료</div>
-					<br>
-					<div style="text-align: center;">
-						<button class="btn btn-kiwi" onclick="location.href='market'">확인</button>
+	<!--서버 추가하기 모달창-->
+	<div class="modal fade" id="exampleModal" tabindex="-1"
+		aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content">
+				<div class="modal-body">
+					<div class="mb-3">
+						<p>
+						<div
+							style="text-align: center; font-weight: bold; font-size: x-large;">글쓰기
+							완료</div>
+						<br>
+						<div style="text-align: center;">
+							<button class="btn btn-kiwi" onclick="location.href='market'">확인</button>
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-</div>
 </div>
 </html>

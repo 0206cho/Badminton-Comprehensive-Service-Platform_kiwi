@@ -8,22 +8,28 @@ import javax.validation.Valid;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kiwi.market.dto.MarketDto;
+import com.kiwi.market.entity.Comment;
 import com.kiwi.market.entity.Market;
+import com.kiwi.market.repository.MarketRepository;
+import com.kiwi.market.service.CommentService;
 import com.kiwi.market.service.MarketService;
 
 import lombok.RequiredArgsConstructor;
@@ -35,9 +41,13 @@ public class MarketController {
 	private Logger log = LoggerFactory.getLogger(this.getClass());
 
 	private final MarketService marketService;
+	private final CommentService commentService;
 
 	@Value("${marketImgLocation}")
 	private String marketImgLocation;
+
+	@Autowired
+	private MarketRepository marketRepository;
 
 	@GetMapping(value = "/admin/market/new")
 	public String market(Model model) {
@@ -84,7 +94,7 @@ public class MarketController {
 
 		// 서버에 저장될 때 중복된 파일 이름인 경우를 방지하기 위해 UUID에 확장자를 붙여 새로운 파일 이름을 생성
 		String newFileName = UUID.randomUUID() + ext;
-
+	
 		// 현재경로/upload/파일명이 저장 경로
 		String savePath = marketImgLocation + newFileName;
 
@@ -106,10 +116,31 @@ public class MarketController {
 		return mav;
 	}
 
+	// 마켓 리스트
+//	@GetMapping("/marketList")
+//	public String marketList(Model model) {
+//		List<Market> list = marketService.maketList();
+//		model.addAttribute("list", list);
+//		System.out.println(">>>>>>>>>>>>>>>>>>>>> market list : " + list);
+//		return "/market/marketList";
+//	}
+	
+	// 마켓 리스트 - 페이지
 	@GetMapping("/marketList")
-	public String marketList(Model model) {
-		List<Market> list = marketService.maketList();
+	public String marketList(Model model, @PageableDefault(size = 8, sort = "id", direction = Sort.Direction.DESC) Pageable pageable, @RequestParam(required = false, defaultValue = "") String searchText) {
+		//list.getPageable().getPageNumber(); //: 현재 페이지 번호
+		// getTotalElements() : 전체 데이터 건수
+		// getTotalPages() : 총 페이지 개수
+		Page<Market> list = marketRepository.findByTitleContainingOrDetailContaining(searchText, searchText, pageable);
+		System.out.println(searchText);
+		int startPage = Math.max(1, list.getPageable().getPageNumber() - 7);
+		int endPage = Math.min(list.getTotalPages(), list.getPageable().getPageNumber() + 7);
+		model.addAttribute("startPage", startPage);
+        model.addAttribute("endPage", endPage);
+        model.addAttribute("markets", list);
+		
 		model.addAttribute("list", list);
+		System.out.println(">>>>>>>>>>>>>>>>>>>>> market list : " + list);
 		return "/market/marketList";
 	}
 
@@ -117,6 +148,9 @@ public class MarketController {
 	public String marketDetail(@PathVariable("id") Long id, Model model) {
 		Market market = marketService.marketDetail(id);
 		model.addAttribute("market", market);
+		List<Comment> list = commentService.commentList();
+		model.addAttribute("list", list);
+		System.out.println(">>>>>>>>>>>>>>>>>>>>> list : " + list);
 		return "/market/marketDetail";
 	}
 
@@ -130,12 +164,12 @@ public class MarketController {
 	// 수정
 	@PostMapping(value = "/market/marketUpdate/{id}")
 	public String marketUpdate(Market market, MultipartFile file) throws Exception {
-		System.out.println(">>>>>>>>>>>>>>>>>>>>>> ID : " + market.getId());
-		System.out.println(">>>>>>>>>>>>>>>>>>>>>> Detail : " + market.getDetail());
-		System.out.println(">>>>>>>>>>>>>>>>>>>>>> Title : " + market.getTitle());
-		System.out.println(">>>>>>>>>>>>>>>>>>>>>> Price : " + market.getPrice());
-		System.out.println(">>>>>>>>>>>>>>>>>>>>>> Filename : " + market.getFilename());
-		System.out.println(">>>>>>>>>>>>>>>>>>>>>> Filepath : " + market.getFilepath());
+//		System.out.println(">>>>>>>>>>>>>>>>>>>>>> ID : " + market.getId());
+//		System.out.println(">>>>>>>>>>>>>>>>>>>>>> Detail : " + market.getDetail());
+//		System.out.println(">>>>>>>>>>>>>>>>>>>>>> Title : " + market.getTitle());
+//		System.out.println(">>>>>>>>>>>>>>>>>>>>>> Price : " + market.getPrice());
+//		System.out.println(">>>>>>>>>>>>>>>>>>>>>> Filename : " + market.getFilename());
+//		System.out.println(">>>>>>>>>>>>>>>>>>>>>> Filepath : " + market.getFilepath());
 		marketService.updateMarket(market, file);
 
 		return "redirect:/marketList"; // return "redirect:/";

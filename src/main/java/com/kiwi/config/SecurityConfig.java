@@ -72,7 +72,8 @@ public class SecurityConfig {
         http.authorizeRequests()
 
                 .mvcMatchers("/css/**","/js/**","/img/**","/video/**","/login/**","/signup/**","/image/title/**","/pay/**", "/pay/charge/**").permitAll()
-                .mvcMatchers("/","/members/**","/item/**","/images/**","/marketList/**", "/market/marketDetail/**","/market/marketDelete/**", "/market/mDetail/**","/market/marketUpdate/**",  "/image/upload/**", "/marketEdit/**", "/admin/market/**","/oauth2/**","/members/login/**", "/mypage/**", "/pay/**","/court/**").permitAll()
+                .mvcMatchers("/", "/market/marketList?searchText/**","/market/comment/**", "/market/commentDelete/**", "/members/**","/item/**","/images/**","/marketList/**", "/market/marketDetail/**","/market/marketDelete/**", "/market/mDetail/**","/market/marketUpdate/**",  "/image/upload/**", "/marketEdit/**", "/admin/market/**","/oauth2/**","/members/login/**", "/mypage/**", "/pay/**").permitAll()
+
                 .mvcMatchers("/admin/**").hasRole("ADMIN")
                 .anyRequest().authenticated();
 
