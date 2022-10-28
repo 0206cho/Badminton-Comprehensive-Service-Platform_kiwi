@@ -94,19 +94,6 @@ a {
 	margin-bottom: 50px;
 }
 
-.aa {
-	text-align: center;
-	display: table;
-	border: 1px solid #cecece;
-	width: 280px;
-	height: 250px;
-}
-
-.detail {
-	display: table-cell;
-	vertical-align: middle;
-}
-
 img {
 	max-width: 600px;
 	max-height: 600px;
@@ -191,11 +178,10 @@ img {
 	</form>
 
 	<hr>
-	<div calss="aa">
+	<div>
 		<img th:src="${market.filepath}" class="card-img-top" alt="이미지 로딩중">
 		<br> <br>
-		<div calss="detail" style="padding-left: 12px"
-			th:utext="${market.detail}">내용</div>
+		<div style="padding-left: 12px" th:utext="${market.detail}">내용</div>
 	</div>
 	<br>
 	<hr style="height: 5px; color: black;">
@@ -204,25 +190,29 @@ img {
 
 	<!-- 댓글 -->
 	<div th:each="vo : ${list}">
-	<span th:if="${vo.market.id == market.id}">
-		<div class="flex-container" style="padding-left: 12px;">
-			<div style="display: flex; flex-direction: column; justify-content: flex-start; width: 8%; height: 100%">
-				<img class="logo" src="/img/kiwi.png" alt="kiwi"
-					style="margin-right: 10px;">
-			</div>
-			<div class="flex-container-col">
-				<div class="flex-container">
-					<h5
-						style="padding-right: 10px; font-weight: bold; margin-top: 5px;" th:text="${vo.createdBy}">작성자</h5>
-						<label
-					style="background-color: #70ACB1; padding: 5px; border-color: black; border: 1px solid black; color: white;">글쓴이</label>
-						<input type="hidden" id="comment_id" th:value="${vo.id}"/>
-						<a type="button" id="comment-btn-delete" class="btn btn-kiwi" style="float: right; margin-left: auto; margin-right:0px;">삭제하기</a>
+		<span th:if="${vo.market.id == market.id}">
+			<div class="flex-container" style="padding-left: 12px;">
+				<div
+					style="display: flex; flex-direction: column; justify-content: flex-start; width: 8%; height: 100%">
+					<img class="logo" src="/img/kiwi.png" alt="kiwi"
+						style="margin-right: 10px;">
 				</div>
-				<div style="width: 850px" th:text="${vo.content}">댓글 내용 출력되어야 정상</div>
+				<div class="flex-container-col">
+					<div class="flex-container">
+						<h5
+							style="padding-right: 10px; font-weight: bold; margin-top: 5px;"
+							th:text="${vo.createdBy}">작성자</h5>
+						<label
+							style="background-color: #70ACB1; padding: 5px; border-color: black; border: 1px solid black; color: white;">글쓴이</label>
+						<input type="hidden" id="comment_id" th:value="${vo.id}" /> <a
+							type="button" id="comment-btn-delete" class="btn btn-kiwi"
+							style="float: right; margin-left: auto; margin-right: 0px;">삭제하기</a>
+					</div>
+					<div style="width: 850px" th:text="${vo.content}">댓글 내용 출력되어야
+						정상</div>
+				</div>
 			</div>
-		</div>
-		<hr>
+			<hr>
 		</span>
 	</div>
 
