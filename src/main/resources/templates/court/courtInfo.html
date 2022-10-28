@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout1}">
+
+
+<!-- 사용자 CSS 추가-->
+<th:block layout:fragment="css">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+
+	<style>
+		.content {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			margin-left: 15%;
+			margin-right: 20%;
+		}
+
+		.fieldError {
+			color: #bd2130;
+		}
+
+		a {
+			text-decoration: none;
+		}
+
+		.btn-map {
+			background-color: white;
+			color: #808080;
+			border-color: white;
+		}
+
+		.btn-kiwi {
+			background-color: #70ACB1;
+			color: white;
+			border-color: #666;
+		}
+
+		.wrap {
+			position: absolute;
+			left: 0;
+			bottom: 40px;
+			width: 288px;
+			height: 132px;
+			margin-left: -144px;
+			text-align: left;
+			overflow: hidden;
+			font-size: 12px;
+			font-family: 'Malgun Gothic', dotum, '돋움', sans-serif;
+			line-height: 1.5;
+		}
+
+		.wrap * {
+			padding: 0;
+			margin: 0;
+		}
+
+		.wrap .info {
+			width: 286px;
+			height: 120px;
+			border-radius: 5px;
+			border-bottom: 2px solid #ccc;
+			border-right: 1px solid #ccc;
+			overflow: hidden;
+			background: #fff;
+		}
+
+		.wrap .info:nth-child(1) {
+			border: 0;
+			box-shadow: 0px 1px 2px #888;
+		}
+
+		.info .title {
+			padding: 5px 0 0 10px;
+			height: 30px;
+			background: #C6F1E7;
+			border-bottom: 1px solid #ddd;
+			font-size: 18px;
+			font-weight: bold;
+		}
+
+		.info .close {
+			position: absolute;
+			top: 10px;
+			right: 10px;
+			color: #888;
+			width: 17px;
+			height: 17px;
+			background:
+				url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/overlay_close.png');
+		}
+
+		.info .close:hover {
+			cursor: pointer;
+		}
+
+		.info .body {
+			position: relative;
+			overflow: hidden;
+		}
+
+		.info .desc {
+			position: relative;
+			margin: 13px 0 0 90px;
+			height: 75px;
+		}
+
+		.desc .ellipsis {
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+		}
+
+		.desc .jibun {
+			font-size: 11px;
+			color: #888;
+			margin-top: -2px;
+		}
+
+		.info .img {
+			position: absolute;
+			top: 0px;
+			left: 0px;
+			width: 60px;
+			height: 60px;
+			margin-top: 15px;
+			margin-left: 13px;
+			color: #888;
+			overflow: hidden;
+		}
+
+		.info:after {
+			content: '';
+			position: absolute;
+			margin-left: -12px;
+			left: 50%;
+			bottom: 0;
+			width: 22px;
+			height: 12px;
+			background:
+				url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white.png')
+		}
+
+		.info .link {
+			color: #5085BB;
+		}
+	</style>
+</th:block>
+
+<!-- 사용자 스크립트 추가 -->
+<th:block layout:fragment="script">
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+		crossorigin="anonymous"></script>
+
+	<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+	<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
+
+
+	<script type="text/javascript"
+		src="//dapi.kakao.com/v2/maps/sdk.js?appkey=8d88fe30f1babaf45150d93fec381f08&libraries=clusterer"></script>
+
+
+
+
+
+
+</th:block>
+
+
+<div layout:fragment="content">
+	<div class="container">
+
+		<!-- 
+<div
+			style="float: left; width: 100%; margin-right: 80px; margin-left: 55px; text-align: center;">
+			<div style="border: 1px solid black; float: left; width: 100%;">
+				<div
+					style="margin-left: 55px; text-align: left; margin-top: 20px; margin-bottom: 20px">
+					8월 30일 월요일 <br> 12:00 ~ 14:00 <Br> 연수 배드민턴장<Br>
+				</div>
+			</div>
+		</div>
+ -->
+
+
+		<div id="map" style="width: 1213px; height: 600px; margin-right: 80px; margin-left: 55px;"></div>
+		<script th:inline="javascript">
+			/*<![CDATA[*/
+			var data = /*[[${court}]]*/;
+			var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+				mapOption = {
+					center: new kakao.maps.LatLng(37.40785375, 126.6325097), // 지도의 중심좌표
+					level: 5
+					// 지도의 확대 레벨
+				};
+
+			var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+			// 마커 이미지의 이미지 크기 입니다
+			var imageSize = new kakao.maps.Size(24, 35);
+			var imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
+			// 마커 이미지를 생성합니다    
+			var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
+
+			// 일반 지도와 스카이뷰로 지도 타입을 전환할 수 있는 지도타입 컨트롤을 생성합니다
+			var mapTypeControl = new kakao.maps.MapTypeControl();
+
+			// 지도에 컨트롤을 추가해야 지도위에 표시됩니다
+			// kakao.maps.ControlPosition은 컨트롤이 표시될 위치를 정의하는데 TOPRIGHT는 오른쪽 위를 의미합니다
+			map.addControl(mapTypeControl, kakao.maps.ControlPosition.TOPRIGHT);
+
+			// 지도 확대 축소를 제어할 수 있는  줌 컨트롤을 생성합니다
+			var zoomControl = new kakao.maps.ZoomControl();
+			map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
+
+			// 마커가 표시될 위치입니다 
+			var markerPosition = new kakao.maps.LatLng(data.lat, data.lng);
+
+			// 마커를 생성합니다
+			var marker = new kakao.maps.Marker({
+				position: markerPosition,
+				image: markerImage // 마커 이미지 
+			});
+
+			// 마커가 지도 위에 표시되도록 설정합니다
+			marker.setMap(map);
+
+
+			/*]]>*/
+		</script>
+
+
+
+		<br>
+		<div style="margin-left: 55px; margin-right: 80px; margin-top: 20px; width: 100%;">
+
+			<div style="float: left; width: 50%;padding-left: 60px">
+				<p style="font-weight: bold; font-size: 1.5em;float: left;margin-bottom:0px" th:text="${court.name}">
+				</p>
+				<button class="btn btn-map" type="button" style="height: 35px;">지도보기</button>
+				<br>
+				<p th:text="${court.address1}" style="margin-bottom:0px;padding-top: 10px;"></p>
+				<p th:text="${court.call_number}"></p>
+				<br>
+				<br>
+				<p style="font-weight: bold; font-size: 1.4em;float: left;">코트 시설</p>
+			</div>
+
+			<div>
+
+
+			</div>
+
+
+			<!-- <div style="float: right; width: 50%;">
+				<button class="btn btn-kiwi" type="button"
+					style="width:120px;height:70px;float: right; margin-right: 100px; font-size: 18px;border-radius : 10%">코트
+					예약</button>
+			</div> -->
+			<div style="width: 100%;height: 320px;">
+
+			</div>
+			<div style="float: left;width: 100%;height: 320px;padding-left: 60px">
+				<p style="font-weight: bold; font-size: 1.4em;margin-bottom:0px">시설 사용 주의 사항</p>
+
+				<p style="padding-top: 20px;"> - 모든 코트 예약은 인터넷 예약을 원칙으로 합니다.</p>
+				<p> - (시설방역) 1일 2회 방역시간(13:00 ~ 14:00, 18:00 ~ 19:00)은 이용이 불가합니다.</p>
+				<p style=""> - 경기중 마스크 착용 및 취식 금지(물, 무알콜 음료는 제외)</p>
+				<p style=""> - 예약 내용 변경은 불가능하며 취소후 다시 예약하셔야 합니다. </p>
+				<p style=""> - 흡연 구역 외에는 모두 금연 시설입니다. 구역 외에서 적발시 과태료가 부과됩니다.</p>
+			</div>
+
+
+			<!-- <div style="float: left; width: 50%;padding-left: 30px">
+				<p th:text="${court.address1}"></p>
+				<p th:text="${court.call_number}"></p>
+
+			</div> -->
+			<!-- <div style="float: left; width: 40%;padding-left: 30px" th:text="${court.call_number}">코트 주소</div> -->
+			<!-- <div style="float: right; font-weight: bold; margin-right: 10px;">
+				10000원</div> -->
+			<Br>
+			<!-- <hr style="margin-bottom: 0px"> -->
+			<br>
+		</div>
+
+
+
+	</div>
+
+</div>
+
+
+
+
+</html>

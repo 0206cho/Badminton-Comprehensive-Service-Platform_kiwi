@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout1}">
+
+
+<!-- 사용자 CSS 추가-->
+<th:block layout:fragment="css">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+	<style>
+		.content {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			margin-left: 15%;
+			margin-right: 20%;
+		}
+
+		.fieldError {
+			color: #bd2130;
+		}
+
+		a {
+			text-decoration: none;
+		}
+
+		.btn-kiwi {
+			background-color: #C6F1E7;
+			color: black;
+			border-color: #666;
+			width:100px;
+			height:65px;
+			float: left;
+			border-radius : 10%;
+			margin-left:43px;
+			border-color: #C6F1E7;
+		}
+
+		.wrap {
+			position: absolute;
+			left: 0;
+			bottom: 40px;
+			width: 288px;
+			height: 132px;
+			margin-left: -144px;
+			text-align: left;
+			overflow: hidden;
+			font-size: 12px;
+			font-family: 'Malgun Gothic', dotum, '돋움', sans-serif;
+			line-height: 1.5;
+		}
+
+		.wrap * {
+			padding: 0;
+			margin: 0;
+		}
+		
+		.wrap .info {
+			width: 286px;
+			height: 120px;
+			border-radius: 5px;
+			border-bottom: 2px solid #ccc;
+			border-right: 1px solid #ccc;
+			overflow: hidden;
+			background: #fff;
+		}
+		
+		.wrap .info:nth-child(1) {
+			border: 0;
+			box-shadow: 0px 1px 2px #888;
+		}
+		
+		.info .title {
+			padding: 5px 0 0 10px;
+			height: 30px;
+			background: #C6F1E7;
+			border-bottom: 1px solid #ddd;
+			font-size: 18px;
+			font-weight: bold;
+		}
+		.name {
+			font-weight: bold;
+			float: left;
+			padding-top:20px;
+			padding-right:10px;
+			font-size: 22px;
+		}
+
+		.info .close {
+			position: absolute;
+			top: 10px;
+			right: 10px;
+			color: #888;
+			width: 17px;
+			height: 17px;
+			background:
+				url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/overlay_close.png');
+		}
+
+		.info .close:hover {
+			cursor: pointer;
+		}
+
+		.info .body {
+			position: relative;
+			overflow: hidden;
+		}
+
+		.info .desc {
+			position: relative;
+			margin: 13px 0 0 90px;
+			height: 75px;
+		}
+
+		.desc .ellipsis {
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+		}
+
+		.desc .jibun {
+			font-size: 11px;
+			color: #888;
+			margin-top: -2px;
+		}
+
+		.info .img {
+			position: absolute;
+			top: 0px;
+			left: 0px;
+			width: 60px;
+			height: 60px;
+			margin-top: 15px;
+			margin-left: 13px;
+			color: #888;
+			overflow: hidden;
+		}
+
+		.info:after {
+			content: '';
+			position: absolute;
+			margin-left: -12px;
+			left: 50%;
+			bottom: 0;
+			width: 22px;
+			height: 12px;
+			background:
+				url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white.png')
+		}
+
+		.info .link {
+			color: #5085BB;
+		}
+	</style>
+</th:block>
+
+<!-- 사용자 스크립트 추가 -->
+<th:block layout:fragment="script">
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+		crossorigin="anonymous"></script>
+
+	<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+	<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
+
+
+	<script type="text/javascript"
+		src="//dapi.kakao.com/v2/maps/sdk.js?appkey=8d88fe30f1babaf45150d93fec381f08&libraries=clusterer"></script>
+
+	<script type="text/javascript">
+		$('document').ready(function () {
+			var area0 = ["시/도 선택", "서울특별시", "인천광역시", "대전광역시", "광주광역시", "대구광역시", "울산광역시", "부산광역시", "경기도", "강원도", "충청북도", "충청남도", "전라북도", "전라남도", "경상북도", "경상남도", "제주도"];
+			var area1 = ["강남구", "강동구", "강북구", "강서구", "관악구", "광진구", "구로구", "금천구", "노원구", "도봉구", "동대문구", "동작구", "마포구", "서대문구", "서초구", "성동구", "성북구", "송파구", "양천구", "영등포구", "용산구", "은평구", "종로구", "중구", "중랑구"];
+			var area2 = ["계양구", "미추홀구", "남동구", "동구", "부평구", "서구", "연수구", "중구", "강화군", "옹진군"];
+			var area3 = ["대덕구", "동구", "서구", "유성구", "중구"];
+			var area4 = ["광산구", "남구", "동구", "북구", "서구"];
+			var area5 = ["남구", "달서구", "동구", "북구", "서구", "수성구", "중구", "달성군"];
+			var area6 = ["남구", "동구", "북구", "중구", "울주군"];
+			var area7 = ["강서구", "금정구", "남구", "동구", "동래구", "부산진구", "북구", "사상구", "사하구", "서구", "수영구", "연제구", "영도구", "중구", "해운대구", "기장군"];
+			var area8 = ["고양시", "과천시", "광명시", "광주시", "구리시", "군포시", "김포시", "남양주시", "동두천시", "부천시", "성남시", "수원시", "시흥시", "안산시", "안성시", "안양시", "양주시", "오산시", "용인시", "의왕시", "의정부시", "이천시", "파주시", "평택시", "포천시", "하남시", "화성시", "가평군", "양평군", "여주군", "연천군"];
+			var area9 = ["강릉시", "동해시", "삼척시", "속초시", "원주시", "춘천시", "태백시", "고성군", "양구군", "양양군", "영월군", "인제군", "정선군", "철원군", "평창군", "홍천군", "화천군", "횡성군"];
+			var area10 = ["제천시", "청주시", "충주시", "괴산군", "단양군", "보은군", "영동군", "옥천군", "음성군", "증평군", "진천군", "청원군"];
+			var area11 = ["계룡시", "공주시", "논산시", "보령시", "서산시", "아산시", "천안시", "금산군", "당진군", "부여군", "서천군", "연기군", "예산군", "청양군", "태안군", "홍성군"];
+			var area12 = ["군산시", "김제시", "남원시", "익산시", "전주시", "정읍시", "고창군", "무주군", "부안군", "순창군", "완주군", "임실군", "장수군", "진안군"];
+			var area13 = ["광양시", "나주시", "목포시", "순천시", "여수시", "강진군", "고흥군", "곡성군", "구례군", "담양군", "무안군", "보성군", "신안군", "영광군", "영암군", "완도군", "장성군", "장흥군", "진도군", "함평군", "해남군", "화순군"];
+			var area14 = ["경산시", "경주시", "구미시", "김천시", "문경시", "상주시", "안동시", "영주시", "영천시", "포항시", "고령군", "군위군", "봉화군", "성주군", "영덕군", "영양군", "예천군", "울릉군", "울진군", "의성군", "청도군", "청송군", "칠곡군"];
+			var area15 = ["거제시", "김해시", "마산시", "밀양시", "사천시", "양산시", "진주시", "진해시", "창원시", "통영시", "거창군", "고성군", "남해군", "산청군", "의령군", "창녕군", "하동군", "함안군", "함양군", "합천군"];
+			var area16 = ["서귀포시", "제주시", "남제주군", "북제주군"];
+
+
+
+			// 시/도 선택 박스 초기화
+
+			$("select[name^=sido]").each(function () {
+				$selsido = $(this);
+				$.each(eval(area0), function () {
+					$selsido.append("<option value='" + this + "'>" + this + "</option>");
+				});
+				$selsido.next().append("<option value=''>구/군 선택</option>");
+			});
+
+
+
+			// 시/도 선택시 구/군 설정
+
+			$("select[name^=sido]").change(function () {
+				var area = "area" + $("option", $(this)).index($("option:selected", $(this))); // 선택지역의 구군 Array
+				var $gugun = $(this).next(); // 선택영역 군구 객체
+				$("option", $gugun).remove(); // 구군 초기화
+
+				if (area == "area0")
+					$gugun.append("<option value=''>구/군 선택</option>");
+				else {
+					$.each(eval(area), function () {
+						$gugun.append("<option value='" + this + "'>" + this + "</option>");
+					});
+				}
+			});
+
+
+		});
+
+	</script>
+
+
+
+
+</th:block>
+
+
+<div layout:fragment="content">
+	<div class="container">
+
+		<!-- 
+<div
+			style="float: left; width: 100%; margin-right: 80px; margin-left: 55px; text-align: center;">
+			<div style="border: 1px solid black; float: left; width: 100%;">
+				<div
+					style="margin-left: 55px; text-align: left; margin-top: 20px; margin-bottom: 20px">
+					8월 30일 월요일 <br> 12:00 ~ 14:00 <Br> 연수 배드민턴장<Br>
+				</div>
+			</div>
+		</div>
+ -->
+
+		<!--지역 -->
+		<select class="select" name="sido1" id="sido1" style="padding: 6px; margin-left: 55px;"></select>
+		<select class="select" name="gugun1" id="gugun1"
+			style="padding: 6px; margin-left: 10px; margin-bottom: 10px"></select>
+	
+
+		
+		
+		<div id="map" style="width: 1213px; height: 600px; margin-right: 80px; margin-left: 55px;"></div>
+		<script th:inline="javascript">
+			/*<![CDATA[*/
+			var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+				mapOption = {
+					center: new kakao.maps.LatLng(37.40785375, 126.6325097), // 지도의 중심좌표
+					level: 5 // 지도의 확대 레벨
+				};
+
+			var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+			var imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
+
+			// 일반 지도와 스카이뷰로 지도 타입을 전환할 수 있는 지도타입 컨트롤을 생성합니다
+			var mapTypeControl = new kakao.maps.MapTypeControl();
+
+			// 지도에 컨트롤을 추가해야 지도위에 표시됩니다
+			// kakao.maps.ControlPosition은 컨트롤이 표시될 위치를 정의하는데 TOPRIGHT는 오른쪽 위를 의미합니다
+			map.addControl(mapTypeControl, kakao.maps.ControlPosition.TOPRIGHT);
+
+			// 지도 확대 축소를 제어할 수 있는  줌 컨트롤을 생성합니다
+			var zoomControl = new kakao.maps.ZoomControl();
+			map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
+
+			
+			// 마커 클러스터러를 생성합니다 
+			var clusterer = new kakao.maps.MarkerClusterer({
+				map: map, // 마커들을 클러스터로 관리하고 표시할 지도 객체 
+				averageCenter: true, // 클러스터에 포함된 마커들의 평균 위치를 클러스터 마커 위치로 설정 
+				minLevel: 10 // 클러스터 할 최소 지도 레벨 
+			});
+
+
+			/*[# th:each="court : ${courtList}"]*/
+			// 마커 이미지의 이미지 크기 입니다
+			var imageSize = new kakao.maps.Size(24, 35);
+
+			// 마커 이미지를 생성합니다    
+			var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
+
+
+			var markers = [];
+			var data = /*[[${court}]]*/;
+			//console.log(data);
+			//console.log(data.lat);
+
+			displayMarker(data);
+			clusterer.addMarkers(markers);
+
+			/*[/]*/
+
+			// 지도에 마커를 표시하는 함수입니다    
+			function displayMarker(data) {
+
+				var l = new kakao.maps.LatLng(data.lat, data.lng);
+				var marker = new kakao.maps.Marker({
+					map: map,
+					position: l,
+					image: markerImage // 마커 이미지 
+				});
+				var overlay = new kakao.maps.CustomOverlay({
+					yAnchor: 3,
+					map: map,
+					position: marker.getPosition()
+				});
+
+				var wrap = document.createElement('div');
+				//wrap.innerHTML = data.name;
+				wrap.className = "wrap";
+
+				var info = document.createElement('div');
+				info.className = "info";
+
+				wrap.appendChild(info);
+
+				var title = document.createElement('div');
+				title.className = "title";
+				sometext = document.createTextNode(data.name);
+
+				title.appendChild(sometext);
+				info.append(title);
+
+				var close = document.createElement('div');
+				close.className = "close";
+				close.title = '닫기';
+				close.onclick = function () {
+					overlay.setMap(null);
+				};
+				title.appendChild(close);
+
+				var body = document.createElement('div');
+				body.className = "body";
+				info.appendChild(body);
+
+				var imgDiv = document.createElement('div');
+				imgDiv.className = "img";
+				body.appendChild(imgDiv);
+
+				var img = document.createElement('img');
+				img.className = "image";
+				img.src = "/img/kiwi.png";
+				// img.width="40";
+				// img.height="40";
+				imgDiv.appendChild(img);
+
+				var desc = document.createElement('div');
+				desc.className = "desc";
+				body.appendChild(desc);
+
+				var ellipsis = document.createElement('div');
+				ellipsis.className = "ellipsis";
+
+				var text = document.createTextNode(data.address1);
+
+				ellipsis.appendChild(text);
+
+				desc.appendChild(ellipsis);
+
+				var jibun = document.createElement('div');
+				jibun.className = "jibun ellipsis";
+
+				var text2 = document.createTextNode(data.call_number);
+
+				jibun.appendChild(text2);
+				
+				desc.appendChild(jibun);
+				
+				var footerDev = document.createElement('div');
+				
+				desc.appendChild(footerDev);
+
+				var link = document.createElement('a');
+				link.className = "link";
+
+				var text3 = document.createTextNode("구장 정보 보기");
+
+				link.appendChild(text3);
+				//link.target = "_blank";
+				link.href = "/court/info/"+ data.id;
+
+				footerDev.appendChild(link);
+
+				overlay.setContent(wrap);
+				markers.push(marker);
+				kakao.maps.event.addListener(marker, 'click', function () {
+					overlay.setMap(map);
+					console.log("하이용");
+					document.getElementById('selectCourtName').innerHTML=data.name; 
+					document.getElementById('selectCourtAddress').innerHTML=data.address1; 
+					document.getElementById('selectCourtNumber').innerHTML=data.call_number; 
+				});
+			}
+
+			/*]]>*/
+
+		</script>
+		
+		<div style="margin-left: 55px; margin-right: 80px; margin-top: 20px; width: 100%;">
+		
+			<div style="float: left; width: 100%;border: 1px solid #808080;margin-bottom:60px;border-radius : 15px;">
+				<p id ="selectCourtName"style="margin-top:40px;margin-left:50px;margin-bottom:5px;font-weight: bold;font-size: 22px;"> 코트를 선택해주세요 &#127992;</p>
+				<p id="selectCourtAddress" style="margin-left:50px;margin-bottom:0px;font-size: 17px;">주소</p>
+				<p id="selectCourtNumber" style="margin-left:50px;margin-bottom:40px;font-size: 17px;">전화번호</p>
+			</div>
+
+			<div style="float: left; width: 100%;padding-bottom:30px">
+					<p class="name">코트1</p>
+					<button class="btn btn-kiwi">06:00 <br>~08:00</button>
+					<button class="btn btn-kiwi">08:00 <br>~10:00</button>
+					<button class="btn btn-kiwi">10:00 <br>~12:00</button>
+					<button class="btn btn-kiwi">12:00 <br>~14:00</button>
+					<button class="btn btn-kiwi">14:00 <br>~16:00</button>
+					<button class="btn btn-kiwi">16:00 <br>~18:00</button>
+					<button class="btn btn-kiwi">18:00 <br>~20:00</button>
+					<button class="btn btn-kiwi">20:00 <br>~22:00</button>
+			</div>
+			<div style="float: left; width: 100%;padding-bottom:30px">
+					<p class="name">코트2</p>
+					<button class="btn btn-kiwi">06:00 <br>~08:00</button>
+					<button class="btn btn-kiwi">08:00 <br>~10:00</button>
+					<button class="btn btn-kiwi">10:00 <br>~12:00</button>
+					<button class="btn btn-kiwi">12:00 <br>~14:00</button>
+					<button class="btn btn-kiwi">14:00 <br>~16:00</button>
+					<button class="btn btn-kiwi">16:00 <br>~18:00</button>
+					<button class="btn btn-kiwi">18:00 <br>~20:00</button>
+					<button class="btn btn-kiwi">20:00 <br>~22:00</button>
+			</div>
+			<div style="float: left; width: 100%;padding-bottom:30px">
+					<p class="name">코트3</p>
+					<button class="btn btn-kiwi">06:00 <br>~08:00</button>
+					<button class="btn btn-kiwi">08:00 <br>~10:00</button>
+					<button class="btn btn-kiwi">10:00 <br>~12:00</button>
+					<button class="btn btn-kiwi">12:00 <br>~14:00</button>
+					<button class="btn btn-kiwi">14:00 <br>~16:00</button>
+					<button class="btn btn-kiwi">16:00 <br>~18:00</button>
+					<button class="btn btn-kiwi">18:00 <br>~20:00</button>
+					<button class="btn btn-kiwi">20:00 <br>~22:00</button>
+			</div>
+			<div style="float: left; width: 100%;padding-bottom:30px">
+					<p class="name">코트4</p>
+					<button class="btn btn-kiwi">06:00 <br>~08:00</button>
+					<button class="btn btn-kiwi">08:00 <br>~10:00</button>
+					<button class="btn btn-kiwi">10:00 <br>~12:00</button>
+					<button class="btn btn-kiwi">12:00 <br>~14:00</button>
+					<button class="btn btn-kiwi">14:00 <br>~16:00</button>
+					<button class="btn btn-kiwi">16:00 <br>~18:00</button>
+					<button class="btn btn-kiwi">18:00 <br>~20:00</button>
+					<button class="btn btn-kiwi">20:00 <br>~22:00</button>
+			</div>
+			<div style="float: left; width: 100%;padding-bottom:30px">
+					<p class="name">코트5</p>
+					<button class="btn btn-kiwi">06:00 <br>~08:00</button>
+					<button class="btn btn-kiwi">08:00 <br>~10:00</button>
+					<button class="btn btn-kiwi">10:00 <br>~12:00</button>
+					<button class="btn btn-kiwi">12:00 <br>~14:00</button>
+					<button class="btn btn-kiwi">14:00 <br>~16:00</button>
+					<button class="btn btn-kiwi">16:00 <br>~18:00</button>
+					<button class="btn btn-kiwi">18:00 <br>~20:00</button>
+					<button class="btn btn-kiwi">20:00 <br>~22:00</button>
+			</div>
+			<div style="float: left; width: 100%;padding-bottom:30px">
+					<p class="name">코트6</p>
+					<button class="btn btn-kiwi">06:00 <br>~08:00</button>
+					<button class="btn btn-kiwi">08:00 <br>~10:00</button>
+					<button class="btn btn-kiwi">10:00 <br>~12:00</button>
+					<button class="btn btn-kiwi">12:00 <br>~14:00</button>
+					<button class="btn btn-kiwi">14:00 <br>~16:00</button>
+					<button class="btn btn-kiwi">16:00 <br>~18:00</button>
+					<button class="btn btn-kiwi">18:00 <br>~20:00</button>
+					<button class="btn btn-kiwi">20:00 <br>~22:00</button>
+			</div>
+		</div>	
+		
+		
+
+
+		<br> <Br> <br> <br> <Br> <br>
+		
+</div>
+</div>
+
+
+
+</html>

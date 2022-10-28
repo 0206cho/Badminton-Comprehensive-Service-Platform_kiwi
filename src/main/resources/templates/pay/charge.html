@@ -87,12 +87,13 @@
 							"apply_num" : rsp.apply_num
 						},
 					});
+					opener.document.getElementById('t1').innerHTML = [[${cash}]] + rsp.paid_amount + '원';
 				} else {
 					var msg = '결제에 실패하였습니다.';
 					msg += '에러내용 : ' + rsp.error_msg;
 					document.location.href = "/cash/charge";
+					opener.document.getElementById('t1').innerHTML = [[${cash}]] + '원';
 				}
-				opener.document.getElementById('t1').innerHTML = [[${cash}]] + rsp.paid_amount + '원';
 				alert(msg);
 				window.close();
 				//document.location.href = "/members/mypage"; //alert창 확인 후 이동할 url 설정
