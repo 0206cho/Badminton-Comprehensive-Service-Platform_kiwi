@@ -15,5 +15,13 @@ public class MatchController {
 	public String matchList() {
 		return "match/matchList";
 	}
+	
+	// 매치 디테일
+	@GetMapping("/matchDetail")
+	public String matchDetail() {
+		return "match/matchDetail";
+	}
+	
+	
 
 }
