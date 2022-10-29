@@ -29,11 +29,11 @@
 			background-color: #C6F1E7;
 			color: black;
 			border-color: #666;
-			width:100px;
-			height:65px;
+			width: 100px;
+			height: 65px;
 			float: left;
-			border-radius : 10%;
-			margin-left:43px;
+			border-radius: 10%;
+			margin-left: 43px;
 			border-color: #C6F1E7;
 		}
 
@@ -55,7 +55,7 @@
 			padding: 0;
 			margin: 0;
 		}
-		
+
 		.wrap .info {
 			width: 286px;
 			height: 120px;
@@ -65,12 +65,12 @@
 			overflow: hidden;
 			background: #fff;
 		}
-		
+
 		.wrap .info:nth-child(1) {
 			border: 0;
 			box-shadow: 0px 1px 2px #888;
 		}
-		
+
 		.info .title {
 			padding: 5px 0 0 10px;
 			height: 30px;
@@ -79,11 +79,12 @@
 			font-size: 18px;
 			font-weight: bold;
 		}
+
 		.name {
 			font-weight: bold;
 			float: left;
-			padding-top:20px;
-			padding-right:10px;
+			padding-top: 20px;
+			padding-right: 10px;
 			font-size: 22px;
 		}
 
@@ -248,10 +249,10 @@
 		<select class="select" name="sido1" id="sido1" style="padding: 6px; margin-left: 55px;"></select>
 		<select class="select" name="gugun1" id="gugun1"
 			style="padding: 6px; margin-left: 10px; margin-bottom: 10px"></select>
-	
 
-		
-		
+
+
+
 		<div id="map" style="width: 1213px; height: 600px; margin-right: 80px; margin-left: 55px;"></div>
 		<script th:inline="javascript">
 			/*<![CDATA[*/
@@ -275,7 +276,7 @@
 			var zoomControl = new kakao.maps.ZoomControl();
 			map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
 
-			
+
 			// 마커 클러스터러를 생성합니다 
 			var clusterer = new kakao.maps.MarkerClusterer({
 				map: map, // 마커들을 클러스터로 관리하고 표시할 지도 객체 
@@ -375,11 +376,11 @@
 				var text2 = document.createTextNode(data.call_number);
 
 				jibun.appendChild(text2);
-				
+
 				desc.appendChild(jibun);
-				
+
 				var footerDev = document.createElement('div');
-				
+
 				desc.appendChild(footerDev);
 
 				var link = document.createElement('a');
@@ -389,7 +390,7 @@
 
 				link.appendChild(text3);
 				//link.target = "_blank";
-				link.href = "/court/info/"+ data.id;
+				link.href = "/court/info/" + data.id;
 
 				footerDev.appendChild(link);
 
@@ -398,98 +399,141 @@
 				kakao.maps.event.addListener(marker, 'click', function () {
 					overlay.setMap(map);
 					console.log("하이용");
-					document.getElementById('selectCourtName').innerHTML=data.name; 
-					document.getElementById('selectCourtAddress').innerHTML=data.address1; 
-					document.getElementById('selectCourtNumber').innerHTML=data.call_number; 
+					document.getElementById('selectCourtName').innerHTML = data.name;
+					document.getElementById('selectCourtAddress').innerHTML = data.address1;
+					document.getElementById('selectCourtNumber').innerHTML = data.call_number;
 				});
 			}
 
 			/*]]>*/
 
 		</script>
-		
+
 		<div style="margin-left: 55px; margin-right: 80px; margin-top: 20px; width: 100%;">
-		
+
 			<div style="float: left; width: 100%;border: 1px solid #808080;margin-bottom:60px;border-radius : 15px;">
-				<p id ="selectCourtName"style="margin-top:40px;margin-left:50px;margin-bottom:5px;font-weight: bold;font-size: 22px;"> 코트를 선택해주세요 &#127992;</p>
-				<p id="selectCourtAddress" style="margin-left:50px;margin-bottom:0px;font-size: 17px;">주소</p>
-				<p id="selectCourtNumber" style="margin-left:50px;margin-bottom:40px;font-size: 17px;">전화번호</p>
+				<p id="selectCourtName"
+					style="margin-top:40px;margin-left:50px;margin-bottom:5px;font-weight: bold;font-size: 22px;"> 코트를
+					선택해주세요 &#127992;</p>
+				<p id="selectCourtAddress" style="margin-left:50px;margin-bottom:0px;font-size: 17px;"></p>
+				<p id="selectCourtNumber" style="margin-left:50px;margin-bottom:40px;font-size: 17px;"></p>
 			</div>
 
 			<div style="float: left; width: 100%;padding-bottom:30px">
-					<p class="name">코트1</p>
-					<button class="btn btn-kiwi">06:00 <br>~08:00</button>
-					<button class="btn btn-kiwi">08:00 <br>~10:00</button>
-					<button class="btn btn-kiwi">10:00 <br>~12:00</button>
-					<button class="btn btn-kiwi">12:00 <br>~14:00</button>
-					<button class="btn btn-kiwi">14:00 <br>~16:00</button>
-					<button class="btn btn-kiwi">16:00 <br>~18:00</button>
-					<button class="btn btn-kiwi">18:00 <br>~20:00</button>
-					<button class="btn btn-kiwi">20:00 <br>~22:00</button>
+				<p class="name">코트1</p>
+				<button class="btn btn-kiwi first">06:00 <br>~08:00</button>
+				<button class="btn btn-kiwi second">08:00 <br>~10:00</button>
+				<button class="btn btn-kiwi">10:00 <br>~12:00</button>
+				<button class="btn btn-kiwi">12:00 <br>~14:00</button>
+				<button class="btn btn-kiwi">14:00 <br>~16:00</button>
+				<button class="btn btn-kiwi">16:00 <br>~18:00</button>
+				<button class="btn btn-kiwi">18:00 <br>~20:00</button>
+				<button class="btn btn-kiwi">20:00 <br>~22:00</button>
 			</div>
 			<div style="float: left; width: 100%;padding-bottom:30px">
-					<p class="name">코트2</p>
-					<button class="btn btn-kiwi">06:00 <br>~08:00</button>
-					<button class="btn btn-kiwi">08:00 <br>~10:00</button>
-					<button class="btn btn-kiwi">10:00 <br>~12:00</button>
-					<button class="btn btn-kiwi">12:00 <br>~14:00</button>
-					<button class="btn btn-kiwi">14:00 <br>~16:00</button>
-					<button class="btn btn-kiwi">16:00 <br>~18:00</button>
-					<button class="btn btn-kiwi">18:00 <br>~20:00</button>
-					<button class="btn btn-kiwi">20:00 <br>~22:00</button>
+				<p class="name">코트2</p>
+				<button class="btn btn-kiwi first">06:00 <br>~08:00</button>
+				<button class="btn btn-kiwi second">08:00 <br>~10:00</button>
+				<button class="btn btn-kiwi">10:00 <br>~12:00</button>
+				<button class="btn btn-kiwi">12:00 <br>~14:00</button>
+				<button class="btn btn-kiwi">14:00 <br>~16:00</button>
+				<button class="btn btn-kiwi">16:00 <br>~18:00</button>
+				<button class="btn btn-kiwi">18:00 <br>~20:00</button>
+				<button class="btn btn-kiwi">20:00 <br>~22:00</button>
 			</div>
 			<div style="float: left; width: 100%;padding-bottom:30px">
-					<p class="name">코트3</p>
-					<button class="btn btn-kiwi">06:00 <br>~08:00</button>
-					<button class="btn btn-kiwi">08:00 <br>~10:00</button>
-					<button class="btn btn-kiwi">10:00 <br>~12:00</button>
-					<button class="btn btn-kiwi">12:00 <br>~14:00</button>
-					<button class="btn btn-kiwi">14:00 <br>~16:00</button>
-					<button class="btn btn-kiwi">16:00 <br>~18:00</button>
-					<button class="btn btn-kiwi">18:00 <br>~20:00</button>
-					<button class="btn btn-kiwi">20:00 <br>~22:00</button>
+				<p class="name">코트3</p>
+				<button id="first" class="btn btn-kiwi first">06:00 <br>~08:00</button>
+				<button class="btn btn-kiwi second">08:00 <br>~10:00</button>
+				<button class="btn btn-kiwi">10:00 <br>~12:00</button>
+				<button class="btn btn-kiwi">12:00 <br>~14:00</button>
+				<button class="btn btn-kiwi">14:00 <br>~16:00</button>
+				<button class="btn btn-kiwi">16:00 <br>~18:00</button>
+				<button class="btn btn-kiwi">18:00 <br>~20:00</button>
+				<button class="btn btn-kiwi">20:00 <br>~22:00</button>
 			</div>
 			<div style="float: left; width: 100%;padding-bottom:30px">
-					<p class="name">코트4</p>
-					<button class="btn btn-kiwi">06:00 <br>~08:00</button>
-					<button class="btn btn-kiwi">08:00 <br>~10:00</button>
-					<button class="btn btn-kiwi">10:00 <br>~12:00</button>
-					<button class="btn btn-kiwi">12:00 <br>~14:00</button>
-					<button class="btn btn-kiwi">14:00 <br>~16:00</button>
-					<button class="btn btn-kiwi">16:00 <br>~18:00</button>
-					<button class="btn btn-kiwi">18:00 <br>~20:00</button>
-					<button class="btn btn-kiwi">20:00 <br>~22:00</button>
+				<p class="name">코트4</p>
+				<button id="first" class="btn btn-kiwi first">06:00 <br>~08:00</button>
+				<button class="btn btn-kiwi second">08:00 <br>~10:00</button>
+				<button class="btn btn-kiwi">10:00 <br>~12:00</button>
+				<button class="btn btn-kiwi">12:00 <br>~14:00</button>
+				<button class="btn btn-kiwi">14:00 <br>~16:00</button>
+				<button class="btn btn-kiwi">16:00 <br>~18:00</button>
+				<button class="btn btn-kiwi">18:00 <br>~20:00</button>
+				<button class="btn btn-kiwi">20:00 <br>~22:00</button>
 			</div>
 			<div style="float: left; width: 100%;padding-bottom:30px">
-					<p class="name">코트5</p>
-					<button class="btn btn-kiwi">06:00 <br>~08:00</button>
-					<button class="btn btn-kiwi">08:00 <br>~10:00</button>
-					<button class="btn btn-kiwi">10:00 <br>~12:00</button>
-					<button class="btn btn-kiwi">12:00 <br>~14:00</button>
-					<button class="btn btn-kiwi">14:00 <br>~16:00</button>
-					<button class="btn btn-kiwi">16:00 <br>~18:00</button>
-					<button class="btn btn-kiwi">18:00 <br>~20:00</button>
-					<button class="btn btn-kiwi">20:00 <br>~22:00</button>
+				<p class="name">코트5</p>
+				<button id="first" class="btn btn-kiwi first">06:00 <br>~08:00</button>
+				<button class="btn btn-kiwi second">08:00 <br>~10:00</button>
+				<button class="btn btn-kiwi">10:00 <br>~12:00</button>
+				<button class="btn btn-kiwi">12:00 <br>~14:00</button>
+				<button class="btn btn-kiwi">14:00 <br>~16:00</button>
+				<button class="btn btn-kiwi">16:00 <br>~18:00</button>
+				<button class="btn btn-kiwi">18:00 <br>~20:00</button>
+				<button class="btn btn-kiwi">20:00 <br>~22:00</button>
 			</div>
 			<div style="float: left; width: 100%;padding-bottom:30px">
-					<p class="name">코트6</p>
-					<button class="btn btn-kiwi">06:00 <br>~08:00</button>
-					<button class="btn btn-kiwi">08:00 <br>~10:00</button>
-					<button class="btn btn-kiwi">10:00 <br>~12:00</button>
-					<button class="btn btn-kiwi">12:00 <br>~14:00</button>
-					<button class="btn btn-kiwi">14:00 <br>~16:00</button>
-					<button class="btn btn-kiwi">16:00 <br>~18:00</button>
-					<button class="btn btn-kiwi">18:00 <br>~20:00</button>
-					<button class="btn btn-kiwi">20:00 <br>~22:00</button>
+				<p class="name">코트6</p>
+				<button id="first" class="btn btn-kiwi first">06:00 <br>~08:00</button>
+				<button class="btn btn-kiwi second">08:00 <br>~10:00</button>
+				<button class="btn btn-kiwi">10:00 <br>~12:00</button>
+				<button class="btn btn-kiwi">12:00 <br>~14:00</button>
+				<button class="btn btn-kiwi">14:00 <br>~16:00</button>
+				<button class="btn btn-kiwi">16:00 <br>~18:00</button>
+				<button class="btn btn-kiwi">18:00 <br>~20:00</button>
+				<button class="btn btn-kiwi">20:00 <br>~22:00</button>
 			</div>
-		</div>	
-		
-		
+		</div>
+
+
 
 
 		<br> <Br> <br> <br> <Br> <br>
-		
-</div>
+		<script type="text/javascript">
+			var Now = new Date();  /* 현재 시간 */
+			var nowHour = Now.getHours();
+			var nowMins = Now.getMinutes();
+			console.log(nowHour + " " + nowMins);
+
+			/* 시, 분 앞에 0을 붙이는 함수 -> 계산하기 위해서! */
+			function pluszero(time) {
+				var time = time.toString();	// 시간을 숫자에서 문자로 바꿈 
+				if (time.length < 2) {	// 2자리보다 작다면
+					time = '0' + time;	// 숫자 앞에 0을 붙여줌
+					return time;		// 0을 붙여서 값을 리턴
+				} else {
+					return time;	// 2자리이상이면 리턴
+				}
+			}
+			nowHour = pluszero(nowHour);
+			nowMins = pluszero(nowMins);
+			console.log(nowHour + " " + nowMins);
+			
+			var nowTime = nowHour + nowMins;
+			console.log(nowTime);
+			
+			var first = document.getElementsByClassName("first");
+			var second = document.getElementsByClassName("second");
+			console.log(second.length);
+			
+			if() {
+				for (var i = 0; first.length; i++) {
+					first[i].disabled = true;
+				}
+			}
+			
+			
+			
+	//var btn = document.getElementsByClassName("first");
+	//console.log(btn.length);
+	// for(var i=0; btn.length;i++){
+	// 	btn[i].disabled=true;
+	// }
+
+		</script>
+	</div>
 </div>
 
 
