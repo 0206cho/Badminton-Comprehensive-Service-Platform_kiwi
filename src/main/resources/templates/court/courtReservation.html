@@ -35,6 +35,13 @@
 			margin-left: 43px;
 			border-color: #C6F1E7;
 		}
+		
+		.btn-modal {
+			background-color: #70ACB1;
+   			color: white;
+   			border-color: #666;
+
+		}
 
 		.wrap {
 			position: absolute;
@@ -375,7 +382,7 @@
 				var text2 = document.createTextNode(data.call_number);
 
 				jibun.appendChild(text2);
-
+				
 				desc.appendChild(jibun);
 
 				var footerDev = document.createElement('div');
@@ -412,7 +419,7 @@
 
 			<div style="float: left; width: 100%;border: 1px solid #808080;margin-bottom:60px;border-radius : 15px;">
 				<p id="selectCourtName"
-					style="margin-top:40px;margin-left:50px;margin-bottom:5px;font-weight: bold;font-size: 22px;"> 코트를
+					style="margin-top:37px;margin-left:50px;margin-bottom:5px;font-weight: bold;font-size: 22px;"> 코트를
 					선택해주세요 &#127992;</p>
 				<p id="selectCourtAddress" style="margin-left:50px;margin-bottom:0px;font-size: 17px;"></p>
 				<p id="selectCourtNumber" style="margin-left:50px;margin-bottom:40px;font-size: 17px;"></p>
@@ -427,7 +434,8 @@
 				<button class="btn btn-kiwi fifth">14:00 <br>~16:00</button>
 				<button class="btn btn-kiwi sixth">16:00 <br>~18:00</button>
 				<button class="btn btn-kiwi serventh">18:00 <br>~20:00</button>
-				<button class="btn btn-kiwi eighth">20:00 <br>~22:00</button>
+				<button class="btn btn-kiwi eighth" data-bs-toggle="modal"
+			data-bs-target="#exampleModal">20:00 <br>~22:00</button>
 			</div>
 			<div style="float: left; width: 100%;padding-bottom:30px">
 				<p class="name">코트2</p>
@@ -485,7 +493,29 @@
 				<button class="btn btn-kiwi eighth">20:00 <br>~22:00</button>
 			</div>
 		</div>
+		
+		<!-- 모달 -->
+		<div class="modal fade" id="exampleModal" tabindex="-1"
+		aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header" style="border: none; padding-bottom: 0px;">
+					<h5 class="modal-title" id="exampleModalLabel"
+						style="font-weight: bold;">장비대여</h5>
+					
+				</div>
+				<div class="modal-body">
+						<img src="/img/모달예시.png" style="width:400px;height:150px;">
+					
+				</div>
+				<div class="modal-footer" style="border: none">
+					<button type ="button" class="btn btn-modal"   onclick="location.href='/cash/court'">확인
+					</button>
+				</div>
+			</div>
+		</div>
 
+	</div>
 
 
 
@@ -613,7 +643,8 @@
 					serventh[i].style.backgroundColor = '#D3D3D3';
 					serventh[i].style.borderColor = '#808080';
 				}
-			} else if(2000 <= nowTime && 2200>= nowTime) {
+			} 
+			else if(2000 <= nowTime && 2200>= nowTime) {
 				for (var i = 0; i<6; i++) {
 					first[i].disabled = true;
 					second[i].disabled = true;
@@ -622,7 +653,7 @@
 					fifth[i].disabled = true;
 					sixth[i].disabled = true;
 					serventh[i].disabled = true;
-					eighth[i].disabled = true;
+					//eighth[i].disabled = true;
 				}
 			}
 			
