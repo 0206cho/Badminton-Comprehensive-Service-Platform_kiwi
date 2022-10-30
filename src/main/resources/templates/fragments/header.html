@@ -4,14 +4,14 @@
 
 <div th:fragment="header">
 	<section class="hbody">
-		<article class="nav">
+		<article class="nav fixed-top" style="background-color: white;">
 		 <div class="title"></div>
 			<ul id="menu">
 				<a href="/">
 				<img class="logo" src="/img/kiwi.png"  alt="kiwi">
 				</a>
 				<li>
-					<!-- hasAnyAuthority('ROLE_ADMIN') --> <a href="/admin/item/new">매 치</a>
+					<!-- hasAnyAuthority('ROLE_ADMIN') --> <a href="/match/matchList">매 치</a>
 					<!-- 상품등록 -->
 				</li>
 				<li >
@@ -20,7 +20,7 @@
 				</li>
 				<li>
 					<!-- isAuthenticated()  /cart  장바구니--> 
-					<a href="/marketList">키위마켓</a> 
+					<a href="/market/marketList">키위마켓</a> 
 				</li>
 				<li>
 					<!-- isAuthenticated() --> <a href="https://app.gather.town/app/QzY1PVfgtOza8exE/kiwi">소곤소곤</a>
