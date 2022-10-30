@@ -66,6 +66,9 @@ public class MemberController {
 			memberService.saveMember(member);
 			model.addAttribute("Message", "회원가입이 완료되었습니다.");
 		} catch (IllegalStateException e) {
+			model.addAttribute("genders", Gender.values());
+			model.addAttribute("bnames", Bank.values());
+			model.addAttribute("local", Address.values());
 			System.out.println("에러 메시지 전이야!");
 			model.addAttribute("errorMessage", e.getMessage());
 			System.out.println("에러 메시지 후야!");
