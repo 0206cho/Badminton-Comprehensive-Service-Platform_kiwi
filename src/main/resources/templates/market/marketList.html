@@ -123,12 +123,12 @@ a {
 			<option value="16">제주도</option>
 		</select>
 
-    	<form class="form-inline" method="get" th:action="@{/marketList}">
+    	<form class="form-inline" method="get" th:action="@{/market/marketList}">
     	<label for ="searchText" class="sr-only">검색</label>
 		<input type="text" id="searchText" name="searchText" th:value="${param.searchText}" style="width: 280px; height: 36px; margin-bottom: 0x; padding-bottom: 0px; margin-right: 10px;">
 		<button class="btn btn-outline-success" type="submit" style="width: 80px; margin-right: 30px">검색</button></form>
 		<button type="button" class="btn btn-kiwi" style="width: 120px;"
-			onclick="location.href='/admin/market/new'">글쓰기</button>
+			onclick="location.href='/market/marketNew'">글쓰기</button>
 	</div>
 
 	<div class="container" style="margin-top: 0x; padding-top: 0px;">
@@ -165,17 +165,17 @@ a {
 	<nav aria-label="Page navigation example">
 		<ul class="pagination my">
 			<li class="page-item" th:classappend="${1 == list.pageable.pageNumber + 1} ? 'disabled' : '' ">
-				<a class="page-link" aria-label="Previous" th:href="@{/marketList/(page=${list.pageable.pageNumber - 1}, search=${param.searchText})}">
+				<a class="page-link" aria-label="Previous" th:href="@{/market/marketList/(page=${list.pageable.pageNumber - 1}, search=${param.searchText})}">
 					<span aria-hidden="true" style="color: #70ACB1;">◀</span>
 				</a>
 			</li>
 			
 			<li class="page-item" th:classappend="${i == list.pageable.pageNumber + 1} ? 'active' : '' " th:each="i : ${#numbers.sequence(startPage, endPage)}">
-				<a class="page-link" style="color: black;" th:href="@{/marketList/(page=${i-  1}, search=${param.searchText})}"	th:classappend="${i - 1} == -1 ? 'pageno' : '' " th:text="${i}">1</a>
+				<a class="page-link" style="color: black;" th:href="@{/market/marketList/(page=${i-  1}, search=${param.searchText})}"	th:classappend="${i - 1} == -1 ? 'pageno' : '' " th:text="${i}">1</a>
 			</li>
 			
 			<li class="page-item" th:classappend="${list.totalPages == list.pageable.pageNumber + 1} ? 'disabled' : '' ">
-				<a class="page-link" aria-label="Next" style="color: #70ACB1;" th:href="@{/marketList/(page=${list.pageable.pageNumber + 1}, search=${param.searchText})}">
+				<a class="page-link" aria-label="Next" style="color: #70ACB1;" th:href="@{/market/marketList/(page=${list.pageable.pageNumber + 1}, search=${param.searchText})}">
 					<span aria-hidden="true">▶</span>
 				</a>
 			</li>

@@ -134,7 +134,7 @@ a {
 
 <div layout:fragment="content">
 	<form role="form" method="post" enctype="multipart/form-data"
-		action="/admin/market/new" th:object="${marketDto}" name="market_form">
+		action="/market/marketNew" th:object="${marketDto}" name="market_form">
 		<p th:if="${#fields.hasErrors('price')}" th:errors="*{price}"
 			class="fieldError" style="margin-left: 380px;">Incorrect data</p>
 		<div class="head">
@@ -186,7 +186,7 @@ a {
 
 
 			<button type="button" class="btn btn-cancel" style="width: 120px;"
-				onclick="location.href='/marketList'">취소</button>
+				onclick="location.href='/market/marketList'">취소</button>
 			<div th:if="${#strings.isEmpty(marketDto.id)}" 	style="text-align: center">
 				<button type="button" onclick="check();" class="btn btn-kiwi submit" style="width: 100px;">등록</button>
 				<!--  data-bs-toggle="modal" data-bs-target="#exampleModal" -->
