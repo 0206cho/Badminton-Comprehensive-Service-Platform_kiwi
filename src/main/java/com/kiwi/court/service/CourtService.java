@@ -2,6 +2,8 @@ package com.kiwi.court.service;
 
 import java.util.List;
 
+import javax.persistence.EntityNotFoundException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,8 +25,12 @@ public class CourtService {
 		List<Court> findAll = courtRepository.findAll();
 		return findAll;
 	}
-//	public void testBBB() {
-//		System.out.println("===========>" + courtRepository.getLat());
-//	}
+	
+	
+	public CourtDto getCourtDtl(Long courtId) {
+		Court court = courtRepository.findById(courtId).orElseThrow(EntityNotFoundException::new);
+		CourtDto dto = CourtDto.of(court);
+		return dto;
+	}
 	
 }

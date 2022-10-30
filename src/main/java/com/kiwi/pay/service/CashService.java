@@ -29,13 +29,7 @@ public class CashService {
 //		member.setKiwicash(memberOriCash + cashRepository.amountSum(member));
 		return cashRepository.save(cash);
 	}
-	
-//	// 유저 캐시 잔액 
-//	public int amountSum(Member member) {
-//		int sum = cashRepository.amountSum(member);
-//		return sum;
-//	}
-	
+		
 	// 유저 캐시 필드 매핑
 	public void cashMapping(Long id, int amount) {
 		Member member = memberRepository.findMemberById(id);

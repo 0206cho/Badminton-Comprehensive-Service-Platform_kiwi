@@ -27,7 +27,7 @@ public class SecurityConfig {
 
 //    // http 요청에 대한 보안설정
 //    protected void configure(HttpSecurity http) throws Exception {
-//
+//		
 //    }
 
    @Autowired
@@ -72,6 +72,7 @@ public class SecurityConfig {
         http.authorizeRequests()
 
                 .mvcMatchers("/css/**","/js/**","/img/**","/video/**","/login/**","/signup/**","/image/title/**","/pay/**", "/pay/charge/**").permitAll()
+
                 .mvcMatchers("/", "https://app.gather.town/**", "/market/**", "/members/**","/item/**","/images/**",  "/image/upload/**", "/oauth2/**","/members/login/**", "/mypage/**", "/pay/**","/court/**", "/match/**").permitAll()
 
                 .mvcMatchers("/admin/**").hasRole("ADMIN")
