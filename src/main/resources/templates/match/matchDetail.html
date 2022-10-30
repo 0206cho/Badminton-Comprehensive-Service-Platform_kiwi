@@ -49,12 +49,12 @@ a {
 }
 
 .floBanPc1 { /*사이드바*/
-   position: fixed;
-   top: 128px; /* 윗쪽 끝에서부터의 거리 */
-   right: 50%;
-   margin-right: -650px; /* 가운데를 기준으로 오른쪽 거리 */
-   clear : left;
-   /*z-index: 20;*/
+	position: fixed;
+	top: 128px; /* 윗쪽 끝에서부터의 거리 */
+	right: 50%;
+	margin-right: -650px; /* 가운데를 기준으로 오른쪽 거리 */
+	clear: left;
+	/*z-index: 20;*/
 }
 </style>
 
@@ -70,6 +70,52 @@ a {
 	integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
 	crossorigin="anonymous"></script>
 
+<!-- 지도 -->
+<script type="text/javascript"
+	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=8d88fe30f1babaf45150d93fec381f08&libraries=clusterer"></script>
+	
+<!-- Channel Plugin Scripts -->
+<!-- <script>
+  (function() {
+    var w = window;
+    if (w.ChannelIO) {
+      return (window.console.error || window.console.log || function(){})('ChannelIO script included twice.');
+    }
+    var ch = function() {
+      ch.c(arguments);
+    };
+    ch.q = [];
+    ch.c = function(args) {
+      ch.q.push(args);
+    };
+    w.ChannelIO = ch;
+    function l() {
+      if (w.ChannelIOInitialized) {
+        return;
+      }
+      w.ChannelIOInitialized = true;
+      var s = document.createElement('script');
+      s.type = 'text/javascript';
+      s.async = true;
+      s.src = 'https://cdn.channel.io/plugin/ch-plugin-web.js';
+      s.charset = 'UTF-8';
+      var x = document.getElementsByTagName('script')[0];
+      x.parentNode.insertBefore(s, x);
+    }
+    if (document.readyState === 'complete') {
+      l();
+    } else if (window.attachEvent) {
+      window.attachEvent('onload', l);
+    } else {
+      window.addEventListener('DOMContentLoaded', l, false);
+      window.addEventListener('load', l, false);
+    }
+  })();
+  ChannelIO('boot', {
+    "pluginKey": "fca736d4-fb37-47ee-a22f-4533d8676e38"
+  });
+</script> -->
+<!-- End Channel Plugin -->
 </head>
 
 <body>
@@ -90,13 +136,13 @@ a {
 				</div>
 
 				<div class="carousel-inner">
-					<div class="carousel-item active" data-bs-interval="10000">
+					<div class="carousel-item active" data-bs-interval="2000">
 						<img src="/img/구장1.png" style="width: 930px; height: 550px;">
 					</div>
-					<div class="carousel-item" data-bs-interval="10000">
+					<div class="carousel-item" data-bs-interval="2000">
 						<img src="/img/구장2.png" style="width: 930px; height: 550px;">
 					</div>
-					<div class="carousel-item" data-bs-interval="10000">
+					<div class="carousel-item" data-bs-interval="2000">
 						<img src="/img/구장3.png" style="width: 930px; height: 550px;">
 					</div>
 				</div>
@@ -168,6 +214,8 @@ a {
 						<div class="tab-pane fade" id="myreview" role="tabpanel"
 							aria-labelledby="myreview-tab">
 							<div style="float: left; text-align: center;">
+								<!-- 카카오 맵 -->
+								<!-- <div id="map" style="width: 500px; height: 300px;"></div> -->
 								<img src="/img/지도예시.png"
 									style="margin-top: 5px; width: 500px; height: 300px;">
 							</div>
@@ -177,7 +225,7 @@ a {
 							<div
 								style="border: 1px solid black; float: left; width: 120px; height: 100px; text-align: center; background-color: #C6F1E7; margin-left: 18px;">
 								<div style="margin-top: 25px;">휴관일</div>
-								<div style="font-weight: bold;">1vs1 (단식)</div>
+								<div style="font-weight: bold;">매주 월요일</div>
 							</div>
 
 							<div
@@ -195,9 +243,10 @@ a {
 							<div style="font-weight: bold;">시설 이용 주의 사항</div>
 							<div style="margin-top: 5px; line-height: 30px;">
 								- 키위에서 진행하는 모든 매치 중, 코트 이용 시 마스크 필수 착용입니다.<br> - 현장 상황에 따라
-								주차장 이용이 어려울 수 있습니다.(배드민턴 구장 직원을 통해 주차권을 받으실 수 있습니다.)<br> -
-								흡연 부스 외에는 모두 금연 시설 입니다.(흡연구역 외에서 흡연 적발 시 서비스 이용에 제한이 있을 수 있습니다.)<br>
-								- 배드민턴 물품 및 배드민턴화 대여 여부는 배드민턴 구장마다 다르므로 구장 안내데스크 지원에게 문의해주세요!
+								주차장 이용이 어려울 수 있습니다. <br>&nbsp;(배드민턴 구장 직원을 통해 주차권을 받으실 수
+								있습니다.)<br> - 흡연 부스 외에는 모두 금연 시설 입니다. <br>&nbsp;(흡연구역
+								외에서 흡연 적발 시 서비스 이용에 제한이 있을 수 있습니다.)<br> - 배드민턴 물품 및 배드민턴화
+								대여 여부는 배드민턴 구장마다 다르므로 구장 안내데스크 지원에게 문의해주세요!
 							</div>
 						</div>
 
@@ -206,12 +255,12 @@ a {
 							aria-labelledby="wishlist-tab">
 							<div style="font-weight: bold;">매치 안내 사항</div>
 							<div style="margin-top: 5px; line-height: 30px;">
-								- 사전 연락 없이 매치에 참여하지 않으셔도 환불은 불가합니다. (또한 향후 키위 서비스 이용에 재한이 있을 수도
-								있습니다.)<br> - 음주 및 흡연과 코트에 오물을 투처하는 행위를 금지합니다.<br> -
-								배드민턴 외의 행위를 금지합니다.(족구, 퀵보드, 반려동물 동반 입장 등)<br> - 매치가 확정되었지만
-								진행에 변동 사항이 있을 경우, 매치 시작 1시간 전까지 안내해드립니다.<br> - 실외 매치 시
-								기상악화로 인한 경기가 취소될 경우, 경기가 종료될 수 있으며, 진행되지 않은 시간은 키위캐시로 환불해 드릴
-								예정입니다.
+								- 사전 연락 없이 매치에 참여하지 않으셔도 환불은 불가합니다. <br>&nbsp;(또한 향후 키위 서비스
+								이용에 재한이 있을 수도 있습니다.)<br> - 음주 및 흡연과 코트에 오물을 투처하는 행위를 금지합니다.<br>
+								- 배드민턴 외의 행위를 금지합니다. <br>&nbsp;(족구, 퀵보드, 반려동물 동반 입장 등)<br>
+								- 매치가 확정되었지만 진행에 변동 사항이 있을 경우, 매치 시작 1시간 전까지 안내해드립니다.<br> -
+								실외 매치 시 기상악화로 인한 경기가 취소될 경우, 경기가 종료될 수 있으며, 진행되지 않은 시간은 키위캐시로
+								환불해 드릴 예정입니다.
 							</div>
 						</div>
 					</div>
@@ -220,12 +269,8 @@ a {
 
 				<div style="float: left; width: 30%;">
 
-
-					
-
 					<!-- 사이드 바 -->
-					<div class="col col-xl-3 col-lg-3 col-md-6 "
-						style="float: left;">
+					<div class="col col-xl-3 col-lg-3 col-md-6 " style="float: left;">
 						<div class="card" style="width: 280px; border-color: black;">
 							<div class="card-body">
 								<h6 class="card-title">2022년 8월 30일 6:00</h6>
@@ -236,7 +281,8 @@ a {
 								</div>
 								<div style="float: left;">&nbsp;/ 2시간</div>
 								<br> <br>
-								<button type="button" class="btn btn-kiwi" style="width: 250px;">신청하기</button>
+								<button type="button" class="btn btn-kiwi" style="width: 250px;"
+									onclick="location.href='/cash/court'">신청하기</button>
 							</div>
 						</div>
 					</div>
@@ -247,13 +293,57 @@ a {
 
 
 		</div>
-
+		<br> <Br> <br>
 	</div>
 
 
 
 
 	<div th:replace="fragments/footer::footer"></div>
+	<script th:inline="javascript">
+		/*<![CDATA[*/
+		var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+		mapOption = {
+			center : new kakao.maps.LatLng(37.40785375, 126.6325097), // 지도의 중심좌표
+			level : 3
+		// 지도의 확대 레벨
+		};
+
+		var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+		// 마커 이미지의 이미지 크기 입니다
+		var imageSize = new kakao.maps.Size(50, 50);
+		var imageSrc = "/img/bad2.png";
+		// 마커 이미지를 생성합니다    
+		var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
+
+		// 일반 지도와 스카이뷰로 지도 타입을 전환할 수 있는 지도타입 컨트롤을 생성합니다
+		var mapTypeControl = new kakao.maps.MapTypeControl();
+
+		// 지도에 컨트롤을 추가해야 지도위에 표시됩니다
+		// kakao.maps.ControlPosition은 컨트롤이 표시될 위치를 정의하는데 TOPRIGHT는 오른쪽 위를 의미합니다
+		map.addControl(mapTypeControl, kakao.maps.ControlPosition.TOPRIGHT);
+
+		// 지도 확대 축소를 제어할 수 있는  줌 컨트롤을 생성합니다
+		var zoomControl = new kakao.maps.ZoomControl();
+		map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
+
+		// 마커가 표시될 위치입니다 
+		var markerPosition = new kakao.maps.LatLng(37.40785375, 126.6325097);
+
+		console.log(data.lat, data.lng);
+
+		// 마커를 생성합니다
+		var marker = new kakao.maps.Marker({
+			position : markerPosition,
+			image : markerImage
+		// 마커 이미지 
+		});
+
+		// 마커가 지도 위에 표시되도록 설정합니다
+		marker.setMap(map);
+
+		/*]]>*/
+	</script>
 </body>
 </html>
 
