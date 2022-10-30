@@ -20,6 +20,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -34,6 +35,7 @@ import com.kiwi.market.service.MarketService;
 
 import lombok.RequiredArgsConstructor;
 
+@RequestMapping("/market")
 @Controller
 @RequiredArgsConstructor
 public class MarketController {
@@ -49,13 +51,13 @@ public class MarketController {
 	@Autowired
 	private MarketRepository marketRepository;
 
-	@GetMapping(value = "/admin/market/new")
+	@GetMapping(value = "/marketNew")
 	public String market(Model model) {
 		model.addAttribute("marketDto", new MarketDto());
 		return "/market/marketForm";
 	}
 
-	@PostMapping(value = "/admin/market/new")
+	@PostMapping(value = "/marketNew")
 	public String marketNew(@Valid MarketDto marketDto, BindingResult bindingResult, Model model, MultipartFile file) throws Exception {
 		if (bindingResult.hasErrors()) {
 			System.out.println("-------------------->바인딩에러");
@@ -69,7 +71,7 @@ public class MarketController {
 			return "market/marketForm";
 		}
 		// 상품이 정상적으로 등록되었다면 메인 페이지로 이동
-		return "redirect:/marketList"; // return "redirect:/";
+		return "redirect:/market/marketList"; // return "redirect:/";
 	}
 
 	@PostMapping(value = "/image/upload")
@@ -135,16 +137,18 @@ public class MarketController {
 		System.out.println(searchText);
 		int startPage = Math.max(1, list.getPageable().getPageNumber() - 7);
 		int endPage = Math.min(list.getTotalPages(), list.getPageable().getPageNumber() + 7);
+		
 		model.addAttribute("startPage", startPage);
         model.addAttribute("endPage", endPage);
         model.addAttribute("markets", list);
 		
 		model.addAttribute("list", list);
-		System.out.println(">>>>>>>>>>>>>>>>>>>>> market list : " + list);
+		//System.out.println(">>>>>>>>>>>>>>>>>>>>> market list : " + list);
+		
 		return "/market/marketList";
 	}
 
-	@GetMapping("/market/marketDetail/{id}")
+	@GetMapping("/marketDetail/{id}")
 	public String marketDetail(@PathVariable("id") Long id, Model model) {
 		Market market = marketService.marketDetail(id);
 		model.addAttribute("market", market);
@@ -154,7 +158,7 @@ public class MarketController {
 		return "/market/marketDetail";
 	}
 
-	@GetMapping("/market/marketUpdate/{id}")
+	@GetMapping("/marketUpdate/{id}")
 	public String mDetail(@PathVariable("id") Long id, Model model) {
 		Market market = marketService.marketDetail(id);
 		model.addAttribute("market", market);
@@ -162,7 +166,7 @@ public class MarketController {
 	}
 
 	// 수정
-	@PostMapping(value = "/market/marketUpdate/{id}")
+	@PostMapping(value = "/marketUpdate/{id}")
 	public String marketUpdate(Market market, MultipartFile file) throws Exception {
 //		System.out.println(">>>>>>>>>>>>>>>>>>>>>> ID : " + market.getId());
 //		System.out.println(">>>>>>>>>>>>>>>>>>>>>> Detail : " + market.getDetail());
@@ -172,14 +176,14 @@ public class MarketController {
 //		System.out.println(">>>>>>>>>>>>>>>>>>>>>> Filepath : " + market.getFilepath());
 		marketService.updateMarket(market, file);
 
-		return "redirect:/marketList"; // return "redirect:/";
+		return "redirect:/market/marketList"; // return "redirect:/";
 	}
 
 	// 삭제
-	@GetMapping(value = "/market/marketDelete/{id}")
+	@GetMapping(value = "/marketDelete/{id}")
 	public String marketDelete(@PathVariable("id") Long id) {
 		marketService.deleteMarket(id);
-		return "redirect:/marketList"; // return "redirect:/";
+		return "redirect:/market/marketList"; // return "redirect:/";
 	}
 	
 }

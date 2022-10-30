@@ -94,19 +94,6 @@ a {
 	margin-bottom: 50px;
 }
 
-.aa {
-	text-align: center;
-	display: table;
-	border: 1px solid #cecece;
-	width: 280px;
-	height: 250px;
-}
-
-.detail {
-	display: table-cell;
-	vertical-align: middle;
-}
-
 img {
 	max-width: 600px;
 	max-height: 600px;
@@ -191,14 +178,11 @@ img {
 	</form>
 
 	<hr>
-	<div calss="aa">
+	<div>
 		<img th:src="${market.filepath}" class="card-img-top" alt="이미지 로딩중">
 		<br> <br>
-		<div calss="detail" style="padding-left: 12px"
-			th:utext="${market.detail}">내용</div>
+		<div style="padding-left: 12px" th:utext="${market.detail}">내용</div>
 	</div>
-	<!-- <img src="/img/라켓1.jpg" class="card-img-top" alt="이미지 로딩중"
-			style="width: 15rem; height: 15rem; margin: auto; padding-top: 15px;"> -->
 	<br>
 	<hr style="height: 5px; color: black;">
 	<h4
@@ -206,43 +190,31 @@ img {
 
 	<!-- 댓글 -->
 	<div th:each="vo : ${list}">
-		<div class="flex-container" style="padding-left: 12px;">
-			<div style="display: flex; flex-direction: column; justify-content: flex-start; width: 8%; height: 100%">
-				<img class="logo" src="/img/kiwi.png" alt="kiwi"
-					style="margin-right: 10px;">
-			</div>
-			<div class="flex-container-col">
-				<div class="flex-container">
-					<h5
-						style="padding-right: 10px; font-weight: bold; margin-top: 5px;" th:text="${vo.createdBy}">작성자</h5>
-					<!-- <img src="/img/더보기.png" alt="더보기"
-						style="width: 5%; height: 5%; padding-bottom: 10px; float: right; margin-left: auto; text-align: center;"> -->
-						<label
-					style="background-color: #70ACB1; padding: 5px; border-color: black; border: 1px solid black; color: white;">글쓴이</label>
-						<input type="hidden" id="comment_id" th:value="${vo.id}"/>
-						<a type="button" id="comment-btn-delete" class="btn btn-kiwi" style="float: right; margin-left: auto; margin-right:0px;">삭제하기</a>
+		<span th:if="${vo.market.id == market.id}">
+			<div class="flex-container" style="padding-left: 12px;">
+				<div
+					style="display: flex; flex-direction: column; justify-content: flex-start; width: 8%; height: 100%">
+					<img class="logo" src="/img/kiwi.png" alt="kiwi"
+						style="margin-right: 10px;">
 				</div>
-				<div style="width: 850px" th:text="${vo.content}">댓글 내용 출력되어야 정상</div>
+				<div class="flex-container-col">
+					<div class="flex-container">
+						<h5
+							style="padding-right: 10px; font-weight: bold; margin-top: 5px;"
+							th:text="${vo.createdBy}">작성자</h5>
+						<label
+							style="background-color: #70ACB1; padding: 5px; border-color: black; border: 1px solid black; color: white;">글쓴이</label>
+						<input type="hidden" id="comment_id" th:value="${vo.id}" /> <a
+							type="button" id="comment-btn-delete" class="btn btn-kiwi"
+							style="float: right; margin-left: auto; margin-right: 0px;">삭제하기</a>
+					</div>
+					<div style="width: 850px" th:text="${vo.content}">댓글 내용 출력되어야
+						정상</div>
+				</div>
 			</div>
-		</div>
-		<hr>
+			<hr>
+		</span>
 	</div>
-
-	<!--  댓글 리스트 예시
-    <div class="card">
-        <div class="card-header">댓글</div>
-        <ul id="reply--box" class="list-group" th:each="market : ${market.commentList}">
-            <li th:id="'reply--' + ${comment.id}" class="list-group-item d-flex justify-content-between">
-                <div th:text="${comment.content}"></div>
-                <div class="d-flex">
-                    <span class="text-monospace mr-1">작성자: &nbsp;</span><div class="text-monospace mr-1" th:text="${reply.user.username}"></div>
-                    <button class="badge btn-warning">수정</button><span> | </span>
-                    <button class="badge btn-danger">삭제</button>
-                </div>
-            </li>
-        </ul>
-    </div>
-    -->
 
 	<div class="ans">
 		<input type="hidden" id="market_id" th:value="${market.id}"> <input
