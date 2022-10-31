@@ -54,8 +54,6 @@ public class Cash {
 	@JoinColumn(name = "member_id")
 	private Member member;
 	
-	
-	
 	public Cash(int amount, String merchant_uid, String imp_uid, String apply_num) {
 		this.amount = amount;
 		this.merchant_uid = merchant_uid;
@@ -63,6 +61,4 @@ public class Cash {
 		this.apply_num = apply_num;
 		this.time = LocalDateTime.now();
 	}
-	
-	
 }

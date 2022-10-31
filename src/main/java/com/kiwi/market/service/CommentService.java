@@ -21,10 +21,14 @@ public class CommentService {
 
 	// 댓글 작성
 	@Transactional
-	public void commentSave(Long marketId, String content, Comment comment) { // Member member
+	public void commentSave(Long marketId, String content, Comment comment, String memberName, String memberImage, Long memberId) { // Member member
 		Market market = marketRepository.findById(marketId)
 				.orElseThrow(() -> new IllegalArgumentException("해당 marketId가 없습니다. id=" + marketId));
 
+		comment.setMemId(memberId);
+		comment.setMemName(memberName);
+		comment.setMemImg(memberImage);
+		
 		comment.save(market, content); // , member
 		commentRepository.save(comment);
 	}

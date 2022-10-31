@@ -21,7 +21,7 @@ public class UploadFile {
 	@Value("${resource}")
 	private String path;
 	
-	public void fildUpload(MarketDto dto, MultipartFile file) throws IOException {
+	public void fildUpload(Market market, MultipartFile file) throws IOException {
 		
 		String oriFileName = file.getOriginalFilename();
 		
@@ -35,9 +35,9 @@ public class UploadFile {
 		
 		FileCopyUtils.copy(file.getBytes(), uploadFile);
 		
-		dto.setFilename(fileName);
-		dto.setFilepath(File.separator + "image\\title" + fileName);
-		dto.setOriImgName(oriFileName);
+		market.setFilename(fileName);
+		market.setFilepath(File.separator + "image\\title" + fileName);
+		market.setOriImgName(oriFileName);
 	}
 	
 	public void fildUpload2(Market market, MultipartFile file) throws IOException {

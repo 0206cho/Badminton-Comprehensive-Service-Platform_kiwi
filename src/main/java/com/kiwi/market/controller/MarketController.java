@@ -14,6 +14,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -26,6 +27,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.kiwi.config.auth.PrincipalDetails;
 import com.kiwi.market.dto.MarketDto;
 import com.kiwi.market.entity.Comment;
 import com.kiwi.market.entity.Market;
@@ -58,20 +60,26 @@ public class MarketController {
 	}
 
 	@PostMapping(value = "/marketNew")
-	public String marketNew(@Valid MarketDto marketDto, BindingResult bindingResult, Model model, MultipartFile file) throws Exception {
+	public String marketNew(@Valid MarketDto marketDto, BindingResult bindingResult, Model model, MultipartFile file, @AuthenticationPrincipal PrincipalDetails principalDetails)
+			throws Exception {
 		if (bindingResult.hasErrors()) {
 			System.out.println("-------------------->바인딩에러");
 			return "market/marketForm";
 		}
 
 		try {
-			marketService.saveMarket(marketDto, file);
+			Market market = Market.createMarket(marketDto);
+			String memberName = principalDetails.getMember().getName();
+			String memberImage = principalDetails.getMember().getImage();
+			Long memberId = principalDetails.getMember().getId();
+			
+			marketService.saveMarket(market, file, memberName, memberImage, memberId);
 		} catch (Exception e) {
 			model.addAttribute("errorMessage", "상품 등록 중 에러가 발생하였습니다.");
 			return "market/marketForm";
 		}
 		// 상품이 정상적으로 등록되었다면 메인 페이지로 이동
-		return "redirect:/market/marketList"; // return "redirect:/";
+		return "redirect:/market/marketList";
 	}
 
 	@PostMapping(value = "/image/upload")
@@ -96,7 +104,7 @@ public class MarketController {
 
 		// 서버에 저장될 때 중복된 파일 이름인 경우를 방지하기 위해 UUID에 확장자를 붙여 새로운 파일 이름을 생성
 		String newFileName = UUID.randomUUID() + ext;
-	
+
 		// 현재경로/upload/파일명이 저장 경로
 		String savePath = marketImgLocation + newFileName;
 
@@ -126,64 +134,72 @@ public class MarketController {
 //		System.out.println(">>>>>>>>>>>>>>>>>>>>> market list : " + list);
 //		return "/market/marketList";
 //	}
-	
+
 	// 마켓 리스트 - 페이지
 	@GetMapping("/marketList")
-	public String marketList(Model model, @PageableDefault(size = 8, sort = "id", direction = Sort.Direction.DESC) Pageable pageable, @RequestParam(required = false, defaultValue = "") String searchText) {
-		//list.getPageable().getPageNumber(); //: 현재 페이지 번호
+	public String marketList(Model model,
+			@PageableDefault(size = 8, sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
+			@RequestParam(required = false, defaultValue = "") String searchText) {
+		// list.getPageable().getPageNumber(); //: 현재 페이지 번호
 		// getTotalElements() : 전체 데이터 건수
 		// getTotalPages() : 총 페이지 개수
 		Page<Market> list = marketRepository.findByTitleContainingOrDetailContaining(searchText, searchText, pageable);
 		System.out.println(searchText);
 		int startPage = Math.max(1, list.getPageable().getPageNumber() - 7);
 		int endPage = Math.min(list.getTotalPages(), list.getPageable().getPageNumber() + 7);
-		
+
 		model.addAttribute("startPage", startPage);
-        model.addAttribute("endPage", endPage);
-        model.addAttribute("markets", list);
-		
+		model.addAttribute("endPage", endPage);
+		model.addAttribute("markets", list);
+
 		model.addAttribute("list", list);
-		//System.out.println(">>>>>>>>>>>>>>>>>>>>> market list : " + list);
-		
+
 		return "/market/marketList";
 	}
 
+	// 마켓 상세 페이지
 	@GetMapping("/marketDetail/{id}")
-	public String marketDetail(@PathVariable("id") Long id, Model model) {
+	public String marketDetail(@PathVariable("id") Long id, Model model,
+			@AuthenticationPrincipal PrincipalDetails principalDetails) {
+		
+//		if(principalDetails == null) {
+//			
+//		}
+		
+		Long memberId = principalDetails.getMember().getId();
 		Market market = marketService.marketDetail(id);
 		model.addAttribute("market", market);
+		model.addAttribute("memberId", memberId); // 현재 로그인 한 ID
+		
 		List<Comment> list = commentService.commentList();
 		model.addAttribute("list", list);
-		System.out.println(">>>>>>>>>>>>>>>>>>>>> list : " + list);
 		return "/market/marketDetail";
 	}
 
+	// 마켓 수정 페이지
 	@GetMapping("/marketUpdate/{id}")
-	public String mDetail(@PathVariable("id") Long id, Model model) {
+	public String mDetail(@PathVariable("id") Long id, Model model, @AuthenticationPrincipal PrincipalDetails principalDetails) {
+		Long memberId = principalDetails.getMember().getId();
 		Market market = marketService.marketDetail(id);
+		model.addAttribute("memberId", memberId); // 현재 로그인 한 ID
 		model.addAttribute("market", market);
 		return "/market/marketUpdate";
 	}
 
-	// 수정
+	// 마켓 수정 페이지
 	@PostMapping(value = "/marketUpdate/{id}")
 	public String marketUpdate(Market market, MultipartFile file) throws Exception {
 //		System.out.println(">>>>>>>>>>>>>>>>>>>>>> ID : " + market.getId());
-//		System.out.println(">>>>>>>>>>>>>>>>>>>>>> Detail : " + market.getDetail());
-//		System.out.println(">>>>>>>>>>>>>>>>>>>>>> Title : " + market.getTitle());
-//		System.out.println(">>>>>>>>>>>>>>>>>>>>>> Price : " + market.getPrice());
-//		System.out.println(">>>>>>>>>>>>>>>>>>>>>> Filename : " + market.getFilename());
-//		System.out.println(">>>>>>>>>>>>>>>>>>>>>> Filepath : " + market.getFilepath());
 		marketService.updateMarket(market, file);
 
-		return "redirect:/market/marketList"; // return "redirect:/";
+		return "redirect:/market/marketList";
 	}
 
-	// 삭제
+	// 마켓 삭제 페이지
 	@GetMapping(value = "/marketDelete/{id}")
 	public String marketDelete(@PathVariable("id") Long id) {
 		marketService.deleteMarket(id);
-		return "redirect:/market/marketList"; // return "redirect:/";
+		return "redirect:/market/marketList";
 	}
-	
+
 }
