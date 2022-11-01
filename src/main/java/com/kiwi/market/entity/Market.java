@@ -5,6 +5,8 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,6 +15,8 @@ import javax.persistence.Lob;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.kiwi.market.constant.ItemSellStatus;
+import com.kiwi.market.dto.MarketDto;
 import com.kiwi.shop.entity.BaseEntity;
 
 import lombok.AllArgsConstructor;
@@ -47,8 +51,9 @@ public class Market extends BaseEntity {
 	@Column(name = "market_price")
 	private String price; // 가격
 
+	@Enumerated(EnumType.STRING)
 	@Column(name = "market_status")
-	private String status; // 판매 여부
+	private ItemSellStatus status; // 판매 여부
 	
 	private String filename;
 	
@@ -65,7 +70,44 @@ public class Market extends BaseEntity {
 	@OneToMany(mappedBy = "market", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
 	private List<Comment> commentList;
 	
-//  @Enumerated(EnumType.STRING)   //@Enumrated는 enum타입 매핑시 사용함!
-//  private MarketSellStatus marketSellStatus;  //상품 판매 상태
-
+	@Column(name = "market_memId")
+	private Long memId;  // 작성자 id
+	
+	@Column(name = "market_memName")
+	private String memName;  // 작성자 이름
+	
+	@Column(name = "market_memImg")
+	private String memImg;  // 작성자 프로필 사진
+	
+	
+	public static Market createMarket(MarketDto marketDto) {
+		Market market = new Market();
+		market.setTitle(marketDto.getTitle());
+		market.setDetail(marketDto.getDetail());
+		market.setPrice(marketDto.getPrice());
+		market.setStatus(ItemSellStatus.SELL);
+		market.setFilename(marketDto.getFilename());
+		market.setFilepath(marketDto.getFilepath());
+		market.setOriImgName(marketDto.getOriImgName());
+		
+		market.setMemId(marketDto.getMemId());
+		market.setMemName(marketDto.getMemName());
+		market.setMemImg(marketDto.getMemImg());
+		return market;
+	}
+	
+	
+	public void updateMarket(MarketDto marketDto) {
+		this.title = marketDto.getTitle();
+		this.detail = marketDto.getDetail();
+		this.price = marketDto.getPrice();
+		this.status = marketDto.getStatus();
+		this.filename = marketDto.getFilename();
+		this.filepath = marketDto.getFilepath();
+		this.oriImgName = marketDto.getOriImgName();
+		
+		this.memId = marketDto.getMemId();
+		this.memName = marketDto.getMemName();
+		this.memImg = marketDto.getMemImg();
+	}
 }

@@ -22,6 +22,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name = "comment")
@@ -29,6 +30,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
+@Setter
 public class Comment extends BaseEntity {
 
 	@Id
@@ -55,10 +57,18 @@ public class Comment extends BaseEntity {
     @OneToMany(mappedBy = "market", fetch = FetchType.EAGER)
     private List<Comment> commentList;
 	
+	@Column(name = "comment_memId")
+	private Long memId;  // 작성자 id
+	
+	@Column(name = "comment_memName")
+	private String memName;  // 작성자 이름
+	
+	@Column(name = "comment_memImg")
+	private String memImg;  // 작성자 프로필 사진
+	
 	public void save(Market market, String content) {
         this.market = market;
         this.content = content;
-//        this.member = member;
     }
 
 }

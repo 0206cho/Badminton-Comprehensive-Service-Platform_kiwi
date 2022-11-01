@@ -23,41 +23,57 @@ import lombok.RequiredArgsConstructor;
 @Transactional
 @RequiredArgsConstructor
 public class MarketService {
-	
+
 	@Autowired
-    MarketRepository marketRepository; // private final MarketRepository marketRepository;
-    
+	MarketRepository marketRepository;
+
 	@Autowired
 	UploadFile uploadFile;
-	
-    public void saveMarket(MarketDto marketDto, MultipartFile file) throws Exception{
-        // 상품 등록
-    	if(file.isEmpty()) {
+
+	public void saveMarket(Market market, MultipartFile file, String memberName, String memberImage, Long memberId) throws Exception {
+		if (file.isEmpty()) {
 			String img = "";
-			marketDto.setFilepath(img);
+			market.setFilepath(img);
 		} else {
-			uploadFile.fildUpload(marketDto, file);
+			uploadFile.fildUpload(market, file);
 		}
-    	marketRepository.save(marketDto.toEntity());
-    	
-    }
-    
-    public void saveMarket(MarketDto marketDto) {
-        // 상품 등록    	
-    	marketRepository.save(marketDto.toEntity());
-    	
-    }
+
+		market.setMemId(memberId);
+		market.setMemName(memberName);
+		market.setMemImg(memberImage);
+		
+		marketRepository.save(market);
+	}
+
+//	public void saveMarket(Market market, MultipartFile file) throws Exception { // 마켓 글 등록
+//		if (file.isEmpty()) {
+//			String img = "";
+//			market.setFilepath(img);
+//		} else {
+//			uploadFile.fildUpload(market, file);
+//		}
+//
+//		market.setMemId(null);
+//		marketRepository.save(market);
+//
+//	}
+
+//    public void saveMarket(Market market) {
+//        // 상품 등록    	
+//    	marketRepository.save(market);
+//    	
+//    }
 
 	public List<Market> maketList() {
 
-		List<Market> list =  marketRepository.findAllByOrderByIdDesc();
-		
+		List<Market> list = marketRepository.findAllByOrderByIdDesc();
+
 		return list;
 	}
 
 	public Market marketDetail(Long id) {
 		Optional<Market> optional = marketRepository.findById(id);
-		if(optional.isPresent()) {
+		if (optional.isPresent()) {
 			Market market = optional.get();
 			return market;
 		} else {
@@ -67,7 +83,7 @@ public class MarketService {
 
 	// 수정
 	public Long updateMarket(Market market, MultipartFile file) throws IOException {
-		if(file.isEmpty()) {
+		if (file.isEmpty()) {
 			String img = "";
 			market.setFilepath(img);
 		} else {
@@ -75,11 +91,10 @@ public class MarketService {
 		}
 		return marketRepository.save(market).getId();
 	}
-	
-	
+
 	// 마켓 글 삭제
 	public void deleteMarket(Long id) {
-		marketRepository.deleteById(id);		
+		marketRepository.deleteById(id);
 	}
 
 	// 마켓 조회 -> 페이지
@@ -91,6 +106,5 @@ public class MarketService {
 //	public Page<Market> findByTitleContainingOrContentContaining(String search, String search2, Pageable pageable) {
 //		return marketRepository.findByTitleContainingOrContentContaining(title, content, pageable);
 //	}
-	
-	
+
 }

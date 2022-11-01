@@ -98,6 +98,12 @@ img {
 	max-width: 600px;
 	max-height: 600px;
 }
+
+.profile { /*프로필 사진*/
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
 </style>
 </th:block>
 
@@ -126,7 +132,8 @@ img {
 			<div class="card" style="width: 13%; border: none;">
 				<div class="card-body" style="padding: 10px; padding-bottom: 0px;">
 
-					<div class="btn-group dropstart" style="padding-bottom: 10px;">
+					<div th:if="${memberId == market.memId}"
+						class="btn-group dropstart" style="padding-bottom: 10px;">
 						<button type="button" class="btn btn-secondary dropdown-toggle"
 							data-bs-toggle="dropdown" aria-expanded="false"
 							style="padding: 0px; background-color: transparent; border: none;">
@@ -156,19 +163,23 @@ img {
 		<div class="flex-container" style="padding-left: 12px;">
 			<div
 				style="display: flex; flex-direction: column; justify-content: flex-start; width: 8%; height: 100%">
-				<img class="logo" src="/img/kiwi.png" alt="kiwi"
-					style="margin-right: 10px;">
+				<img class="profile"
+					th:src="*{market.memImg} != null ? *{market.memImg} : @{/img/kiwiLogo2.png}"
+					alt="kiwi"
+					style="margin-right: 10px; object-fit: cover; border-radius: 30%; overflow: hidden;">
 			</div>
 			<div class="flex-container-col">
 				<div class="flex-container">
-					<h5 style="padding-right: 15px; font-weight: bold"
-						th:text="${market.createdBy}">작성자</h5>
+					<h5
+						style="margin-left: 15px; padding-right: 15px; font-weight: bold"
+						th:text="${market.memName}">작성자</h5>
 					<label
 						style="background-color: #C6F1E7; padding: 5px; border-color: black; border: 1px solid black; margin-right: 10px;">LEVEL-A</label>
 					<label
 						style="background-color: #70ACB1; padding: 5px; border-color: black; border: 1px solid black; color: white">골든키위</label>
 				</div>
-				<div class="flex-container" style="align-items: flex-end;">
+				<div class="flex-container"
+					style="margin-left: 15px; align-items: flex-end;">
 					<h5 th:text="${market.regTime}">YYYY-MM-DD HH:mm:ss형식으로 출력할거에용</h5>
 					<button type="button" class="btn btn-kiwi"
 						style="margin-left: 15cm;">구매하기</button>
@@ -194,22 +205,23 @@ img {
 			<div class="flex-container" style="padding-left: 12px;">
 				<div
 					style="display: flex; flex-direction: column; justify-content: flex-start; width: 8%; height: 100%">
-					<img class="logo" src="/img/kiwi.png" alt="kiwi"
-						style="margin-right: 10px;">
+					<img class="profile"
+						th:src="*{vo.memImg} != null ? *{vo.memImg} : @{/img/kiwiLogo2.png}"
+						alt="kiwi"
+						style="margin-right: 10px; object-fit: cover; border-radius: 30%; overflow: hidden;">
 				</div>
 				<div class="flex-container-col">
 					<div class="flex-container">
 						<h5
-							style="padding-right: 10px; font-weight: bold; margin-top: 5px;"
-							th:text="${vo.createdBy}">작성자</h5>
-						<label
+							style="padding-right: 10px; font-weight: bold; margin-top: 5px; margin-left: 15px;"
+							th:text="${vo.memName}">작성자</h5>
+						<label th:if="${vo.memId == market.memId}"
 							style="background-color: #70ACB1; padding: 5px; border-color: black; border: 1px solid black; color: white;">글쓴이</label>
-						<input type="hidden" id="comment_id" th:value="${vo.id}" /> <a
-							type="button" id="comment-btn-delete" class="btn btn-kiwi"
-							style="float: right; margin-left: auto; margin-right: 0px;">삭제하기</a>
+						<input type="hidden" id="comment_id" th:value="${vo.id}" /> 
+						<a th:if="${memberId == vo.memId}" type="button" id="comment-btn-delete" class="btn btn-kiwi" style="float: right; margin-left: auto; margin-right: 0px;">삭제하기</a>
 					</div>
-					<div style="width: 850px" th:text="${vo.content}">댓글 내용 출력되어야
-						정상</div>
+					<div style="width: 830px; margin-left: 15px;"
+						th:text="${vo.content}">댓글 내용 출력되어야 정상</div>
 				</div>
 			</div>
 			<hr>
