@@ -237,7 +237,7 @@
 
 
 <div layout:fragment="content">
-	<div class="container">
+	<div class="container" style="width:2400px">
 
 		<!-- 
 <div
@@ -417,7 +417,7 @@
 
 		<div style="margin-left: 55px; margin-right: 80px; margin-top: 20px; width: 100%;">
 
-			<div style="float: left; width: 100%;border: 1px solid #808080;margin-bottom:60px;border-radius : 15px;">
+			<div style="float: left; width: 1215px;border: 1px solid #808080;margin-bottom:60px;border-radius : 15px;">
 				<p id="selectCourtName"
 					style="margin-top:37px;margin-left:50px;margin-bottom:5px;font-weight: bold;font-size: 22px;"> 코트를
 					선택해주세요 &#127992;</p>
@@ -425,16 +425,17 @@
 				<p id="selectCourtNumber" style="margin-left:50px;margin-bottom:40px;font-size: 17px;"></p>
 			</div>
 
-			<div style="float: left; width: 100%;padding-bottom:30px">
+			<!-- <div style="float: left; width: 100%;padding-bottom:30px">
 				<p class="name">코트1</p>
-				<button class="btn btn-kiwi first">06:00 <br>~08:00</button>
-				<button class="btn btn-kiwi second">08:00 <br>~10:00</button>
-				<button class="btn btn-kiwi third">10:00 <br>~12:00</button>
-				<button class="btn btn-kiwi fourth">12:00 <br>~14:00</button>
-				<button class="btn btn-kiwi fifth">14:00 <br>~16:00</button>
-				<button class="btn btn-kiwi sixth">16:00 <br>~18:00</button>
-				<button class="btn btn-kiwi serventh">18:00 <br>~20:00</button>
-				<button class="btn btn-kiwi eighth" data-bs-toggle="modal"
+				<button id = "1" class="btn btn-kiwi first" data-bs-toggle="modal"
+			data-bs-target="#exampleModal">06:00 <br>~08:00</button>
+				<button id = "2" class="btn btn-kiwi second">08:00 <br>~10:00</button>
+				<button id = "3" class="btn btn-kiwi third">10:00 <br>~12:00</button>
+				<button id = "4" class="btn btn-kiwi fourth">12:00 <br>~14:00</button>
+				<button id = "5" class="btn btn-kiwi fifth">14:00 <br>~16:00</button>
+				<button id = "6" class="btn btn-kiwi sixth">16:00 <br>~18:00</button>
+				<button id = "7" class="btn btn-kiwi serventh">18:00 <br>~20:00</button>
+				<button id = "8" class="btn btn-kiwi eighth" data-bs-toggle="modal"
 			data-bs-target="#exampleModal">20:00 <br>~22:00</button>
 			</div>
 			<div style="float: left; width: 100%;padding-bottom:30px">
@@ -480,9 +481,12 @@
 				<button class="btn btn-kiwi sixth">16:00 <br>~18:00</button>
 				<button class="btn btn-kiwi serventh">18:00 <br>~20:00</button>
 				<button class="btn btn-kiwi eighth">20:00 <br>~22:00</button>
-			</div>
-			<div style="float: left; width: 100%;padding-bottom:30px">
-				<p class="name">코트6</p>
+			</div> 
+			 <div style="float: left; width: 100%;padding-bottom:30px" >
+				 <p class="name">코트6</p> 
+				 <div >
+				 
+				 </div> 
 				<button class="btn btn-kiwi first">06:00 <br>~08:00</button>
 				<button class="btn btn-kiwi second">08:00 <br>~10:00</button>
 				<button class="btn btn-kiwi third">10:00 <br>~12:00</button>
@@ -491,7 +495,40 @@
 				<button class="btn btn-kiwi sixth">16:00 <br>~18:00</button>
 				<button class="btn btn-kiwi serventh">18:00 <br>~20:00</button>
 				<button class="btn btn-kiwi eighth">20:00 <br>~22:00</button>
+			</div>  -->
+			<div style="float: left; width: 110px; height:600px;" id="div_courtName"  >
 			</div>
+			<div style="float: left; width: 110px; height:600px;margin-right:33px" id="div_court1" >
+			</div>
+			<div style="float: left; width: 110px; height:600px;margin-right:33px" id="div_court2"  >
+			</div>
+			<div style="float: left; width: 110px; height:600px;margin-right:33px" id="div_court3" >
+			</div>
+			<div style="float: left; width: 110px; height:600px;margin-right:33px" id="div_court4" >
+			</div>
+			<div style="float: left; width: 110px; height:600px;margin-right:33px" id="div_court5" >
+			</div>
+			<div style="float: left; width: 110px; height:600px;margin-right:33px" id="div_court6" >
+			</div>
+			<div style="float: left; width: 110px; height:600px;margin-right:35px" id="div_court7" >
+			</div>
+			<div style="float: left; width: 110px; height:600px;" id="div_court8" >
+			</div>
+			
+			<!-- <div class="input-group number-spinner" style="width:20%">
+				<span class="input-group-btn">
+					<button class="btn btn-default" data-dir="dwn"><img src="/img/minus.png" style="width:20px;height:20px"></button>
+				</span>
+				<input type="text" class="form-control text-center" value="1">
+				<span class="input-group-btn" >
+					<button class="btn btn-default" data-dir="up">
+					<img src="/img/plus.png" style="width:20px;height:20px">
+					</button>
+				</span>
+			</div> -->
+			
+			
+		
 		</div>
 		
 		<!-- 모달 -->
@@ -499,14 +536,20 @@
 		aria-labelledby="exampleModalLabel" aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content">
-				<div class="modal-header" style="border: none; padding-bottom: 0px;">
+				<div class="modal-header" style="border: none; padding-bottom: 0px;margin-left:30px">
 					<h5 class="modal-title" id="exampleModalLabel"
 						style="font-weight: bold;">장비대여</h5>
 					
 				</div>
 				<div class="modal-body">
-						<img src="/img/모달예시.png" style="width:400px;height:150px;">
-					
+						<!-- <img src="/img/모달예시.png" style="width:400px;height:150px;"> -->
+						<div style="display: flex; padding-right: 5px;margin-left:30px">
+							라켓
+						</div>
+						
+						<div style="display: flex; padding-right: 5px;margin-top:10px;margin-left:30px">
+							셔틀콕
+						</div>
 				</div>
 				<div class="modal-footer" style="border: none">
 					<button type ="button" class="btn btn-modal"   onclick="location.href='/cash/court'">확인
@@ -520,153 +563,219 @@
 
 
 		<br> <Br> <br> <br> <Br> <br>
-		<script type="text/javascript">
-			var Now = new Date();  /* 현재 시간 */
-			var nowHour = Now.getHours();
-			var nowMins = Now.getMinutes();
-			console.log(nowHour + " " + nowMins);
+		
 
-			/* 시, 분 앞에 0을 붙이는 함수 -> 계산하기 위해서! */
-			function pluszero(time) {
-				var time = time.toString();	// 시간을 숫자에서 문자로 바꿈 
-				if (time.length < 2) {	// 2자리보다 작다면
-					time = '0' + time;	// 숫자 앞에 0을 붙여줌
-					return time;		// 0을 붙여서 값을 리턴
+		<script>
+			$(document).ready(function(){
+				var str_court="";
+				var str_court2="";
+				var str_court3="";
+				var str_court4="";
+				var str_court5="";
+				var str_court6="";
+				var str_court7="";
+				var str_court8="";
+				var str_courtName="";
+				for(var i = 0; i < 6; i++){
+					var html_btn = '<button id = "btn'+i+'" class="btn btn-kiwi second" style="margin-left:0;margin-bottom:30px" data-bs-toggle="modal" data-bs-target="#exampleModal">06:00 <br>~08:00</button>';
+					
+					html_btn = html_btn.replace('{}', i);
+					str_court = str_court + html_btn + '\n';
+				}
+				$('#div_court1').html(str_court);
+		
+				for(var i = 6; i < 12; i++){
+					var html_btn = '<button id = "btn'+i+'" class="btn btn-kiwi second" style="margin-left:0;margin-bottom:30px" data-bs-toggle="modal" data-bs-target="#exampleModal">08:00 <br>~10:00</button>';
+					
+					html_btn = html_btn.replace('{}', i);
+					str_court2 = str_court2 + html_btn + '\n';
+				}
+				$('#div_court2').html(str_court2);
+				
+				for(var i = 12; i < 18; i++){
+					var html_btn = '<button id = "btn'+i+'" class="btn btn-kiwi second" style="margin-left:0;margin-bottom:30px" data-bs-toggle="modal" data-bs-target="#exampleModal">10:00 <br>~12:00</button>';
+					
+					html_btn = html_btn.replace('{}', i);
+					str_court3 = str_court3 + html_btn + '\n';
+				}
+				$('#div_court3').html(str_court3);
+				
+				for(var i = 18; i < 24; i++){
+					var html_btn = '<button id = "btn'+i+'" class="btn btn-kiwi second" style="margin-left:0;margin-bottom:30px" data-bs-toggle="modal" data-bs-target="#exampleModal">12:00 <br>~14:00</button>';
+					
+					html_btn = html_btn.replace('{}', i);
+					str_court4 = str_court4 + html_btn + '\n';
+				}
+				$('#div_court4').html(str_court4);
+				
+				for(var i = 24; i < 30; i++){
+					var html_btn = '<button id = "btn'+i+'" class="btn btn-kiwi second" style="margin-left:0;margin-bottom:30px" data-bs-toggle="modal" data-bs-target="#exampleModal">14:00 <br>~16:00</button>';
+					
+					html_btn = html_btn.replace('{}', i);
+					str_court5 = str_court5 + html_btn + '\n';
+				}
+				$('#div_court5').html(str_court5);
+				
+				for(var i = 30; i < 36; i++){
+					var html_btn = '<button id = "btn'+i+'" class="btn btn-kiwi second" style="margin-left:0;margin-bottom:30px" data-bs-toggle="modal" data-bs-target="#exampleModal">16:00 <br>~18:00</button>';
+					
+					html_btn = html_btn.replace('{}', i);
+					str_court6 = str_court6 + html_btn + '\n';
+				}
+				$('#div_court6').html(str_court6);
+				
+				for(var i = 36; i < 42; i++){
+					var html_btn = '<button id = "btn'+i+'" class="btn btn-kiwi second" style="margin-left:0;margin-bottom:30px" data-bs-toggle="modal" data-bs-target="#exampleModal">18:00 <br>~20:00</button>';
+					
+					html_btn = html_btn.replace('{}', i);
+					str_court7 = str_court7 + html_btn + '\n';
+				}
+				$('#div_court7').html(str_court7);
+				
+				for(var i = 42; i < 48; i++){
+					var html_btn = '<button id = "btn'+i+'" class="btn btn-kiwi second" style="margin-left:0;margin-bottom:30px" data-bs-toggle="modal" data-bs-target="#exampleModal">20:00 <br>~22:00</button>';
+					
+					html_btn = html_btn.replace('{}', i);
+					str_court8 = str_court8 + html_btn + '\n';
+				}
+				$('#div_court8').html(str_court8);
+				
+				
+				
+				for(var i = 1; i < 7; i++){
+					var html_btn = '<p style="float: left;margin-bottom:42px;padding-top:20px"class="name">코트'+i+'</p>';
+					
+					html_btn = html_btn.replace('{}', i);
+					str_courtName = str_courtName + html_btn + '\n';
+				}
+				$('#div_courtName').html(str_courtName);
+				
+
+				// 아래는 시간 구하는 코드
+
+				var Now = new Date();  /* 현재 시간 */
+				var nowHour = Now.getHours();
+				var nowMins = Now.getMinutes();
+				console.log(nowHour + " " + nowMins);
+
+				/* 시, 분 앞에 0을 붙이는 함수 -> 계산하기 위해서! */
+				function pluszero(time) {
+					var time = time.toString();	// 시간을 숫자에서 문자로 바꿈 
+					if (time.length < 2) {	// 2자리보다 작다면
+						time = '0' + time;	// 숫자 앞에 0을 붙여줌
+						return time;		// 0을 붙여서 값을 리턴
+					} else {
+						return time;	// 2자리이상이면 리턴
+					}
+				}
+				nowHour = pluszero(nowHour);
+				nowMins = pluszero(nowMins);
+				console.log(nowHour + " " + nowMins);
+				
+				var nowTime = nowHour + nowMins;
+				console.log(nowTime);
+				
+				if(0600 <= nowTime && 0800 >= nowTime) {
+					for (var i = 0; i <= 5; i++){
+					     (function (i) {
+					         var btn = document.getElementById('btn'+i);
+					         btn.disabled = true;
+							 btn.style.backgroundColor = '#D3D3D3';
+							 btn.style.borderColor = '#808080';
+					     })(i);
+					 }
+				} else if(0800 <= nowTime && 1000>= nowTime){
+					for (var i = 0; i <= 11; i++){
+					     (function (i) {
+					         var btn = document.getElementById('btn'+i);
+					         btn.disabled = true;
+							 btn.style.backgroundColor = '#D3D3D3';
+							 btn.style.borderColor = '#808080';
+					     })(i);
+					 }
+				} else if(1000 <= nowTime && 1200>= nowTime) {
+					for (var i = 0; i <= 17; i++){
+					     (function (i) {
+					         var btn = document.getElementById('btn'+i);
+					         btn.disabled = true;
+							 btn.style.backgroundColor = '#D3D3D3';
+							 btn.style.borderColor = '#808080';
+					     })(i);
+					 }
+					
+				} else if(1200 <= nowTime && 1400>= nowTime) {
+					for (var i = 0; i <= 23; i++){
+					     (function (i) {
+					         var btn = document.getElementById('btn'+i);
+					         btn.disabled = true;
+							 btn.style.backgroundColor = '#D3D3D3';
+							 btn.style.borderColor = '#808080';
+					     })(i);
+					 }
+					
+				} else if(1400 <= nowTime && 1600>= nowTime) {
+					for (var i = 0; i <= 29; i++){
+					     (function (i) {
+					         var btn = document.getElementById('btn'+i);
+					         btn.disabled = true;
+							 btn.style.backgroundColor = '#D3D3D3';
+							 btn.style.borderColor = '#808080';
+					     })(i);
+					 }
+				} else if(1600 <= nowTime && 1800>= nowTime) {
+					for (var i = 0; i <= 35; i++){
+					     (function (i) {
+					         var btn = document.getElementById('btn'+i);
+					         btn.disabled = true;
+							 btn.style.backgroundColor = '#D3D3D3';
+							 btn.style.borderColor = '#808080';
+					     })(i);
+					 }
+				} else if(1800 <= nowTime && 2000>= nowTime) {
+					for (var i = 0; i <= 41; i++){
+					     (function (i) {
+					         var btn = document.getElementById('btn'+i);
+					         btn.disabled = true;
+							 btn.style.backgroundColor = '#D3D3D3';
+							 btn.style.borderColor = '#808080';
+					     })(i);
+					}
+				} 
+				else if(2000 <= nowTime && 2200>= nowTime) {
+					//  for (var i = 0; i <= 47; i++){
+					//      (function (i) {
+					//          var btn = document.getElementById('btn'+i);
+					//          btn.disabled = true;
+					// 		 btn.style.backgroundColor = '#D3D3D3';
+					// 		 btn.style.borderColor = '#808080';
+					//      })(i);
+					//  }
+				}
+				
+				
+				
+				
+			});
+			
+			$(document).on('click', '.number-spinner button', function () {    
+				var btn = $(this),
+					oldValue = btn.closest('.number-spinner').find('input').val().trim(),
+					newVal = 0;
+				
+				if (btn.attr('data-dir') == 'up') {
+					newVal = parseInt(oldValue) + 1;
 				} else {
-					return time;	// 2자리이상이면 리턴
+					if (oldValue > 1) {
+						newVal = parseInt(oldValue) - 1;
+					} else {
+						newVal = 1;
+					}
 				}
-			}
-			nowHour = pluszero(nowHour);
-			nowMins = pluszero(nowMins);
-			console.log(nowHour + " " + nowMins);
-			
-			var nowTime = nowHour + nowMins;
-			console.log(nowTime);
-			
-			var first = document.getElementsByClassName("first");
-			var second = document.getElementsByClassName("second");
-			var third = document.getElementsByClassName("third");
-			var fourth = document.getElementsByClassName("fourth");
-			var fifth = document.getElementsByClassName("fifth");
-			var sixth = document.getElementsByClassName("sixth");
-			var serventh = document.getElementsByClassName("serventh");
-			var eighth = document.getElementsByClassName("eighth");
-			console.log(second.length);
-			
-			if(0600 <= nowTime && 0800 >= nowTime) {
-				for (var i = 0; i<6; i++) {
-					first[i].disabled = true;
-					first[i].style.backgroundColor = 'yellow';
-				}
-			} else if(0800 <= nowTime && 1000>= nowTime){
-				for (var i = 0; i<6; i++) {
-					first[i].disabled = true;
-					second[i].disabled = true;
-				}
-			} else if(1000 <= nowTime && 1200>= nowTime) {
-				for (var i = 0; i<6; i++) {
-					first[i].disabled = true;
-					second[i].disabled = true;
-					third[i].disabled = true;
-				}
-				
-			} else if(1200 <= nowTime && 1400>= nowTime) {
-				for (var i = 0; i<6; i++) {
-					first[i].disabled = true;
-					second[i].disabled = true;
-					third[i].disabled = true;
-					fourth[i].disabled = true;
-				}
-				
-			} else if(1400 <= nowTime && 1600>= nowTime) {
-				for (var i = 0; i<6; i++) {
-					first[i].disabled = true;
-					second[i].disabled = true;
-					third[i].disabled = true;
-					fourth[i].disabled = true;
-					fifth[i].disabled = true;
-					first[i].style.backgroundColor = '#D3D3D3';
-					first[i].style.borderColor = '#808080';
-					second[i].style.backgroundColor = '#D3D3D3';
-					second[i].style.borderColor = '#808080';
-					third[i].style.backgroundColor = '#D3D3D3';
-					third[i].style.borderColor = '#808080';
-					fourth[i].style.backgroundColor = '#D3D3D3';
-					fourth[i].style.borderColor = '#808080';
-					fifth[i].style.backgroundColor = '#D3D3D3';
-					fifth[i].style.borderColor = '#808080';
-					
-					
-				}
-			} else if(1600 <= nowTime && 1800>= nowTime) {
-				for (var i = 0; i<6; i++) {
-					first[i].disabled = true;
-					second[i].disabled = true;
-					third[i].disabled = true;
-					fourth[i].disabled = true;
-					fifth[i].disabled = true;
-					sixth[i].disabled = true;
-					first[i].style.backgroundColor = '#D3D3D3';
-					first[i].style.borderColor = '#808080';
-					second[i].style.backgroundColor = '#D3D3D3';
-					second[i].style.borderColor = '#808080';
-					third[i].style.backgroundColor = '#D3D3D3';
-					third[i].style.borderColor = '#808080';
-					fourth[i].style.backgroundColor = '#D3D3D3';
-					fourth[i].style.borderColor = '#808080';
-					fifth[i].style.backgroundColor = '#D3D3D3';
-					fifth[i].style.borderColor = '#808080';
-					sixth[i].style.backgroundColor = '#D3D3D3';
-					sixth[i].style.borderColor = '#808080';
-				}
-			} else if(1800 <= nowTime && 2000>= nowTime) {
-				for (var i = 0; i<6; i++) {
-					first[i].disabled = true;
-					second[i].disabled = true;
-					third[i].disabled = true;
-					fourth[i].disabled = true;
-					fifth[i].disabled = true;
-					sixth[i].disabled = true;
-					serventh[i].disabled = true;
-					first[i].style.backgroundColor = '#D3D3D3';
-					first[i].style.borderColor = '#808080';
-					second[i].style.backgroundColor = '#D3D3D3';
-					second[i].style.borderColor = '#808080';
-					third[i].style.backgroundColor = '#D3D3D3';
-					third[i].style.borderColor = '#808080';
-					fourth[i].style.backgroundColor = '#D3D3D3';
-					fourth[i].style.borderColor = '#808080';
-					fifth[i].style.backgroundColor = '#D3D3D3';
-					fifth[i].style.borderColor = '#808080';
-					sixth[i].style.backgroundColor = '#D3D3D3';
-					sixth[i].style.borderColor = '#808080';
-					serventh[i].style.backgroundColor = '#D3D3D3';
-					serventh[i].style.borderColor = '#808080';
-				}
-			} 
-			else if(2000 <= nowTime && 2200>= nowTime) {
-				for (var i = 0; i<6; i++) {
-					first[i].disabled = true;
-					second[i].disabled = true;
-					third[i].disabled = true;
-					fourth[i].disabled = true;
-					fifth[i].disabled = true;
-					sixth[i].disabled = true;
-					serventh[i].disabled = true;
-					//eighth[i].disabled = true;
-				}
-			}
-			
-			
-			
-			
-	//var btn = document.getElementsByClassName("first");
-	//console.log(btn.length);
-	// for(var i=0; btn.length;i++){
-	// 	btn[i].disabled=true;
-	// }
+				btn.closest('.number-spinner').find('input').val(newVal);
+			});
 
 		</script>
+
 	</div>
 </div>
 
