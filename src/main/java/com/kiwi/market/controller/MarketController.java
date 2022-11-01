@@ -53,6 +53,7 @@ public class MarketController {
 	@Autowired
 	private MarketRepository marketRepository;
 
+	// 마켓 글 작성 페이지
 	@GetMapping(value = "/marketNew")
 	public String market(Model model) {
 		model.addAttribute("marketDto", new MarketDto());
@@ -162,10 +163,13 @@ public class MarketController {
 	public String marketDetail(@PathVariable("id") Long id, Model model,
 			@AuthenticationPrincipal PrincipalDetails principalDetails) {
 		
-//		if(principalDetails == null) {
-//			
-//		}
+		if(principalDetails == null) {
+			System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>null");
+			principalDetails.getMember().setId(Long.valueOf(0));
+			System.out.println(principalDetails.getMember().getId());
+		}
 		
+		System.out.println(principalDetails);
 		Long memberId = principalDetails.getMember().getId();
 		Market market = marketService.marketDetail(id);
 		model.addAttribute("market", market);
@@ -188,9 +192,18 @@ public class MarketController {
 
 	// 마켓 수정 페이지
 	@PostMapping(value = "/marketUpdate/{id}")
-	public String marketUpdate(Market market, MultipartFile file) throws Exception {
-//		System.out.println(">>>>>>>>>>>>>>>>>>>>>> ID : " + market.getId());
-		marketService.updateMarket(market, file);
+	public String marketUpdate(Market market, MultipartFile file, @AuthenticationPrincipal PrincipalDetails principalDetails) throws Exception {
+		System.out.println(">>>>>>>>>>>>>>>>>>>>>> ID : " + market.getId());
+		System.out.println(">>>>>>>>>>>>>>>>>>>>>> detail : " + market.getDetail());
+		System.out.println(">>>>>>>>>>>>>>>>>>>>>> name : " + market.getMemName());
+		
+		String memberName = principalDetails.getMember().getName();
+		String memberImage = principalDetails.getMember().getImage();
+		Long memberId = principalDetails.getMember().getId();
+		
+		marketService.saveMarket(market, file, memberName, memberImage, memberId);
+		
+		//marketService.updateMarket(market, file);
 
 		return "redirect:/market/marketList";
 	}

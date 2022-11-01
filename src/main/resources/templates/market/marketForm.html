@@ -147,6 +147,7 @@ a {
 			var area16 = ["서귀포시", "제주시", "남제주군", "북제주군"];
 
 
+			
 
 			// 시/도 선택 박스 초기화
 
@@ -159,25 +160,25 @@ a {
 			});
 
 
-
 			// 시/도 선택시 구/군 설정
 
 			$("select[name^=sido]").change(function () {
 				var area = "area" + $("option", $(this)).index($("option:selected", $(this))); // 선택지역의 구군 Array
 				var $gugun = $(this).next(); // 선택영역 군구 객체
 				$("option", $gugun).remove(); // 구군 초기화
-
+				console.log(">>>>>>>>> 지역 : " + $("#sido1").val());			
 				if (area == "area0")
 					$gugun.append("<option value=''>지역</option>");
 				else {
 					$.each(eval(area), function () {
 						$gugun.append("<option value='" + this + "'>" + this + "</option>");
 					});
+					console.log(">>>>>>>>> 도시 2 : " + $("#gugun1").val());
 				}
+				
 			});
-
-
 		});
+
 
 	</script>
 </th:block>
