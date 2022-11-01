@@ -57,7 +57,7 @@ public class MarketController {
 	@GetMapping(value = "/marketNew")
 	public String market(Model model) {
 		model.addAttribute("marketDto", new MarketDto());
-		return "/market/marketForm";
+		return "market/marketForm";
 	}
 
 	@PostMapping(value = "/marketNew")
@@ -112,7 +112,7 @@ public class MarketController {
 		// 브라우저에서 이미지 불러올 때 절대 경로로 불러오면 보안의 위험 있어 상대경로를 쓰거나 이미지 불러오는 jsp 또는 클래스 파일을 만들어
 		// 가져오는 식으로 우회해야 함
 		// 때문에 savePath와 별개로 상대 경로인 uploadPath 만들어줌
-		String uploadPath = "/image/upload/" + newFileName;
+		String uploadPath = "/market/image/upload/" + newFileName;
 
 		// 저장 경로로 파일 객체 생성
 		File file = new File(savePath);
@@ -154,8 +154,9 @@ public class MarketController {
 		model.addAttribute("markets", list);
 
 		model.addAttribute("list", list);
+		
+		return "market/marketList";
 
-		return "/market/marketList";
 	}
 
 	// 마켓 상세 페이지
@@ -177,7 +178,9 @@ public class MarketController {
 		
 		List<Comment> list = commentService.commentList();
 		model.addAttribute("list", list);
-		return "/market/marketDetail";
+
+		return "market/marketDetail";
+
 	}
 
 	// 마켓 수정 페이지
@@ -187,7 +190,7 @@ public class MarketController {
 		Market market = marketService.marketDetail(id);
 		model.addAttribute("memberId", memberId); // 현재 로그인 한 ID
 		model.addAttribute("market", market);
-		return "/market/marketUpdate";
+		return "market/marketUpdate";
 	}
 
 	// 마켓 수정 페이지
