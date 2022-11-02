@@ -42,23 +42,14 @@ public class MatchService {
 		
 	}
 	
-	public List<Matchs> courtTest() {
-		List<Matchs> matchs = matchRepository.findAllByOrderByIdDesc();
-		System.out.println(">>>>>>>>>> courtName : " + matchs.get(0).getReservation().getCourt().getName());
-		
-		return matchs;
-	}
-	
 	// 매치 리스트
 	public List<Matchs> matchList() {
 		List<Matchs> matchs = matchRepository.findAllByOrderByIdDesc();
 		//System.out.println(">>>>>>>>>> courtName : " + matchs.get(0).getReservation().getCourt().getName());
 		
-		
 		return matchs;
 	}
 
-	
 
 //	// 매치 신청
 //	public void saveMatch(Match match) {

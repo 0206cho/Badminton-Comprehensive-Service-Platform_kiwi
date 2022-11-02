@@ -4,6 +4,11 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,10 +21,12 @@ import org.springframework.web.multipart.MultipartFile;
 import com.kiwi.config.auth.PrincipalDetails;
 import com.kiwi.market.dto.MarketDto;
 import com.kiwi.market.entity.Market;
+import com.kiwi.market.repository.MarketRepository;
 import com.kiwi.market.service.CommentService;
 import com.kiwi.market.service.MarketService;
 import com.kiwi.match.dto.MatchDto;
 import com.kiwi.match.entity.Matchs;
+import com.kiwi.match.repository.MatchRepository;
 import com.kiwi.match.service.MatchService;
 
 import lombok.RequiredArgsConstructor;
@@ -30,15 +37,32 @@ import lombok.RequiredArgsConstructor;
 public class MatchController {
 
 	private final MatchService matchService;
+	
+	@Autowired
+	private MatchRepository matchRepository;
 
 	// 매치 메인 - 매치 리스트
+//	@GetMapping("/matchList")
+//	public String matchList(Model model) {
+//		//String courtName = matchService.courtTest(1L);
+//		
+//		List<Matchs> list =  matchService.matchList();
+//		model.addAttribute("list", list);
+//		
+//		return "match/matchList";
+//	}
+	
+	// 매치 메인 - 매치 리스트 (페이징)
 	@GetMapping("/matchList")
-	public String matchList(Model model) {
+	public String matchList(Model model,
+			@PageableDefault(size = 5, sort = "id", direction = Sort.Direction.DESC) Pageable pageable) {
 		//String courtName = matchService.courtTest(1L);
-		
-		List<Matchs> list =  matchService.courtTest();
-		model.addAttribute("list", list);
-		//model.addAttribute("courtName", courtName);
+		Page<Matchs> list = matchRepository.findAll(pageable);
+		int startPage = Math.max(1, list.getPageable().getPageNumber() - 4);
+		int endPage = Math.min(list.getTotalPages(), list.getPageable().getPageNumber() + 4);
+		model.addAttribute("startPage", startPage);
+        model.addAttribute("endPage", endPage);
+        model.addAttribute("list", list);
 		
 		return "match/matchList";
 	}

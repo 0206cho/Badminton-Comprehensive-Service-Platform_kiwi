@@ -288,21 +288,27 @@ a {
 	</div>
 	<br>
 
-	<nav aria-label="Page">
-		<ul class="pagination">
-			<li><a class="page-link" href="#" aria-label="Previous"> <span
-					aria-hidden="true" style="color: #70ACB1;">◀</span>
-			</a></li>
-			<li class="page-item"><a class="page-link" href="#"
-				style="color: black;">1</a></li>
-			<li class="page-item"><a class="page-link" href="#"
-				style="color: black;">2</a></li>
-			<li class="page-item"><a class="page-link" href="#"
-				style="color: black;">3</a></li>
-			<li class="page-item"><a class="page-link" href="#"
-				aria-label="Next" style="color: #70ACB1;"> <span
-					aria-hidden="true">▶</span>
-			</a></li>
+	<nav aria-label="Page navigation example">
+		<ul class="pagination my">
+			<li class="page-item"
+				th:classappend="${1 == list.pageable.pageNumber + 1} ? 'disabled' : '' ">
+				<a class="page-link" aria-label="Previous"
+				th:href="@{/match/matchList/(page=${list.pageable.pageNumber - 1})}">
+					<span aria-hidden="true" style="color: #70ACB1;">◀</span>
+			</a>
+			</li>
+			<li class="page-item"
+				th:classappend="${i == list.pageable.pageNumber + 1} ? 'active' : '' "
+				th:each="i : ${#numbers.sequence(startPage, endPage)}"><a
+				class="page-link" style="color: black;"
+				th:href="@{/match/matchList/(page=${i - 1})}" th:text="${i}">1</a></li>
+			<li class="page-item"
+				th:classappend="${list.totalPages == list.pageable.pageNumber + 1} ? 'disabled' : '' ">
+				<a class="page-link" aria-label="Next" style="color: #70ACB1;"
+				th:href="@{/match/matchList/(page=${list.pageable.pageNumber + 1})}">
+					<span aria-hidden="true">▶</span>
+			</a>
+			</li>
 		</ul>
 	</nav>
 </div>
