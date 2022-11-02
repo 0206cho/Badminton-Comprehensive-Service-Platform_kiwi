@@ -185,8 +185,6 @@ a {
 
 
 <div layout:fragment="content">
-	<form role="form" method="post" enctype="multipart/form-data"
-		action="/market/marketNew" th:object="${marketDto}" name="market_form">
 		<p th:if="${#fields.hasErrors('price')}" th:errors="*{price}"
 			class="fieldError" style="margin-left: 350px;">Incorrect data</p>
 		<div class="head">
@@ -240,7 +238,6 @@ a {
 
 		<input type="hidden" name="_csrf" id="_csrf" th:value="${_csrf.token}">
 
-	</form>
 	<script
 		src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/ckeditor.js"></script>
 	<script
