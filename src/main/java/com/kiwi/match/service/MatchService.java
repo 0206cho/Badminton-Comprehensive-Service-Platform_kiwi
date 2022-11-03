@@ -1,6 +1,7 @@
 package com.kiwi.match.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.kiwi.court.entity.Reservation;
 import com.kiwi.court.repository.CourtRepository;
 import com.kiwi.court.repository.ReservationRepository;
+import com.kiwi.market.entity.Market;
 import com.kiwi.match.entity.Matchs;
 import com.kiwi.match.repository.MatchRepository;
 
@@ -57,6 +59,16 @@ public class MatchService {
 		List<Reservation> reservation = reservationRepository.findAllByOrderByIdDesc();
 		// TODO Auto-generated method stub
 		return reservation;
+	}
+
+	public Matchs matchDetail(Long id) {
+		Optional<Matchs> optional = matchRepository.findById(id);
+		if (optional.isPresent()) {
+			Matchs matchs = optional.get();
+			return matchs;
+		} else {
+			throw new NullPointerException();
+		}
 	}
 
 

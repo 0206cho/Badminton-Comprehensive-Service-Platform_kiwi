@@ -196,12 +196,12 @@ a {
 							<div
 								style="border: 1px solid black; float: left; width: 100px; height: 100px; text-align: center; background-color: #C6F1E7">
 								<img src="/img/진행방식.png" style="margin-top: 5px;">
-								<div style="font-weight: bold;">1vs1 (단식)</div>
+								<div style="font-weight: bold;" th:text="${matchs.type}">1vs1 (단식)</div>
 							</div>
 							<div
 								style="border: 1px solid black; float: left; width: 100px; height: 100px; text-align: center; background-color: #C6F1E7; margin-left: 90px;">
 								<img src="/img/진행방식.png" style="margin-top: 5px;">
-								<div style="font-weight: bold;">모든레벨</div>
+								<div style="font-weight: bold;" th:text="${matchs.level}">모든레벨</div>
 							</div>
 							<br> <br> <br> <br> <br>
 							<div style="line-height: 30px;">
@@ -225,7 +225,7 @@ a {
 							<div
 								style="border: 1px solid black; float: left; width: 120px; height: 100px; text-align: center; background-color: #C6F1E7; margin-left: 18px;">
 								<div style="margin-top: 25px;">휴관일</div>
-								<div style="font-weight: bold;">매주 월요일</div>
+								<div style="font-weight: bold;" th:text="${matchs.reservation.court.holiday}">매주 월요일</div>
 							</div>
 
 							<div
@@ -237,7 +237,7 @@ a {
 							<div
 								style="border: 1px solid black; float: left; width: 120px; height: 100px; text-align: center; background-color: #C6F1E7; margin-left: 50px;">
 								<div style="margin-top: 25px;">전화번호</div>
-								<div style="font-weight: bold;">032-870-2330</div>
+								<div style="font-weight: bold;" th:text="${matchs.reservation.court.call_number}">032-870-2330</div>
 							</div>
 							<br> <br> <br> <br> <br>
 							<div style="font-weight: bold;">시설 이용 주의 사항</div>
@@ -273,13 +273,18 @@ a {
 					<div class="col col-xl-3 col-lg-3 col-md-6 " style="float: left;">
 						<div class="card" style="width: 280px; border-color: black;">
 							<div class="card-body">
-							<form role="form" method="post" enctype="multipart/form-data" action="/market/marketNew" th:object="${marketDto}" name="market_form">
-								<h6 class="card-title">2022년 8월 30일 6:00</h6>
-								<h5 style="font-weight: bold;">연수동 배드민턴장 코트1</h5>
-								<div>인천광역시 연수구 청능대로 205 연수체육공원</div>
-								<br>
-								<div style="float: left;">1vs1(단식)</div>
-								<div style="float: left;">&nbsp;/ 모든레벨</div>
+							<form role="form" method="post" enctype="multipart/form-data" name="market_form">
+							<div style="display: flex;">
+							<h6 class="card-title" th:text="${#temporals.format(matchs.reservation.reservation_time, 'yyyy년 MM월 dd일 ')}">2022년 8월 30일 6:00</h6>
+							<!-- DB에 있는 로컬데이터 타입 파싱 -->
+							<h6 class="card-title" th:text="${matchs.reservation.court_time}" style="margin-left:5px;">06:00</h6>
+						</div>
+						
+								<h5 style="font-weight: bold;" th:text="${matchs.reservation.court.name}">연수동 배드민턴장 코트1</h5>
+								<h5 style="font-weight: bold;" th:text="${matchs.reservation.court_num}">연수동 배드민턴장 코트1</h5>
+								<div th:text="${matchs.reservation.court.address1}">인천광역시 연수구 청능대로 205 연수체육공원</div>
+								<div style="float: left;"th:text="${matchs.type} +' /&nbsp;'">1vs1(단식)</div>
+								<div style="float: left;" th:text="${matchs.level}">/ 모든레벨</div>
 								<br>
 								<hr>
 								<div style="font-weight: bold; float: left; font-size: large;">20,000원

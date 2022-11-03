@@ -15,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
@@ -70,8 +71,15 @@ public class MatchController {
 	}
 
 	// 매치 디테일
-	@GetMapping("/matchDetail")
-	public String matchDetail() {
+//	@GetMapping("/matchDetail")
+//	public String matchDetail() {
+//		return "match/matchDetail";
+//	}
+	
+	@GetMapping("/matchDetail/{id}")
+	public String matchDetail(@PathVariable("id") Long id, Model model) {
+		Matchs matchs =  matchService.matchDetail(id);
+		model.addAttribute("matchs", matchs);
 		return "match/matchDetail";
 	}
 
