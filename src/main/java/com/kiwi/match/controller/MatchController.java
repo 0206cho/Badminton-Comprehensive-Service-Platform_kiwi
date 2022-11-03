@@ -1,5 +1,6 @@
 package com.kiwi.match.controller;
 
+import java.util.Iterator;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.kiwi.config.auth.PrincipalDetails;
+import com.kiwi.court.entity.Reservation;
 import com.kiwi.market.dto.MarketDto;
 import com.kiwi.market.entity.Market;
 import com.kiwi.market.repository.MarketRepository;
@@ -74,9 +76,31 @@ public class MatchController {
 	}
 
 	// 매치 개설하기
+//	@GetMapping("/matchNew")
+//	public String matchNew(Model model) {
+//		model.addAttribute("matchDto", new MatchDto());
+//		return "match/matchForm";
+//	}
+	
 	@GetMapping("/matchNew")
-	public String matchNew(Model model) {
-		model.addAttribute("matchDto", new MatchDto());
+	public String matchNew(@Valid MatchDto matchDto, Model model, @AuthenticationPrincipal PrincipalDetails principalDetails ) {
+		Long memberId = principalDetails.getMember().getId();
+		List<Reservation> list =  matchService.matchsCourt();
+		model.addAttribute("list", list);
+		model.addAttribute("memberId", memberId);
+		
+		int count = 0;
+		for (int i = 0; i < list.size(); i++) {
+			if(list.get(i).getMember().getId() == memberId) { // 예약 했을 경우
+				count += 1; // 예약한 건 수 : count
+//				System.out.println(count);
+			}			
+		}
+//		System.out.println(count);
+		model.addAttribute("count", count);
+		
+		
+		
 		return "match/matchForm";
 	}
 

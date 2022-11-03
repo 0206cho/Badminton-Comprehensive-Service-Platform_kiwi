@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.kiwi.court.entity.Reservation;
 import com.kiwi.court.repository.CourtRepository;
+import com.kiwi.court.repository.ReservationRepository;
 import com.kiwi.match.entity.Matchs;
 import com.kiwi.match.repository.MatchRepository;
 
@@ -23,8 +25,8 @@ public class MatchService {
 	@Autowired
 	CourtRepository courtRepository;
 	
-//	@Autowired
-//	ReservationRepository reservationRepository; 
+	@Autowired
+	ReservationRepository reservationRepository; 
 
 	public String courtTest(Long id){
 		
@@ -48,6 +50,13 @@ public class MatchService {
 		//System.out.println(">>>>>>>>>> courtName : " + matchs.get(0).getReservation().getCourt().getName());
 		
 		return matchs;
+	}
+
+
+	public List<Reservation> matchsCourt() {
+		List<Reservation> reservation = reservationRepository.findAllByOrderByIdDesc();
+		// TODO Auto-generated method stub
+		return reservation;
 	}
 
 

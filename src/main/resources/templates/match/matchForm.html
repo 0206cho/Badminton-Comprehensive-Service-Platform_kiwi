@@ -110,7 +110,9 @@ a {
 
 
 <div layout:fragment="content" style="margin-top: 27px;">
-	<div class="head" style="margin-bottom: 0x; padding-bottom: 0px;">
+	<!-- 예약 안 했을 경우 출력 X -->
+	<div th:if="${count != 0}" class="head"
+		style="margin-bottom: 0x; padding-bottom: 0px;">
 		<!--레벨-->
 		<select class="select" name="region"
 			style="padding: 6px; padding-right: 20px; margin-right: 50px;">
@@ -144,110 +146,80 @@ a {
 		<!-- 리스트 - 없을경우 코트예약을 먼저 해주세요. -->
 
 		<br>
-		<div>
-			<div style="float: left; width: 72%;">
-				<div style="display: flex; padding-left: 2px;">
-					<div style="margin-right: 8px;">2022년 6월 22일</div>
-					<div>06:00</div>
+
+		<div th:each="vo : ${list}">
+			<div th:if="${memberId == vo.member.id}">
+				<!-- == list.member.id}"> -->
+				<div>
+					<div style="float: left; width: 72%;">
+						<div style="display: flex; padding-left: 2px;">
+							<div style="margin-right: 8px;"
+								th:text="${#temporals.format(vo.reservation_time, 'yyyy년 MM월 dd일')}">2022년
+								6월 22일</div>
+							<!-- DB에 있는 로컬데이터 타입 파싱 -->
+							<div th:text="${vo.court_time}">06:00</div>
+						</div>
+						<div style="display: flex;">
+							<h4
+								style="padding-right: 10px; font-weight: bold; margin-top: 5px;"
+								th:text="${vo.court.name}">주안동 배드민턴장</h4>
+							<h4
+								style="padding-right: 10px; font-weight: bold; margin-top: 5px;"
+								th:text="${vo.court_num}">코트1</h4>
+						</div>
+						<div style="display: flex;">
+							<div style="margin-right: 30px; padding-left: 2px;"
+								th:text="${vo.court.address1}">인천광역시 미추홀구 석정로 433번길 18</div>
+						</div>
+					</div>
+
+					<div
+						style="float: left; width: 28%; margin-top: 20px; text-align: center;">
+						<button class="btn btn-kiwi ok" id="btn_check" type="button"
+							onclick='changeBtn()'
+							style="height: 40px; background-color: #C6F1E7; color: black;">선택하기</button>
+						<div style="display: flex; margin-top: 10px; margin-left: 23px;">
+							<div style="margin-right: 8px;">결제일시</div>
+							<div>2022.05.30 11:30:20</div>
+						</div>
+					</div>
 				</div>
-				<h4 style="padding-right: 10px; font-weight: bold; margin-top: 5px;">주안동
-					배드민턴장 코트1</h4>
-				<div style="display: flex;">
-					<div style="margin-right: 30px; padding-left: 2px;">인천광역시
-						미추홀구 석정로 433번길 18</div>
-				</div>
+				<br> <br> <br> <br>
+				<hr>
 			</div>
 
-			<div
-				style="float: left; width: 28%; margin-top: 20px; text-align: center;">
-				<button class="btn btn-kiwi ok" id="btn_check" type="button"
-					onclick='changeBtn()'
-					style="height: 40px; background-color: #C6F1E7; color: black;">선택하기</button>
-				<div style="display: flex; margin-top: 10px; margin-left: 23px;">
-					<div style="margin-right: 8px;">결제일시</div>
-					<div>2022.05.30 11:30:20</div>
-				</div>
-			</div>
 		</div>
-		<br> <br> <br> <br>
-		<hr>
-
-		<div>
-			<div style="float: left; width: 72%;">
-				<div style="display: flex; padding-left: 2px;">
-					<div style="margin-right: 8px;">2022년 6월 22일</div>
-					<div>06:00</div>
-				</div>
-				<h4 style="padding-right: 10px; font-weight: bold; margin-top: 5px;">주안동
-					배드민턴장 코트1</h4>
-				<div style="display: flex;">
-					<div style="margin-right: 30px; padding-left: 2px;">인천광역시
-						미추홀구 석정로 433번길 18</div>
-				</div>
-			</div>
-
-			<div
-				style="float: left; width: 28%; margin-top: 20px; text-align: center;">
-				<button class="btn btn-kiwi ok" type="button"
-					onclick="location.href='/match/matchDetail'"
-					style="height: 40px; background-color: #C6F1E7; color: black;">선택하기</button>
-				<div style="display: flex; margin-top: 10px; margin-left: 23px;">
-					<div style="margin-right: 8px;">결제일시</div>
-					<div>2022.05.30 11:30:20</div>
-				</div>
-			</div>
+		<!-- 아직 예약을 안 한 사용자 -->
+		<div th:if="${count == 0}"
+			style="float: left; width: 925px; border: 1px solid #808080; margin-bottom: 60px; border-radius: 15px;">
+			<p
+				style="margin-top: 37px; margin-left: 50px; margin-bottom: 35px; font-weight: bold; font-size: 22px;">
+				코트를 먼저 예약해주세요 &#127992;</p>
 		</div>
-		<br> <br> <br> <br>
-		<hr>
 
-		<div>
-			<div style="float: left; width: 72%;">
-				<div style="display: flex; padding-left: 2px;">
-					<div style="margin-right: 8px;">2022년 6월 22일</div>
-					<div>06:00</div>
-				</div>
-				<h4 style="padding-right: 10px; font-weight: bold; margin-top: 5px;">주안동
-					배드민턴장 코트1</h4>
-				<div style="display: flex;">
-					<div style="margin-right: 30px; padding-left: 2px;">인천광역시
-						미추홀구 석정로 433번길 18</div>
-				</div>
-			</div>
 
-			<div
-				style="float: left; width: 28%; margin-top: 20px; text-align: center;">
-				<button class="btn btn-kiwi ok" type="button"
-					style="height: 40px; background-color: #C6F1E7; color: black;">선택하기</button>
-				<div style="display: flex; margin-top: 10px; margin-left: 23px;">
-					<div style="margin-right: 8px;">결제일시</div>
-					<div>2022.05.30 11:30:20</div>
-				</div>
-			</div>
-		</div>
-		<br> <br> <br> <br>
-		<hr>
 
 
 		<br>
 
-		<nav aria-label="Page" style="float: right;">
-			<ul class="pagination">
-				<li><a class="page-link" href="#" aria-label="Previous"> <span
-						aria-hidden="true" style="color: #70ACB1;">◀</span>
-				</a></li>
-				<li class="page-item"><a class="page-link" href="#"
-					style="color: black;">1</a></li>
-				<li class="page-item"><a class="page-link" href="#"
-					style="color: black;">2</a></li>
-				<li class="page-item"><a class="page-link" href="#"
-					style="color: black;">3</a></li>
-				<li class="page-item"><a class="page-link" href="#"
-					aria-label="Next" style="color: #70ACB1;"> <span
-						aria-hidden="true">▶</span>
-				</a></li>
-			</ul>
-		</nav>
-		<Br> <br> <br>
+		<!-- <nav aria-label="Page" style="float: right;">
+		<ul class="pagination">
+			<li><a class="page-link" href="#" aria-label="Previous"> <span
+					aria-hidden="true" style="color: #70ACB1;">◀</span>
+			</a></li>
+			<li class="page-item"><a class="page-link" href="#"
+				style="color: black;">1</a></li>
+			<li class="page-item"><a class="page-link" href="#"
+				style="color: black;">2</a></li>
+			<li class="page-item"><a class="page-link" href="#"
+				style="color: black;">3</a></li>
+			<li class="page-item"><a class="page-link" href="#"
+				aria-label="Next" style="color: #70ACB1;"> <span
+					aria-hidden="true">▶</span>
+			</a></li>
+		</ul>
+	</nav>
+	<Br> <br> <br> -->
 
 	</div>
 
