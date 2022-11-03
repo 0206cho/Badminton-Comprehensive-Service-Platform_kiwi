@@ -10,6 +10,7 @@ import org.springframework.data.repository.query.Param;
 import com.kiwi.court.entity.Court;
 import com.kiwi.court.entity.Reservation;
 import com.kiwi.match.entity.Matchs;
+import com.kiwi.match.entity.MatchsReservation;
 
 public interface MatchRepository extends JpaRepository<Matchs, Long>{
 
@@ -21,7 +22,6 @@ public interface MatchRepository extends JpaRepository<Matchs, Long>{
 //			+ "join m.reservation r "
 //			+ "order by m.id desc")
 	List<Matchs> findAllByOrderByIdDesc();
-	
 
 //	Reservation findByReservation(Long reservation);
 	

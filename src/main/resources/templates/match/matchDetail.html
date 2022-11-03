@@ -73,7 +73,7 @@ a {
 <!-- 지도 -->
 <script type="text/javascript"
 	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=8d88fe30f1babaf45150d93fec381f08&libraries=clusterer"></script>
-	
+
 <!-- Channel Plugin Scripts -->
 <!-- <script>
   (function() {
@@ -196,7 +196,8 @@ a {
 							<div
 								style="border: 1px solid black; float: left; width: 100px; height: 100px; text-align: center; background-color: #C6F1E7">
 								<img src="/img/진행방식.png" style="margin-top: 5px;">
-								<div style="font-weight: bold;" th:text="${matchs.type}">1vs1 (단식)</div>
+								<div style="font-weight: bold;" th:text="${matchs.type}">1vs1
+									(단식)</div>
 							</div>
 							<div
 								style="border: 1px solid black; float: left; width: 100px; height: 100px; text-align: center; background-color: #C6F1E7; margin-left: 90px;">
@@ -225,7 +226,8 @@ a {
 							<div
 								style="border: 1px solid black; float: left; width: 120px; height: 100px; text-align: center; background-color: #C6F1E7; margin-left: 18px;">
 								<div style="margin-top: 25px;">휴관일</div>
-								<div style="font-weight: bold;" th:text="${matchs.reservation.court.holiday}">매주 월요일</div>
+								<div style="font-weight: bold;"
+									th:text="${matchs.reservation.court.holiday}">매주 월요일</div>
 							</div>
 
 							<div
@@ -237,7 +239,8 @@ a {
 							<div
 								style="border: 1px solid black; float: left; width: 120px; height: 100px; text-align: center; background-color: #C6F1E7; margin-left: 50px;">
 								<div style="margin-top: 25px;">전화번호</div>
-								<div style="font-weight: bold;" th:text="${matchs.reservation.court.call_number}">032-870-2330</div>
+								<div style="font-weight: bold;"
+									th:text="${matchs.reservation.court.call_number}">032-870-2330</div>
 							</div>
 							<br> <br> <br> <br> <br>
 							<div style="font-weight: bold;">시설 이용 주의 사항</div>
@@ -273,27 +276,38 @@ a {
 					<div class="col col-xl-3 col-lg-3 col-md-6 " style="float: left;">
 						<div class="card" style="width: 280px; border-color: black;">
 							<div class="card-body">
-							<form role="form" method="post" enctype="multipart/form-data" name="market_form">
-							<div style="display: flex;">
-							<h6 class="card-title" th:text="${#temporals.format(matchs.reservation.reservation_time, 'yyyy년 MM월 dd일 ')}">2022년 8월 30일 6:00</h6>
-							<!-- DB에 있는 로컬데이터 타입 파싱 -->
-							<h6 class="card-title" th:text="${matchs.reservation.court_time}" style="margin-left:5px;">06:00</h6>
-						</div>
-						
-								<h5 style="font-weight: bold;" th:text="${matchs.reservation.court.name}">연수동 배드민턴장 코트1</h5>
-								<h5 style="font-weight: bold;" th:text="${matchs.reservation.court_num}">연수동 배드민턴장 코트1</h5>
-								<div th:text="${matchs.reservation.court.address1}">인천광역시 연수구 청능대로 205 연수체육공원</div>
-								<div style="float: left;"th:text="${matchs.type} +' /&nbsp;'">1vs1(단식)</div>
-								<div style="float: left;" th:text="${matchs.level}">/ 모든레벨</div>
-								<br>
-								<hr>
-								<div style="font-weight: bold; float: left; font-size: large;">20,000원
-								</div>
-								<div style="float: left;">&nbsp;/ 2시간</div>
-								<br> <br>
-								<button type="button" class="btn btn-kiwi" style="width: 250px;"
-									onclick="location.href='/cash/court'">신청하기</button>
-									</form>
+								<form role="form" method="get" enctype="multipart/form-data"
+									action="/match/matchDetail/'${matchs.id}'"
+									th:object="${matchsReservationDto}" name="mr_form">
+									<div style="display: flex;">
+										<h6 class="card-title"
+											th:text="${#temporals.format(matchs.reservation.reservation_time, 'yyyy년 MM월 dd일 ')}">2022년
+											8월 30일 6:00</h6>
+										<!-- DB에 있는 로컬데이터 타입 파싱 -->
+										<h6 class="card-title"
+											th:text="${matchs.reservation.court_time}"
+											style="margin-left: 5px;">06:00</h6>
+									</div>
+
+									<h5 style="font-weight: bold;"
+										th:text="${matchs.reservation.court.name}">연수동 배드민턴장 코트1</h5>
+									<h5 style="font-weight: bold;"
+										th:text="${matchs.reservation.court_num}">연수동 배드민턴장 코트1</h5>
+									<div th:text="${matchs.reservation.court.address1}">인천광역시
+										연수구 청능대로 205 연수체육공원</div>
+									<div style="float: left;" th:text="${matchs.type} +' /&nbsp;'">1vs1(단식)</div>
+									<div style="float: left;" th:text="${matchs.level}">/
+										모든레벨</div>
+									<br>
+									<hr>
+									<div style="font-weight: bold; float: left; font-size: large;">20,000원
+									</div>
+									<div style="float: left;">&nbsp;/ 2시간</div>
+									<input type="hidden" id="matchs_id" th:value="${matchs.id}"/> <br> <br>
+									<button type="button" id="mrSave" class="btn btn-kiwi submit"
+										style="width: 250px;">신청하기</button>
+									<!-- onclick="location.href='/cash/court'" -->
+								</form>
 							</div>
 						</div>
 					</div>
@@ -305,6 +319,41 @@ a {
 
 		</div>
 		<br> <Br> <br>
+
+		<script type="text/javascript">
+		'use strict';
+		let mrIndex = {
+	    	init: function () {
+	       	 $("#mrSave").on("click", () => {
+	            this.mrSave();
+	        });
+	    },
+	    
+	    // 매치 신청하기
+		mrSave: function () {
+	    	let matchs_id = $("#matchs_id").val();
+	        console.log(matchs_id);
+	        $.ajax({
+	            type: "GET",
+	            url: "/match/matchsReservation", // "/match/matchDetail/${mathcshId}"
+	            data: {
+					"mathcshId": matchs_id,
+				},
+				success:function(){
+					 alert("매치가 신청되었습니다.");
+					 location.href = `/cash/court`;
+				},
+				error:function(){
+					alert("실패");
+		            alert(JSON.stringify(err));
+				}
+	        });
+	        
+		   }
+	    }
+	    
+	    mrIndex.init();
+		</script>
 	</div>
 
 

@@ -12,7 +12,9 @@ import com.kiwi.court.repository.CourtRepository;
 import com.kiwi.court.repository.ReservationRepository;
 import com.kiwi.market.entity.Market;
 import com.kiwi.match.entity.Matchs;
+import com.kiwi.match.entity.MatchsReservation;
 import com.kiwi.match.repository.MatchRepository;
+import com.kiwi.match.repository.MatchsReservationRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -28,7 +30,10 @@ public class MatchService {
 	CourtRepository courtRepository;
 	
 	@Autowired
-	ReservationRepository reservationRepository; 
+	ReservationRepository reservationRepository;
+	
+	@Autowired
+	MatchsReservationRepository matchsReservationRepository; 
 
 	public String courtTest(Long id){
 		
@@ -69,6 +74,14 @@ public class MatchService {
 		} else {
 			throw new NullPointerException();
 		}
+	}
+
+	public void saveMatchsReservation(MatchsReservation mr, Long mathcshId, Long memberId) {
+		mr.setMathcshId(mathcshId);
+		mr.setMemId(memberId);
+		matchsReservationRepository.save(mr);
+		// TODO Auto-generated method stub
+		
 	}
 
 
