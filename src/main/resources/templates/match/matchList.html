@@ -71,6 +71,13 @@ a {
 	color: black;
 	border-color: #606060;
 	width: 100px;
+	/*클릭 방지*/
+	opacity: 0.6; 
+	cursor: not-allowed;
+}
+
+.noA { /*a태그 비활성화*/
+	pointer-events: none;
 }
 
 .no:hover {
@@ -277,8 +284,9 @@ a {
 				</div>
 
 				<div style="float: left; width: 15%; margin-top: 10px;">
-				<a href="/match/matchDetail/" th:attrappend="href=${vo.id}" style="text-decoration: none; color: black">
-					<button class="btn btn-kiwi ok" type="button" style="height: 50px;">신&nbsp;&nbsp;청</button></a>
+				<a href="/match/matchDetail/" th:attrappend="href=${vo.id}" style="text-decoration: none; color: black" th:classappend="${#strings.equals(vo.status, '마감')} ? 'noA' : '' ">
+					<button class="btn btn-kiwi ok" type="button" style="height: 50px; letter-spacing: 12px; padding-left:22px;" th:text="${vo.status}" 
+					th:classappend="${#strings.equals(vo.status, '마감')} ? 'no' : '' ">신&nbsp;&nbsp;청</button></a>
 						 
 				</div>
 			</div>

@@ -106,14 +106,14 @@ public class MatchController {
 		// 매치 신청 마감 확인
 		List<MatchsReservation> list = mrService.mrCourt();
 
-		int count = 0; 
+		int count = 1; // 1vs1단식일 경우 참가할 수 있는 사람은 2명, 본인 제외 하면 1명 
 		for (int i = 0; i < list.size(); i++) {
 			if (list.get(i).getMathshId().getId() == mathcshId) { // 매치 ID가 DB에 있는 경우 -> 매치를 신청한 경우
 				count += 1; // 매치 신청 건 수 카운트
 			}
 		}
 
-		if (mr.getMathshId().getCount() <= count) {
+		if (mr.getMathshId().getCount() <= count) { 
 			mr.getMathshId().setStatus(Status.마감);
 
 			Reservation reservation = mr.getMathshId().getReservation();
