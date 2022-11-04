@@ -6,6 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.Valid;
@@ -35,13 +36,17 @@ public class MatchsReservation extends BaseEntity{
 	@Column(name = "mr_memId")
     private Long memId;
 	
-	@JoinColumn(name = "mr_matchsId")
-	private Long mathcshId;
+//	@Column(name = "mr_matchsId")
+//	private Long mathcshId;
+	
+	@ManyToOne
+    @JoinColumn(name = "mr_mathsId")
+    private Matchs mathshId;
 
 	public static MatchsReservation createMR(MatchsReservationDto mrDto) {
 		MatchsReservation mr = new MatchsReservation();
 		mr.setMemId(mrDto.getMemId());
-		mr.setMathcshId(mrDto.getMathcshId());
+//		mr.setMathcshId(mrDto.getMathcshId());
 		
 		return mr;
 	}

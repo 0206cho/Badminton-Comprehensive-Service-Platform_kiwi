@@ -3,6 +3,7 @@ package com.kiwi.match.controller;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.persistence.EntityNotFoundException;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,17 +24,21 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.kiwi.config.auth.PrincipalDetails;
 import com.kiwi.court.entity.Reservation;
+import com.kiwi.court.repository.ReservationRepository;
 import com.kiwi.market.dto.MarketDto;
 import com.kiwi.market.entity.Market;
 import com.kiwi.market.repository.MarketRepository;
 import com.kiwi.market.service.CommentService;
 import com.kiwi.market.service.MarketService;
+import com.kiwi.match.constant.Level;
+import com.kiwi.match.constant.Status;
 import com.kiwi.match.dto.MatchDto;
 import com.kiwi.match.dto.MatchsReservationDto;
 import com.kiwi.match.entity.Matchs;
 import com.kiwi.match.entity.MatchsReservation;
 import com.kiwi.match.repository.MatchRepository;
 import com.kiwi.match.service.MatchService;
+import com.kiwi.match.service.MatchsReservationService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -46,6 +51,14 @@ public class MatchController {
 
 	@Autowired
 	private MatchRepository matchRepository;
+
+	@Autowired
+	private ReservationRepository reservationRepository;
+
+	@Autowired
+	private MatchsReservationService mrService;
+
+	private Long id;
 
 	// 매치 메인 - 매치 리스트
 //	@GetMapping("/matchList")
@@ -76,25 +89,10 @@ public class MatchController {
 	// 매치 디테일
 	@GetMapping("/matchDetail/{id}")
 	public String matchDetail(@PathVariable("id") Long id, Model model) {
-		Matchs matchs =  matchService.matchDetail(id);
+		Matchs matchs = matchService.matchDetail(id);
 		model.addAttribute("matchs", matchs);
 		return "match/matchDetail";
 	}
-
-	// 매치 디테일 + 매치 신청
-//	@GetMapping("/matchDetail/{id}")
-//	public String matchDetail(@Valid MatchsReservationDto mrDto, @PathVariable("id") Long id, Model model,
-//			Long mathcshId, @AuthenticationPrincipal PrincipalDetails principalDetails) {
-//		// 매치 신청 정보 보여주기
-//		Matchs matchs = matchService.matchDetail(id);
-//		model.addAttribute("matchs", matchs);
-//
-//		// 매치 신청 하기
-//		Long memberId = principalDetails.getMember().getId();
-//		MatchsReservation mr = MatchsReservation.createMR(mrDto);
-//		matchService.saveMatchsReservation(mr, mathcshId, memberId);
-//		return "match/matchDetail";
-//	}
 
 	// 매치 신청하기
 	@ResponseBody // ajax로 보낼 경우 사용
@@ -104,6 +102,25 @@ public class MatchController {
 		Long memberId = principalDetails.getMember().getId();
 		MatchsReservation mr = MatchsReservation.createMR(mrDto);
 		matchService.saveMatchsReservation(mr, mathcshId, memberId);
+
+		// 매치 신청 마감 확인
+		List<MatchsReservation> list = mrService.mrCourt();
+
+		int count = 0; 
+		for (int i = 0; i < list.size(); i++) {
+			if (list.get(i).getMathshId().getId() == mathcshId) { // 매치 ID가 DB에 있는 경우 -> 매치를 신청한 경우
+				count += 1; // 매치 신청 건 수 카운트
+			}
+		}
+
+		if (mr.getMathshId().getCount() <= count) {
+			mr.getMathshId().setStatus(Status.마감);
+
+			Reservation reservation = mr.getMathshId().getReservation();
+			Matchs match = mr.getMathshId();
+			matchService.saveMatch(match, memberId, reservation);
+			
+		}
 	}
 
 	// 매치 개설하기
@@ -126,27 +143,26 @@ public class MatchController {
 		for (int i = 0; i < list.size(); i++) {
 			if (list.get(i).getMember().getId() == memberId) { // 예약 했을 경우
 				count += 1; // 예약한 건 수 : count
-//				System.out.println(count);
 			}
 		}
-//		System.out.println(count);
 		model.addAttribute("count", count);
 
 		return "match/matchForm";
 	}
 
-//	@PostMapping(value = "/matchNew")
-//	public String matchNew(@Valid MatchDto matchDto, Model model) {
-//		try {
-//			Match match = Match.createMatch(matchDto);
-//			
-//			matchService.saveMatch(match);
-//		} catch (Exception e) {
-//			model.addAttribute("errorMessage", "매치 중 에러가 발생하였습니다.");
-//			return "market/marketForm";
-//		}
-//		// 상품이 정상적으로 등록되었다면 메인 페이지로 이동
-//		return "redirect:/market/marketList";
-//	}
+	// 매치 개설
+	@PostMapping("/matchNew")
+	public String matchNewPost(@Valid MatchDto matchDto, Model model,
+			@AuthenticationPrincipal PrincipalDetails principalDetails) {
+		Long memberId = principalDetails.getMember().getId();
+		Matchs match = Matchs.createMatch(matchDto);
+		Long reservationId = (long) 5;
+
+		Reservation reservation = reservationRepository.findById(reservationId).orElseThrow();
+		System.out.println(">>>>>>>>>>>>>>> reservation : " + reservation);
+		System.out.println(">>>>>>>>>>>>>>> match : " + match);
+		matchService.saveMatch(match, memberId, reservation);
+		return "match/matchForm";
+	}
 
 }

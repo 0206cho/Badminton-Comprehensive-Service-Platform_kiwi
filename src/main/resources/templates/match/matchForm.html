@@ -139,12 +139,24 @@ a {
 			data-bs-target="#exampleModal">
 			<button type="button" class="btn btn-kiwi" style="width: 120px;">개설하기</button>
 		</a>
+
+
 	</div>
 
 	<div class="container">
 		<!-- container : 좌측정렬-->
 		<!-- 리스트 - 없을경우 코트예약을 먼저 해주세요. -->
-
+		<!-- 매치 저장 테스트 -->
+		<form role="form" method="post" enctype="multipart/form-data"
+			action="/match/matchNew" th:object="${matchDto}" name="match_form">
+			<input type="text" th:field="*{id}"> 
+			<input type="text" th:field="*{memberId}"> 
+			<button type="button" onclick="check();" class="btn btn-kiwi submit"
+				style="width: 100px;">등록</button>
+			<!-- 모달창 없는 개설하기 임시 -->
+			<input type="hidden" name="_csrf" id="_csrf" th:value="${_csrf.token}">
+		</form>
+		<!-- 매치 저장 테스트 -->
 		<br>
 
 		<div th:each="vo : ${list}">
@@ -173,7 +185,7 @@ a {
 						</div>
 					</div>
 
-					<div 
+					<div
 						style="float: left; width: 28%; margin-top: 20px; text-align: center;">
 						<button class="btn btn-kiwi ok" type="button"
 							onclick='changeBtn()'
@@ -264,6 +276,11 @@ a {
 
 			btnElement.innerHTML = html;
 		}
+		
+		function check(){
+	    	document.match_form.submit();
+	    	console.log("힝");
+         } 
 	</script>
 </div>
 </html>

@@ -3,6 +3,8 @@ package com.kiwi.match.service;
 import java.util.List;
 import java.util.Optional;
 
+import javax.persistence.EntityNotFoundException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,10 +13,12 @@ import com.kiwi.court.entity.Reservation;
 import com.kiwi.court.repository.CourtRepository;
 import com.kiwi.court.repository.ReservationRepository;
 import com.kiwi.market.entity.Market;
+import com.kiwi.match.constant.Status;
 import com.kiwi.match.entity.Matchs;
 import com.kiwi.match.entity.MatchsReservation;
 import com.kiwi.match.repository.MatchRepository;
 import com.kiwi.match.repository.MatchsReservationRepository;
+import com.kiwi.member.entity.Member;
 
 import lombok.RequiredArgsConstructor;
 
@@ -76,12 +80,23 @@ public class MatchService {
 		}
 	}
 
+
 	public void saveMatchsReservation(MatchsReservation mr, Long mathcshId, Long memberId) {
-		mr.setMathcshId(mathcshId);
+		Matchs mt = matchRepository.findById(mathcshId).orElseThrow(EntityNotFoundException::new);
+		System.out.println();
+		mr.setMathshId(mt);
+		
 		mr.setMemId(memberId);
 		matchsReservationRepository.save(mr);
-		// TODO Auto-generated method stub
+	}
+
+	// 매치 개설
+	public void saveMatch(Matchs matchs, Long memberId, Reservation reservation) {
+		matchs.setMemberId(memberId);
+		matchs.setReservation(reservation);
+		System.out.println("");
 		
+		matchRepository.save(matchs);
 	}
 
 

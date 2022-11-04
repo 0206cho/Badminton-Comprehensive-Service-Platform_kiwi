@@ -29,7 +29,9 @@ public class MatchDto {
 	
 	private Long id; // 매치 아이디
 	
-    private Member member;
+//    private Member member;
+	
+	private Long memberId; // 상태
 	
 	// 지역, 도시, 타입 추가 해야함
 	

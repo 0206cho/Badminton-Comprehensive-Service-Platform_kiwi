@@ -38,9 +38,12 @@ public class Matchs extends BaseEntity {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id; // 매치 아이디
 	
-	@ManyToOne
-    @JoinColumn(name = "member_id")
-    private Member member;
+//	@ManyToOne
+//    @JoinColumn(name = "member_id")
+//    private Member member;
+	
+	@Column(name="member_id")
+	private Long memberId; // 상태
 	
 	// 지역, 도시 추가 해야함
 	
@@ -60,13 +63,13 @@ public class Matchs extends BaseEntity {
 	@Column(name="matchs_count")
 	private long count;      // 매치 인원
 
-//	public static Matchs createMatch(@Valid MatchDto matchDto) {
-//		Matchs match = new Matchs();
-//		match.setLevel(matchDto.getLevel());
-//		match.setStatus(matchDto.getStatus());
-//		match.setType(matchDto.getType());
-//		match.setCount(matchDto.getCount());
-//		return match;
-//	}
+	public static Matchs createMatch(@Valid MatchDto matchDto) {
+		Matchs match = new Matchs();
+		match.setLevel(matchDto.getLevel());
+		match.setStatus(Status.신청);
+		match.setType(matchDto.getType());
+		match.setCount(matchDto.getCount());
+		return match;
+	}
 	
 }
