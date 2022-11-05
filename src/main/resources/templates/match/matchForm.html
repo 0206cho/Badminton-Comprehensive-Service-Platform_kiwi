@@ -169,7 +169,7 @@ a {
 						style="float: left; width: 28%; margin-top: 20px; text-align: center;">
 						<div id="1"></div>
 
-						 <input class="btn btn-kiwi ok court_list" type="button"
+						 <input class="btn btn-kiwi ok court_list diss" type="button"
 							th:field="*{id}" id="001" onclick='changeBtn(this.id)'
 							style="height: 40px; background-color: #C6F1E7; color: black;"
 							value='선택하기' /> 
@@ -195,7 +195,8 @@ a {
 								document.getElementById(id).value = "선택됨";		
 								
 								// 클래스명으로 버튼 비활성화
-								$('.court_list').attr('disabled', true);
+								$('.court_list').attr('no', true);
+								$('.diss').attr('disabled', true);
 							}
 							</script>
 
