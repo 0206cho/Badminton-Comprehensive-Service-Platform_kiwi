@@ -143,4 +143,8 @@ public class Member extends BaseEntity {
 		this.image = image;
 	}
     
+    public int deposit(int amount) {
+    	kiwicash -= amount;
+    	return kiwicash;
+    }
 }
