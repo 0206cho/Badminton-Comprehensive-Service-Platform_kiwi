@@ -170,11 +170,15 @@ a {
 						style="float: left; width: 28%; margin-top: 20px; text-align: center;">
 						<div id="1"></div>
 
-
-						<button class="btn btn-kiwi ok" type="button" th:field="*{id}"
-							id="001" onclick='changeBtn(this.id)'
+						 <input class="btn btn-kiwi ok court_list" type="button"
+							th:field="*{id}" id="001" onclick='changeBtn(this.id)'
 							style="height: 40px; background-color: #C6F1E7; color: black;"
-							value="dd">선택하기</button>
+							value='선택하기' /> 
+
+						<!-- <button class="btn btn-kiwi ok court_list" type="button"
+							th:field="*{id}" id="001" onclick='changeBtn(this.id)'
+							style="height: 40px; background-color: #C6F1E7; color: black;"
+							value="dd">선택하기</button> -->
 
 						<script th:inline="javascript">
 							'use strict';
@@ -187,10 +191,27 @@ a {
 								/*]]>*/	
 							});
 							
+							// 코트 예약 선택했을 경우
 							function changeBtn(id) {								
 								
 								// form안에 hidden으로 만든 예약id input에 선택한 버튼의 id값인 예약id 넣어줌
 								document.getElementById('check_crId').value = id;
+								
+								// 선택한 버튼 값 변경
+								document.getElementById(id).value = "선택됨";
+								
+								
+								
+								
+								// 클래스명으로 버튼 비활성화
+								
+								//var class_id = $('.court_list').attr('id');  // class로 id값 가져오기
+								//class_id.disabled = true;
+								
+								//const btnElement = document.getElementById(id);
+								//const html = '<div style="color:red;"> 선택됨!! </div>';
+
+								//btnElement.innerHTML = html;
 								
 							}
 							</script>
@@ -216,8 +237,8 @@ a {
 
 	</div>
 
-<!-- 개설확인 모달창 - 모달창 있을 경우 post 전송 x -->
-<!-- 
+	<!-- 개설확인 모달창 - 모달창 있을 경우 post 전송 x -->
+	<!-- 
 	<div class="modal fade" id="exampleModal" tabindex="-1"
 		aria-labelledby="exampleModalLabel" aria-hidden="true">
 		<div class="modal-dialog">
