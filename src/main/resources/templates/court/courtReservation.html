@@ -251,12 +251,13 @@
 			var lat = document.getElementById('lat');
 			lat.value="37.40785375";
 			console.log(lat.value);
-
+			
 		});
 
 	</script>
 	<script th:inline="javascript">
 		function noSelectCourt(id) {
+			panTo();
 			var name = document.getElementById('court_name');
 			var btn = document.getElementById(id);
 			var court_time = document.getElementById('court_time');
@@ -270,6 +271,7 @@
 			var btnNum = document.getElementById('btnNum');
 			btnNum.value = id;
 			console.log("==============" + btnNum.value);
+			
 			
 		}
 	</script>
@@ -293,7 +295,7 @@
 			</div>
 		</div>
  -->
-		<input type="hidden" id="lat" name="lat">
+		<input type="hidden" id="lat" name="lat" value="">
 		<!--지역 -->
 		<select class="select" name="sido" id="sido1" style="padding: 6px; margin-left: 55px;"></select>
 		<select class="select" name="gugun" id="gugun1"
@@ -306,13 +308,13 @@
 		<script th:inline="javascript">
 		
 		
-		console.log("====="+document.getElementById('lat').value);
-		var latlng = new kakao.maps.LatLng(37.40785375, 126.6325097);
+		//console.log("====="+document.getElementById('lat').value);
+		//var latlng = new kakao.maps.LatLng(37.40785375, 126.6325097);
 			/*<![CDATA[*/
 			var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
 				mapOption = {
-					//center: new kakao.maps.LatLng(37.40785375, 126.6325097), // 지도의 중심좌표
-					center: latlng, // 지도의 중심좌표
+					center: new kakao.maps.LatLng(37.40785375, 126.6325097), // 지도의 중심좌표
+					//center: latlng, // 지도의 중심좌표
 					level: 7 // 지도의 확대 레벨
 				};
 
@@ -465,6 +467,15 @@
 					//console.log("data.id : " + data.id)
 				});
 			}
+			
+			function panTo() {
+			    // 이동할 위도 경도 위치를 생성합니다 
+			    var moveLatLon = new kakao.maps.LatLng(33.450580, 126.574942);
+			    
+			    // 지도 중심을 부드럽게 이동시킵니다
+			    // 만약 이동할 거리가 지도 화면보다 크면 부드러운 효과 없이 이동합니다
+			    map.panTo(moveLatLon);            
+			}        
 
 			/*]]>*/
 
