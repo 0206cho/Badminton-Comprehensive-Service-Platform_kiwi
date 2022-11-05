@@ -85,7 +85,7 @@ public class Market extends BaseEntity {
 		market.setTitle(marketDto.getTitle());
 		market.setDetail(marketDto.getDetail());
 		market.setPrice(marketDto.getPrice());
-		market.setStatus(ItemSellStatus.SELL);
+		market.setStatus(ItemSellStatus.판매중);
 		market.setFilename(marketDto.getFilename());
 		market.setFilepath(marketDto.getFilepath());
 		market.setOriImgName(marketDto.getOriImgName());
