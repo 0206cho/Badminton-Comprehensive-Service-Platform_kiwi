@@ -140,13 +140,18 @@ public class MatchController {
 		model.addAttribute("memberId", memberId);
 
 		int count = 0;
+		Long reservationId = (long)0;
 		for (int i = 0; i < list.size(); i++) {
 			if (list.get(i).getMember().getId() == memberId) { // 예약 했을 경우
 				count += 1; // 예약한 건 수 : count
+				
+				reservationId = list.get(i).getId() ; // 해당하는 멤버의 예약 아이디 반환
+				System.out.println(">>>>>>>>>>>>>>>>>> reservationId : " + reservationId);
 			}
 		}
 		model.addAttribute("count", count);
-
+		model.addAttribute("reservationId", reservationId);
+		
 		return "match/matchForm";
 	}
 
@@ -162,7 +167,7 @@ public class MatchController {
 		System.out.println(">>>>>>>>>>>>>>> reservation : " + reservation);
 		System.out.println(">>>>>>>>>>>>>>> match : " + match);
 		matchService.saveMatch(match, memberId, reservation);
-		return "match/matchForm";
+		return "redirect:/match/matchList";
 	}
 
 }

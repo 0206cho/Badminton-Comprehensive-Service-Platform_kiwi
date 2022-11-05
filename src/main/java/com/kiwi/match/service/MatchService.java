@@ -94,7 +94,15 @@ public class MatchService {
 	public void saveMatch(Matchs matchs, Long memberId, Reservation reservation) {
 		matchs.setMemberId(memberId);
 		matchs.setReservation(reservation);
-		System.out.println("");
+		
+		// 단식일 경우 count2, 복식일 경우 count 4
+		if(matchs.getType().equals("1vs1(단식)")) {
+			matchs.setCount(2);			
+		}
+		else {
+			matchs.setCount(4);
+		}
+		System.out.println(">>>>>>>>>>>> match : " + matchs.getType());
 		
 		matchRepository.save(matchs);
 	}

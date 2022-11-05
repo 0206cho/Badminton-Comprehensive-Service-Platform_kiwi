@@ -149,12 +149,29 @@ a {
 		<!-- 매치 저장 테스트 -->
 		<form role="form" method="post" enctype="multipart/form-data"
 			action="/match/matchNew" th:object="${matchDto}" name="match_form">
-			<input type="text" th:field="*{id}"> 
-			<input type="text" th:field="*{memberId}"> 
+			<!--레벨-->
+			<select th:field="*{level}" class="select" name="region"
+				style="padding: 6px; padding-right: 20px; margin-right: 50px;">
+				<option value="모든레벨" selected>모든레벨</option>
+				<option value="LEVEL_A">LEVEL_A</option>
+				<option value="LEVEL_B">LEVEL_B</option>
+				<option value="LEVEL_C">LEVEL_C</option>
+				<option value="LEVEL_D">LEVEL_D</option>
+			</select>
+
+			<!--종류-->
+			<select th:field="*{type}" class="select" name="type"
+				style="padding: 6px; padding-right: 20px; margin-right: 80px;">
+				<option value="1vs1(단식)" selected>종류</option>
+				<option value="1vs1(단식)">1vs1(단식)</option>
+				<option value="2vs2(복식)">2vs2(복식)</option>
+			</select> <Br> <input type="text" th:field="*{id}"> <input
+				type="text" th:field="*{memberId}">
 			<button type="button" onclick="check();" class="btn btn-kiwi submit"
 				style="width: 100px;">등록</button>
 			<!-- 모달창 없는 개설하기 임시 -->
-			<input type="hidden" name="_csrf" id="_csrf" th:value="${_csrf.token}">
+			<input type="hidden" name="_csrf" id="_csrf"
+				th:value="${_csrf.token}">
 		</form>
 		<!-- 매치 저장 테스트 -->
 		<br>
@@ -187,8 +204,11 @@ a {
 
 					<div
 						style="float: left; width: 28%; margin-top: 20px; text-align: center;">
-						<button class="btn btn-kiwi ok" type="button"
-							onclick='changeBtn()'
+						<div id="1"></div>
+
+
+						<button class="btn btn-kiwi ok" type="button" 
+							th:classappend="${vo.id}" id="001" onclick='changeBtn()'
 							style="height: 40px; background-color: #C6F1E7; color: black;">선택하기</button>
 						<div style="display: flex; margin-top: 10px; margin-left: 23px;">
 							<div style="margin-right: 8px;">결제일시</div>
@@ -269,18 +289,53 @@ a {
 
 	</div>
 	<script type="text/javascript">
+		'use strict';
+		$(document).ready(function(){
+			
+			
+			
+			console.log(">>>>>>>>>>");
+			
+			/*
+			var obj = document.getElementById("아이디");
+			obj.setAttribute("id", "바꿀아이디");
+			alert( obj.getAttribute("id") );
+			
+			document.querySelector('5').id = 'save_Project';
+			console.log(document.querySelector('.kiwi'));
+			//var html_btn = '<button id = "btn" class="btn btn-kiwi second" style="margin-left:0;margin-bottom:30px" data-bs-toggle="modal" data-bs-target="#exampleModal">06:00 <br>~08:00</button>';
+			var html_btn = '<button class="btn btn-kiwi ok" id ="001" type="button" onclick="changeBtn()" style="height: 40px; background-color: #C6F1E7; color: black;">선택하기</button>';
+			$('#1').html(html_btn);
+			*/
+			 /*<![CDATA[*/
+	        //const btnId = document.getElementById('001').value;
+	        //document.setElementById(/*[[${reservationId}]]*/).value;
+	        
+	        //document.querySelector('.5').setAttribute("id", /*[[${reservationId}]]*/);
+
+	        //location.href='list?page=' + page + '&btnId=' + searchWord;
+	    /*]]>*/
+		});
+		
 		function changeBtn() {
+			/*
+			for(var i =0; i <= 10; i++){
+				var x = document.getElementsByClassName(i)[0].value
+				console.log(x)
+			}
+			*/
+			
 			const btnElement = document.getElementById('btn_check');
 
 			const html = '<div style="color:black;"> 선택됨 </div>';
 
 			btnElement.innerHTML = html;
 		}
-		
-		function check(){
-	    	document.match_form.submit();
-	    	console.log("힝");
-         } 
+
+		function check() {
+			document.match_form.submit();
+			console.log("힝");
+		}
 	</script>
 </div>
 </html>
