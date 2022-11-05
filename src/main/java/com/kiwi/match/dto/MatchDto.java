@@ -42,7 +42,9 @@ public class MatchDto {
 	@Column(name="match_type")
 	private String type; // 상태
 	
-	private Reservation reservation; // 코트예약 아이디. 매치는 하나의 코트예약건에서만 할 수 있음
+	//private Reservation reservation; // 코트예약 아이디. 매치는 하나의 코트예약건에서만 할 수 있음
+	
+	private Long reser_id;
 	
 	@Column(name="match_count")
 	private long count;      // 매치 인원

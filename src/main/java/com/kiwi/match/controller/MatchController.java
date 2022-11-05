@@ -116,7 +116,7 @@ public class MatchController {
 		if (mr.getMathshId().getCount() <= count) { 
 			mr.getMathshId().setStatus(Status.마감);
 
-			Reservation reservation = mr.getMathshId().getReservation();
+			Long reservation = mr.getMathshId().getReservation().getId();
 			Matchs match = mr.getMathshId();
 			matchService.saveMatch(match, memberId, reservation);
 			
@@ -147,10 +147,11 @@ public class MatchController {
 				
 				reservationId = list.get(i).getId() ; // 해당하는 멤버의 예약 아이디 반환
 				System.out.println(">>>>>>>>>>>>>>>>>> reservationId : " + reservationId);
+				model.addAttribute("reservationId" + count, reservationId); // 각각의 예약 id반환하기 위해서 reservatuonId1 ,, 2,, 이런식으로 줌
 			}
 		}
 		model.addAttribute("count", count);
-		model.addAttribute("reservationId", reservationId);
+		//model.addAttribute("reservationId", reservationId);
 		
 		return "match/matchForm";
 	}
@@ -161,12 +162,13 @@ public class MatchController {
 			@AuthenticationPrincipal PrincipalDetails principalDetails) {
 		Long memberId = principalDetails.getMember().getId();
 		Matchs match = Matchs.createMatch(matchDto);
-		Long reservationId = (long) 5;
+		//Long reservationId = (long) 5;
 
-		Reservation reservation = reservationRepository.findById(reservationId).orElseThrow();
-		System.out.println(">>>>>>>>>>>>>>> reservation : " + reservation);
+		//Reservation reservation = reservationRepository.findById(reservationId).orElseThrow();
+		//System.out.println(">>>>>>>>>>>>>>> reservation : " + reservation);
 		System.out.println(">>>>>>>>>>>>>>> match : " + match);
-		matchService.saveMatch(match, memberId, reservation);
+		//matchService.saveMatch(match, memberId, reservation);
+		matchService.saveMatch(match, memberId,matchDto.getReser_id());
 		return "redirect:/match/matchList";
 	}
 

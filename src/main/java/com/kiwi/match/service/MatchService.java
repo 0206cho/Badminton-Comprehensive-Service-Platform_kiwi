@@ -91,10 +91,27 @@ public class MatchService {
 	}
 
 	// 매치 개설
-	public void saveMatch(Matchs matchs, Long memberId, Reservation reservation) {
-		matchs.setMemberId(memberId);
-		matchs.setReservation(reservation);
+//	public void saveMatch(Matchs matchs, Long memberId, Reservation reservation) {
+//		matchs.setMemberId(memberId);
+//		matchs.setReservation(reservation);
+//		
+//		// 단식일 경우 count2, 복식일 경우 count 4
+//		if(matchs.getType().equals("1vs1(단식)")) {
+//			matchs.setCount(2);			
+//		}
+//		else {
+//			matchs.setCount(4);
+//		}
+//		System.out.println(">>>>>>>>>>>> match : " + matchs.getType());
+//		
+//		matchRepository.save(matchs);
+//	}
+
+	public void saveMatch(Matchs matchs, Long memberId, Long reservationId) {
 		
+		Reservation reser = reservationRepository.findById(reservationId).orElseThrow();
+		matchs.setMemberId(memberId);
+		matchs.setReservation(reser);
 		// 단식일 경우 count2, 복식일 경우 count 4
 		if(matchs.getType().equals("1vs1(단식)")) {
 			matchs.setCount(2);			
