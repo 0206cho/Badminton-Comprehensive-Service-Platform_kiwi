@@ -137,7 +137,6 @@ a {
 	<div class="container">
 		<!-- container : 좌측정렬-->
 		<!-- 리스트 - 없을경우 코트예약을 먼저 해주세요. -->
-
 		<br>
 
 		<div th:each="vo : ${list}">
@@ -175,11 +174,6 @@ a {
 							style="height: 40px; background-color: #C6F1E7; color: black;"
 							value='선택하기' /> 
 
-						<!-- <button class="btn btn-kiwi ok court_list" type="button"
-							th:field="*{id}" id="001" onclick='changeBtn(this.id)'
-							style="height: 40px; background-color: #C6F1E7; color: black;"
-							value="dd">선택하기</button> -->
-
 						<script th:inline="javascript">
 							'use strict';
 							$(document).ready(function(){
@@ -198,21 +192,10 @@ a {
 								document.getElementById('check_crId').value = id;
 								
 								// 선택한 버튼 값 변경
-								document.getElementById(id).value = "선택됨";
-								
-								
-								
+								document.getElementById(id).value = "선택됨";		
 								
 								// 클래스명으로 버튼 비활성화
-								
-								//var class_id = $('.court_list').attr('id');  // class로 id값 가져오기
-								//class_id.disabled = true;
-								
-								//const btnElement = document.getElementById(id);
-								//const html = '<div style="color:red;"> 선택됨!! </div>';
-
-								//btnElement.innerHTML = html;
-								
+								$('.court_list').attr('disabled', true);
 							}
 							</script>
 
