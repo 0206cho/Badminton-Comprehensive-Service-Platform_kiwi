@@ -34,6 +34,7 @@ public class MarketService {
 		if (file.isEmpty()) {
 			String img = "";
 			market.setFilepath(img);
+			System.out.println(">>>>>>>>>>>>>>>>>> img : " + img);
 		} else {
 			uploadFile.fildUpload(market, file);
 		}
