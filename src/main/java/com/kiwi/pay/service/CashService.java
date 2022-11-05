@@ -43,4 +43,16 @@ public class CashService {
 		return kiwicash;
 	}
 	
+	// 캐시 차감
+	public void cashDeposit(Long id, int amount) {
+		Member member = memberRepository.findMemberById(id);
+		if(member.getKiwicash() < amount) {
+			System.out.println("금액이 부족해,,");
+			
+		} else {
+			member.deposit(amount);
+		}
+		
+	}
+	
 }

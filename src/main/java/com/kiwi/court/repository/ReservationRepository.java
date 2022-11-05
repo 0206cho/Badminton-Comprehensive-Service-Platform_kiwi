@@ -11,7 +11,5 @@ import com.kiwi.match.entity.Matchs;
 public interface ReservationRepository extends JpaRepository<Reservation, Long>{
 
 	List<Reservation> findAllByOrderByIdDesc();
-	
-	//Reservation findById(String id);
 
 }

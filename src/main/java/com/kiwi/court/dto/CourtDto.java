@@ -1,13 +1,8 @@
 package com.kiwi.court.dto;
 
-import javax.validation.constraints.NotNull;
-
 import org.modelmapper.ModelMapper;
 
 import com.kiwi.court.entity.Court;
-import com.kiwi.member.constant.Address;
-import com.kiwi.member.constant.Bank;
-import com.kiwi.member.constant.Gender;
 
 import lombok.Getter;
 import lombok.Setter;
