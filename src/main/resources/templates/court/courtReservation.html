@@ -185,74 +185,16 @@
 		src="//dapi.kakao.com/v2/maps/sdk.js?appkey=8d88fe30f1babaf45150d93fec381f08&libraries=clusterer"></script>
 
 	<script type="text/javascript">
-		$('document').ready(function () {
-			var area0 = ["시/도 선택", "서울특별시", "인천광역시", "대전광역시", "광주광역시", "대구광역시", "울산광역시", "부산광역시", "경기도", "강원도", "충청북도", "충청남도", "전라북도", "전라남도", "경상북도", "경상남도", "제주도"];
-			var area1 = ["강남구", "강동구", "강북구", "강서구", "관악구", "광진구", "구로구", "금천구", "노원구", "도봉구", "동대문구", "동작구", "마포구", "서대문구", "서초구", "성동구", "성북구", "송파구", "양천구", "영등포구", "용산구", "은평구", "종로구", "중구", "중랑구"];
-			var area2 = ["계양구", "미추홀구", "남동구", "동구", "부평구", "서구", "연수구", "중구", "강화군", "옹진군"];
-			var area3 = ["대덕구", "동구", "서구", "유성구", "중구"];
-			var area4 = ["광산구", "남구", "동구", "북구", "서구"];
-			var area5 = ["남구", "달서구", "동구", "북구", "서구", "수성구", "중구", "달성군"];
-			var area6 = ["남구", "동구", "북구", "중구", "울주군"];
-			var area7 = ["강서구", "금정구", "남구", "동구", "동래구", "부산진구", "북구", "사상구", "사하구", "서구", "수영구", "연제구", "영도구", "중구", "해운대구", "기장군"];
-			var area8 = ["고양시", "과천시", "광명시", "광주시", "구리시", "군포시", "김포시", "남양주시", "동두천시", "부천시", "성남시", "수원시", "시흥시", "안산시", "안성시", "안양시", "양주시", "오산시", "용인시", "의왕시", "의정부시", "이천시", "파주시", "평택시", "포천시", "하남시", "화성시", "가평군", "양평군", "여주군", "연천군"];
-			var area9 = ["강릉시", "동해시", "삼척시", "속초시", "원주시", "춘천시", "태백시", "고성군", "양구군", "양양군", "영월군", "인제군", "정선군", "철원군", "평창군", "홍천군", "화천군", "횡성군"];
-			var area10 = ["제천시", "청주시", "충주시", "괴산군", "단양군", "보은군", "영동군", "옥천군", "음성군", "증평군", "진천군", "청원군"];
-			var area11 = ["계룡시", "공주시", "논산시", "보령시", "서산시", "아산시", "천안시", "금산군", "당진군", "부여군", "서천군", "연기군", "예산군", "청양군", "태안군", "홍성군"];
-			var area12 = ["군산시", "김제시", "남원시", "익산시", "전주시", "정읍시", "고창군", "무주군", "부안군", "순창군", "완주군", "임실군", "장수군", "진안군"];
-			var area13 = ["광양시", "나주시", "목포시", "순천시", "여수시", "강진군", "고흥군", "곡성군", "구례군", "담양군", "무안군", "보성군", "신안군", "영광군", "영암군", "완도군", "장성군", "장흥군", "진도군", "함평군", "해남군", "화순군"];
-			var area14 = ["경산시", "경주시", "구미시", "김천시", "문경시", "상주시", "안동시", "영주시", "영천시", "포항시", "고령군", "군위군", "봉화군", "성주군", "영덕군", "영양군", "예천군", "울릉군", "울진군", "의성군", "청도군", "청송군", "칠곡군"];
-			var area15 = ["거제시", "김해시", "마산시", "밀양시", "사천시", "양산시", "진주시", "진해시", "창원시", "통영시", "거창군", "고성군", "남해군", "산청군", "의령군", "창녕군", "하동군", "함안군", "함양군", "합천군"];
-			var area16 = ["서귀포시", "제주시", "남제주군", "북제주군"];
-
-
-
-			// 시/도 선택 박스 초기화
-
-			$("select[name^=sido]").each(function () {
-				$selsido = $(this);
-				$.each(eval(area0), function () {
-					$selsido.append("<option value='" + this + "'>" + this + "</option>");
-				});
-				$selsido.next().append("<option value=''>구/군 선택</option>");
-			});
-
-
-
-			// 시/도 선택시 구/군 설정
-			$("select[name^=sido]").change(function () {
-				var area = "area" + $("option", $(this)).index($("option:selected", $(this))); // 선택지역의 구군 Array
-				var $gugun = $(this).next(); // 선택영역 군구 객체
-				$("option", $gugun).remove(); // 구군 초기화
-				
-				if (area == "area0")
-					$gugun.append("<option value=''>구/군 선택</option>");
-				else {
-					$.each(eval(area), function () {
-						$gugun.append("<option value='" + this + "'>" + this + "</option>");
-						
-						
-						
-						//console.log(this);
-					});
-				}
-			});
 			
-			
-			$("select[name^=gugun]").change(function () {
-				var area = "area" + $("option", $(this)).index($("option:selected", $(this))); // 선택지역의 구군 Array
-				console.log(area);
-				
-				if (area == "area0"){
-					console.log("area0이야!");
-				}
-			
-			});
-			
-			var lat = document.getElementById('lat');
-			lat.value="37.40785375";
-			console.log(lat.value);
-			
-		});
+	$('document').ready(function () {
+		
+		
+		
+		var lat = document.getElementById('lat');
+		lat.value="37.40785375";
+		console.log(lat.value);
+		
+	});
 
 	</script>
 	<script th:inline="javascript">
@@ -297,9 +239,9 @@
  -->
 		<input type="hidden" id="lat" name="lat" value="">
 		<!--지역 -->
-		<select class="select" name="sido" id="sido1" style="padding: 6px; margin-left: 55px;"></select>
-		<select class="select" name="gugun" id="gugun1"
-			style="padding: 6px; margin-left: 10px; margin-bottom: 10px"></select>
+		<select class="select" name="sido" id="sido" style="padding: 6px; margin-left: 55px;margin-bottom:10px">
+			
+		</select>
 
 		
 		
@@ -310,174 +252,7 @@
 		
 		//console.log("====="+document.getElementById('lat').value);
 		//var latlng = new kakao.maps.LatLng(37.40785375, 126.6325097);
-			/*<![CDATA[*/
-			var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
-				mapOption = {
-					center: new kakao.maps.LatLng(37.40785375, 126.6325097), // 지도의 중심좌표
-					//center: latlng, // 지도의 중심좌표
-					level: 7 // 지도의 확대 레벨
-				};
-
-			var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
-			var imageSrc = "/img/bad2.png";
-			// 마커 이미지의 이미지 크기 입니다
-			var imageSize = new kakao.maps.Size(40, 40);
-
-			// 일반 지도와 스카이뷰로 지도 타입을 전환할 수 있는 지도타입 컨트롤을 생성합니다
-			var mapTypeControl = new kakao.maps.MapTypeControl();
-
-			// 지도에 컨트롤을 추가해야 지도위에 표시됩니다
-			// kakao.maps.ControlPosition은 컨트롤이 표시될 위치를 정의하는데 TOPRIGHT는 오른쪽 위를 의미합니다
-			map.addControl(mapTypeControl, kakao.maps.ControlPosition.TOPRIGHT);
-
-			// 지도 확대 축소를 제어할 수 있는  줌 컨트롤을 생성합니다
-			var zoomControl = new kakao.maps.ZoomControl();
-			map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
 			
-			
-			// 마커 클러스터러를 생성합니다 
-			var clusterer = new kakao.maps.MarkerClusterer({
-				map: map, // 마커들을 클러스터로 관리하고 표시할 지도 객체 
-				averageCenter: true, // 클러스터에 포함된 마커들의 평균 위치를 클러스터 마커 위치로 설정 
-				minLevel: 10 // 클러스터 할 최소 지도 레벨 
-			});
-			
-			
-			
-			
-
-
-			/*[# th:each="court : ${courtList}"]*/
-
-			// 마커 이미지를 생성합니다    
-			var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
-
-
-			var markers = [];
-			var data = /*[[${court}]]*/;
-			//console.log(data);
-			//console.log(data.lat);
-
-			displayMarker(data);
-			clusterer.addMarkers(markers);
-
-			/*[/]*/
-
-			// 지도에 마커를 표시하는 함수입니다    
-			function displayMarker(data) {
-
-				var l = new kakao.maps.LatLng(data.lat, data.lng);
-				var marker = new kakao.maps.Marker({
-					map: map,
-					position: l,
-					image: markerImage // 마커 이미지 
-				});
-				var overlay = new kakao.maps.CustomOverlay({
-					yAnchor: 3,
-					map: map,
-					position: marker.getPosition()
-				});
-
-				var wrap = document.createElement('div');
-				//wrap.innerHTML = data.name;
-				wrap.className = "wrap";
-
-				var info = document.createElement('div');
-				info.className = "info";
-
-				wrap.appendChild(info);
-
-				var title = document.createElement('div');
-				title.className = "title";
-				sometext = document.createTextNode(data.name);
-
-				title.appendChild(sometext);
-				info.append(title);
-
-				var close = document.createElement('div');
-				close.className = "close";
-				close.title = '닫기';
-				close.onclick = function () {
-					overlay.setMap(null);
-				};
-				title.appendChild(close);
-
-				var body = document.createElement('div');
-				body.className = "body";
-				info.appendChild(body);
-
-				var imgDiv = document.createElement('div');
-				imgDiv.className = "img";
-				body.appendChild(imgDiv);
-
-				var img = document.createElement('img');
-				img.className = "image";
-				img.src = "/img/kiwi.png";
-				// img.width="40";
-				// img.height="40";
-				imgDiv.appendChild(img);
-
-				var desc = document.createElement('div');
-				desc.className = "desc";
-				body.appendChild(desc);
-
-				var ellipsis = document.createElement('div');
-				ellipsis.className = "ellipsis";
-
-				var text = document.createTextNode(data.address1);
-
-				ellipsis.appendChild(text);
-
-				desc.appendChild(ellipsis);
-
-				var jibun = document.createElement('div');
-				jibun.className = "jibun ellipsis";
-
-				var text2 = document.createTextNode(data.call_number);
-
-				jibun.appendChild(text2);
-
-				desc.appendChild(jibun);
-
-				var footerDev = document.createElement('div');
-
-				desc.appendChild(footerDev);
-
-				var link = document.createElement('a');
-				link.className = "link";
-
-				var text3 = document.createTextNode("구장 정보 보기");
-
-				link.appendChild(text3);
-				//link.target = "_blank";
-				link.href = "/court/info/" + data.id;
-
-				footerDev.appendChild(link);
-
-				overlay.setContent(wrap);
-				markers.push(marker);
-				kakao.maps.event.addListener(marker, 'click', function () {
-					overlay.setMap(map);
-					document.getElementById('selectCourtName').innerHTML = data.name;
-					document.getElementById('selectCourtName').value = data.name;
-					document.getElementById('selectCourtAddress').innerHTML = data.address1;
-					document.getElementById('selectCourtNumber').innerHTML = data.call_number;
-					document.getElementById('court_id').value = data.id;
-					document.getElementById('court_name').value = data.name;
-					//console.log("data.id : " + data.id)
-				});
-			}
-			
-			function panTo() {
-			    // 이동할 위도 경도 위치를 생성합니다 
-			    var moveLatLon = new kakao.maps.LatLng(33.450580, 126.574942);
-			    
-			    // 지도 중심을 부드럽게 이동시킵니다
-			    // 만약 이동할 거리가 지도 화면보다 크면 부드러운 효과 없이 이동합니다
-			    map.panTo(moveLatLon);            
-			}        
-
-			/*]]>*/
 
 		</script>
 
@@ -771,6 +546,294 @@
 			 	btnDisable.style.backgroundColor = '#D3D3D3';
 			 	btnDisable.style.borderColor = '#808080';
 				/*[/]*/
+				
+				
+			 	/*<![CDATA[*/
+				var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+					mapOption = {
+						center: new kakao.maps.LatLng(37.40785375, 126.6325097), // 지도의 중심좌표
+						//center: latlng, // 지도의 중심좌표
+						level: 7 // 지도의 확대 레벨
+					};
+
+				var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+				var imageSrc = "/img/bad2.png";
+				// 마커 이미지의 이미지 크기 입니다
+				var imageSize = new kakao.maps.Size(40, 40);
+
+				// 일반 지도와 스카이뷰로 지도 타입을 전환할 수 있는 지도타입 컨트롤을 생성합니다
+				var mapTypeControl = new kakao.maps.MapTypeControl();
+
+				// 지도에 컨트롤을 추가해야 지도위에 표시됩니다
+				// kakao.maps.ControlPosition은 컨트롤이 표시될 위치를 정의하는데 TOPRIGHT는 오른쪽 위를 의미합니다
+				map.addControl(mapTypeControl, kakao.maps.ControlPosition.TOPRIGHT);
+
+				// 지도 확대 축소를 제어할 수 있는  줌 컨트롤을 생성합니다
+				var zoomControl = new kakao.maps.ZoomControl();
+				map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
+				
+				
+				// 마커 클러스터러를 생성합니다 
+				var clusterer = new kakao.maps.MarkerClusterer({
+					map: map, // 마커들을 클러스터로 관리하고 표시할 지도 객체 
+					averageCenter: true, // 클러스터에 포함된 마커들의 평균 위치를 클러스터 마커 위치로 설정 
+					minLevel: 10 // 클러스터 할 최소 지도 레벨 
+				});
+				
+				
+				
+				
+
+
+				/*[# th:each="court : ${courtList}"]*/
+
+				// 마커 이미지를 생성합니다    
+				var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
+
+
+				var markers = [];
+				var data = /*[[${court}]]*/;
+				//console.log(data);
+				//console.log(data.lat);
+
+				displayMarker(data);
+				clusterer.addMarkers(markers);
+
+				/*[/]*/
+
+				// 지도에 마커를 표시하는 함수입니다    
+				function displayMarker(data) {
+
+					var l = new kakao.maps.LatLng(data.lat, data.lng);
+					var marker = new kakao.maps.Marker({
+						map: map,
+						position: l,
+						image: markerImage // 마커 이미지 
+					});
+					var overlay = new kakao.maps.CustomOverlay({
+						yAnchor: 3,
+						map: map,
+						position: marker.getPosition()
+					});
+
+					var wrap = document.createElement('div');
+					//wrap.innerHTML = data.name;
+					wrap.className = "wrap";
+
+					var info = document.createElement('div');
+					info.className = "info";
+
+					wrap.appendChild(info);
+
+					var title = document.createElement('div');
+					title.className = "title";
+					sometext = document.createTextNode(data.name);
+
+					title.appendChild(sometext);
+					info.append(title);
+
+					var close = document.createElement('div');
+					close.className = "close";
+					close.title = '닫기';
+					close.onclick = function () {
+						overlay.setMap(null);
+					};
+					title.appendChild(close);
+
+					var body = document.createElement('div');
+					body.className = "body";
+					info.appendChild(body);
+
+					var imgDiv = document.createElement('div');
+					imgDiv.className = "img";
+					body.appendChild(imgDiv);
+
+					var img = document.createElement('img');
+					img.className = "image";
+					img.src = "/img/kiwi.png";
+					// img.width="40";
+					// img.height="40";
+					imgDiv.appendChild(img);
+
+					var desc = document.createElement('div');
+					desc.className = "desc";
+					body.appendChild(desc);
+
+					var ellipsis = document.createElement('div');
+					ellipsis.className = "ellipsis";
+
+					var text = document.createTextNode(data.address1);
+
+					ellipsis.appendChild(text);
+
+					desc.appendChild(ellipsis);
+
+					var jibun = document.createElement('div');
+					jibun.className = "jibun ellipsis";
+
+					var text2 = document.createTextNode(data.call_number);
+
+					jibun.appendChild(text2);
+
+					desc.appendChild(jibun);
+
+					var footerDev = document.createElement('div');
+
+					desc.appendChild(footerDev);
+
+					var link = document.createElement('a');
+					link.className = "link";
+
+					var text3 = document.createTextNode("구장 정보 보기");
+
+					link.appendChild(text3);
+					//link.target = "_blank";
+					link.href = "/court/info/" + data.id;
+
+					footerDev.appendChild(link);
+
+					overlay.setContent(wrap);
+					markers.push(marker);
+					kakao.maps.event.addListener(marker, 'click', function () {
+						overlay.setMap(map);
+						document.getElementById('selectCourtName').innerHTML = data.name;
+						document.getElementById('selectCourtName').value = data.name;
+						document.getElementById('selectCourtAddress').innerHTML = data.address1;
+						document.getElementById('selectCourtNumber').innerHTML = data.call_number;
+						document.getElementById('court_id').value = data.id;
+						document.getElementById('court_name').value = data.name;
+						//console.log("data.id : " + data.id)
+					});
+				}
+				
+				        
+
+				/*]]>*/
+				
+		var area0 = ["시/도 선택", "서울특별시", "인천광역시", "대전광역시", "광주광역시", "대구광역시", "울산광역시", "부산광역시", "경기도", "강원도", "충청북도", "충청남도", "전라북도", "전라남도", "경상북도", "경상남도", "제주도"];
+		
+		// 시/도 선택 박스 초기화
+
+		$("select[name^=sido]").each(function () {
+			$selsido = $(this);
+			$.each(eval(area0), function () {
+				$selsido.append("<option value='" + this + "'>" + this + "</option>");
+				//console.log(this);
+			});
+			
+		});
+		
+		function panTo(x,y) {
+		    // 이동할 위도 경도 위치를 생성합니다 
+		    var moveLatLon = new kakao.maps.LatLng(x,y);
+		    
+		    // 지도 중심을 부드럽게 이동시킵니다
+		    // 만약 이동할 거리가 지도 화면보다 크면 부드러운 효과 없이 이동합니다
+		    map.panTo(moveLatLon);            
+		}
+
+		// 시/도 선택시 구/군 설정
+		$("select[name^=sido]").change(function () {
+			var area = "area" + $("option", $(this)).index($("option:selected", $(this))); // 선택지역의 구군 Array
+			if(area == "area1"){
+				panTo(37.486137,127.042414);
+			} else if(area == "area2"){
+				panTo(37.47457949,126.6226689);
+			} else if(area == "area3"){
+				panTo(36.33173992,127.3448267);
+			} else if(area == "area4"){
+				panTo(35.1595454,126.8526012);
+			} else if(area == "area5"){
+				panTo(35.34928218,129.318896);
+			} else if(area == "area6"){
+				panTo(35.34928218,129.318896);
+			} else if(area == "area7"){
+				panTo(35.210957,128.972213);
+			} else if(area == "area8"){
+				panTo(37.332808,126.868024);
+			} else if(area == "area9"){
+				panTo(37.332808,126.868024);
+			} else if(area == "area10"){
+				panTo(37.332808,126.868024);
+			} else if(area == "area11"){
+				panTo(36.10044663,127.4804214);
+			} else if(area == "area12"){
+				panTo(35.95764191,126.9520666);
+			} else if(area == "area13"){
+				panTo(34.93964829,127.5207066);
+			} else if(area == "area14"){
+				panTo(36.094549,128.429805);
+			} else if(area == "area15"){
+				panTo(34.97931331,128.3107228);
+			} else if(area == "area16"){
+				panTo(34.97931331,128.3107228);
+			}
+			
+			
+		}); 
+
+		var selectDate = 20221106;    // 원하는 날짜
+
+		 function setWeekDate(selectDate){
+		    var year  = selectDate.substring(0,4); //선택된 년도
+
+		    var month = selectDate.substring(4,6); //선택된 월
+
+		    var day   = selectDate.substring(6,8); //선택된 일자
+
+		    var week  = new Array("", "월", "화", "수", "목", "금", "토", "일");  // 아래 코드에서는 사용하지 않음
+
+		    // 보통 0~6 까지가 일~토로 표현된다 하지만 월요일부터 표현하기 위해 0번째를 공백처리
+
+			var currentDay = new Date(year, month-1, day);  
+
+			var theDayOfWeek = currentDay.getDay();        // 요일을 숫자로 구해옴
+
+		// 선택한 날이 일요일 일때 전주의 날짜를 담음
+
+			 if(theDayOfWeek == 0){		 
+
+				 var currentDay = new Date(year, month-1, day-7);  		 
+
+			 }	 
+
+			var theYear = currentDay.getFullYear();
+
+			 var theMonth = currentDay.getMonth();
+
+			 var theDate  = currentDay.getDate();
+
+			 var thisWeek = [];
+
+			 for(var i=1; i<8; i++) {
+
+			   var resultDay = new Date(theYear, theMonth, theDate + (i - theDayOfWeek));
+
+			   var yyyy = resultDay.getFullYear();
+
+			   var mm = Number(resultDay.getMonth()) + 1;
+
+			   var dd = resultDay.getDate();
+
+			   var dd_nm = resultDay.getDay();
+
+			   mm = String(mm).length === 1 ? '0' + mm : mm;
+
+			   dd = String(dd).length === 1 ? '0' + dd : dd;
+		//월요일부터 화, 수 ~ 일요일까지 날짜를 담음
+
+			   thisWeek[i] = yyyy + '-' + mm + '-' + dd;
+			   if(i==1){
+				  // 검색기준 월요일
+			   }else if(i==7){
+				  // 검색기준 일요일
+			   }	   
+			 }
+			console.log(thisWeek);
+		 }
+				
+		setWeekDate(selectDate);
+				
 				
 			});
 			
