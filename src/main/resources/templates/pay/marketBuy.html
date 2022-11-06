@@ -49,51 +49,51 @@
 
 
 	<script th:inline="javascript">
-		function pay() {
-			var dto = /*[[${marketDto}]]*/;
-			console.log(dto);
-			console.log(dto.id);
-			var money = /*[[${money}]]*/;
-			console.log(money);
-			if (money < 20000) {
-				alert("키위 캐시 잔액이 부족합니다.");
-				var width = '480';
-				var height = '900';
+		// function pay() {
+		// 	var dto = /*[[${marketDto}]]*/;
+		// 	console.log(dto);
+		// 	console.log(dto.id);
+		// 	var money = /*[[${money}]]*/;
+		// 	console.log(money);
+		// 	if (money < 20000) {
+		// 		alert("키위 캐시 잔액이 부족합니다.");
+		// 		var width = '480';
+		// 		var height = '900';
 
-				var left = Math.ceil((window.screen.width - width) / 2);
-				var top = Math.ceil((window.screen.height - height) / 2);
+		// 		var left = Math.ceil((window.screen.width - width) / 2);
+		// 		var top = Math.ceil((window.screen.height - height) / 2);
 
-				window.open('http://localhost/cash/charge', 'popup-test', 'width=' + width + ', height=' + height + ', left=' + left + ', top=' + top);
-				return false;
-			}
+		// 		window.open('http://localhost/cash/charge', 'popup-test', 'width=' + width + ', height=' + height + ', left=' + left + ', top=' + top);
+		// 		return false;
+		// 	}
 			
-			$.ajax({
-				url : "/market/pay/result",
-				type : "post",
-				data : {
-					id : dto.court_id,
-					name : dto.court_name,
-					num : dto.court_num,
-					time : dto.court_time,
-					racket : dto.racket,
-					email : dto.reservation_email,
-					shuttlecock : dto.shuttlecock,
-					btnNum : dto.btnNum,
-				},
-				// ajax csrf 토큰 적용
-				beforeSend: function (jqXHR, settings) {
-			           var header = $("meta[name='_csrf_header']").attr("content");
-			           var token = $("meta[name='_csrf']").attr("content");
-			           jqXHR.setRequestHeader(header, token);
-				},
-				success : function(){
-					alert("예약이 완료되었습니다.")
-					window.location.href = "http://localhost/court/reservation";	
-				},
-				error : function(){alert("error");}
-			});
+		// 	$.ajax({
+		// 		url : "/market/pay/result",
+		// 		type : "post",
+		// 		data : {
+		// 			id : dto.court_id,
+		// 			name : dto.court_name,
+		// 			num : dto.court_num,
+		// 			time : dto.court_time,
+		// 			racket : dto.racket,
+		// 			email : dto.reservation_email,
+		// 			shuttlecock : dto.shuttlecock,
+		// 			btnNum : dto.btnNum,
+		// 		},
+		// 		// ajax csrf 토큰 적용
+		// 		beforeSend: function (jqXHR, settings) {
+		// 	           var header = $("meta[name='_csrf_header']").attr("content");
+		// 	           var token = $("meta[name='_csrf']").attr("content");
+		// 	           jqXHR.setRequestHeader(header, token);
+		// 		},
+		// 		success : function(){
+		// 			alert("예약이 완료되었습니다.")
+		// 			window.location.href = "http://localhost/court/reservation";	
+		// 		},
+		// 		error : function(){alert("error");}
+		// 	});
 			
-		}
+		// }
 
 
 	</script>
@@ -115,9 +115,9 @@
 				</div>
 			</div>
 		</div>
-
-
-
+		
+		
+		
 		<br> <Br> <br> <br> <Br> <br>
 		<div style="margin-left: 55px; margin-right: 80px; margin-top: 20px; width: 100%;">
 			<div style="float: left; width: 98%; font-weight: bold;">키위 마켓 구매</div>

@@ -198,24 +198,7 @@
 
 	</script>
 	<script th:inline="javascript">
-		function noSelectCourt(id) {
-			panTo();
-			var name = document.getElementById('court_name');
-			var btn = document.getElementById(id);
-			var court_time = document.getElementById('court_time');
-			if (name.value == "") {
-				alert("예약 장소를 선택하세요!");
-				return false;
-			}
-			court_time.value = btn.value;
-			$("#exampleModal").modal("show");
-			
-			var btnNum = document.getElementById('btnNum');
-			btnNum.value = id;
-			console.log("==============" + btnNum.value);
-			
-			
-		}
+		
 	</script>
 
 
@@ -834,8 +817,30 @@
 				
 		setWeekDate(selectDate);
 				
+		
+		
+		
 				
 			});
+			
+			function noSelectCourt(id) {
+				
+				var name = document.getElementById('court_name');
+				var btn = document.getElementById(id);
+				var court_time = document.getElementById('court_time');
+				if (name.value == "") {
+					alert("예약 장소를 선택하세요!");
+					return false;
+				}
+				court_time.value = btn.value;
+				$("#exampleModal").modal("show");
+				
+				var btnNum = document.getElementById('btnNum');
+				btnNum.value = id;
+				console.log("==============" + btnNum.value);
+				
+				
+			}
 			
 			$(document).on('click', '.number-spinner button', function () {
 				var btn = $(this),
