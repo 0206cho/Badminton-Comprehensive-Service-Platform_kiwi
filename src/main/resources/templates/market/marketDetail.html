@@ -236,7 +236,11 @@ img {
 					<input type="hidden" id="memName" name="memName" th:value="${market.memName}"> 
 					<input type="hidden" id="memImg" name="memImg" th:value="${market.memImg}">--> 
 					<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
-					<button type="submit" class="btn btn-kiwi" style="margin-left: 15cm;">구매하기</button>
+					<button th:if="${memberId == market.buy_memId} and ${#strings.equals(market.status, '구매대기')}" type="submit" class="btn btn-kiwi" style="margin-left: 15cm;">구매완료</button>
+					<button th:if="${#strings.equals(market.status, '판매중')}" type="submit" class="btn btn-kiwi" style="margin-left: 15cm;">구매하기</button>
+					<button th:if="${memberId != market.buy_memId} and ${#strings.equals(market.status, '구매대기')}" type="submit" class="btn btn-kiwi disabled" style="margin-left: 15cm;">구매불가</button>
+					<button th:if="${memberId != market.buy_memId} and ${#strings.equals(market.status, '구매완료')}" type="submit" class="btn btn-kiwi disabled" style="margin-left: 15cm;">구매불가</button>
+					<button th:if="${memberId == market.buy_memId} and ${#strings.equals(market.status, '구매완료')}" type="submit" class="btn btn-kiwi disabled" style="margin-left: 15cm;">구매완료</button>
 					</form>
 				</div>
 			</div>
