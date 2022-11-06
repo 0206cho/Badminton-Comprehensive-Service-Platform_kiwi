@@ -79,6 +79,9 @@ public class Market extends BaseEntity {
 	@Column(name = "market_memImg")
 	private String memImg;  // 작성자 프로필 사진
 	
+	@Column(name = "buy_memId")
+	private Long buy_memId;  // 구매자 id
+	
 	
 	public static Market createMarket(MarketDto marketDto) {
 		Market market = new Market();
@@ -93,6 +96,7 @@ public class Market extends BaseEntity {
 		market.setMemId(marketDto.getMemId());
 		market.setMemName(marketDto.getMemName());
 		market.setMemImg(marketDto.getMemImg());
+		market.setBuy_memId(marketDto.getBuy_memId());
 		return market;
 	}
 	
@@ -110,4 +114,5 @@ public class Market extends BaseEntity {
 		this.memName = marketDto.getMemName();
 		this.memImg = marketDto.getMemImg();
 	}
+	
 }
