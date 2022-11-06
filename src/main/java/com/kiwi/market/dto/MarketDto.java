@@ -3,6 +3,7 @@ package com.kiwi.market.dto;
 import javax.persistence.Column;
 import javax.validation.constraints.NotBlank;
 
+import com.kiwi.court.dto.ReservationDto;
 import com.kiwi.market.constant.ItemSellStatus;
 
 import lombok.AllArgsConstructor;
@@ -43,6 +44,8 @@ public class MarketDto {
 	
 	@Column(name = "market_memImg")
 	private String memImg;  // 작성자 프로필 사진
+	
+	private Long buy_memId;  // 구매자 id
 
 	// 상품 저장 후 수정할 때 상품 정보를 저장하는 리스트
 //    private List<MarketDto> marketDtoList = new ArrayList<>();
@@ -77,5 +80,10 @@ public class MarketDto {
 //		this.filepath = entity.getFilepath();
 //		this.oriImgName = entity.getOriImgName();
 //	}
+	
+	public void marketBuy(MarketDto dto, Long buyId) {
+		dto.setStatus(ItemSellStatus.구매대기);
+		dto.setBuy_memId(buyId);
+	}
 
 }

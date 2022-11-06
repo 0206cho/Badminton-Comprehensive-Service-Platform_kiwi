@@ -63,7 +63,7 @@ a {
 	font-weight: bold;
 	font-size: large;
 	margin-left: 23px;
-	margin-top: 15px;
+	margin-top: 8px;
 }
 
 .no { /*비활성화 버튼 - 마감*/
@@ -72,7 +72,7 @@ a {
 	border-color: #606060;
 	width: 100px;
 	/*클릭 방지*/
-	opacity: 0.6; 
+	opacity: 0.6;
 	cursor: not-allowed;
 }
 
@@ -249,7 +249,9 @@ a {
 			<option value="2">마감</option>
 		</select> <Br>
 
-<button class="btn btn-outline-success" type="submit" style="width: 80px; margin-right: 30px">검색</button></form>
+		<button class="btn btn-outline-success" type="submit"
+			style="width: 80px; margin-right: 30px">검색</button>
+		</form>
 		<button type="button" class="btn btn-kiwi" style="width: 120px;"
 			onclick="location.href='/match/matchNew'">개설하기</button>
 	</div>
@@ -260,21 +262,21 @@ a {
 		<!-- container : 좌측정렬-->
 		<!-- 리스트 - 마감일경우 클래스 덧붙여서 disabled하기 -->
 		<div th:each="vo : ${list}">
-			<div >
+			<div>
 				<!-- th:each="vo : ${list}" -->
 				<div style="float: left; width: 15%;">
 					<div class="time" th:text="${vo.reservation.court_time}">06:00</div>
 				</div>
 
 				<div style="float: left; width: 70%;">
-				<div style="display: flex;">
-					<h5
-						style="padding-right: 10px; font-weight: bold; margin-top: 5px; margin-left: 10px;"
-						th:text="${vo.reservation.court.name}">연수동 배드민턴장 </h5>
-					<h5
-						style="padding-right: 10px; font-weight: bold; margin-top: 5px;"
-						th:text="${vo.reservation.court_num}">코트1</h5>
-						</div>
+					<div style="display: flex;">
+						<h5
+							style="padding-right: 10px; font-weight: bold; margin-top: 5px; margin-left: 10px;"
+							th:text="${vo.reservation.court.name}">연수동 배드민턴장</h5>
+						<h5
+							style="padding-right: 10px; font-weight: bold; margin-top: 5px;"
+							th:text="${vo.reservation.court_num}">코트1</h5>
+					</div>
 					<div style="display: flex;">
 						<div style="margin-right: 30px; margin-left: 10px;">인천</div>
 						<div style="margin-right: 30px;">연수구</div>
@@ -284,16 +286,21 @@ a {
 				</div>
 
 				<div style="float: left; width: 15%; margin-top: 10px;">
-				<a href="/match/matchDetail/" th:attrappend="href=${vo.id}" style="text-decoration: none; color: black" th:classappend="${#strings.equals(vo.status, '마감')} ? 'noA' : '' ">
-					<button class="btn btn-kiwi ok" type="button" style="height: 50px; letter-spacing: 12px; padding-left:22px;" th:text="${vo.status}" 
-					th:classappend="${#strings.equals(vo.status, '마감')} ? 'no' : '' ">신&nbsp;&nbsp;청</button></a>
-						 
+					<a href="/match/matchDetail/" th:attrappend="href=${vo.id}"
+						style="text-decoration: none; color: black"
+						th:classappend="${#strings.equals(vo.status, '마감')} ? 'noA' : '' ">
+						<button class="btn btn-kiwi ok" type="button"
+							style="height: 50px; letter-spacing: 12px; padding-left: 22px;"
+							th:text="${vo.status}"
+							th:classappend="${#strings.equals(vo.status, '마감')} ? 'no' : '' ">신&nbsp;&nbsp;청</button>
+					</a>
+
 				</div>
 			</div>
 			<br> <br> <br>
 			<hr>
 		</div>
-		
+
 	</div>
 	<br>
 
@@ -310,7 +317,7 @@ a {
 				th:classappend="${i == list.pageable.pageNumber + 1} ? 'active' : '' "
 				th:each="i : ${#numbers.sequence(startPage, endPage)}"><a
 				class="page-link" style="color: black;"
-				th:href="@{/match/matchList/(page=${i - 1})}" th:text="${i}">1</a></li>
+				th:href="@{/match/matchList/(page=${i - 1})}" th:classappend="${i - 1} == -1 ? 'pageno' : '' " th:text="${i}">1</a></li>
 			<li class="page-item"
 				th:classappend="${list.totalPages == list.pageable.pageNumber + 1} ? 'disabled' : '' ">
 				<a class="page-link" aria-label="Next" style="color: #70ACB1;"

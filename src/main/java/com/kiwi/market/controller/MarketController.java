@@ -28,12 +28,15 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kiwi.config.auth.PrincipalDetails;
+import com.kiwi.court.dto.ReservationDto;
 import com.kiwi.market.dto.MarketDto;
 import com.kiwi.market.entity.Comment;
 import com.kiwi.market.entity.Market;
 import com.kiwi.market.repository.MarketRepository;
 import com.kiwi.market.service.CommentService;
 import com.kiwi.market.service.MarketService;
+import com.kiwi.member.entity.Member;
+import com.kiwi.member.repository.MemberRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -52,6 +55,9 @@ public class MarketController {
 
 	@Autowired
 	private MarketRepository marketRepository;
+	
+	@Autowired
+	private MemberRepository memberRepository;
 
 	// 마켓 글 작성 페이지
 	@GetMapping(value = "/marketNew")
@@ -216,6 +222,23 @@ public class MarketController {
 	public String marketDelete(@PathVariable("id") Long id) {
 		marketService.deleteMarket(id);
 		return "redirect:/market/marketList";
+	}
+	
+	// 마켓 구매 페이지
+	@PostMapping("/pay")
+	public String marketBuy(MarketDto marketDto, Model model, @AuthenticationPrincipal PrincipalDetails principalDetails ) {
+		Long id = principalDetails.getMember().getId();
+		Member member = memberRepository.findMemberById(id);
+		int money = member.getKiwicash();
+		System.out.println("==================>" + money);
+		model.addAttribute("money", money);
+		
+		//marketDto.marketBuy(marketDto, id);
+		
+		model.addAttribute("marketDto", marketDto);
+		System.out.println(marketDto.getTitle() + " ,  " + marketDto.getPrice());
+		
+		return "pay/marketBuy";
 	}
 
 }
