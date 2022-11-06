@@ -54,8 +54,8 @@
 			console.log(dto);
 			console.log(dto.id);
 			var money = /*[[${money}]]*/;
-			console.log(money);
-			if (money < 20000) {
+			console.log(/*[[${marketDto.price}]]*/);
+			if (money < /*[[${marketDto.price}]]*/) {
 				alert("키위 캐시 잔액이 부족합니다.");
 				var width = '480';
 				var height = '900';
@@ -71,14 +71,9 @@
 				url : "/market/pay/result",
 				type : "post",
 				data : {
-					id : dto.court_id,
-					name : dto.court_name,
-					num : dto.court_num,
-					time : dto.court_time,
-					racket : dto.racket,
-					email : dto.reservation_email,
-					shuttlecock : dto.shuttlecock,
-					btnNum : dto.btnNum,
+					id : dto.id,
+					title : dto.title,
+					price : dto.price,
 				},
 				// ajax csrf 토큰 적용
 				beforeSend: function (jqXHR, settings) {
@@ -87,8 +82,8 @@
 			           jqXHR.setRequestHeader(header, token);
 				},
 				success : function(){
-					alert("예약이 완료되었습니다.")
-					window.location.href = "http://localhost/court/reservation";	
+					alert("구매가 완료되었습니다.")
+					window.location.href = "http://localhost/market/marketList";	
 				},
 				error : function(){alert("error");}
 			});
@@ -151,8 +146,11 @@
 		<div style="float: left; width: 100%; margin-right: 80px; margin-left: 55px; text-align: center;">
 			<div style="border: 1px solid black; float: left; width: 100%;">
 				<div style="margin-left: 55px; text-align: left; margin-top: 20px; margin-bottom: 20px">
-					<p style="margin-bottom:0px" th:text="${marketDto.title}">10월 30일 월요일</p>
-					<p style="margin-bottom:0px" th:text="${marketDto.price}">20:00 ~ 22:00</p>
+				<h5>키위마켓을 이용해주셔서 감사합니다.</h5>
+				<div style="float: left; margin-bottom:0px">구매 물품 : &nbsp;</div>
+			    <div style="float: left; margin-bottom:0px; font-weight: bold;" th:text="${marketDto.title}">키위마켓 타이틀</div> <br>
+			    <div style="float: left; margin-bottom:0px">구매 가격 : &nbsp;</div>
+			    <div style="float: left; margin-bottom:15px; font-weight: bold;" th:text="${marketDto.price} + '원'">키위마켓 가격</div>
 				</div>
 			</div>
 		</div>
@@ -166,7 +164,7 @@
 			<hr>
 			<br>
 			<div style="float: left; width: 80%; font-weight: bold;">결제 금액</div>
-			<div style="float: right; font-weight: bold; margin-right: 10px;">
+			<div style="float: right; font-weight: bold; margin-right: 10px;" th:text="${marketDto.price} + '원'">
 				20000원</div>
 			<Br>
 			<hr style="margin-bottom: 0px">
@@ -231,9 +229,8 @@
 					<div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree"
 						data-bs-parent="#accordionExample">
 						<div class="accordion-body">
-							<strong>- (시설방역) 1일 2회 방역시간(08:00~08:59, 21:00~22:00
-								이용불가)</strong><br> <strong>- (실내) 경기중 마스크 착용, 취식금지(물, 무알콜
-								음료는 제외)</strong>
+							<strong>- 직거래 시 방역수칙을 꼭 지켜주시길 바랍니다.</strong><br> 
+							<strong>- 코트장에서 거래 시 마스크 착용, 취식금지(물, 무알콜 음료는 제외)입니다.</strong>
 						</div>
 					</div>
 				</div>
@@ -241,7 +238,7 @@
 
 			<div style=" margin-right: 80px; margin-top: 40px; width: 100%;">
 				<button type="submit" class="btn btn-kiwi" style="width:100%;height:70px;font-size:20px"
-					onclick="pay();">20000원 결제하기</button>
+					onclick="pay();" th:text="${marketDto.price} + '원 결제하기'">20000원 결제하기</button>
 			</div>
 
 		</div>
