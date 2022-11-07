@@ -73,7 +73,9 @@ public class Reservation {
 	@ManyToOne
 	@JoinColumn(name = "court_id")
 	private Court court;
-
+	
+	
+	
 	public Reservation(String name, String num, String time, String racket, String shuttlecock, String email,String btnNum) {
 		court_name = name;
 		court_num = num;
