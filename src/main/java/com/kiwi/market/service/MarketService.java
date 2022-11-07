@@ -98,12 +98,13 @@ public class MarketService {
 	}
 
 	// 마켓 구매 완료하기
-	public Market saveBuyMarket(@AuthenticationPrincipal PrincipalDetails principalDetails, Market market, Long id) {
+	public void saveBuyMarket(@AuthenticationPrincipal PrincipalDetails principalDetails, Market market, Long id) {
+		// Market -> void 임시로 막기
 		Long memid = principalDetails.getMember().getId();
 		market.setBuy_memId(memid);
 		cashService.cashDeposit(memid, 20000);
 		
-		return marketRepository.save(market);
+		//return marketRepository.save(market);
 		
 	}
 
