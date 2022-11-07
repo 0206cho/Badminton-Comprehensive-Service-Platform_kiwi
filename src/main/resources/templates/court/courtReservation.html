@@ -198,24 +198,7 @@
 
 	</script>
 	<script th:inline="javascript">
-		function noSelectCourt(id) {
-			panTo();
-			var name = document.getElementById('court_name');
-			var btn = document.getElementById(id);
-			var court_time = document.getElementById('court_time');
-			if (name.value == "") {
-				alert("예약 장소를 선택하세요!");
-				return false;
-			}
-			court_time.value = btn.value;
-			$("#exampleModal").modal("show");
-			
-			var btnNum = document.getElementById('btnNum');
-			btnNum.value = id;
-			console.log("==============" + btnNum.value);
-			
-			
-		}
+		
 	</script>
 
 <!-- Channel Plugin Scripts -->
@@ -261,23 +244,22 @@
 </script>
 <!-- End Channel Plugin -->
 
+
+<script th:inline="javascript">
+function getBtn(){
+	
+}
+
+
+</script>
+
 </th:block>
 
 
 <div layout:fragment="content">
 	<div class="container" style="width:2400px">
 
-		<!-- 
-<div
-			style="float: left; width: 100%; margin-right: 80px; margin-left: 55px; text-align: center;">
-			<div style="border: 1px solid black; float: left; width: 100%;">
-				<div
-					style="margin-left: 55px; text-align: left; margin-top: 20px; margin-bottom: 20px">
-					8월 30일 월요일 <br> 12:00 ~ 14:00 <Br> 연수 배드민턴장<Br>
-				</div>
-			</div>
-		</div>
- -->
+
 		<input type="hidden" id="lat" name="lat" value="">
 		<!--지역 -->
 		<select class="select" name="sido" id="sido" style="padding: 6px; margin-left: 55px;margin-bottom:10px">
@@ -399,197 +381,65 @@
 
 		<br> <Br> <br> <br> <Br> <br>
 
-		<
+		
 		<script th:inline="javascript">
 			$(document).ready(function () {
-				var str_court = ""; var str_court2 = ""; var str_court3 = ""; var str_court4 = ""; var str_court5 = ""; var str_court6 = ""; var str_court7 = ""; var str_court8 = ""; var str_courtName = "";
-				for (var i = 0; i < 6; i++) {
-					var html_btn = '<button type="button" id = "btn' + i + '" class="btn btn-kiwi" style="margin-left:0;margin-bottom:30px" onclick="noSelectCourt(this.id);" value="코트' + ((i % 6) + 1) + ' 06:00 ~ 08:00">06:00 <br>~08:00</button>';
+				
+				// 지도 위 셀렉트 박스 출력에 대한 코드 
+				var area0 = ["시/도 선택", "서울특별시", "인천광역시", "대전광역시", "광주광역시", "대구광역시", "울산광역시", "부산광역시", "경기도", "강원도", "충청북도", "충청남도", "전라북도", "전라남도", "경상북도", "경상남도", "제주도"];
+				$("select[name^=sido]").each(function () {
+					$selsido = $(this);
+					$.each(eval(area0), function () {
+						$selsido.append("<option value='" + this + "'>" + this + "</option>");
+						//console.log(this);
+					});
 					
-					html_btn = html_btn.replace('{}', i);
-					str_court = str_court + html_btn + '\n';
-				}
-				$('#div_court1').html(str_court);
-
-				for (var i = 6; i < 12; i++) {
-					var html_btn = '<button type="button" id = "btn' + i + '" class="btn btn-kiwi" style="margin-left:0;margin-bottom:30px" onclick="noSelectCourt(this.id);" value="코트' + ((i % 6) + 1) + ' 08:00 ~ 10:00">08:00 <br>~10:00</button>';
-
-					html_btn = html_btn.replace('{}', i);
-					str_court2 = str_court2 + html_btn + '\n';
-				}
-				$('#div_court2').html(str_court2);
-
-				for (var i = 12; i < 18; i++) {
-					var html_btn = '<button type="button" id = "btn' + i + '" class="btn btn-kiwi" style="margin-left:0;margin-bottom:30px" onclick="noSelectCourt(this.id);" value="코트' + ((i % 6) + 1) + ' 10:00 ~ 12:00">10:00 <br>~12:00</button>';
-
-					html_btn = html_btn.replace('{}', i);
-					str_court3 = str_court3 + html_btn + '\n';
-				}
-				$('#div_court3').html(str_court3);
-
-				for (var i = 18; i < 24; i++) {
-					var html_btn = '<button type="button" id = "btn' + i + '" class="btn btn-kiwi" style="margin-left:0;margin-bottom:30px" onclick="noSelectCourt(this.id);" value="코트' + ((i % 6) + 1) + ' 12:00 ~ 14:00">12:00 <br>~14:00</button>';
-
-					html_btn = html_btn.replace('{}', i);
-					str_court4 = str_court4 + html_btn + '\n';
-				}
-				$('#div_court4').html(str_court4);
-
-				for (var i = 24; i < 30; i++) {
-					var html_btn = '<button type="button" id = "btn' + i + '" class="btn btn-kiwi" style="margin-left:0;margin-bottom:30px" onclick="noSelectCourt(this.id);" value="코트' + ((i % 6) + 1) + ' 14:00 ~ 16:00">14:00 <br>~16:00</button>';
-
-					html_btn = html_btn.replace('{}', i);
-					str_court5 = str_court5 + html_btn + '\n';
-				}
-				$('#div_court5').html(str_court5);
-
-				for (var i = 30; i < 36; i++) {
-					var html_btn = '<button type="button" id = "btn' + i + '" class="btn btn-kiwi" style="margin-left:0;margin-bottom:30px" onclick="noSelectCourt(this.id);" value="코트' + ((i % 6) + 1) + ' 16:00 ~ 18:00" >16:00 <br>~18:00</button>';
-
-					html_btn = html_btn.replace('{}', i);
-					str_court6 = str_court6 + html_btn + '\n';
-				}
-				$('#div_court6').html(str_court6);
-
-				for (var i = 36; i < 42; i++) {
-					var html_btn = '<button type="button" id = "btn' + i + '" class="btn btn-kiwi" style="margin-left:0;margin-bottom:30px" onclick="noSelectCourt(this.id);" value="코트' + ((i % 6) + 1) + ' 18:00 ~ 20:00" >18:00 <br>~20:00</button>';
-
-					html_btn = html_btn.replace('{}', i);
-					str_court7 = str_court7 + html_btn + '\n';
-				}
-				$('#div_court7').html(str_court7);
-
-				for (var i = 42; i < 48; i++) {
-					var html_btn = '<button type="button" id = "btn' + i + '" class="btn btn-kiwi" style="margin-left:0;margin-bottom:30px"  onclick="noSelectCourt(this.id);" value="코트' + ((i % 6) + 1) + ' 20:00 ~ 22:00">20:00 <br>~22:00</button>';
-
-					html_btn = html_btn.replace('{}', i);
-					str_court8 = str_court8 + html_btn + '\n';
-				}
-				$('#div_court8').html(str_court8);
-
-
-
-				for (var i = 1; i < 7; i++) {
-					var html_btn = '<p style="float: left;margin-bottom:42px;padding-top:20px"class="name">코트' + i + '</p>';
-
-					html_btn = html_btn.replace('{}', i);
-					str_courtName = str_courtName + html_btn + '\n';
-				}
-				$('#div_courtName').html(str_courtName);
-
-
-				// 아래는 시간 구하는 코드
-
-				var Now = new Date();  /* 현재 시간 */
-				var nowHour = Now.getHours();
-				var nowMins = Now.getMinutes();
-				console.log(nowHour + " " + nowMins);
-
-				/* 시, 분 앞에 0을 붙이는 함수 -> 계산하기 위해서! */
-				function pluszero(time) {
-					var time = time.toString();	// 시간을 숫자에서 문자로 바꿈 
-					if (time.length < 2) {	// 2자리보다 작다면
-						time = '0' + time;	// 숫자 앞에 0을 붙여줌
-						return time;		// 0을 붙여서 값을 리턴
-					} else {
-						return time;	// 2자리이상이면 리턴
-					}
-				}
-				nowHour = pluszero(nowHour);
-				nowMins = pluszero(nowMins);
-				console.log(nowHour + " " + nowMins);
-
-				var nowTime = nowHour + nowMins;
-				console.log(nowTime);
-
-				if (0600 <= nowTime && 0800 >= nowTime) {
-					for (var i = 0; i <= 5; i++) {
-						(function (i) {
-							var btn = document.getElementById('btn' + i);
-							btn.disabled = true;
-							btn.style.backgroundColor = '#D3D3D3';
-							btn.style.borderColor = '#808080';
-						})(i);
-					}
-				} else if (0800 <= nowTime && 1000 >= nowTime) {
-					for (var i = 0; i <= 11; i++) {
-						(function (i) {
-							var btn = document.getElementById('btn' + i);
-							btn.disabled = true;
-							btn.style.backgroundColor = '#D3D3D3';
-							btn.style.borderColor = '#808080';
-						})(i);
-					}
-				} else if (1000 <= nowTime && 1200 >= nowTime) {
-					for (var i = 0; i <= 17; i++) {
-						(function (i) {
-							var btn = document.getElementById('btn' + i);
-							btn.disabled = true;
-							btn.style.backgroundColor = '#D3D3D3';
-							btn.style.borderColor = '#808080';
-						})(i);
-					}
-
-				} else if (1200 <= nowTime && 1400 >= nowTime) {
-					for (var i = 0; i <= 23; i++) {
-						(function (i) {
-							var btn = document.getElementById('btn' + i);
-							btn.disabled = true;
-							btn.style.backgroundColor = '#D3D3D3';
-							btn.style.borderColor = '#808080';
-						})(i);
-					}
-
-				} else if (1400 <= nowTime && 1600 >= nowTime) {
-					for (var i = 0; i <= 29; i++) {
-						(function (i) {
-							var btn = document.getElementById('btn' + i);
-							btn.disabled = true;
-							btn.style.backgroundColor = '#D3D3D3';
-							btn.style.borderColor = '#808080';
-						})(i);
-					}
-				} else if (1600 <= nowTime && 1800 >= nowTime) {
-					for (var i = 0; i <= 35; i++) {
-						(function (i) {
-							var btn = document.getElementById('btn' + i);
-							btn.disabled = true;
-							btn.style.backgroundColor = '#D3D3D3';
-							btn.style.borderColor = '#808080';
-						})(i);
-					}
-				} else if (1800 <= nowTime && 2000 >= nowTime) {
-					for (var i = 0; i <= 41; i++) {
-						(function (i) {
-							var btn = document.getElementById('btn' + i);
-							btn.disabled = true;
-							btn.style.backgroundColor = '#D3D3D3';
-							btn.style.borderColor = '#808080';
-						})(i);
-					}
-				}
-				else if (2000 <= nowTime && 2200 >= nowTime) {
-					//  for (var i = 0; i <= 47; i++){
-					//      (function (i) {
-					//          var btn = document.getElementById('btn'+i);
-					//          btn.disabled = true;
-					// 		 btn.style.backgroundColor = '#D3D3D3';
-					// 		 btn.style.borderColor = '#808080';
-					//      })(i);
-					//  }
-				}
+				});
 				
-				/*[# th:each="reser : ${reserList}"]*/
-				var getReser = /*[[${reser}]]*/;
-				console.log(getReser.btnNum);
-			 	var btnDisable = document.getElementById(getReser.btnNum);
-			 	btnDisable.disabled = true;
-			 	btnDisable.style.backgroundColor = '#D3D3D3';
-			 	btnDisable.style.borderColor = '#808080';
-				/*[/]*/
+				// 시/도 선택시 해당 지역으로 좌표 변경
+				$("select[name^=sido]").change(function () {
+					var area = "area" + $("option", $(this)).index($("option:selected", $(this))); // 선택지역의 구군 Array
+					if(area == "area1"){
+						panTo(37.486137,127.042414);
+					} else if(area == "area2"){
+						panTo(37.47457949,126.6226689);
+					} else if(area == "area3"){
+						panTo(36.33173992,127.3448267);
+					} else if(area == "area4"){
+						panTo(35.1595454,126.8526012);
+					} else if(area == "area5"){
+						panTo(35.34928218,129.318896);
+					} else if(area == "area6"){
+						panTo(35.34928218,129.318896);
+					} else if(area == "area7"){
+						panTo(35.210957,128.972213);
+					} else if(area == "area8"){
+						panTo(37.332808,126.868024);
+					} else if(area == "area9"){
+						panTo(37.332808,126.868024);
+					} else if(area == "area10"){
+						panTo(37.332808,126.868024);
+					} else if(area == "area11"){
+						panTo(36.10044663,127.4804214);
+					} else if(area == "area12"){
+						panTo(35.95764191,126.9520666);
+					} else if(area == "area13"){
+						panTo(34.93964829,127.5207066);
+					} else if(area == "area14"){
+						panTo(36.094549,128.429805);
+					} else if(area == "area15"){
+						panTo(34.97931331,128.3107228);
+					} else if(area == "area16"){
+						panTo(34.97931331,128.3107228);
+					}
+				}); 
 				
 				
-			 	/*<![CDATA[*/
+				
+				
+				
+				
+				/*<![CDATA[*/
 				var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
 					mapOption = {
 						center: new kakao.maps.LatLng(37.40785375, 126.6325097), // 지도의 중심좌표
@@ -622,16 +472,11 @@
 				});
 				
 				
-				
-				
-
-
+				// 코트장에 대한 정보를 마커로 찍기 위해서 foreach문 돌림
 				/*[# th:each="court : ${courtList}"]*/
 
 				// 마커 이미지를 생성합니다    
 				var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
-
-
 				var markers = [];
 				var data = /*[[${court}]]*/;
 				//console.log(data);
@@ -743,27 +588,14 @@
 						document.getElementById('selectCourtNumber').innerHTML = data.call_number;
 						document.getElementById('court_id').value = data.id;
 						document.getElementById('court_name').value = data.name;
-						//console.log("data.id : " + data.id)
+						console.log("data.id : " + data.id)
+						getBtn();
+						btnDisable(data.id);
 					});
 				}
-				
-				        
-
-				/*]]>*/
-				
-		var area0 = ["시/도 선택", "서울특별시", "인천광역시", "대전광역시", "광주광역시", "대구광역시", "울산광역시", "부산광역시", "경기도", "강원도", "충청북도", "충청남도", "전라북도", "전라남도", "경상북도", "경상남도", "제주도"];
 		
-		// 시/도 선택 박스 초기화
-
-		$("select[name^=sido]").each(function () {
-			$selsido = $(this);
-			$.each(eval(area0), function () {
-				$selsido.append("<option value='" + this + "'>" + this + "</option>");
-				//console.log(this);
-			});
-			
-		});
-		
+				
+		// 지도를 변경하는 함수
 		function panTo(x,y) {
 		    // 이동할 위도 경도 위치를 생성합니다 
 		    var moveLatLon = new kakao.maps.LatLng(x,y);
@@ -772,97 +604,38 @@
 		    // 만약 이동할 거리가 지도 화면보다 크면 부드러운 효과 없이 이동합니다
 		    map.panTo(moveLatLon);            
 		}
-
-		// 시/도 선택시 구/군 설정
-		$("select[name^=sido]").change(function () {
-			var area = "area" + $("option", $(this)).index($("option:selected", $(this))); // 선택지역의 구군 Array
-			if(area == "area1"){
-				panTo(37.486137,127.042414);
-			} else if(area == "area2"){
-				panTo(37.47457949,126.6226689);
-			} else if(area == "area3"){
-				panTo(36.33173992,127.3448267);
-			} else if(area == "area4"){
-				panTo(35.1595454,126.8526012);
-			} else if(area == "area5"){
-				panTo(35.34928218,129.318896);
-			} else if(area == "area6"){
-				panTo(35.34928218,129.318896);
-			} else if(area == "area7"){
-				panTo(35.210957,128.972213);
-			} else if(area == "area8"){
-				panTo(37.332808,126.868024);
-			} else if(area == "area9"){
-				panTo(37.332808,126.868024);
-			} else if(area == "area10"){
-				panTo(37.332808,126.868024);
-			} else if(area == "area11"){
-				panTo(36.10044663,127.4804214);
-			} else if(area == "area12"){
-				panTo(35.95764191,126.9520666);
-			} else if(area == "area13"){
-				panTo(34.93964829,127.5207066);
-			} else if(area == "area14"){
-				panTo(36.094549,128.429805);
-			} else if(area == "area15"){
-				panTo(34.97931331,128.3107228);
-			} else if(area == "area16"){
-				panTo(34.97931331,128.3107228);
-			}
-			
-			
-		}); 
-
+		
+		
+		// 아래 코드는 오늘 날짜 기준으로 일주일을 구하는 코드
 		var selectDate = 20221106;    // 원하는 날짜
-
-		 function setWeekDate(selectDate){
+		function setWeekDate(selectDate){
 		    var year  = selectDate.substring(0,4); //선택된 년도
-
 		    var month = selectDate.substring(4,6); //선택된 월
-
 		    var day   = selectDate.substring(6,8); //선택된 일자
-
 		    var week  = new Array("", "월", "화", "수", "목", "금", "토", "일");  // 아래 코드에서는 사용하지 않음
 
 		    // 보통 0~6 까지가 일~토로 표현된다 하지만 월요일부터 표현하기 위해 0번째를 공백처리
-
 			var currentDay = new Date(year, month-1, day);  
-
 			var theDayOfWeek = currentDay.getDay();        // 요일을 숫자로 구해옴
 
-		// 선택한 날이 일요일 일때 전주의 날짜를 담음
-
+			// 선택한 날이 일요일 일때 전주의 날짜를 담음
 			 if(theDayOfWeek == 0){		 
-
 				 var currentDay = new Date(year, month-1, day-7);  		 
-
 			 }	 
-
-			var theYear = currentDay.getFullYear();
-
+			 var theYear = currentDay.getFullYear();
 			 var theMonth = currentDay.getMonth();
-
 			 var theDate  = currentDay.getDate();
-
 			 var thisWeek = [];
-
 			 for(var i=1; i<8; i++) {
-
 			   var resultDay = new Date(theYear, theMonth, theDate + (i - theDayOfWeek));
-
 			   var yyyy = resultDay.getFullYear();
-
 			   var mm = Number(resultDay.getMonth()) + 1;
-
 			   var dd = resultDay.getDate();
-
 			   var dd_nm = resultDay.getDay();
-
 			   mm = String(mm).length === 1 ? '0' + mm : mm;
-
 			   dd = String(dd).length === 1 ? '0' + dd : dd;
-		//월요일부터 화, 수 ~ 일요일까지 날짜를 담음
-
+		
+			   //월요일부터 화, 수 ~ 일요일까지 날짜를 담음
 			   thisWeek[i] = yyyy + '-' + mm + '-' + dd;
 			   if(i==1){
 				  // 검색기준 월요일
@@ -872,12 +645,222 @@
 			 }
 			console.log(thisWeek);
 		 }
-				
 		setWeekDate(selectDate);
-				
-				
-			});
+});
 			
+			
+			// 마커(코트장) 클릭 했을때 버튼 생성
+			function getBtn(){
+				var str_court = ""; var str_court2 = ""; var str_court3 = ""; var str_court4 = ""; var str_court5 = ""; var str_court6 = ""; var str_court7 = ""; var str_court8 = ""; var str_courtName = "";
+				for (var i = 0; i < 6; i++) {
+					var html_btn = '<button type="button" id = "btn' + i + '" class="btn btn-kiwi" style="margin-left:0;margin-bottom:30px" onclick="noSelectCourt(this.id);" value="코트' + ((i % 6) + 1) + ' 06:00 ~ 08:00">06:00 <br>~08:00</button>';
+					
+					html_btn = html_btn.replace('{}', i);
+					str_court = str_court + html_btn + '\n';
+				}
+				$('#div_court1').html(str_court);
+
+				for (var i = 6; i < 12; i++) {
+					var html_btn = '<button type="button" id = "btn' + i + '" class="btn btn-kiwi" style="margin-left:0;margin-bottom:30px" onclick="noSelectCourt(this.id);" value="코트' + ((i % 6) + 1) + ' 08:00 ~ 10:00">08:00 <br>~10:00</button>';
+
+					html_btn = html_btn.replace('{}', i);
+					str_court2 = str_court2 + html_btn + '\n';
+				}
+				$('#div_court2').html(str_court2);
+
+				for (var i = 12; i < 18; i++) {
+					var html_btn = '<button type="button" id = "btn' + i + '" class="btn btn-kiwi" style="margin-left:0;margin-bottom:30px" onclick="noSelectCourt(this.id);" value="코트' + ((i % 6) + 1) + ' 10:00 ~ 12:00">10:00 <br>~12:00</button>';
+
+					html_btn = html_btn.replace('{}', i);
+					str_court3 = str_court3 + html_btn + '\n';
+				}
+				$('#div_court3').html(str_court3);
+
+				for (var i = 18; i < 24; i++) {
+					var html_btn = '<button type="button" id = "btn' + i + '" class="btn btn-kiwi" style="margin-left:0;margin-bottom:30px" onclick="noSelectCourt(this.id);" value="코트' + ((i % 6) + 1) + ' 12:00 ~ 14:00">12:00 <br>~14:00</button>';
+
+					html_btn = html_btn.replace('{}', i);
+					str_court4 = str_court4 + html_btn + '\n';
+				}
+				$('#div_court4').html(str_court4);
+
+				for (var i = 24; i < 30; i++) {
+					var html_btn = '<button type="button" id = "btn' + i + '" class="btn btn-kiwi" style="margin-left:0;margin-bottom:30px" onclick="noSelectCourt(this.id);" value="코트' + ((i % 6) + 1) + ' 14:00 ~ 16:00">14:00 <br>~16:00</button>';
+
+					html_btn = html_btn.replace('{}', i);
+					str_court5 = str_court5 + html_btn + '\n';
+				}
+				$('#div_court5').html(str_court5);
+
+				for (var i = 30; i < 36; i++) {
+					var html_btn = '<button type="button" id = "btn' + i + '" class="btn btn-kiwi" style="margin-left:0;margin-bottom:30px" onclick="noSelectCourt(this.id);" value="코트' + ((i % 6) + 1) + ' 16:00 ~ 18:00" >16:00 <br>~18:00</button>';
+
+					html_btn = html_btn.replace('{}', i);
+					str_court6 = str_court6 + html_btn + '\n';
+				}
+				$('#div_court6').html(str_court6);
+
+				for (var i = 36; i < 42; i++) {
+					var html_btn = '<button type="button" id = "btn' + i + '" class="btn btn-kiwi" style="margin-left:0;margin-bottom:30px" onclick="noSelectCourt(this.id);" value="코트' + ((i % 6) + 1) + ' 18:00 ~ 20:00" >18:00 <br>~20:00</button>';
+
+					html_btn = html_btn.replace('{}', i);
+					str_court7 = str_court7 + html_btn + '\n';
+				}
+				$('#div_court7').html(str_court7);
+
+				for (var i = 42; i < 48; i++) {
+					var html_btn = '<button type="button" id = "btn' + i + '" class="btn btn-kiwi" style="margin-left:0;margin-bottom:30px"  onclick="noSelectCourt(this.id);" value="코트' + ((i % 6) + 1) + ' 20:00 ~ 22:00">20:00 <br>~22:00</button>';
+
+					html_btn = html_btn.replace('{}', i);
+					str_court8 = str_court8 + html_btn + '\n';
+				}
+				$('#div_court8').html(str_court8);
+
+				// 버튼 옆에 코트1, 코트2, 코트3 생성하는 반복문
+				for (var i = 1; i < 7; i++) {
+					var html_btn = '<p style="float: left;margin-bottom:42px;padding-top:20px"class="name">코트' + i + '</p>';
+
+					html_btn = html_btn.replace('{}', i);
+					str_courtName = str_courtName + html_btn + '\n';
+				}
+				$('#div_courtName').html(str_courtName);
+				
+				
+				
+				// 아래는 시간 구하는 코드(현재 시간을 구한뒤 현재 시간이 예약시간보다 클경우 버튼 비활성화)
+				var Now = new Date();  /* 현재 시간 */
+				var nowHour = Now.getHours();
+				var nowMins = Now.getMinutes();
+				console.log(nowHour + " " + nowMins);
+
+				/* 시, 분 앞에 0을 붙이는 함수 -> 계산하기 위해서! */
+				function pluszero(time) {
+					var time = time.toString();	// 시간을 숫자에서 문자로 바꿈 
+					if (time.length < 2) {	// 2자리보다 작다면
+						time = '0' + time;	// 숫자 앞에 0을 붙여줌
+						return time;		// 0을 붙여서 값을 리턴
+					} else {
+						return time;	// 2자리이상이면 리턴
+					}
+				}
+				nowHour = pluszero(nowHour);
+				nowMins = pluszero(nowMins);
+				console.log(nowHour + " " + nowMins);
+
+				var nowTime = nowHour + nowMins;
+				console.log(nowTime);
+
+				if (0600 <= nowTime && 0800 >= nowTime) {
+					for (var i = 0; i <= 5; i++) {
+						(function (i) {
+							var btn = document.getElementById('btn' + i);
+							btn.disabled = true;
+							btn.style.backgroundColor = '#D3D3D3';
+							btn.style.borderColor = '#808080';
+						})(i);
+					}
+				} else if (0800 <= nowTime && 1000 >= nowTime) {
+					for (var i = 0; i <= 11; i++) {
+						(function (i) {
+							var btn = document.getElementById('btn' + i);
+							btn.disabled = true;
+							btn.style.backgroundColor = '#D3D3D3';
+							btn.style.borderColor = '#808080';
+						})(i);
+					}
+				} else if (1000 <= nowTime && 1200 >= nowTime) {
+					for (var i = 0; i <= 17; i++) {
+						(function (i) {
+							var btn = document.getElementById('btn' + i);
+							btn.disabled = true;
+							btn.style.backgroundColor = '#D3D3D3';
+							btn.style.borderColor = '#808080';
+						})(i);
+					}
+
+				} else if (1200 <= nowTime && 1400 >= nowTime) {
+					for (var i = 0; i <= 23; i++) {
+						(function (i) {
+							var btn = document.getElementById('btn' + i);
+							btn.disabled = true;
+							btn.style.backgroundColor = '#D3D3D3';
+							btn.style.borderColor = '#808080';
+						})(i);
+					}
+
+				} else if (1400 <= nowTime && 1600 >= nowTime) {
+					for (var i = 0; i <= 29; i++) {
+						(function (i) {
+							var btn = document.getElementById('btn' + i);
+							btn.disabled = true;
+							btn.style.backgroundColor = '#D3D3D3';
+							btn.style.borderColor = '#808080';
+						})(i);
+					}
+				} else if (1600 <= nowTime && 1800 >= nowTime) {
+					for (var i = 0; i <= 35; i++) {
+						(function (i) {
+							var btn = document.getElementById('btn' + i);
+							btn.disabled = true;
+							btn.style.backgroundColor = '#D3D3D3';
+							btn.style.borderColor = '#808080';
+						})(i);
+					}
+				} else if (1800 <= nowTime && 2000 >= nowTime) {
+					for (var i = 0; i <= 41; i++) {
+						(function (i) {
+							var btn = document.getElementById('btn' + i);
+							btn.disabled = true;
+							btn.style.backgroundColor = '#D3D3D3';
+							btn.style.borderColor = '#808080';
+						})(i);
+					}
+				}
+				else if (2000 <= nowTime && 2200 >= nowTime) {
+					//  for (var i = 0; i <= 47; i++){
+					//      (function (i) {
+					//          var btn = document.getElementById('btn'+i);
+					//          btn.disabled = true;
+					// 		 btn.style.backgroundColor = '#D3D3D3';
+					// 		 btn.style.borderColor = '#808080';
+					//      })(i);
+					//  }
+				}
+				/*]]>*/
+		}
+			
+			// 코트 예약 테이블을 바탕으로 버튼 비활성화
+			function btnDisable(id){
+				/*[# th:each="reser : ${reserList}"]*/
+				var getReser = /*[[${reser}]]*/;
+				console.log("getReser.court_id : "+getReser.court.id);
+				if(id == getReser.court.id){
+					var btn = document.getElementById(getReser.btnNum);
+					btn.disabled = true;
+				 	btn.style.backgroundColor = '#D3D3D3';
+				 	btn.style.borderColor = '#808080';
+				}
+				/*[/]*/
+			}
+			
+			// 코트장을 선택하지 않고 예약을 하려고 할때
+			function noSelectCourt(id) {
+				var name = document.getElementById('court_name');
+				var btn = document.getElementById(id);
+				var court_time = document.getElementById('court_time');
+				if (name.value == "") {
+					alert("예약 장소를 선택하세요!");
+					return false;
+				}
+				court_time.value = btn.value;
+				$("#exampleModal").modal("show");
+				
+				var btnNum = document.getElementById('btnNum');
+				btnNum.value = id;
+				console.log("==============" + btnNum.value);
+			}
+			
+			// 코트 예약할 시간(버튼)을 클릭했을때 모달 정보를 넘기기 위한 코드(라켓)
 			$(document).on('click', '.number-spinner button', function () {
 				var btn = $(this),
 					oldValue = btn.closest('.number-spinner').find('input').val().trim(),
@@ -896,7 +879,8 @@
 				document.getElementById('racket').value = racket;
 
 			});
-
+			
+			// 코트 예약할 시간(버튼)을 클릭했을때 모달 정보를 넘기기 위한 코드(셔틀콕)
 			$(document).on('click', '.number-spinner2 button', function () {
 				var btn = $(this),
 					oldValue = btn.closest('.number-spinner2').find('input').val().trim(),
@@ -914,15 +898,9 @@
 				btn.closest('.number-spinner2').find('input').val(shuttlecock);
 				document.getElementById('shuttlecock').value = shuttlecock;
 			});
-
-			
 			
 		</script>
 
 	</div>
 </div>
-
-
-
-
 </html>
