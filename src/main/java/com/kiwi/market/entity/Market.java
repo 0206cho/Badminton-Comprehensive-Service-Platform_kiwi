@@ -100,19 +100,13 @@ public class Market extends BaseEntity {
 		return market;
 	}
 	
-	
-	public void updateMarket(MarketDto marketDto) {
-		this.title = marketDto.getTitle();
-		this.detail = marketDto.getDetail();
-		this.price = marketDto.getPrice();
-		this.status = marketDto.getStatus();
-		this.filename = marketDto.getFilename();
-		this.filepath = marketDto.getFilepath();
-		this.oriImgName = marketDto.getOriImgName();
-		
-		this.memId = marketDto.getMemId();
-		this.memName = marketDto.getMemName();
-		this.memImg = marketDto.getMemImg();
+
+	// 마켓 구매완료 시 필요
+	public Market(Long marketId, String marketTitle, String marketPrice) {
+		id = marketId;
+		title = marketTitle;
+		price = marketPrice;
+		status = ItemSellStatus.구매대기;
 	}
 	
 }

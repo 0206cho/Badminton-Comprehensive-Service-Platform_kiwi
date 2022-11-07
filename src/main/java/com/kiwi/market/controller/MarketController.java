@@ -23,12 +23,15 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kiwi.config.auth.PrincipalDetails;
+import com.kiwi.court.dto.CourtDto;
 import com.kiwi.court.dto.ReservationDto;
+import com.kiwi.court.entity.Reservation;
 import com.kiwi.market.dto.MarketDto;
 import com.kiwi.market.entity.Comment;
 import com.kiwi.market.entity.Market;
@@ -55,7 +58,7 @@ public class MarketController {
 
 	@Autowired
 	private MarketRepository marketRepository;
-	
+
 	@Autowired
 	private MemberRepository memberRepository;
 
@@ -67,8 +70,8 @@ public class MarketController {
 	}
 
 	@PostMapping(value = "/marketNew")
-	public String marketNew(@Valid MarketDto marketDto, BindingResult bindingResult, Model model, MultipartFile file, @AuthenticationPrincipal PrincipalDetails principalDetails)
-			throws Exception {
+	public String marketNew(@Valid MarketDto marketDto, BindingResult bindingResult, Model model, MultipartFile file,
+			@AuthenticationPrincipal PrincipalDetails principalDetails) throws Exception {
 		if (bindingResult.hasErrors()) {
 			System.out.println("-------------------->바인딩에러");
 			return "market/marketForm";
@@ -79,7 +82,7 @@ public class MarketController {
 			String memberName = principalDetails.getMember().getName();
 			String memberImage = principalDetails.getMember().getImage();
 			Long memberId = principalDetails.getMember().getId();
-			
+
 			marketService.saveMarket(market, file, memberName, memberImage, memberId);
 		} catch (Exception e) {
 			model.addAttribute("errorMessage", "상품 등록 중 에러가 발생하였습니다.");
@@ -160,7 +163,7 @@ public class MarketController {
 		model.addAttribute("markets", list);
 
 		model.addAttribute("list", list);
-		
+
 		return "market/marketList";
 
 	}
@@ -169,19 +172,23 @@ public class MarketController {
 	@GetMapping("/marketDetail/{id}")
 	public String marketDetail(@PathVariable("id") Long id, Model model,
 			@AuthenticationPrincipal PrincipalDetails principalDetails) {
-		
-		if(principalDetails == null) {
+
+		if (principalDetails == null) {
 			System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>null");
 			principalDetails.getMember().setId(Long.valueOf(0));
 			System.out.println(principalDetails.getMember().getId());
 		}
-		
+
 		System.out.println(principalDetails);
 		Long memberId = principalDetails.getMember().getId();
 		Market market = marketService.marketDetail(id);
 		model.addAttribute("market", market);
+		System.out.println(">>>>>>>>>>>> marketId: " + market.getId());
+		model.addAttribute("marketDto", new MarketDto());
+
+		// System.out.println(">>>>>>>>>>> : " + new MarketDto());
 		model.addAttribute("memberId", memberId); // 현재 로그인 한 ID
-		
+
 		List<Comment> list = commentService.commentList();
 		model.addAttribute("list", list);
 
@@ -191,7 +198,8 @@ public class MarketController {
 
 	// 마켓 수정 페이지
 	@GetMapping("/marketUpdate/{id}")
-	public String mDetail(@PathVariable("id") Long id, Model model, @AuthenticationPrincipal PrincipalDetails principalDetails) {
+	public String mDetail(@PathVariable("id") Long id, Model model,
+			@AuthenticationPrincipal PrincipalDetails principalDetails) {
 		Long memberId = principalDetails.getMember().getId();
 		Market market = marketService.marketDetail(id);
 		model.addAttribute("memberId", memberId); // 현재 로그인 한 ID
@@ -201,18 +209,14 @@ public class MarketController {
 
 	// 마켓 수정 페이지
 	@PostMapping(value = "/marketUpdate/{id}")
-	public String marketUpdate(Market market, MultipartFile file, @AuthenticationPrincipal PrincipalDetails principalDetails) throws Exception {
-		System.out.println(">>>>>>>>>>>>>>>>>>>>>> ID : " + market.getId());
-		System.out.println(">>>>>>>>>>>>>>>>>>>>>> detail : " + market.getDetail());
-		System.out.println(">>>>>>>>>>>>>>>>>>>>>> name : " + market.getMemName());
-		
+	public String marketUpdate(Market market, MultipartFile file,
+			@AuthenticationPrincipal PrincipalDetails principalDetails) throws Exception {
+
 		String memberName = principalDetails.getMember().getName();
 		String memberImage = principalDetails.getMember().getImage();
 		Long memberId = principalDetails.getMember().getId();
-		
+
 		marketService.saveMarket(market, file, memberName, memberImage, memberId);
-		
-		//marketService.updateMarket(market, file);
 
 		return "redirect:/market/marketList";
 	}
@@ -223,22 +227,43 @@ public class MarketController {
 		marketService.deleteMarket(id);
 		return "redirect:/market/marketList";
 	}
-	
+
+	// 마켓 구매 페이지
+	@GetMapping("/pay")
+	public String marketBuy(Market market, Model model) {
+		return "pay/marketBuy";
+	}
+
 	// 마켓 구매 페이지
 	@PostMapping("/pay")
-	public String marketBuy(MarketDto marketDto, Model model, @AuthenticationPrincipal PrincipalDetails principalDetails ) {
+	public String marketBuy(MarketDto marketDto, Model model,
+			@AuthenticationPrincipal PrincipalDetails principalDetails) {
+		// 캐시 조회
+		System.out.println("==============>" + marketDto.getId());
 		Long id = principalDetails.getMember().getId();
 		Member member = memberRepository.findMemberById(id);
 		int money = member.getKiwicash();
 		System.out.println("==================>" + money);
 		model.addAttribute("money", money);
-		
-		//marketDto.marketBuy(marketDto, id);
-		
+
+		// marketDto.marketBuy(marketDto, id);
+
+		marketDto.marketBuy(marketDto, id);
 		model.addAttribute("marketDto", marketDto);
 		System.out.println(marketDto.getTitle() + " ,  " + marketDto.getPrice());
-		
+
 		return "pay/marketBuy";
+	}
+
+	// 마켓 결제 완료
+	@PostMapping("/pay/result")
+	@ResponseBody
+	public void payResult(Long id, String title, String price, @AuthenticationPrincipal PrincipalDetails principalDetails) {
+		System.out.println("=============> ajax에서 보낸 id : " + id);
+		System.out.println("=============> ajax에서 보낸 title : " + title);
+		System.out.println("=============> ajax에서 보낸 price : " + price);
+		marketService.saveBuyMarket(principalDetails, new Market(id, title, price), id);
+
 	}
 
 }
