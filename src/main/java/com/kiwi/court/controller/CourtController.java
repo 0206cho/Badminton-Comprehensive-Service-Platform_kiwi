@@ -45,7 +45,8 @@ public class CourtController {
 		
 		List<Reservation> reserAll = reservationService.reserAll();
 		model.addAttribute("reserList", reserAll);
-		
+		Reservation dd = new Reservation();
+		//dd.getCourt().getId()
 		return "court/courtReservation";
 	}
 
