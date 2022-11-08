@@ -147,4 +147,9 @@ public class Member extends BaseEntity {
     	kiwicash -= amount;
     	return kiwicash;
     }
+    
+    public int withdraw(int amout) {
+    	kiwicash += amout;
+    	return kiwicash;
+    }
 }

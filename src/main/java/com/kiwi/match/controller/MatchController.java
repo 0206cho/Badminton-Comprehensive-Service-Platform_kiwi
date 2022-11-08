@@ -40,6 +40,9 @@ import com.kiwi.match.entity.MatchsReservation;
 import com.kiwi.match.repository.MatchRepository;
 import com.kiwi.match.service.MatchService;
 import com.kiwi.match.service.MatchsReservationService;
+import com.kiwi.member.entity.Member;
+import com.kiwi.member.repository.MemberRepository;
+import com.kiwi.pay.service.CashService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -54,10 +57,16 @@ public class MatchController {
 	private MatchRepository matchRepository;
 
 	@Autowired
+	private MemberRepository memberRepository;
+
+	@Autowired
 	private ReservationRepository reservationRepository;
 
 	@Autowired
 	private MatchsReservationService mrService;
+	
+	@Autowired
+	private CashService cashservice;
 
 	private Long id;
 
@@ -94,36 +103,30 @@ public class MatchController {
 	public String matchDetail(@PathVariable("id") Long id, Model model) {
 		Matchs matchs = matchService.matchDetail(id);
 		model.addAttribute("matchs", matchs);
+		model.addAttribute("matchsReservationDto", new MatchsReservationDto());
 		return "match/matchDetail";
 	}
 
 	// 매치 신청하기
-	@ResponseBody // ajax로 보낼 경우 사용
 	@GetMapping("/matchsReservation")
-	public void mrSave(@Valid MatchsReservationDto mrDto, Long mathcshId, @AuthenticationPrincipal PrincipalDetails principalDetails) {
-		// 매치 신청 하기
-		Long memberId = principalDetails.getMember().getId();
-		MatchsReservation mr = MatchsReservation.createMR(mrDto);
-		matchService.saveMatchsReservation(mr, mathcshId, memberId);
+	public String mrSave(@Valid MatchsReservationDto matchsReservationDto,
+			@AuthenticationPrincipal PrincipalDetails principalDetails, Model model) {
 
-		// 매치 신청 마감 확인
-		List<MatchsReservation> list = mrService.mrCourt();
+		Long mathcshId = matchsReservationDto.getMathcshId();
+		Matchs matchs = matchRepository.findById(mathcshId).orElseThrow();
+		model.addAttribute("matchs", matchs);
+		model.addAttribute("matchsReservationDto", matchsReservationDto);
+		
+		
+		Long id = principalDetails.getMember().getId();
+		Member member = memberRepository.findMemberById(id);
+		int money = member.getKiwicash();
+		model.addAttribute("money", money);
 
-		int count = 1; // 1vs1단식일 경우 참가할 수 있는 사람은 2명, 본인 제외 하면 1명 
-		for (int i = 0; i < list.size(); i++) {
-			if (list.get(i).getMathshId().getId() == mathcshId) { // 매치 ID가 DB에 있는 경우 -> 매치를 신청한 경우
-				count += 1; // 매치 신청 건 수 카운트
-			}
-		}
+		
 
-		if (mr.getMathshId().getCount() <= count) { 
-			mr.getMathshId().setStatus(Status.마감);
 
-			Long reservation = mr.getMathshId().getReservation().getId();
-			Matchs match = mr.getMathshId();
-			matchService.saveMatch(match, memberId, reservation);
-			
-		}
+		return "pay/matchBuy";
 	}
 
 	// 매치 개설하기
@@ -143,19 +146,20 @@ public class MatchController {
 		model.addAttribute("memberId", memberId);
 
 		int count = 0;
-		Long reservationId = (long)0;
+		Long reservationId = (long) 0;
 		for (int i = 0; i < list.size(); i++) {
 			if (list.get(i).getMember().getId() == memberId) { // 예약 했을 경우
 				count += 1; // 예약한 건 수 : count
-				
-				reservationId = list.get(i).getId() ; // 해당하는 멤버의 예약 아이디 반환
+
+				reservationId = list.get(i).getId(); // 해당하는 멤버의 예약 아이디 반환
 				System.out.println(">>>>>>>>>>>>>>>>>> reservationId : " + reservationId);
-				model.addAttribute("reservationId" + count, reservationId); // 각각의 예약 id반환하기 위해서 reservatuonId1 ,, 2,, 이런식으로 줌
+				model.addAttribute("reservationId" + count, reservationId); // 각각의 예약 id반환하기 위해서 reservatuonId1 ,, 2,,
+																			// 이런식으로 줌
 			}
 		}
 		model.addAttribute("count", count);
-		//model.addAttribute("reservationId", reservationId);
-		
+		// model.addAttribute("reservationId", reservationId);
+
 		return "match/matchForm";
 	}
 
@@ -165,14 +169,54 @@ public class MatchController {
 			@AuthenticationPrincipal PrincipalDetails principalDetails) {
 		Long memberId = principalDetails.getMember().getId();
 		Matchs match = Matchs.createMatch(matchDto);
-		//Long reservationId = (long) 5;
+		// Long reservationId = (long) 5;
 
-		//Reservation reservation = reservationRepository.findById(reservationId).orElseThrow();
-		//System.out.println(">>>>>>>>>>>>>>> reservation : " + reservation);
+		// Reservation reservation =
+		// reservationRepository.findById(reservationId).orElseThrow();
+		// System.out.println(">>>>>>>>>>>>>>> reservation : " + reservation);
 		System.out.println(">>>>>>>>>>>>>>> match : " + match);
-		//matchService.saveMatch(match, memberId, reservation);
-		matchService.saveMatch(match, memberId,matchDto.getReser_id());
+		// matchService.saveMatch(match, memberId, reservation);
+		matchService.saveMatch(match, memberId, matchDto.getReser_id());
 		return "redirect:/match/matchList";
 	}
 
+//	// 마켓 구매 페이지
+//	@GetMapping("/pay")
+//	public String matchBuy(Model model) {
+//		return "pay/matchBuy";
+//	}
+
+	// 마켓 구매 페이지
+	@ResponseBody
+	@PostMapping("/pay/result")
+	public void matchBuyResult(String id, Model model, @AuthenticationPrincipal PrincipalDetails principalDetails) {
+		//System.out.println("ajax로 넘겨온 id : " + id);
+		
+		Long mathcshId = Long.parseLong(id);
+		
+		// 매치 신청 하기
+		Long memberId = principalDetails.getMember().getId();
+		
+		MatchsReservation mr = MatchsReservation.createMR(memberId);
+		matchService.saveMatchsReservation(mr, mathcshId, memberId);
+
+		// 매치 신청 마감 확인
+		List<MatchsReservation> list = mrService.mrCourt();
+
+		int count = 1; // 1vs1단식일 경우 참가할 수 있는 사람은 2명, 본인 제외 하면 1명
+		for (int i = 0; i < list.size(); i++) {
+			if (list.get(i).getMathshId().getId() == mathcshId) { // 매치 ID가 DB에 있는 경우 -> 매치를 신청한 경우
+				count += 1; // 매치 신청 건 수 카운트
+			}
+		}
+
+		if (mr.getMathshId().getCount() <= count) {
+			mr.getMathshId().setStatus(Status.마감);
+
+			Long reservation = mr.getMathshId().getReservation().getId();
+			Matchs match = mr.getMathshId();
+			matchService.saveMatch(match, memberId, reservation);
+			cashservice.cashDeposit(memberId, 5000);
+	}
+}
 }

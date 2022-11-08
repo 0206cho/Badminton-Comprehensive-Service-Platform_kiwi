@@ -215,9 +215,9 @@ public class MarketController {
 		String memberName = principalDetails.getMember().getName();
 		String memberImage = principalDetails.getMember().getImage();
 		Long memberId = principalDetails.getMember().getId();
-
+		
 		marketService.saveMarket(market, file, memberName, memberImage, memberId);
-
+		
 		return "redirect:/market/marketList";
 	}
 
@@ -255,15 +255,17 @@ public class MarketController {
 		return "pay/marketBuy";
 	}
 
-	// 마켓 결제 완료
+	// 마켓 결제(구매 대기) 
 	@PostMapping("/pay/result")
 	@ResponseBody
-	public void payResult(Long id, String title, String price, @AuthenticationPrincipal PrincipalDetails principalDetails) {
-		System.out.println("=============> ajax에서 보낸 id : " + id);
-		System.out.println("=============> ajax에서 보낸 title : " + title);
-		System.out.println("=============> ajax에서 보낸 price : " + price);
-		marketService.saveBuyMarket(principalDetails, new Market(id, title, price), id);
-
+	public void payResult(Long id, @AuthenticationPrincipal PrincipalDetails principalDetails) {
+		marketService.buyMarket(principalDetails, id);
 	}
-
+	
+	// 마켓 결제(구매 완료) 
+	@PostMapping("/pay/finalResult")
+	@ResponseBody
+	public void payFinal(Long id, @AuthenticationPrincipal PrincipalDetails principalDetails) {
+		marketService.finalBuyMarket(id);
+	}
 }

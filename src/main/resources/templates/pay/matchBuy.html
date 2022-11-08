@@ -49,44 +49,46 @@
 
 
 	<script th:inline="javascript">
+	function pay() {
+		var dto = /*[[${matchsReservationDto}]]*/;
+		console.log(dto);
+		console.log(dto.mathcshId);
+		var money = /*[[${money}]]*/;
+		console.log(money);
+		if (money < 5000) {
+			alert("키위 캐시 잔액이 부족합니다.");
+			var width = '480';
+			var height = '900';
 
-		function pay() {
-			var dto = /*[[${marketDto}]]*/;
-			console.log(dto);
-			console.log(dto.id);
-			var money = /*[[${money}]]*/;
-			console.log(/*[[${marketDto.price}]]*/);
-			if (money < /*[[${marketDto.price}]]*/) {
-				alert("키위 캐시 잔액이 부족합니다.");
-				var width = '480';
-				var height = '900';
+			var left = Math.ceil((window.screen.width - width) / 2);
+			var top = Math.ceil((window.screen.height - height) / 2);
 
-				var left = Math.ceil((window.screen.width - width) / 2);
-				var top = Math.ceil((window.screen.height - height) / 2);
-
-				window.open('http://localhost/cash/charge', 'popup-test', 'width=' + width + ', height=' + height + ', left=' + left + ', top=' + top);
-				return false;
-			}
-			
-			$.ajax({
-				url : "/market/pay/result",
-				type : "post",
-				data : {
-					id : dto.id
-				},
-				// ajax csrf 토큰 적용
-				beforeSend: function (jqXHR, settings) {
-			           var header = $("meta[name='_csrf_header']").attr("content");
-			           var token = $("meta[name='_csrf']").attr("content");
-			           jqXHR.setRequestHeader(header, token);
-				},
-				success : function(){
-					alert("구매가 완료되었습니다.")
-					window.location.href = "http://localhost/market/marketList";	
-				},
-				error : function(){alert("error");}
-			});
+			window.open('http://localhost/cash/charge', 'popup-test', 'width=' + width + ', height=' + height + ', left=' + left + ', top=' + top);
+			return false;
 		}
+		
+		$.ajax({
+			url : "/match/pay/result",
+			type : "post",
+			data : {
+				id : dto.mathcshId,
+				
+			},
+			// ajax csrf 토큰 적용
+			beforeSend: function (jqXHR, settings) {
+		           var header = $("meta[name='_csrf_header']").attr("content");
+		           var token = $("meta[name='_csrf']").attr("content");
+		           jqXHR.setRequestHeader(header, token);
+			},
+			success : function(){
+				alert("결제가 완료되었습니다.")
+				window.location.href = "http://localhost/match/matchList";	
+			},
+			error : function(){alert("error");}
+		});
+		
+	}
+		
 		
 	</script>
 
@@ -143,11 +145,15 @@
 		<div style="float: left; width: 100%; margin-right: 80px; margin-left: 55px; text-align: center;">
 			<div style="border: 1px solid black; float: left; width: 100%;">
 				<div style="margin-left: 55px; text-align: left; margin-top: 20px; margin-bottom: 20px">
-				<h5>키위마켓을 이용해주셔서 감사합니다.</h5>
-				<div style="float: left; margin-bottom:0px">구매 물품 : &nbsp;</div>
-			    <div style="float: left; margin-bottom:0px; font-weight: bold;" th:text="${marketDto.title}">키위마켓 타이틀</div> <br>
-			    <div style="float: left; margin-bottom:0px">구매 가격 : &nbsp;</div>
-			    <div style="float: left; margin-bottom:15px; font-weight: bold;" th:text="${marketDto.price} + '원'">키위마켓 가격</div>
+				
+				<div style="float: left; margin-bottom:0px; " th:text="${#temporals.format(matchs.reservation.reservation_time, 'yyyy년 MM월 dd일 ')} ">매치 월일 : &nbsp;</div>
+			    <div style="float: left; margin-bottom:0px; margin-left: 5px;" th:text="${matchs.reservation.court_time}">매치 시간</div> <br>
+			    <div style="float: left; margin-bottom:0px; " th:text="${matchs.reservation.court.name}">배드민턴 장소 : &nbsp;</div>
+			    <div style="float: left; margin-bottom:0px;margin-left: 5px; " th:text="${matchs.reservation.court_num}">코트장 넘버 : &nbsp;</div>
+			     <br>
+			     <div style="float: left; margin-bottom:0px;" th:text="${matchs.type} + ' / ' " >매치 타입</div>
+			     <div style="float: left; margin-bottom:0px;margin-left: 7px;" th:text="${matchs.level}" >매치레벨</div>
+			   <br>
 				</div>
 			</div>
 		</div>
@@ -156,13 +162,13 @@
 		
 		<br> <Br> <br> <br> <Br> <br>
 		<div style="margin-left: 55px; margin-right: 80px; margin-top: 20px; width: 100%;">
-			<div style="float: left; width: 98%; font-weight: bold;">키위 마켓 구매</div>
+			<div style="float: left; width: 98%; font-weight: bold;">매치 구매</div>
 			<Br>
 			<hr>
 			<br>
 			<div style="float: left; width: 80%; font-weight: bold;">결제 금액</div>
-			<div style="float: right; font-weight: bold; margin-right: 10px;" th:text="${marketDto.price} + '원'">
-				20000원</div>
+			<div style="float: right; font-weight: bold; margin-right: 10px;" >
+				5000원</div>
 			<Br>
 			<hr style="margin-bottom: 0px">
 			<br>
@@ -235,7 +241,7 @@
 
 			<div style=" margin-right: 80px; margin-top: 40px; width: 100%;">
 				<button type="submit" class="btn btn-kiwi" style="width:100%;height:70px;font-size:20px"
-					onclick="pay();" th:text="${marketDto.price} + '원 결제하기'">20000원 결제하기</button>
+					onclick="pay();" >5000원 결제하기</button>
 			</div>
 
 		</div>

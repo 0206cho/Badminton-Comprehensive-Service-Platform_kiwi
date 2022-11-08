@@ -36,6 +36,45 @@ a {
 	margin-top: 0px;
 }
 
+.paywaiy { /*구매대기*/
+	background-color: #70ACB1;
+	color: white;
+	border-color: #666;
+	text-align: center; 
+	width: 50%; 
+	margin-bottom: 0px; 
+	padding: 5px; 
+	border-color: black; 
+	border: 1px solid black; 
+	margin-right: 10px;
+}
+
+.buy { /*판매중*/
+	background-color: #C6F1E7;
+	color: black;
+	border-color: #666;
+	text-align: center; 
+	width: 50%; 
+	margin-bottom: 0px; 
+	padding: 5px; 
+	border-color: black; 
+	border: 1px solid black; 
+	margin-right: 10px;
+}
+
+.completion{ /*구매완료*/
+	background-color: #D5D5D5;
+	color: black;
+	border-color: #666;
+	text-align: center; 
+	width: 50%; 
+	margin-bottom: 0px; 
+	padding: 5px; 
+	border-color: black; 
+	border: 1px solid black; 
+	margin-right: 10px;
+}
+
 .btn-kiwi {
 	background-color: #70ACB1;
 	color: white;
@@ -279,8 +318,9 @@ a {
 									style="width: 90%;">
 									5000원 <br>
 								</p>
-								<label th:text="${vo.status}"
-									style="text-align: center; width: 50%; margin-bottom: 0px; background-color: #C6F1E7; padding: 5px; border-color: black; border: 1px solid black; margin-right: 10px;">LEVEL_A</label>
+								<label th:if="${#strings.equals(vo.status, '판매중')}" class="buy" th:text="${vo.status}">판매중</label>
+								<label th:if="${#strings.equals(vo.status, '구매대기')}" class="paywaiy" th:text="${vo.status}">구매대기</label>
+								<label th:if="${#strings.equals(vo.status, '구매완료')}" class="completion" th:text="${vo.status}">구매완료</label>
 							</div>
 						</div>
 					</div>

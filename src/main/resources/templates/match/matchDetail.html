@@ -277,8 +277,7 @@ a {
 						<div class="card" style="width: 280px; border-color: black;">
 							<div class="card-body">
 								<form role="form" method="get" enctype="multipart/form-data"
-									action="/match/matchDetail/'${matchs.id}'"
-									th:object="${matchsReservationDto}" name="mr_form">
+									action="/match/matchsReservation" th:object="${matchsReservationDto}" name="mr_form">
 									<div style="display: flex;">
 										<h6 class="card-title"
 											th:text="${#temporals.format(matchs.reservation.reservation_time, 'yyyy년 MM월 dd일 ')}">2022년
@@ -300,11 +299,11 @@ a {
 										모든레벨</div>
 									<br>
 									<hr>
-									<div style="font-weight: bold; float: left; font-size: large;">20,000원
+									<div style="font-weight: bold; float: left; font-size: large;">5000원
 									</div>
 									<div style="float: left;">&nbsp;/ 2시간</div>
-									<input type="hidden" id="matchs_id" th:value="${matchs.id}"/> <br> <br>
-									<button type="button" id="mrSave" class="btn btn-kiwi submit"
+									<input type="hidden" id="matchs_id" name="mathcshId" th:value="${matchs.id}"/> <br> <br>
+									<button type="submit" id="mrSave" class="btn btn-kiwi submit"
 										style="width: 250px;">신청하기</button>
 									<!-- onclick="location.href='/cash/court'" -->
 								</form>
@@ -321,38 +320,38 @@ a {
 		<br> <Br> <br>
 
 		<script type="text/javascript">
-		'use strict';
-		let mrIndex = {
-	    	init: function () {
-	       	 $("#mrSave").on("click", () => {
-	            this.mrSave();
-	        });
-	    },
+		// 'use strict';
+		// let mrIndex = {
+	    // 	init: function () {
+	    //    	 $("#mrSave").on("click", () => {
+	    //         this.mrSave();
+	    //     });
+	    // },
 	    
-	    // 매치 신청하기
-		mrSave: function () {
-	    	let matchs_id = $("#matchs_id").val();
-	        console.log(matchs_id);
-	        $.ajax({
-	            type: "GET",
-	            url: "/match/matchsReservation", // "/match/matchDetail/${mathcshId}"
-	            data: {
-					"mathcshId": matchs_id,
-				},
-				success:function(){
-					 alert("매치가 신청되었습니다.");
-					 location.href = `/cash/court`;
-				},
-				error:function(){
-					alert("실패");
-		            alert(JSON.stringify(err));
-				}
-	        });
+	    // // 매치 신청하기
+		// mrSave: function () {
+	    // 	let matchs_id = $("#matchs_id").val();
+	    //     console.log(matchs_id);
+	    //     $.ajax({
+	    //         type: "GET",
+	    //         url: "/match/matchsReservation", // "/match/matchDetail/${mathcshId}"
+	    //         data: {
+		// 			"mathcshId": matchs_id,
+		// 		},
+		// 		success:function(){
+		// 			 alert("매치가 신청되었습니다.");
+		// 			 location.href = `/cash/court`;
+		// 		},
+		// 		error:function(){
+		// 			alert("실패");
+		//             alert(JSON.stringify(err));
+		// 		}
+	    //     });
 	        
-		   }
-	    }
+		//    }
+	    // }
 	    
-	    mrIndex.init();
+	    // mrIndex.init();
 		</script>
 	</div>
 

@@ -105,7 +105,27 @@ public class MarketService {
 		cashService.cashDeposit(memid, 20000);
 		
 		//return marketRepository.save(market);
+	}
+	
+	// 마켓 결제(구매 대기) 
+	public void buyMarket(@AuthenticationPrincipal PrincipalDetails principalDetails,Long id) {
 		
+		Long memId = principalDetails.getMember().getId();
+		Market market = marketRepository.findById(id).orElseThrow(IllegalArgumentException::new);
+		market.setBuy_memId(memId);
+		String price = market.getPrice();
+		cashService.cashDeposit(memId, Integer.parseInt(price));
+		market.setStatus(ItemSellStatus.구매대기);
+		
+	}
+	
+	// 마켓 결제(구매 확정) 
+	public void finalBuyMarket(Long id) {
+		Market market = marketRepository.findById(id).orElseThrow(IllegalArgumentException::new);
+		Long memId = market.getMemId();
+		String price = market.getPrice();
+		cashService.cashPlus(memId, Integer.parseInt(price));
+		market.setStatus(ItemSellStatus.구매완료);
 	}
 
 }

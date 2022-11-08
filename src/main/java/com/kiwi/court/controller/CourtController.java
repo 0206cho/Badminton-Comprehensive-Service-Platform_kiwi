@@ -98,13 +98,6 @@ public class CourtController {
 	@PostMapping("/pay/result")
 	@ResponseBody
 	public void payResult(String id, String name, String num, String time, String racket, String email, String shuttlecock,String btnNum, @AuthenticationPrincipal PrincipalDetails principalDetails) {
-		System.out.println( "=============> ajax에서 보낸 id : "+id);
-		System.out.println( "=============> ajax에서 보낸 name : "+name);
-		System.out.println( "=============> ajax에서 보낸 time : "+time);
-		System.out.println( "=============> ajax에서 보낸 racket : "+racket);
-		System.out.println( "=============> ajax에서 보낸 email : "+email);
-		System.out.println( "=============> ajax에서 보낸 shuttlecock : "+shuttlecock);
-		System.out.println( "=============> ajax에서 보낸 btnNum : "+btnNum);
 		reservationService.saveReservation(principalDetails,new Reservation(name, num, time, racket, shuttlecock, email,btnNum), id);
 		
 	}
