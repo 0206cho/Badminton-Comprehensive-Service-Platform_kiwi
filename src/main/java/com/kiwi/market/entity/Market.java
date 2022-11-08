@@ -109,4 +109,6 @@ public class Market extends BaseEntity {
 		status = ItemSellStatus.구매대기;
 	}
 	
+	
+	
 }

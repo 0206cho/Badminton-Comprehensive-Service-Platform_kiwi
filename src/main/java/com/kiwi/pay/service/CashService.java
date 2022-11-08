@@ -55,4 +55,10 @@ public class CashService {
 		
 	}
 	
+	// 캐시 증가( 키위 마켓용)
+	public void cashPlus(Long id, int amount) {
+		Member member = memberRepository.findMemberById(id);
+		member.withdraw(amount);
+	}
+	
 }
