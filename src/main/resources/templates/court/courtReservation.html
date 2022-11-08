@@ -47,6 +47,14 @@
 			border-color: #666;
 
 		}
+		
+		.date_list:focus {
+ 			background-color: #C6F1E7;
+		}
+
+		.date_list:checked {
+			background-color: #C6F1E7;
+		}
 
 		.wrap {
 			position: absolute;
@@ -279,13 +287,12 @@ function getBtn(){
 
 		</script>
 
-
 		<form class="signup-form" action="/court/pay" role="form" method="post" th:object="${ReservationDto}"
 			name="reservation_form">
 			<div style="margin-left: 55px; margin-right: 80px; margin-top: 20px; width: 100%;">
 
 				<div
-					style="float: left; width: 1215px;border: 1px solid #808080;margin-bottom:60px;border-radius : 15px;">
+					style="float: left; width: 1215px;border: 1px solid #808080;margin-bottom:30px;border-radius : 15px;">
 					<p id="selectCourtName" value=""
 						style="margin-top:37px;margin-left:50px;margin-bottom:5px;font-weight: bold;font-size: 22px;">
 						코트를
@@ -296,6 +303,10 @@ function getBtn(){
 				</div>
 			
 
+	<div id = "div_date" style="float: left; width: 1215px;margin-bottom:30px;border-radius : 15px;">
+	
+	</div>
+	
 
 				<div style="float: left; width: 110px; height:600px;" id="div_courtName">
 				</div>
@@ -591,6 +602,7 @@ function getBtn(){
 						console.log("data.id : " + data.id)
 						getBtn();
 						btnDisable(data.id);
+						getDate();
 					});
 				}
 		
@@ -841,6 +853,38 @@ function getBtn(){
 				 	btn.style.borderColor = '#808080';
 				}
 				/*[/]*/
+			}
+			
+			function getDate(){
+			var str_court = "";	
+			
+			var html_btn = '<input class="btn date_list" type="button" id="2022-11-10"  style="height: 90px; width:90px;margin-left:330px; font-size: 23px;  color: black;" value="10(목)" />';
+			html_btn = html_btn.replace('{}', 1);
+			str_court = str_court + html_btn + '\n';
+			
+			var html_btn = '<input class="btn date_list" type="button" id="2022-11-11"  style="height: 90px; width:90px; font-size: 23px;  color: black;" value="11(금)" />';
+			html_btn = html_btn.replace('{}', 2);
+			str_court = str_court + html_btn + '\n';
+			
+			var html_btn = '<input class="btn date_list" type="button" id="2022-11-12"  style="height: 90px; width:90px; font-size: 23px;  color: blue;" value="12(토)" />';
+			html_btn = html_btn.replace('{}', 3);
+			str_court = str_court + html_btn + '\n';
+			
+			var html_btn = '<input class="btn date_list" type="button" id="2022-11-13"  style="height: 90px; width:90px; font-size: 23px;  color: red;" value="13(일)" />';
+			html_btn = html_btn.replace('{}', 4);
+			str_court = str_court + html_btn + '\n';
+			
+			var html_btn = '<input class="btn date_list" type="button" id="2022-11-14"  style="height: 90px; width:90px; font-size: 23px;  color: black;" value="14(월)" />';
+			html_btn = html_btn.replace('{}', 5);
+			str_court = str_court + html_btn + '\n';
+			
+			var html_btn = '<input class="btn date_list" type="button" id="2022-11-15"  style="height: 90px; width:90px; font-size: 23px;  color: black;" value="15(화)" />';
+			html_btn = html_btn.replace('{}', 6);
+			str_court = str_court + html_btn + '\n';
+			
+			
+			$('#div_date').html(str_court);
+			
 			}
 			
 			// 코트장을 선택하지 않고 예약을 하려고 할때
