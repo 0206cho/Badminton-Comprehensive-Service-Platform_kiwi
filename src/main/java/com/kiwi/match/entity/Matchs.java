@@ -62,6 +62,9 @@ public class Matchs extends BaseEntity {
 	
 	@Column(name="matchs_count")
 	private long count;      // 매치 인원
+	
+	@Column(name="matchs_retime")
+	private String retime;  // 매치 날짜 - 경기 날짜
 
 	public static Matchs createMatch(@Valid MatchDto matchDto) {
 		Matchs match = new Matchs();
@@ -69,6 +72,7 @@ public class Matchs extends BaseEntity {
 		match.setStatus(Status.신청);
 		match.setType(matchDto.getType());
 		match.setCount(matchDto.getCount());
+		match.setRetime("2022-11-10");
 		return match;
 	}
 	

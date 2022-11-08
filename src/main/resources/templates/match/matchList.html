@@ -90,6 +90,14 @@ a {
 .ok { /*리스트 목록의 버튼 - 신청*/
 	width: 100px;
 }
+
+.date_list:focus {
+ background-color: #C6F1E7;
+}
+
+.date_list:checked {
+	background-color: #C6F1E7;
+}
 </style>
 </th:block>
 
@@ -259,14 +267,14 @@ a {
 	<div class="head" style="margin-bottom: 0x; padding-bottom: 0px;">
 		<!-- 지역 -->
 		<select class="select" name="sido1" id="sido1"
-			style="padding: 6px; padding-right: 10px; margin-right: 50px;"></select>
+			style="padding: 6px; padding-right: 10px; margin-right: 20px;"></select>
 		<!-- 도시 -->
 		<select class="select" name="gugun1" id="gugun1"
-			style="padding: 6px; padding-right: 50px; margin-right: 50px;"></select>
+			style="padding: 6px; padding-right: 50px; margin-right: 20px;"></select>
 
 		<!--레벨-->
 		<select class="select" name="region"
-			style="padding: 6px; padding-right: 20px; margin-right: 50px;">
+			style="padding: 6px; padding-right: 20px; margin-right: 20px;">
 			<option value="level" selected>레벨</option>
 			<option value="0">모든레벨</option>
 			<option value="1">LEVEL-A</option>
@@ -277,7 +285,7 @@ a {
 
 		<!--종류-->
 		<select class="select" name="type"
-			style="padding: 6px; padding-right: 20px; margin-right: 50px;">
+			style="padding: 6px; padding-right: 20px; margin-right: 20px;">
 			<option value="type" selected>종류</option>
 			<option value="1">1vs1(단식)</option>
 			<option value="2">2vs2(복식)</option>
@@ -285,7 +293,7 @@ a {
 
 		<!--상태-->
 		<select class="select" name="type"
-			style="padding: 6px; padding-right: 50px; margin-right: 80px;">
+			style="padding: 6px; padding-right: 50px; margin-right: 30px;">
 			<option value="type" selected>상태</option>
 			<option value="0">전체</option>
 			<option value="1">신청</option>
@@ -293,12 +301,64 @@ a {
 		</select> <Br>
 
 		<button class="btn btn-outline-success" type="submit"
-			style="width: 80px; margin-right: 30px">검색</button>
-		</form>
+			style="width: 80px; margin-right: 10px">검색</button>
 		<button type="button" class="btn btn-kiwi" style="width: 120px;"
 			onclick="location.href='/match/matchNew'">개설하기</button>
 	</div>
-	<br> <img src="/img/날짜리스트.png" style="width: 800px; height: 80px;">
+	
+	<div>
+	<form class="form-inline" method="get" th:action="@{/match/matchList}">
+	<input type="hidden" id="searchText" name="searchText" th:value="${param.searchText}"	style="width: 280px; height: 36px; margin-bottom: 0x; padding-bottom: 0px; margin-right: 10px;">
+	
+	<input class="btn date_list" type="submit" id="2022-11-10" onclick='changeBtn(this.id)' style="height: 90px; width:90px; font-size: 22px;  color: black;" value='10
+목' /> 
+	<input class="btn date_list" type="submit" id="2022-11-11" onclick='changeBtn(this.id)' style="height: 90px; width:90px; font-size: 22px;  color: black;" value='11
+금' /> 
+	<input class="btn date_list" type="submit" id="2022-11-12" onclick='changeBtn(this.id)' style="height: 90px; width:90px; font-size: 22px;  color: blue;" value='12
+토' /> 
+	<input class="btn date_list" type="submit" id="2022-11-13" onclick='changeBtn(this.id)' style="height: 90px; width:90px; font-size: 22px;  color: red;" value='13
+일' /> 
+	<input class="btn date_list" type="submit" id="2022-11-14" onclick='changeBtn(this.id)' style="height: 90px; width:90px; font-size: 22px;  color: black;" value='14
+월' /> 
+	<input class="btn date_list" type="submit" id="2022-11-15" onclick='changeBtn(this.id)' style="height: 90px; width:90px; font-size: 22px;  color: black;" value='15
+화' /> 
+	<input class="btn date_list" type="submit" id="2022-11-16" onclick='changeBtn(this.id)' style="height: 90px; width:90px; font-size: 22px;  color: black;" value='16
+수' /> 
+	<!-- <input class="btn date_list" type="submit" id="2022-11-17" onclick='changeBtn(this.id)' style="height: 90px; width:90px; font-size: 22px;  color: black;" value='17
+목' />  -->
+</form>
+	</div>
+	
+	<script th:inline="javascript">
+	'use strict';
+	// 새로 고침 시 매치 리스트로 
+	document.onkeydown = fkey;
+	document.onkeypress = fkey;
+	document.onkeyup = fkey;
+
+	var wasPressed = false;
+
+	function fkey(e){
+		e = e || window.event;
+		if(wasPressed) return;
+
+		if(e.keyCode == 116){
+			location.href = "/match/matchList";
+		}
+	}
+							
+	// 날짜 버튼을 선택했을 경우
+	function changeBtn(id) {
+	// form안에 hidden으로 만든 매치날짜 input에 선택한 버튼의 id값인 매치 날짜 넣어줌
+	document.getElementById('searchText').value = id;
+		
+	var event = jQuery.Event("keypress", { keyCode:13 });
+
+	$("#searchText").trigger(event);
+								
+	}
+	</script>
+	
 	<br>
 
 	<div class="container">
@@ -321,9 +381,9 @@ a {
 							th:text="${vo.reservation.court_num}">코트1</h5>
 					</div>
 					<div style="display: flex;">
-						<div style="margin-right: 30px; margin-left: 10px;">인천</div>
-						<div style="margin-right: 30px;">연수구</div>
-						<div style="margin-right: 30px;" th:text="${vo.level}">모든레벨</div>
+						<!-- <div style="margin-right: 30px; margin-left: 10px;">인천</div>
+						<div style="margin-right: 30px;">연수구</div> -->
+						<div style="margin-right: 30px; margin-left: 10px;" th:text="${vo.level}">모든레벨</div>
 						<div style="margin-right: 30px;" th:text="${vo.type}">1vs1</div>
 					</div>
 				</div>
@@ -352,7 +412,7 @@ a {
 			<li class="page-item"
 				th:classappend="${1 == list.pageable.pageNumber + 1} ? 'disabled' : '' ">
 				<a class="page-link" aria-label="Previous"
-				th:href="@{/match/matchList/(page=${list.pageable.pageNumber - 1})}">
+				th:href="@{/match/matchList/(page=${list.pageable.pageNumber - 1}, search=${param.searchText})}">
 					<span aria-hidden="true" style="color: #70ACB1;">◀</span>
 			</a>
 			</li>
@@ -360,11 +420,11 @@ a {
 				th:classappend="${i == list.pageable.pageNumber + 1} ? 'active' : '' "
 				th:each="i : ${#numbers.sequence(startPage, endPage)}"><a
 				class="page-link" style="color: black;"
-				th:href="@{/match/matchList/(page=${i - 1})}" th:classappend="${i - 1} == -1 ? 'pageno' : '' " th:text="${i}">1</a></li>
+				th:href="@{/match/matchList/(page=${i - 1}, search=${param.searchText})}" th:classappend="${i - 1} == -1 ? 'pageno' : '' " th:text="${i}">1</a></li>
 			<li class="page-item"
 				th:classappend="${list.totalPages == list.pageable.pageNumber + 1} ? 'disabled' : '' ">
 				<a class="page-link" aria-label="Next" style="color: #70ACB1;"
-				th:href="@{/match/matchList/(page=${list.pageable.pageNumber + 1})}">
+				th:href="@{/match/matchList/(page=${list.pageable.pageNumber + 1}, search=${param.searchText})}">
 					<span aria-hidden="true">▶</span>
 			</a>
 			</li>
