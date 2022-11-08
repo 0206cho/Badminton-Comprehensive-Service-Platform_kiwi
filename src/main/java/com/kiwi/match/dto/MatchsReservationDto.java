@@ -18,8 +18,8 @@ public class MatchsReservationDto {
 
     private Long memId;
 	
-//	private Long MathcshId;
+	private Long mathcshId;
     
-	private Matchs MathcshId;
+//	private Matchs MathcshId;
 	
 }

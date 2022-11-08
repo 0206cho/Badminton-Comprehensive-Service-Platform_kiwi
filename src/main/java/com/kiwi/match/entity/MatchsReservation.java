@@ -43,12 +43,22 @@ public class MatchsReservation extends BaseEntity{
     @JoinColumn(name = "mr_mathsId")
     private Matchs mathshId;
 
-	public static MatchsReservation createMR(MatchsReservationDto mrDto) {
+//	public static MatchsReservation createMR(MatchsReservationDto mrDto) {
+//		MatchsReservation mr = new MatchsReservation();
+//		mr.setMemId(mrDto.getMemId());
+////		mr.setMathcshId(mrDto.getMathcshId());
+//		
+//		return mr;
+//	}
+	
+	public static MatchsReservation createMR(Long id) {
 		MatchsReservation mr = new MatchsReservation();
-		mr.setMemId(mrDto.getMemId());
+		mr.setMemId(id);
 //		mr.setMathcshId(mrDto.getMathcshId());
 		
 		return mr;
 	}
+	
+	
 	
 }

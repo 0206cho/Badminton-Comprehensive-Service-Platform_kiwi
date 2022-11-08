@@ -233,14 +233,6 @@ img {
 					<input type="hidden" id="id" name="id" th:value="${market.id}"> 
 					<input type="hidden" id="title" name="title" th:value="${market.title}"> 
 					<input type="hidden" id="price" name="price" th:value="${market.price}"> 
-					<!-- <input type="hidden" id="detail" name="detail" th:value="${market.detail}"> 
-					<input type="hidden" id="status" name="status" th:value="${market.status}"> 
-					<input type="hidden" id="filename" name="filename" th:value="${market.filename}"> 
-					<input type="hidden" id="filepath" name="filepath" th:value="${market.filepath}"> 
-					<input type="hidden" id="oriImgName" name="oriImgName" th:value="${market.oriImgName}"> 
-					<input type="hidden" id="memId" name="memId" th:value="${market.memId}"> 
-					<input type="hidden" id="memName" name="memName" th:value="${market.memName}"> 
-					<input type="hidden" id="memImg" name="memImg" th:value="${market.memImg}">--> 
 					<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
 					<button th:if="${memberId == market.buy_memId} and ${#strings.equals(market.status, '구매대기')}" type=button onclick="pay();" class="btn btn-kiwi" style="margin-left: 15cm;">구매완료</button>
 					<button th:if="${#strings.equals(market.status, '판매중')}" type="submit" class="btn btn-kiwi" style="margin-left: 15cm;">구매하기</button>
