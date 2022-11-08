@@ -112,6 +112,7 @@ public class MatchService {
 		Reservation reser = reservationRepository.findById(reservationId).orElseThrow();
 		matchs.setMemberId(memberId);
 		matchs.setReservation(reser);
+		matchs.setRetime("2022-11-10");
 		// 단식일 경우 count2, 복식일 경우 count 4
 		if(matchs.getType().equals("1vs1(단식)")) {
 			matchs.setCount(2);			

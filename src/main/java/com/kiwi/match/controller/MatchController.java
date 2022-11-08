@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -74,9 +75,11 @@ public class MatchController {
 	// 매치 메인 - 매치 리스트 (페이징)
 	@GetMapping("/matchList")
 	public String matchList(Model model,
-			@PageableDefault(size = 5, sort = "id", direction = Sort.Direction.DESC) Pageable pageable) {
+			@PageableDefault(size = 5, sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
+			@RequestParam(required = false, defaultValue = "") String searchText) {
 		// String courtName = matchService.courtTest(1L);
-		Page<Matchs> list = matchRepository.findAll(pageable);
+//		Page<Matchs> list = matchRepository.findAll(pageable);
+		Page<Matchs> list = matchRepository.findByRetimeContaining(searchText, pageable);
 		int startPage = Math.max(1, list.getPageable().getPageNumber() - 4);
 		int endPage = Math.min(list.getTotalPages(), list.getPageable().getPageNumber() + 4);
 		model.addAttribute("startPage", startPage);

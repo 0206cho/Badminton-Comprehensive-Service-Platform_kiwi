@@ -46,6 +46,8 @@ public class MatchDto {
 	
 	private Long reser_id;
 	
+	private String retime;  // 매치 날짜 - 경기 날짜
+	
 	@Column(name="match_count")
 	private long count;      // 매치 인원
 
