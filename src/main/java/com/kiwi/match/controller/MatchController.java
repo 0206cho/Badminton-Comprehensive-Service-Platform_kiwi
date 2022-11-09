@@ -83,9 +83,7 @@ public class MatchController {
 
 	// 매치 메인 - 매치 리스트 (페이징)
 	@GetMapping("/matchList")
-	public String matchList(Model model,
-			@PageableDefault(size = 5, sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
-			@RequestParam(required = false, defaultValue = "") String searchText) {
+	public String matchList(Model model,@PageableDefault(size = 5, sort = "id", direction = Sort.Direction.DESC) Pageable pageable,@RequestParam(required = false, defaultValue = "") String searchText) {
 		// String courtName = matchService.courtTest(1L);
 //		Page<Matchs> list = matchRepository.findAll(pageable);
 		Page<Matchs> list = matchRepository.findByRetimeContaining(searchText, pageable);
@@ -106,6 +104,7 @@ public class MatchController {
 		model.addAttribute("matchsReservationDto", new MatchsReservationDto());
 		return "match/matchDetail";
 	}
+	
 
 	// 매치 신청하기
 	@GetMapping("/matchsReservation")

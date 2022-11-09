@@ -77,6 +77,7 @@ public class CourtController {
 		System.out.println("==================> shuttlecock : " + reservationDto.getShuttlecock());
 		System.out.println("==================> racket : " + reservationDto.getRacket());
 		System.out.println("==================> btnNum : " + reservationDto.getBtnNum());
+		System.out.println("==================> SearchText : " + reservationDto.getSearchText());
 		
 		Long id = principalDetails.getMember().getId();
 		Member member = memberRepository.findMemberById(id);
@@ -96,8 +97,8 @@ public class CourtController {
 	// 코트 예약 완료
 	@PostMapping("/pay/result")
 	@ResponseBody
-	public void payResult(String id, String name, String num, String time, String racket, String email, String shuttlecock,String btnNum, @AuthenticationPrincipal PrincipalDetails principalDetails) {
-		reservationService.saveReservation(principalDetails,new Reservation(name, num, time, racket, shuttlecock, email,btnNum), id);
+	public void payResult(String id, String name, String num, String time, String racket, String email, String shuttlecock,String btnNum,String reservation_time, @AuthenticationPrincipal PrincipalDetails principalDetails) {
+		reservationService.saveReservation(principalDetails,new Reservation(name, num, time, racket, shuttlecock, email,reservation_time,btnNum), id);
 		
 	}
 

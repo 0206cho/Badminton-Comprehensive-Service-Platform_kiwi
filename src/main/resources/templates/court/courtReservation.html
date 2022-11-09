@@ -304,8 +304,9 @@ function getBtn(){
 			
 
 	<div id = "div_date" style="float: left; width: 1215px;margin-bottom:30px;border-radius : 15px;">
-	
+	<input type="hidden" id="reservation_time" name="reservation_time" style="width: 280px; height: 36px; margin-bottom: 0x; padding-bottom: 0px; margin-right: 10px;">
 	</div>
+	
 	
 
 				<div style="float: left; width: 110px; height:600px;" id="div_courtName">
@@ -327,6 +328,8 @@ function getBtn(){
 				<div style="float: left; width: 110px; height:600px;" id="div_court8">
 				</div>
 			</div>
+
+			
 
 			<!-- 모달 -->
 			<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
@@ -376,7 +379,7 @@ function getBtn(){
 							<input type="hidden" id="racket" name="racket" value="0">
 							<input type="hidden" id="shuttlecock" name="shuttlecock" value="0">
 							<input type="hidden" id = "btnNum" name="btnNum">
-							
+							<input type="hidden" id="searchText" name="searchText">
 							<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
 						</div>
 						<div class="modal-footer" style="border: none">
@@ -447,7 +450,7 @@ function getBtn(){
 				
 				
 				
-				
+				var court_id = 0;
 				
 				
 				/*<![CDATA[*/
@@ -592,6 +595,7 @@ function getBtn(){
 					overlay.setContent(wrap);
 					markers.push(marker);
 					kakao.maps.event.addListener(marker, 'click', function () {
+						court_id = data.id;
 						overlay.setMap(map);
 						document.getElementById('selectCourtName').innerHTML = data.name;
 						document.getElementById('selectCourtName').value = data.name;
@@ -601,8 +605,10 @@ function getBtn(){
 						document.getElementById('court_name').value = data.name;
 						console.log("data.id : " + data.id)
 						getBtn();
-						btnDisable(data.id);
 						getDate();
+						var tt = "2022-11-10";
+						btnDisable(tt,data.id);
+						
 					});
 				}
 		
@@ -842,49 +848,68 @@ function getBtn(){
 		}
 			
 			// 코트 예약 테이블을 바탕으로 버튼 비활성화
-			function btnDisable(id){
+			function btnDisable(date,id){
 				/*[# th:each="reser : ${reserList}"]*/
 				var getReser = /*[[${reser}]]*/;
 				console.log("getReser.court_id : "+getReser.court.id);
-				if(id == getReser.court.id){
-					var btn = document.getElementById(getReser.btnNum);
-					btn.disabled = true;
-				 	btn.style.backgroundColor = '#D3D3D3';
-				 	btn.style.borderColor = '#808080';
+				console.log("getReser.reservation_time : "+getReser.reservation_time);
+				console.log("date : "+date);
+				
+				if(date == getReser.reservation_time){
+					if(id == getReser.court.id){
+						var btn = document.getElementById(getReser.btnNum);
+						btn.disabled = true;
+					 	btn.style.backgroundColor = '#D3D3D3';
+					 	btn.style.borderColor = '#808080';
+					}
 				}
+				
 				/*[/]*/
 			}
 			
 			function getDate(){
 			var str_court = "";	
 			
-			var html_btn = '<input class="btn date_list" type="button" id="2022-11-10"  style="height: 90px; width:90px;margin-left:330px; font-size: 23px;  color: black;" value="10(목)" />';
+			var html_btn = '<input class="btn date_list" type="button" id="2022-11-10" onclick="changeBtn(this.id)" style="height: 90px; width:90px;margin-left:330px; font-size: 23px;  color: black;" value="10(목)" />';
 			html_btn = html_btn.replace('{}', 1);
 			str_court = str_court + html_btn + '\n';
 			
-			var html_btn = '<input class="btn date_list" type="button" id="2022-11-11"  style="height: 90px; width:90px; font-size: 23px;  color: black;" value="11(금)" />';
+			var html_btn = '<input class="btn date_list" type="button" id="2022-11-11" onclick="changeBtn(this.id)" style="height: 90px; width:90px; font-size: 23px;  color: black;" value="11(금)" />';
 			html_btn = html_btn.replace('{}', 2);
 			str_court = str_court + html_btn + '\n';
 			
-			var html_btn = '<input class="btn date_list" type="button" id="2022-11-12"  style="height: 90px; width:90px; font-size: 23px;  color: blue;" value="12(토)" />';
+			var html_btn = '<input class="btn date_list" type="button" id="2022-11-12" onclick="changeBtn(this.id)" style="height: 90px; width:90px; font-size: 23px;  color: blue;" value="12(토)" />';
 			html_btn = html_btn.replace('{}', 3);
 			str_court = str_court + html_btn + '\n';
 			
-			var html_btn = '<input class="btn date_list" type="button" id="2022-11-13"  style="height: 90px; width:90px; font-size: 23px;  color: red;" value="13(일)" />';
+			var html_btn = '<input class="btn date_list" type="button" id="2022-11-13" onclick="changeBtn(this.id)" style="height: 90px; width:90px; font-size: 23px;  color: red;" value="13(일)" />';
 			html_btn = html_btn.replace('{}', 4);
 			str_court = str_court + html_btn + '\n';
 			
-			var html_btn = '<input class="btn date_list" type="button" id="2022-11-14"  style="height: 90px; width:90px; font-size: 23px;  color: black;" value="14(월)" />';
+			var html_btn = '<input class="btn date_list" type="button" id="2022-11-14" onclick="changeBtn(this.id)" style="height: 90px; width:90px; font-size: 23px;  color: black;" value="14(월)" />';
 			html_btn = html_btn.replace('{}', 5);
 			str_court = str_court + html_btn + '\n';
 			
-			var html_btn = '<input class="btn date_list" type="button" id="2022-11-15"  style="height: 90px; width:90px; font-size: 23px;  color: black;" value="15(화)" />';
+			var html_btn = '<input class="btn date_list" type="button" id="2022-11-15" onclick="changeBtn(this.id)" style="height: 90px; width:90px; font-size: 23px;  color: black;" value="15(화)" />';
 			html_btn = html_btn.replace('{}', 6);
 			str_court = str_court + html_btn + '\n';
 			
 			
 			$('#div_date').html(str_court);
 			
+			}
+			
+			// 날짜 버튼을 선택했을 경우
+			function changeBtn(id) {
+			getBtn();
+			// form안에 hidden으로 만든 매치날짜 input에 선택한 버튼의 id값인 매치 날짜 넣어줌
+			document.getElementById('searchText').value = id;
+				
+			var event = jQuery.Event("keypress", { keyCode:13 });
+
+			$("#searchText").trigger(event);
+			
+			btnDisable(id,court_id.value);
 			}
 			
 			// 코트장을 선택하지 않고 예약을 하려고 할때
@@ -903,6 +928,8 @@ function getBtn(){
 				btnNum.value = id;
 				console.log("==============" + btnNum.value);
 			}
+			
+			
 			
 			// 코트 예약할 시간(버튼)을 클릭했을때 모달 정보를 넘기기 위한 코드(라켓)
 			$(document).on('click', '.number-spinner button', function () {
