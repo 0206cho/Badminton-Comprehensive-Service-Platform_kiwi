@@ -138,25 +138,25 @@ public class MatchController {
 
 	// 매치 개설하기
 	@GetMapping("/matchNew")
-	public String matchNew(@Valid MatchDto matchDto, Model model,
-			@AuthenticationPrincipal PrincipalDetails principalDetails) {
+	public String matchNew(@AuthenticationPrincipal PrincipalDetails principalDetails, @Valid MatchDto matchDto, Model model) {
 		Long memberId = principalDetails.getMember().getId();
 		List<Reservation> list = matchService.matchsCourt();
 		model.addAttribute("list", list);
 		model.addAttribute("memberId", memberId);
-
+		
 		int count = 0;
 		Long reservationId = (long) 0;
 		for (int i = 0; i < list.size(); i++) {
-			if (list.get(i).getMember().getId() == memberId) { // 예약 했을 경우
+			if (list.get(i).getMember().getId().equals(memberId)) { // 예약 했을 경우
 				count += 1; // 예약한 건 수 : count
-
+				
 				reservationId = list.get(i).getId(); // 해당하는 멤버의 예약 아이디 반환
 				System.out.println(">>>>>>>>>>>>>>>>>> reservationId : " + reservationId);
 				model.addAttribute("reservationId" + count, reservationId); // 각각의 예약 id반환하기 위해서 reservatuonId1 ,, 2,,
 																			// 이런식으로 줌
 			}
 		}
+		System.out.println("=======================> count : " + count);
 		model.addAttribute("count", count);
 		// model.addAttribute("reservationId", reservationId);
 
@@ -165,8 +165,7 @@ public class MatchController {
 
 	// 매치 개설
 	@PostMapping("/matchNew")
-	public String matchNewPost(@Valid MatchDto matchDto, Model model,
-			@AuthenticationPrincipal PrincipalDetails principalDetails) {
+	public String matchNewPost(@Valid MatchDto matchDto, Model model, @AuthenticationPrincipal PrincipalDetails principalDetails) {
 		Long memberId = principalDetails.getMember().getId();
 		Matchs match = Matchs.createMatch(matchDto);
 		// Long reservationId = (long) 5;
