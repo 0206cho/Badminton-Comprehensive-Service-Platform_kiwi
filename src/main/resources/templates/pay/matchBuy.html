@@ -146,7 +146,7 @@
 			<div style="border: 1px solid black; float: left; width: 100%;">
 				<div style="margin-left: 55px; text-align: left; margin-top: 20px; margin-bottom: 20px">
 				
-				<div style="float: left; margin-bottom:0px; " th:text="${#temporals.format(matchs.reservation.reservation_time, 'yyyy년 MM월 dd일 ')} ">매치 월일 : &nbsp;</div>
+				<div style="float: left; margin-bottom:0px; " th:text="${matchs.reservation.reservation_time} ">매치 월일 : &nbsp;</div>
 			    <div style="float: left; margin-bottom:0px; margin-left: 5px;" th:text="${matchs.reservation.court_time}">매치 시간</div> <br>
 			    <div style="float: left; margin-bottom:0px; " th:text="${matchs.reservation.court.name}">배드민턴 장소 : &nbsp;</div>
 			    <div style="float: left; margin-bottom:0px;margin-left: 5px; " th:text="${matchs.reservation.court_num}">코트장 넘버 : &nbsp;</div>
