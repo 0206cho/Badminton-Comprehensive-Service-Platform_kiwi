@@ -12,4 +12,5 @@ public interface CourtRepository extends JpaRepository<Court, Long> {
 	
 //  @Query(value = "select i.lat from court i ", nativeQuery = true)
 //  List<Court> getLat();
+
 }

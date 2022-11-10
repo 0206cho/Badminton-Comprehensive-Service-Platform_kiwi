@@ -17,6 +17,7 @@ import com.kiwi.court.dto.CourtDto;
 import com.kiwi.court.dto.ReservationDto;
 import com.kiwi.court.entity.Court;
 import com.kiwi.court.entity.Reservation;
+import com.kiwi.court.repository.CourtRepository;
 import com.kiwi.court.service.CourtService;
 import com.kiwi.court.service.ReservationService;
 import com.kiwi.member.entity.Member;
@@ -34,6 +35,9 @@ public class CourtController {
 	
 	@Autowired
 	private MemberRepository memberRepository;
+	
+	@Autowired
+	private CourtRepository courtRepository;
 
 	// 코트 예약 페이지
 	@GetMapping(value = "/reservation")
@@ -85,11 +89,12 @@ public class CourtController {
 		System.out.println("==================>" + money);
 		model.addAttribute("money", money);
 		
-		
 		reservationDto.subReserInfo(reservationDto, reservationDto.getReservation_info(),principalDetails.getUsername());
 		model.addAttribute("reservationDto", reservationDto);
 		
-		
+		Long courtId = Long.parseLong(reservationDto.getCourt_id());
+		Court court = courtRepository.findById(courtId).orElseThrow();
+		model.addAttribute("court", court);
 		
 		return "pay/courtpay";
 	}

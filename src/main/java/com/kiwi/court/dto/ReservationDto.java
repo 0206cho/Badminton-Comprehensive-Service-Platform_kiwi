@@ -1,9 +1,5 @@
 package com.kiwi.court.dto;
 
-import java.time.LocalDateTime;
-
-import com.kiwi.court.entity.Court;
-
 import lombok.Getter;
 import lombok.Setter;
 

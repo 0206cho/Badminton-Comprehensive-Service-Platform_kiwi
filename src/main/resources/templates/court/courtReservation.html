@@ -606,7 +606,7 @@ function getBtn(){
 						console.log("data.id : " + data.id)
 						getBtn();
 						getDate();
-						var tt = "2022-11-10";
+						var tt = "2022년 11월 11일";
 						btnDisable(tt,data.id);
 						document.getElementById('searchText').value = tt;
 					});
@@ -870,27 +870,27 @@ function getBtn(){
 			function getDate(){
 			var str_court = "";	
 			
-			var html_btn = '<input class="btn date_list" type="button" id="2022-11-10" onclick="changeBtn(this.id)" style="height: 90px; width:90px;margin-left:330px; font-size: 23px;  color: black;" value="10(목)" />';
+			var html_btn = '<input class="btn date_list" type="button" id="2022년 11월 11일" onclick="changeBtn(this.id)" style="height: 90px; width:90px;margin-left:330px; font-size: 23px;  color: black;" value="11(금)" />';
 			html_btn = html_btn.replace('{}', 1);
 			str_court = str_court + html_btn + '\n';
 			
-			var html_btn = '<input class="btn date_list" type="button" id="2022-11-11" onclick="changeBtn(this.id)" style="height: 90px; width:90px; font-size: 23px;  color: black;" value="11(금)" />';
+			var html_btn = '<input class="btn date_list" type="button" id="2022년 11월 12일" onclick="changeBtn(this.id)" style="height: 90px; width:90px; font-size: 23px;  color: blue;" value="12(토)" />';
 			html_btn = html_btn.replace('{}', 2);
 			str_court = str_court + html_btn + '\n';
 			
-			var html_btn = '<input class="btn date_list" type="button" id="2022-11-12" onclick="changeBtn(this.id)" style="height: 90px; width:90px; font-size: 23px;  color: blue;" value="12(토)" />';
+			var html_btn = '<input class="btn date_list" type="button" id="2022년 11월 13일" onclick="changeBtn(this.id)" style="height: 90px; width:90px; font-size: 23px;   color: red;" value="13(일)" />';
 			html_btn = html_btn.replace('{}', 3);
 			str_court = str_court + html_btn + '\n';
 			
-			var html_btn = '<input class="btn date_list" type="button" id="2022-11-13" onclick="changeBtn(this.id)" style="height: 90px; width:90px; font-size: 23px;  color: red;" value="13(일)" />';
+			var html_btn = '<input class="btn date_list" type="button" id="2022년 11월 14일" onclick="changeBtn(this.id)" style="height: 90px; width:90px; font-size: 23px;  color: black;" value="14(월)" />';
 			html_btn = html_btn.replace('{}', 4);
 			str_court = str_court + html_btn + '\n';
 			
-			var html_btn = '<input class="btn date_list" type="button" id="2022-11-14" onclick="changeBtn(this.id)" style="height: 90px; width:90px; font-size: 23px;  color: black;" value="14(월)" />';
+			var html_btn = '<input class="btn date_list" type="button" id="2022년 11월 15일" onclick="changeBtn(this.id)" style="height: 90px; width:90px; font-size: 23px;  color: black;" value="15(화)" />';
 			html_btn = html_btn.replace('{}', 5);
 			str_court = str_court + html_btn + '\n';
 			
-			var html_btn = '<input class="btn date_list" type="button" id="2022-11-15" onclick="changeBtn(this.id)" style="height: 90px; width:90px; font-size: 23px;  color: black;" value="15(화)" />';
+			var html_btn = '<input class="btn date_list" type="button" id="2022년 11월 16일" onclick="changeBtn(this.id)" style="height: 90px; width:90px; font-size: 23px;  color: black;" value="16(수)" />';
 			html_btn = html_btn.replace('{}', 6);
 			str_court = str_court + html_btn + '\n';
 			
