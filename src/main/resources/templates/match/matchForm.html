@@ -181,7 +181,6 @@ a {
 		<!-- container : 좌측정렬-->
 		<!-- 리스트 - 없을경우 코트예약을 먼저 해주세요. -->
 		<br>
-
 		<div th:each="vo : ${list}">
 			<div th:if="${memberId == vo.member.id}">
 				<!-- == list.member.id}"> -->
@@ -189,7 +188,7 @@ a {
 					<div style="float: left; width: 72%;">
 						<div style="display: flex; padding-left: 2px;">
 							<div style="margin-right: 8px;"
-								th:text="${#temporals.format(vo.reservation_time, 'yyyy년 MM월 dd일')}">2022년
+								th:text="${vo.reservation_time}">2022년
 								6월 22일</div>
 							<!-- DB에 있는 로컬데이터 타입 파싱 -->
 							<div th:text="${vo.court_time}">06:00</div>

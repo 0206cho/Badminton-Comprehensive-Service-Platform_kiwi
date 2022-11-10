@@ -49,7 +49,7 @@ public class Reservation {
 	private String court_time;
 
 	// 코트 예약 시간
-	private LocalDate reservation_time;
+	private String reservation_time;
 
 	// 라켓 대여
 	private String racket;
@@ -74,16 +74,14 @@ public class Reservation {
 	@JoinColumn(name = "court_id")
 	private Court court;
 	
-	
-	
-	public Reservation(String name, String num, String time, String racket, String shuttlecock, String email,String btnNum) {
+	public Reservation(String name, String num, String time, String racket, String shuttlecock,String email,String reservation_time,String btnNum) {
 		court_name = name;
 		court_num = num;
 		court_time = time;
 		this.racket = racket;
 		this.shuttlecock = shuttlecock;
 		reservation_email = email;
-		reservation_time = LocalDate.of(2022, 11, 06);
+		this.reservation_time = reservation_time;
 		this.btnNum = btnNum;
 		pay_time = LocalDateTime.now();
 	}

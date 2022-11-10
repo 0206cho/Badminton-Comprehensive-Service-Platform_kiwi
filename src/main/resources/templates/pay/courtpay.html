@@ -51,15 +51,16 @@
 	<script th:inline="javascript">
 		function pay() {
 			var dto = /*[[${reservationDto}]]*/;
-			console.log(dto);
-			console.log(dto.court_id);
+			//console.log(dto);
+			///console.log(dto.court_id);
+			//console.log("코트넘버 : " + dto.court_num);
 			var money = /*[[${money}]]*/;
 			console.log(money);
 			if (money < 20000) {
 				alert("키위 캐시 잔액이 부족합니다.");
 				var width = '480';
 				var height = '900';
-
+					
 				var left = Math.ceil((window.screen.width - width) / 2);
 				var top = Math.ceil((window.screen.height - height) / 2);
 
@@ -79,6 +80,7 @@
 					email : dto.reservation_email,
 					shuttlecock : dto.shuttlecock,
 					btnNum : dto.btnNum,
+					reservation_time : dto.searchText
 				},
 				// ajax csrf 토큰 적용
 				beforeSend: function (jqXHR, settings) {
@@ -151,10 +153,10 @@
 		<div style="float: left; width: 100%; margin-right: 80px; margin-left: 55px; text-align: center;">
 			<div style="border: 1px solid black; float: left; width: 100%;">
 				<div style="margin-left: 55px; text-align: left; margin-top: 20px; margin-bottom: 20px">
-					<p style="margin-bottom:0px">11월 10일 목요일</p>
-					<p style="margin-bottom:0px" th:text="${reservationDto.court_time}">20:00 ~ 22:00</p>
-					<p style="margin-bottom:0px;width:300px;margin-left:0px" th:text="${reservationDto.court_name}">
-						송도달빛축제공원 </p>
+					<p style="margin-bottom:0px" th:text="${reservationDto.searchText + ' ' + reservationDto.court_time}">11월 10일 목요일</p>
+					<p style="margin-bottom:0px;width:300px;margin-left:0px" th:text="${reservationDto.court_name + ' ' + reservationDto.court_num}">송도달빛축제공원</p>
+					<p style="margin-bottom:0px;width:600px;margin-left:0px" th:text="${court.address1}">송도달빛축제공원</p>
+					
 				</div>
 			</div>
 		</div>

@@ -280,7 +280,7 @@ a {
 									action="/match/matchsReservation" th:object="${matchsReservationDto}" name="mr_form">
 									<div style="display: flex;">
 										<h6 class="card-title"
-											th:text="${#temporals.format(matchs.reservation.reservation_time, 'yyyy년 MM월 dd일 ')}">2022년
+											th:text="${matchs.reservation.reservation_time}">2022년
 											8월 30일 6:00</h6>
 										<!-- DB에 있는 로컬데이터 타입 파싱 -->
 										<h6 class="card-title"

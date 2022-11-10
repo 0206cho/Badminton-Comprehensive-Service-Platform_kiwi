@@ -1,9 +1,5 @@
 package com.kiwi.court.dto;
 
-import java.time.LocalDateTime;
-
-import com.kiwi.court.entity.Court;
-
 import lombok.Getter;
 import lombok.Setter;
 
@@ -28,7 +24,7 @@ public class ReservationDto {
 	private String court_time;
 
 	// 코트 예약 시간
-	private LocalDateTime reservation_time;
+	private String reservation_time;
 
 	// 라켓 대여
 	private String racket;
@@ -41,6 +37,9 @@ public class ReservationDto {
 	
 	// 버튼 번호
 	private String btnNum;
+	
+	// 임시 코트 예약시간 변수
+	private String searchText;
 	
 	public void subReserInfo(ReservationDto dto, String reserInfo,String email) {
 		dto.setCourt_num(reserInfo.substring(0, 3));
