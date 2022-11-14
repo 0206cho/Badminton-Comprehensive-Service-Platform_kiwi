@@ -244,7 +244,7 @@ a {
 
 						<div style="display: flex; margin-top: 10px; margin-left: 23px;">
 							<div style="margin-right: 8px;">결제일시</div>
-							<div>2022.05.30 11:30:20</div>
+							<div th:text="${#temporals.format(vo.pay_time, 'yyyy.MM.dd HH:mm:ss')}">2022.05.30 11:30:20</div>
 						</div>
 					</div>
 				</div>

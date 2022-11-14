@@ -1,5 +1,7 @@
 package com.kiwi.member.controller;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kiwi.config.auth.PrincipalDetails;
+import com.kiwi.court.entity.Reservation;
+import com.kiwi.match.service.MatchService;
 import com.kiwi.member.constant.Address;
 import com.kiwi.member.constant.Bank;
 import com.kiwi.member.constant.Gender;
@@ -41,6 +45,7 @@ public class MemberController {
 	@Autowired
 	private CashRepository cashRepository;
 	
+	private final MatchService matchService;
 	
 	// 회원 가입 로직
 	@GetMapping(value = "/new")
@@ -108,7 +113,32 @@ public class MemberController {
 		model.addAttribute("member", member);
 		return "mypage/mypageMain";
 	}
-    
+	
+    // 마이페이지 - 신청 내역
+	@GetMapping("/mypage/reservation")
+	public String mypageReservation(@AuthenticationPrincipal PrincipalDetails principalDetails, Model model) {
+		Long memberId = principalDetails.getMember().getId();
+		
+		
+		// 코트 예약 부분
+		List<Reservation> list = matchService.matchsCourt();
+		model.addAttribute("list", list);
+		model.addAttribute("memberId", memberId);
+		
+		int count = 0;
+		Long reservationId = (long) 0;
+		for (int i = 0; i < list.size(); i++) {
+			if (list.get(i).getMember().getId().equals(memberId)) { // 예약 했을 경우
+				count += 1; // 예약한 건 수 : count
+				
+				reservationId = list.get(i).getId(); // 해당하는 멤버의 예약 아이디 반환
+				model.addAttribute("reservationId" + count, reservationId); // 각각의 예약 id반환하기 위해서 reservatuonId1 ,, 2,,  이런식으로 줌
+			}
+		}
+		model.addAttribute("count", count);
+		
+		return "mypage/mypageReservation";
+	}	
 	// 소셜로그인 추가정보
 	@GetMapping("/login/addInfo")
 	public String addInfo(Model model,@AuthenticationPrincipal PrincipalDetails principalDetails) {
