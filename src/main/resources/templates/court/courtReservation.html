@@ -254,9 +254,30 @@
 
 
 <script th:inline="javascript">
-function getBtn(){
-	
-}
+//아래 코드는 오늘 날짜 기준으로 일주일을 구하는 코드
+function setWeekDate(){
+	var currentDay = new Date();  
+	var theYear = currentDay.getFullYear();
+	var theMonth = currentDay.getMonth();
+	var theDate  = currentDay.getDate();
+	var theDayOfWeek = currentDay.getDay();
+	var thisWeek = [];
+	 
+	for(var i=0; i<7; i++) {
+	  var resultDay = new Date(theYear, theMonth, theDate + (i - theDayOfWeek));
+	  var yyyy = resultDay.getFullYear();
+	  var mm = Number(resultDay.getMonth()) + 1;
+	  var dd = resultDay.getDate();
+	 
+	  mm = String(mm).length === 1 ? '0' + mm : mm;
+	  dd = String(dd).length === 1 ? '0' + dd : dd;
+	 
+	  thisWeek[i] = yyyy + '년' + mm + '월' + dd + '일';
+	  //console.log("=========== : 111" + thisWeek[i]);
+	}
+	 
+	//console.log("test");
+ }
 
 
 </script>
@@ -281,8 +302,6 @@ function getBtn(){
 		<script th:inline="javascript">
 		
 		
-		//console.log("====="+document.getElementById('lat').value);
-		//var latlng = new kakao.maps.LatLng(37.40785375, 126.6325097);
 			
 
 		</script>
@@ -624,46 +643,7 @@ function getBtn(){
 		}
 		
 		
-		// 아래 코드는 오늘 날짜 기준으로 일주일을 구하는 코드
-		var selectDate = 20221106;    // 원하는 날짜
-		function setWeekDate(selectDate){
-		    var year  = selectDate.substring(0,4); //선택된 년도
-		    var month = selectDate.substring(4,6); //선택된 월
-		    var day   = selectDate.substring(6,8); //선택된 일자
-		    var week  = new Array("", "월", "화", "수", "목", "금", "토", "일");  // 아래 코드에서는 사용하지 않음
-
-		    // 보통 0~6 까지가 일~토로 표현된다 하지만 월요일부터 표현하기 위해 0번째를 공백처리
-			var currentDay = new Date(year, month-1, day);  
-			var theDayOfWeek = currentDay.getDay();        // 요일을 숫자로 구해옴
-
-			// 선택한 날이 일요일 일때 전주의 날짜를 담음
-			 if(theDayOfWeek == 0){		 
-				 var currentDay = new Date(year, month-1, day-7);  		 
-			 }	 
-			 var theYear = currentDay.getFullYear();
-			 var theMonth = currentDay.getMonth();
-			 var theDate  = currentDay.getDate();
-			 var thisWeek = [];
-			 for(var i=1; i<8; i++) {
-			   var resultDay = new Date(theYear, theMonth, theDate + (i - theDayOfWeek));
-			   var yyyy = resultDay.getFullYear();
-			   var mm = Number(resultDay.getMonth()) + 1;
-			   var dd = resultDay.getDate();
-			   var dd_nm = resultDay.getDay();
-			   mm = String(mm).length === 1 ? '0' + mm : mm;
-			   dd = String(dd).length === 1 ? '0' + dd : dd;
 		
-			   //월요일부터 화, 수 ~ 일요일까지 날짜를 담음
-			   thisWeek[i] = yyyy + '-' + mm + '-' + dd;
-			   if(i==1){
-				  // 검색기준 월요일
-			   }else if(i==7){
-				  // 검색기준 일요일
-			   }	   
-			 }
-			console.log(thisWeek);
-		 }
-		setWeekDate(selectDate);
 });
 			
 			
@@ -851,9 +831,9 @@ function getBtn(){
 			function btnDisable(date,id){
 				/*[# th:each="reser : ${reserList}"]*/
 				var getReser = /*[[${reser}]]*/;
-				console.log("getReser.court_id : "+getReser.court.id);
-				console.log("getReser.reservation_time : "+getReser.reservation_time);
-				console.log("date : "+date);
+				//console.log("getReser.court_id : "+getReser.court.id);
+				//console.log("getReser.reservation_time : "+getReser.reservation_time);
+				//console.log("date : "+date);
 				
 				if(date == getReser.reservation_time){
 					if(id == getReser.court.id){
@@ -867,9 +847,10 @@ function getBtn(){
 				/*[/]*/
 			}
 			
+			// 코트예약 일주일 날짜
 			function getDate(){
+				
 			var str_court = "";	
-			
 			var html_btn = '<input class="btn date_list" type="button" id="2022년 11월 11일" onclick="changeBtn(this.id)" style="height: 90px; width:90px;margin-left:330px; font-size: 23px;  color: black;" value="11(금)" />';
 			html_btn = html_btn.replace('{}', 1);
 			str_court = str_court + html_btn + '\n';
@@ -893,6 +874,8 @@ function getBtn(){
 			var html_btn = '<input class="btn date_list" type="button" id="2022년 11월 16일" onclick="changeBtn(this.id)" style="height: 90px; width:90px; font-size: 23px;  color: black;" value="16(수)" />';
 			html_btn = html_btn.replace('{}', 6);
 			str_court = str_court + html_btn + '\n';
+			
+			
 			
 			
 			$('#div_date').html(str_court);
@@ -974,4 +957,6 @@ function getBtn(){
 
 	</div>
 </div>
+
+
 </html>
