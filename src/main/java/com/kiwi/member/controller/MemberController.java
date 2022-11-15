@@ -125,7 +125,7 @@ public class MemberController {
 		List<MatchsReservation> lists = matchsReservationService.mrCourt();
 		model.addAttribute("lists", lists);
 		model.addAttribute("memberId", memberId);
-		System.out.println(">>>>>>>>>>>>>>>>> time : " + lists.get(0).getMathshId().getId());
+		System.out.println(">>>>>>>>>>>>>>>>> time : " + lists.get(0).getPay_time());
 
 		int counts = 0;
 		Long mreservationId = (long) 0;

@@ -1,5 +1,7 @@
 package com.kiwi.match.entity;
 
+import java.time.LocalDateTime;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -36,25 +38,18 @@ public class MatchsReservation extends BaseEntity{
 	@Column(name = "mr_memId")
     private Long memId;
 	
-//	@Column(name = "mr_matchsId")
-//	private Long mathcshId;
 	
 	@ManyToOne
     @JoinColumn(name = "mr_mathsId")
     private Matchs mathshId;
-
-//	public static MatchsReservation createMR(MatchsReservationDto mrDto) {
-//		MatchsReservation mr = new MatchsReservation();
-//		mr.setMemId(mrDto.getMemId());
-////		mr.setMathcshId(mrDto.getMathcshId());
-//		
-//		return mr;
-//	}
 	
+	// 결제 시간
+	private LocalDateTime pay_time;
+
 	public static MatchsReservation createMR(Long id) {
 		MatchsReservation mr = new MatchsReservation();
 		mr.setMemId(id);
-//		mr.setMathcshId(mrDto.getMathcshId());
+		mr.setPay_time(LocalDateTime.now());
 		
 		return mr;
 	}
