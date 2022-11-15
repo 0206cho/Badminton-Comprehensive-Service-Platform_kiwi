@@ -166,13 +166,11 @@ public class MatchController {
 			@AuthenticationPrincipal PrincipalDetails principalDetails) {
 		Long memberId = principalDetails.getMember().getId();
 		Matchs match = Matchs.createMatch(matchDto);
-		// Long reservationId = (long) 5;
-		// Reservation reservation =
-		// reservationRepository.findById(reservationId).orElseThrow();
-		// System.out.println(">>>>>>>>>>>>>>> reservation : " + reservation);
-		System.out.println(">>>>>>>>>>>>>>> match : " + match);
-		// matchService.saveMatch(match, memberId, reservation);
 		matchService.saveMatch(match, memberId, matchDto.getReser_id());
+		
+		String id = match.getId() + "";		
+		
+		matchBuyResult(id, model, principalDetails); // 매치 개설 후 바로 그 건에 대해 매치 신청도 같이 진행
 		return "redirect:/match/matchList";
 	}
 
@@ -182,6 +180,7 @@ public class MatchController {
 	public void matchBuyResult(String id, Model model, @AuthenticationPrincipal PrincipalDetails principalDetails) {
 		// System.out.println("ajax로 넘겨온 id : " + id);
 
+		System.out.println(">>>>>>>>>>>>>>> id  : " + id);
 		Long mathcshId = Long.parseLong(id);
 
 		// 매치 신청 하기
@@ -193,7 +192,7 @@ public class MatchController {
 		// 매치 신청 마감 확인
 		List<MatchsReservation> list = mrService.mrCourt();
 
-		int count = 1; // 1vs1단식일 경우 참가할 수 있는 사람은 2명, 본인 제외 하면 1명
+		int count = 0; // 1vs1단식일 경우 참가할 수 있는 사람은 2명
 		for (int i = 0; i < list.size(); i++) {
 			if (list.get(i).getMathshId().getId() == mathcshId) { // 매치 ID가 DB에 있는 경우 -> 매치를 신청한 경우
 				count += 1; // 매치 신청 건 수 카운트
