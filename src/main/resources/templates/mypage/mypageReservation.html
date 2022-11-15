@@ -86,12 +86,64 @@ a {
 		</ul>
 
 		<!-- 내용 -->
-		<div class="tab-content" id="myTabContent"
-			style="padding-top: 20px; width: 100%;">
+		<div class="tab-content" id="myTabContent" style="padding-top: 20px; width: 100%;">
 			<!-- 소셜 매치 -->
-			<div class="tab-pane fade show active" id="mypage_match"
-				role="tabpanel" aria-labelledby="mypage_match-tab"
-				style="margin-left: 10px;">ㅇㅇㅇㅇㅇ</div>
+			<div class="tab-pane fade show active" id="mypage_match" role="tabpanel" aria-labelledby="mypage_match-tab" style="margin-left: 10px;">
+				<div th:each="vo : ${lists}">
+					<div th:if="${memberId == vo.memId}">
+						<div>
+							<div style="float: left; width: 72%;">
+								<div style="display: flex; padding-left: 2px;">
+									<div style="margin-right: 8px;" th:text="${vo.MathshId.Reservation.Reservation_time}">2022년 6월 22일</div>
+									<!-- DB에 있는 로컬데이터 타입 파싱 -->
+ 									<div th:text="${vo.MathshId.Reservation.Court_time}">06:00</div>
+								</div>
+								<div style="display: flex;">
+									<h4
+										style="padding-right: 10px; font-weight: bold; margin-top: 5px;"
+										th:text="${vo.MathshId.Reservation.Court.name}">주안동 배드민턴장</h4>
+									<h4
+										style="padding-right: 10px; font-weight: bold; margin-top: 5px;"
+										th:text="${vo.MathshId.Reservation.Court_num}">코트1</h4>
+								</div>
+								<div style="display: flex;">
+									<div style="margin-right: 30px; padding-left: 2px;"
+										th:text="${vo.MathshId.Reservation.Court.address1}">인천광역시 미추홀구 석정로 433번길 18</div>
+								</div>
+							</div>
+
+							<div
+								style="float: left; width: 28%; margin-top: 20px; text-align: center;">
+								<div id="1"></div>
+
+								<a href="/match/matchDetail/" th:attrappend="href=${vo.MathshId.Id}">
+									<input class="btn btn-kiwi ok court_list diss" type="button"
+									th:field="*{id}" id="001"
+									style="height: 40px; background-color: #C6F1E7; color: black;"
+									value='매치보기' />
+								</a>
+
+								<div style="display: flex; margin-top: 10px; margin-left: 23px;">
+									<div style="margin-right: 8px;">결제일시</div>
+									<div >2022.05.30 11:30:20</div>
+								</div>
+							</div>
+						</div>
+						<br> <br> <br> <br>
+						<hr>
+					</div>
+				</div>
+				<!-- 코트 예약이 없는 경우 -->
+				<div th:if="${count == 0}"
+					style="float: left; width: 925px; border: 1px solid #808080; margin-bottom: 60px; border-radius: 15px;">
+					<p
+						style="margin-top: 37px; margin-left: 50px; margin-bottom: 35px; font-weight: bold; font-size: 22px;">
+						매치 신청 내역이 없습니다. &#127992;</p>
+				</div>
+				
+				
+				
+				ㄴㄴㄴ</div>
 
 			<!-- 코트 예약 -->
 			<div class="tab-pane fade" id="mypage_court" role="tabpanel"

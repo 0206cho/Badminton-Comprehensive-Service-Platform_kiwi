@@ -66,7 +66,6 @@ public class MatchService {
 
 	public List<Reservation> matchsCourt() {
 		List<Reservation> reservation = reservationRepository.findAllByOrderByIdDesc();
-		// TODO Auto-generated method stub
 		return reservation;
 	}
 

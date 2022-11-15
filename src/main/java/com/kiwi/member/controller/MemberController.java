@@ -19,7 +19,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kiwi.config.auth.PrincipalDetails;
 import com.kiwi.court.entity.Reservation;
+import com.kiwi.match.entity.MatchsReservation;
 import com.kiwi.match.service.MatchService;
+import com.kiwi.match.service.MatchsReservationService;
 import com.kiwi.member.constant.Address;
 import com.kiwi.member.constant.Bank;
 import com.kiwi.member.constant.Gender;
@@ -41,12 +43,14 @@ public class MemberController {
 
 	@Autowired
 	private PasswordEncoder passwordEncoder;
-	
+
 	@Autowired
 	private CashRepository cashRepository;
-	
+
 	private final MatchService matchService;
 	
+	private final MatchsReservationService matchsReservationService;
+
 	// 회원 가입 로직
 	@GetMapping(value = "/new")
 	public String memberForm(Model model) {
@@ -98,64 +102,82 @@ public class MemberController {
 	@GetMapping("/mypage")
 	public String mypage(@AuthenticationPrincipal PrincipalDetails principalDetails, Model model) {
 		Member member = memberService.mypageInfo(principalDetails);
-		//System.out.println("================> 캐시 금액 : " + cashRepository.amountSum(member));	// 추후 수정
-		//member.setKiwicash(cashRepository.amountSum(member));
-		
-		
+		// System.out.println("================> 캐시 금액 : " +
+		// cashRepository.amountSum(member)); // 추후 수정
+		// member.setKiwicash(cashRepository.amountSum(member));
+
 //		Integer userCash = cashRepository.amountSum(member);
 //		if(cashRepository.amountSum(member) != null) {
 //			System.out.println("=================> 0") ;
 //		}else {
 //			System.out.println("================> tt");
 //		}
-		
-		
+
 		model.addAttribute("member", member);
 		return "mypage/mypageMain";
 	}
-	
-    // 마이페이지 - 신청 내역
+
+	// 마이페이지 - 신청 내역
 	@GetMapping("/mypage/reservation")
 	public String mypageReservation(@AuthenticationPrincipal PrincipalDetails principalDetails, Model model) {
 		Long memberId = principalDetails.getMember().getId();
-		
-		
+		// 매치 신청 부분
+		List<MatchsReservation> lists = matchsReservationService.mrCourt();
+		model.addAttribute("lists", lists);
+		model.addAttribute("memberId", memberId);
+		System.out.println(">>>>>>>>>>>>>>>>> time : " + lists.get(0).getMathshId().getId());
+
+		int counts = 0;
+		Long mreservationId = (long) 0;
+		for (int i = 0; i < lists.size(); i++) {
+			if (lists.get(i).getMemId().equals(memberId)) { // 예약 했을 경우
+				counts += 1; // 예약한 건 수 : count
+
+				mreservationId = lists.get(i).getId(); // 해당하는 멤버의 예약 아이디 반환
+				model.addAttribute("mreservationId" + counts, mreservationId); // 각각의 예약 id반환하기 위해서 reservatuonId1 ,, 2,,
+																			// 이런식으로 줌
+			}
+		}
+		model.addAttribute("count", counts);
+
 		// 코트 예약 부분
 		List<Reservation> list = matchService.matchsCourt();
 		model.addAttribute("list", list);
 		model.addAttribute("memberId", memberId);
-		
+
 		int count = 0;
 		Long reservationId = (long) 0;
 		for (int i = 0; i < list.size(); i++) {
 			if (list.get(i).getMember().getId().equals(memberId)) { // 예약 했을 경우
 				count += 1; // 예약한 건 수 : count
-				
+
 				reservationId = list.get(i).getId(); // 해당하는 멤버의 예약 아이디 반환
-				model.addAttribute("reservationId" + count, reservationId); // 각각의 예약 id반환하기 위해서 reservatuonId1 ,, 2,,  이런식으로 줌
+				model.addAttribute("reservationId" + count, reservationId); // 각각의 예약 id반환하기 위해서 reservatuonId1 ,, 2,,
+																			// 이런식으로 줌
 			}
 		}
 		model.addAttribute("count", count);
-		
+
 		return "mypage/mypageReservation";
-	}	
+	}
+
 	// 소셜로그인 추가정보
 	@GetMapping("/login/addInfo")
-	public String addInfo(Model model,@AuthenticationPrincipal PrincipalDetails principalDetails) {
+	public String addInfo(Model model, @AuthenticationPrincipal PrincipalDetails principalDetails) {
 		model.addAttribute("oauthAddInfoDto", new OauthAddInfoDto());
-		model.addAttribute("bnames",Bank.values());
-		model.addAttribute("local",Address.values());
+		model.addAttribute("bnames", Bank.values());
+		model.addAttribute("local", Address.values());
 		return "member/memberAddInfo";
 	}
-	 
+
 	// 소셜로그인 추가정보 등록
 	@PostMapping("/login/addInfo")
-	public String addInfo(@AuthenticationPrincipal PrincipalDetails principalDetails, OauthAddInfoDto oauthAddInfoDto, Model model) {
+	public String addInfo(@AuthenticationPrincipal PrincipalDetails principalDetails, OauthAddInfoDto oauthAddInfoDto,
+			Model model) {
 		memberService.addInfo(principalDetails, oauthAddInfoDto);
 		return "redirect:/";
 	}
 
-	
 	// form로그인 테스트
 	@GetMapping("/test/login")
 	@ResponseBody
@@ -168,7 +190,7 @@ public class MemberController {
 		System.out.println("userDetails : " + principalDetails2.getMember());
 		return "세션 정보 확인하기";
 	}
-	
+
 	// 소셜로그인 테스트
 	@GetMapping("/test/oauth/login")
 	@ResponseBody
@@ -180,8 +202,5 @@ public class MemberController {
 
 		return "OAuth 세션 정보 확인하기";
 	}
-	
 
-	
-	
 }
