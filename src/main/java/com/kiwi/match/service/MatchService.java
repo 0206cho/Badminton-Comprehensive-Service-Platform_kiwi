@@ -1,5 +1,8 @@
 package com.kiwi.match.service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,43 +29,43 @@ import lombok.RequiredArgsConstructor;
 @Transactional
 @RequiredArgsConstructor
 public class MatchService {
-	
+
 	@Autowired
 	MatchRepository matchRepository;
-	
+
 	@Autowired
 	CourtRepository courtRepository;
-	
+
 	@Autowired
 	ReservationRepository reservationRepository;
-	
-	@Autowired
-	MatchsReservationRepository matchsReservationRepository; 
 
-	public String courtTest(Long id){
-		
-	//	Reservation re = reservationRepository.findById(id).orElseThrow();
-		//Court list = courtRepository.findById().orElseThrow();
-		//Reservation list = matchRepository.findByReservation(reservation);
+	@Autowired
+	MatchsReservationRepository matchsReservationRepository;
+
+	public String courtTest(Long id) {
+
+		// Reservation re = reservationRepository.findById(id).orElseThrow();
+		// Court list = courtRepository.findById().orElseThrow();
+		// Reservation list = matchRepository.findByReservation(reservation);
 //		System.out.println(">>>>>>>>>> re : " + re);
 //		System.out.println(">>>>>>>>>> re_court : " + re.getCourt());
-		
+
 		Matchs matchs = matchRepository.findById(id).orElseThrow();
 		System.out.println(">>>>>>>>>> courtName : " + matchs.getReservation().getCourt().getName());
-		
+
 		String str = matchs.getReservation().getCourt().getName();
 		return str;
-		
+
 	}
-	
+
 	// 매치 리스트
 	public List<Matchs> matchList() {
 		List<Matchs> matchs = matchRepository.findAllByOrderByIdDesc();
-		//System.out.println(">>>>>>>>>> courtName : " + matchs.get(0).getReservation().getCourt().getName());
-		
+		// System.out.println(">>>>>>>>>> courtName : " +
+		// matchs.get(0).getReservation().getCourt().getName());
+
 		return matchs;
 	}
-
 
 	public List<Reservation> matchsCourt() {
 		List<Reservation> reservation = reservationRepository.findAllByOrderByIdDesc();
@@ -79,12 +82,11 @@ public class MatchService {
 		}
 	}
 
-
 	public void saveMatchsReservation(MatchsReservation mr, Long mathcshId, Long memberId) {
 		Matchs mt = matchRepository.findById(mathcshId).orElseThrow(EntityNotFoundException::new);
 		System.out.println();
 		mr.setMathshId(mt);
-		
+
 		mr.setMemId(memberId);
 		matchsReservationRepository.save(mr);
 	}
@@ -107,23 +109,43 @@ public class MatchService {
 //	}
 
 	public void saveMatch(Matchs matchs, Long memberId, Long reservationId) {
-		
+
 		Reservation reser = reservationRepository.findById(reservationId).orElseThrow();
 		matchs.setMemberId(memberId);
 		matchs.setReservation(reser);
-		matchs.setRetime("2022-11-10");
-		// 단식일 경우 count2, 복식일 경우 count 4
-		if(matchs.getType().equals("1vs1(단식)")) {
-			matchs.setCount(2);			
+
+		// 매치 날짜 파싱
+		try {
+			String strDate = reser.getReservation_time();
+			System.out.println(">>>>>>>>>>>>>>>>> strDate : " + strDate);
+			SimpleDateFormat dtFormat = new SimpleDateFormat("yyyy년 MM월 dd일");
+			System.out.println(">>>>>>>>>>>>>>>>> dtFormat : " + dtFormat);
+			SimpleDateFormat newDtFormat = new SimpleDateFormat("yyyy-MM-dd");
+			System.out.println(">>>>>>>>>>>>>>>>> newDtFormat : " + newDtFormat);
+			// String 타입을 Date 타입으로 변환
+			Date formatDate = dtFormat.parse(strDate);
+			System.out.println(">>>>>>>>>>>>>>>>> formatDate : " + formatDate);
+
+			// Date타입의 변수를 새롭게 지정한 포맷으로 변환
+			String strNewDtFormat = newDtFormat.format(formatDate);
+			System.out.println("포맷 전 : " + strDate);
+			System.out.println("포맷 후 : " + strNewDtFormat);
+			matchs.setRetime(strNewDtFormat);
+		} catch (
+
+		ParseException e) {
+			e.printStackTrace();
 		}
-		else {
+		// 단식일 경우 count2, 복식일 경우 count 4
+		if (matchs.getType().equals("1vs1(단식)")) {
+			matchs.setCount(2);
+		} else {
 			matchs.setCount(4);
 		}
 		System.out.println(">>>>>>>>>>>> match : " + matchs.getType());
-		
+
 		matchRepository.save(matchs);
 	}
-
 
 //	// 매치 신청
 //	public void saveMatch(Match match) {
