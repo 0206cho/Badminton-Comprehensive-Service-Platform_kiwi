@@ -35,7 +35,9 @@ import com.kiwi.member.dto.MemberFormDto;
 import com.kiwi.member.dto.OauthAddInfoDto;
 import com.kiwi.member.entity.Member;
 import com.kiwi.member.service.MemberService;
+import com.kiwi.pay.entity.Cash;
 import com.kiwi.pay.repository.CashRepository;
+import com.kiwi.pay.service.CashService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -56,6 +58,8 @@ public class MemberController {
 	private final MatchService matchService;
 
 	private final MatchsReservationService matchsReservationService;
+	
+	private final CashService cashService;
 
 	// 회원 가입 로직
 	@GetMapping(value = "/new")
@@ -125,8 +129,26 @@ public class MemberController {
 
 	// 마이페이지 - 충전내역
 	@GetMapping("/mypage/pay")
-	public String mypagePay(Model model) {
+	public String mypagePay(@AuthenticationPrincipal PrincipalDetails principalDetails, Model model) {
+		Long memberId = principalDetails.getMember().getId();
+		List<Cash> list = cashService.cash();
+		model.addAttribute("list", list);
+		model.addAttribute("memberId", memberId);
+		System.out.println(">>>>>>>>>>>>>>>>> pay : " + list.get(0).getAmount() + ", " + list.get(0).getTime());
 
+		int counts = 0;
+		Long payId = (long) 0;
+		for (int i = 0; i < list.size(); i++) {
+			if (list.get(i).getMember().getId().equals(memberId)) { // 충전 했을 경우
+				counts += 1; // 충전한 건 수 : count
+
+				payId = list.get(i).getId(); // 해당하는 멤버의 충전 아이디 반환
+				model.addAttribute("mreservationId" + counts, payId); // 각각의 충전 id반환하기 위해서 payId1 ,,
+																				// 2,, 이런식으로 줌
+			}
+		}
+		model.addAttribute("count", counts);
+		
 		return "mypage/mypagePay";
 	}
 
@@ -138,7 +160,7 @@ public class MemberController {
 		List<MatchsReservation> lists = matchsReservationService.mrCourt();
 		model.addAttribute("lists", lists);
 		model.addAttribute("memberId", memberId);
-		System.out.println(">>>>>>>>>>>>>>>>> time : " + lists.get(0).getPay_time());
+		System.out.println(">>>>>>>>>>>>>>>>> pay : " + lists.get(0).getPay_time());
 
 		int counts = 0;
 		Long mreservationId = (long) 0;
