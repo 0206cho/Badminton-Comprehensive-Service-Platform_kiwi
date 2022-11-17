@@ -130,6 +130,11 @@ public class MemberController {
 	// 마이페이지 - 충전내역
 	@GetMapping("/mypage/pay")
 	public String mypagePay(@AuthenticationPrincipal PrincipalDetails principalDetails, Model model) {
+		// 키위캐시 금액 표시, 충전버튼 관련
+		Member member = memberService.mypageInfo(principalDetails);
+		model.addAttribute("member", member);
+		
+		// 충전내역 표시
 		Long memberId = principalDetails.getMember().getId();
 		List<Cash> list = cashService.cash();
 		model.addAttribute("list", list);
