@@ -31,7 +31,7 @@ public class MatchDto {
 	
 //    private Member member;
 	
-	private Long memberId; // 상태
+	private Long memberId; 
 	
 	// 지역, 도시, 타입 추가 해야함
 	

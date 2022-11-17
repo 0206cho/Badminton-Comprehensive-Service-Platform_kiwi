@@ -1,9 +1,12 @@
 package com.kiwi.pay.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.kiwi.match.entity.MatchsReservation;
 import com.kiwi.member.entity.Member;
 import com.kiwi.member.repository.MemberRepository;
 import com.kiwi.pay.entity.Cash;
@@ -59,6 +62,12 @@ public class CashService {
 	public void cashPlus(Long id, int amount) {
 		Member member = memberRepository.findMemberById(id);
 		member.withdraw(amount);
+	}
+
+	// 캐시 내역 리스트로 띄우기 위함
+	public List<Cash> cash() {
+		List<Cash> cash = cashRepository.findAllByOrderByIdDesc();
+		return cash;
 	}
 	
 }

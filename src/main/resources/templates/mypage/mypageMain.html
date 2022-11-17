@@ -48,6 +48,13 @@ a {
 	height: 100%;
 	object-fit: cover;
 }
+
+</style>
+<!-- a태그 파란색 및 밑줄 제거 -->
+<style type="text/css">
+ a:link { color: black; text-decoration: none;}
+ a:visited { color: black; text-decoration: none;}
+ a:hover { color: black; text-decoration: underline;}
 </style>
 </th:block>
 
@@ -186,15 +193,18 @@ a {
 			<div style="margin-left: 30px; margin-right: 20px;">
 				
 				<img class="logo" src="/img/kiwi.png"  alt="kiwi" style="float: left; width: 5%;margin-bottom:10px">
-				<div style="float: left; width: 90%; font-weight: bold;padding-top:7px">신청 내역
-				</div>
+				<a href="/members/mypage/reservation">
+				<div style="float: left; width: 90%; font-weight: bold;padding-top:7px">신청 내역</div>
 				<div style="float: left; width: 5%;padding-top:10px">▶</div>
+				</a>
 				<Br>
 				<hr>
 				<Br>
 				<img class="logo" src="/img/kiwi.png"  alt="kiwi" style="float: left; width: 5%;margin-bottom:10px">
+				<a href="/members/mypage/pay">
 				<div style="float: left; width: 90%; font-weight: bold;padding-top:7px">충전 내역</div>
 				<div style="float: left; width: 5%;padding-top:10px">▶</div>
+				</a>
 				<Br>
 				<hr>
 				<Br>
