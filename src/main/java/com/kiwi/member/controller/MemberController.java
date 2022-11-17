@@ -5,6 +5,10 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -15,10 +19,12 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kiwi.config.auth.PrincipalDetails;
 import com.kiwi.court.entity.Reservation;
+import com.kiwi.match.entity.Matchs;
 import com.kiwi.match.entity.MatchsReservation;
 import com.kiwi.match.service.MatchService;
 import com.kiwi.match.service.MatchsReservationService;
@@ -48,7 +54,7 @@ public class MemberController {
 	private CashRepository cashRepository;
 
 	private final MatchService matchService;
-	
+
 	private final MatchsReservationService matchsReservationService;
 
 	// 회원 가입 로직
@@ -117,6 +123,13 @@ public class MemberController {
 		return "mypage/mypageMain";
 	}
 
+	// 마이페이지 - 충전내역
+	@GetMapping("/mypage/pay")
+	public String mypagePay(Model model) {
+
+		return "mypage/mypagePay";
+	}
+
 	// 마이페이지 - 신청 내역
 	@GetMapping("/mypage/reservation")
 	public String mypageReservation(@AuthenticationPrincipal PrincipalDetails principalDetails, Model model) {
@@ -134,8 +147,9 @@ public class MemberController {
 				counts += 1; // 예약한 건 수 : count
 
 				mreservationId = lists.get(i).getId(); // 해당하는 멤버의 예약 아이디 반환
-				model.addAttribute("mreservationId" + counts, mreservationId); // 각각의 예약 id반환하기 위해서 reservatuonId1 ,, 2,,
-																			// 이런식으로 줌
+				model.addAttribute("mreservationId" + counts, mreservationId); // 각각의 예약 id반환하기 위해서 reservatuonId1 ,,
+																				// 2,,
+																				// 이런식으로 줌
 			}
 		}
 		model.addAttribute("count", counts);
