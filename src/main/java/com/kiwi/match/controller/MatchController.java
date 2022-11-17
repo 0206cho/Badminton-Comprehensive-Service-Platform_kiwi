@@ -86,6 +86,7 @@ public class MatchController {
 	public String matchList(Model model,@PageableDefault(size = 5, sort = "id", direction = Sort.Direction.DESC) Pageable pageable,@RequestParam(required = false, defaultValue = "") String searchText) {
 		// String courtName = matchService.courtTest(1L);
 //		Page<Matchs> list = matchRepository.findAll(pageable);
+		System.out.println("================> : "+searchText);
 		Page<Matchs> list = matchRepository.findByRetimeContaining(searchText, pageable);
 		int startPage = Math.max(1, list.getPageable().getPageNumber() - 4);
 		int endPage = Math.min(list.getTotalPages(), list.getPageable().getPageNumber() + 4);
