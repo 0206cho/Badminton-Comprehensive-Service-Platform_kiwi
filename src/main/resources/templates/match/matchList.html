@@ -201,22 +201,6 @@
 		<form class="form-inline" id="form_date" method="get" th:action="@{/match/matchList}">
 			 <input type="hidden" id="searchText" name="searchText" th:value="${param.searchText}"
 				style="width: 280px; height: 36px; margin-bottom: 0x; padding-bottom: 0px; margin-right: 10px;">
-				
-			<!-- <input class="btn date_list" type="submit" id="2022-11-11" onclick='changeBtn(this.id)' style="height: 90px; width:90px; font-size: 22px;  color: black;" value='11
-금' /> 
-	<input class="btn date_list" type="submit" id="2022-11-12" onclick='changeBtn(this.id)' style="height: 90px; width:90px; font-size: 22px;  color: blue;" value='12
-토' /> 
-	<input class="btn date_list" type="submit" id="2022-11-13" onclick='changeBtn(this.id)' style="height: 90px; width:90px; font-size: 22px;  color: red;" value='13
-일' /> 
-	<input class="btn date_list" type="submit" id="2022-11-14" onclick='changeBtn(this.id)' style="height: 90px; width:90px; font-size: 22px;  color: black;" value='14
-월' /> 
-	<input class="btn date_list" type="submit" id="2022-11-15" onclick='changeBtn(this.id)' style="height: 90px; width:90px; font-size: 22px;  color: black;" value='15
-화' /> 
-	<input class="btn date_list" type="submit" id="2022-11-16" onclick='changeBtn(this.id)' style="height: 90px; width:90px; font-size: 22px;  color: black;" value='16
-수' /> 
-	<input class="btn date_list" type="submit" id="2022-11-17" onclick='changeBtn(this.id)' style="height: 90px; width:90px; font-size: 22px;  color: black;" value='17
-목' /> -->
-
 
 		</form>
 
@@ -412,10 +396,10 @@
 		
 		// 날짜 버튼을 선택했을 경우
 		function changeBtn(id) {
-		alert(id);
+		//alert(id);
 		// form안에 hidden으로 만든 매치날짜 input에 선택한 버튼의 id값인 매치 날짜 넣어줌
 		document.getElementById('searchText').value = id;
-		alert("값 : "+ document.getElementById('searchText').value);
+		//alert("값 : "+ document.getElementById('searchText').value);
 		var event = jQuery.Event("keypress", { keyCode: 13 });
 		
 		$("#searchText").trigger(event);
