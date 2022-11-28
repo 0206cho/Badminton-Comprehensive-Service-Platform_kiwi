@@ -581,8 +581,7 @@
 						document.getElementById('selectCourtNumber').innerHTML = data.call_number;
 						document.getElementById('court_id').value = data.id;
 						document.getElementById('court_name').value = data.name;
-						getBtn();
-						getDate();
+						
 
 						var currentDay = new Date();
 						var theMonth = currentDay.getMonth()+1;
@@ -592,6 +591,11 @@
 
 						var theToday = "2022년 "+theMonth+"월 "+theDate+"일";
 						//console.log("======>theToday : " + theToday);
+						
+						getBtn(theToday);
+						getDate();
+						
+						
 						btnDisable(theToday, data.id);
 						document.getElementById('searchText').value = theToday;
 					});
@@ -614,7 +618,7 @@
 
 
 			// 마커(코트장) 클릭 했을때 버튼 생성
-			function getBtn() {
+			function getBtn(date) {
 				var str_court = ""; var str_court2 = ""; var str_court3 = ""; var str_court4 = ""; var str_court5 = ""; var str_court6 = ""; var str_court7 = ""; var str_court8 = ""; var str_courtName = "";
 				for (var i = 0; i < 6; i++) {
 					var html_btn = '<button type="button" id = "btn' + i + '" class="btn btn-kiwi" style="margin-left:0;margin-bottom:30px" onclick="noSelectCourt(this.id);" value="코트' + ((i % 6) + 1) + ' 06:00 ~ 08:00">06:00 <br>~08:00</button>';
@@ -712,84 +716,100 @@
 				//console.log(nowHour + " " + nowMins);
 
 				var nowTime = nowHour + nowMins;
-				console.log(nowTime);
+				//console.log(nowTime);
+				
+				// 오늘 날짜 하나만 받아와서 if문 안에 넣기
+				var currentDay = new Date();
+				var today = ''+currentDay.getDate();
+				//console.log("=================> : " + today);
+				
+				var clickDay = ''+date;
+				//console.log("=================>t : " + clickDay);
+				//console.log("=================> : " + clickDay.substring(10,12));
+				
+				// 오늘 날짜 기준으로 시간이 변하면 코트 비활성화
+				if(clickDay.includes(today)){
+					if (0600 <= nowTime && 0800 >= nowTime) {
+						for (var i = 0; i <= 5; i++) {
+							(function (i) {
+								var btn = document.getElementById('btn' + i);
+								btn.disabled = true;
+								btn.style.backgroundColor = '#D3D3D3';
+								btn.style.borderColor = '#808080';
+							})(i);
+						}
+					} else if (0800 <= nowTime && 1000 >= nowTime) {
+						for (var i = 0; i <= 11; i++) {
+							(function (i) {
+								var btn = document.getElementById('btn' + i);
+								btn.disabled = true;
+								btn.style.backgroundColor = '#D3D3D3';
+								btn.style.borderColor = '#808080';
+							})(i);
+						}
+					} else if (1000 <= nowTime && 1200 >= nowTime) {
+						for (var i = 0; i <= 17; i++) {
+							(function (i) {
+								var btn = document.getElementById('btn' + i);
+								btn.disabled = true;
+								btn.style.backgroundColor = '#D3D3D3';
+								btn.style.borderColor = '#808080';
+							})(i);
+						}
 
-				if (0600 <= nowTime && 0800 >= nowTime) {
-					for (var i = 0; i <= 5; i++) {
-						(function (i) {
-							var btn = document.getElementById('btn' + i);
-							btn.disabled = true;
-							btn.style.backgroundColor = '#D3D3D3';
-							btn.style.borderColor = '#808080';
-						})(i);
-					}
-				} else if (0800 <= nowTime && 1000 >= nowTime) {
-					for (var i = 0; i <= 11; i++) {
-						(function (i) {
-							var btn = document.getElementById('btn' + i);
-							btn.disabled = true;
-							btn.style.backgroundColor = '#D3D3D3';
-							btn.style.borderColor = '#808080';
-						})(i);
-					}
-				} else if (1000 <= nowTime && 1200 >= nowTime) {
-					for (var i = 0; i <= 17; i++) {
-						(function (i) {
-							var btn = document.getElementById('btn' + i);
-							btn.disabled = true;
-							btn.style.backgroundColor = '#D3D3D3';
-							btn.style.borderColor = '#808080';
-						})(i);
-					}
+					} else if (1200 <= nowTime && 1400 >= nowTime) {
+						for (var i = 0; i <= 23; i++) {
+							(function (i) {
+								var btn = document.getElementById('btn' + i);
+								btn.disabled = true;
+								btn.style.backgroundColor = '#D3D3D3';
+								btn.style.borderColor = '#808080';
+							})(i);
+						}
 
-				} else if (1200 <= nowTime && 1400 >= nowTime) {
-					for (var i = 0; i <= 23; i++) {
-						(function (i) {
-							var btn = document.getElementById('btn' + i);
-							btn.disabled = true;
-							btn.style.backgroundColor = '#D3D3D3';
-							btn.style.borderColor = '#808080';
-						})(i);
+					} else if (1400 <= nowTime && 1600 >= nowTime) {
+						for (var i = 0; i <= 29; i++) {
+							(function (i) {
+								var btn = document.getElementById('btn' + i);
+								btn.disabled = true;
+								btn.style.backgroundColor = '#D3D3D3';
+								btn.style.borderColor = '#808080';
+							})(i);
+						}
+					} else if (1600 <= nowTime && 1800 >= nowTime) {
+						for (var i = 0; i <= 35; i++) {
+							(function (i) {
+								var btn = document.getElementById('btn' + i);
+								btn.disabled = true;
+								btn.style.backgroundColor = '#D3D3D3';
+								btn.style.borderColor = '#808080';
+							})(i);
+						}
+					} else if (1800 <= nowTime && 2000 >= nowTime) {
+						for (var i = 0; i <= 41; i++) {
+							(function (i) {
+								var btn = document.getElementById('btn' + i);
+								btn.disabled = true;
+								btn.style.backgroundColor = '#D3D3D3';
+								btn.style.borderColor = '#808080';
+							})(i);
+						}
 					}
-
-				} else if (1400 <= nowTime && 1600 >= nowTime) {
-					for (var i = 0; i <= 29; i++) {
-						(function (i) {
-							var btn = document.getElementById('btn' + i);
-							btn.disabled = true;
-							btn.style.backgroundColor = '#D3D3D3';
-							btn.style.borderColor = '#808080';
-						})(i);
+					else if (2000 <= nowTime && 2200 >= nowTime) {
+						  for (var i = 0; i <= 47; i++){
+						      (function (i) {
+						          var btn = document.getElementById('btn'+i);
+						          btn.disabled = true;
+						 		 btn.style.backgroundColor = '#D3D3D3';
+						 		 btn.style.borderColor = '#808080';
+						      })(i);
+						  }
 					}
-				} else if (1600 <= nowTime && 1800 >= nowTime) {
-					for (var i = 0; i <= 35; i++) {
-						(function (i) {
-							var btn = document.getElementById('btn' + i);
-							btn.disabled = true;
-							btn.style.backgroundColor = '#D3D3D3';
-							btn.style.borderColor = '#808080';
-						})(i);
-					}
-				} else if (1800 <= nowTime && 2000 >= nowTime) {
-					for (var i = 0; i <= 41; i++) {
-						(function (i) {
-							var btn = document.getElementById('btn' + i);
-							btn.disabled = true;
-							btn.style.backgroundColor = '#D3D3D3';
-							btn.style.borderColor = '#808080';
-						})(i);
-					}
-				}
-				else if (2000 <= nowTime && 2200 >= nowTime) {
-					//  for (var i = 0; i <= 47; i++){
-					//      (function (i) {
-					//          var btn = document.getElementById('btn'+i);
-					//          btn.disabled = true;
-					// 		 btn.style.backgroundColor = '#D3D3D3';
-					// 		 btn.style.borderColor = '#808080';
-					//      })(i);
-					//  }
-				}
+					
+				} 
+				
+				
+				
 				/*]]>*/
 			}
 
@@ -868,8 +888,11 @@
 
 			// 날짜 버튼을 선택했을 경우
 			function changeBtn(id) {
-				getBtn();
-
+				var date = id;
+				getBtn(date);
+				
+				
+				
 				// form안에 hidden으로 만든 매치날짜 input에 선택한 버튼의 id값인 매치 날짜 넣어줌
 				document.getElementById('searchText').value = id;
 

@@ -147,9 +147,7 @@ public class MarketController {
 
 	// 마켓 리스트 - 페이지
 	@GetMapping("/marketList")
-	public String marketList(Model model,
-			@PageableDefault(size = 8, sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
-			@RequestParam(required = false, defaultValue = "") String searchText) {
+	public String marketList(Model model,@PageableDefault(size = 8, sort = "id", direction = Sort.Direction.DESC) Pageable pageable,@RequestParam(required = false, defaultValue = "") String searchText) {
 		// list.getPageable().getPageNumber(); //: 현재 페이지 번호
 		// getTotalElements() : 전체 데이터 건수
 		// getTotalPages() : 총 페이지 개수
@@ -170,8 +168,7 @@ public class MarketController {
 
 	// 마켓 상세 페이지
 	@GetMapping("/marketDetail/{id}")
-	public String marketDetail(@PathVariable("id") Long id, Model model,
-			@AuthenticationPrincipal PrincipalDetails principalDetails) {
+	public String marketDetail(@PathVariable("id") Long id, Model model,@AuthenticationPrincipal PrincipalDetails principalDetails) {
 
 		if (principalDetails == null) {
 			System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>null");
@@ -209,8 +206,7 @@ public class MarketController {
 
 	// 마켓 수정 페이지
 	@PostMapping(value = "/marketUpdate/{id}")
-	public String marketUpdate(Market market, MultipartFile file,
-			@AuthenticationPrincipal PrincipalDetails principalDetails) throws Exception {
+	public String marketUpdate(Market market, MultipartFile file, @AuthenticationPrincipal PrincipalDetails principalDetails) throws Exception {
 
 		String memberName = principalDetails.getMember().getName();
 		String memberImage = principalDetails.getMember().getImage();
