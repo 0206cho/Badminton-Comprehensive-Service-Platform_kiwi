@@ -147,9 +147,7 @@ public class MarketController {
 
 	// 마켓 리스트 - 페이지
 	@GetMapping("/marketList")
-	public String marketList(Model model,
-			@PageableDefault(size = 8, sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
-			@RequestParam(required = false, defaultValue = "") String searchText) {
+	public String marketList(Model model,@PageableDefault(size = 8, sort = "id", direction = Sort.Direction.DESC) Pageable pageable,@RequestParam(required = false, defaultValue = "") String searchText) {
 		// list.getPageable().getPageNumber(); //: 현재 페이지 번호
 		// getTotalElements() : 전체 데이터 건수
 		// getTotalPages() : 총 페이지 개수
