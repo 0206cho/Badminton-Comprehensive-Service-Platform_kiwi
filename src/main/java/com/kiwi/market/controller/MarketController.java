@@ -74,19 +74,24 @@ public class MarketController {
 		// 좋아요 저장
 		Long memberId = principalDetails.getMember().getId();
 
-		MarketLike ml = MarketLike.createML(memberId);
-		marketService.saveMarketLike(ml, marketId, memberId);
+		
+		
 
 		// 이미 좋아요가 눌러진 경우
 		List<MarketLike> list = mlService.marketLike();
+		System.out.println(">>>>>>>>>>>> list" + list);
 
 		for (int i = 0; i < list.size(); i++) {
-			if (list.get(i).getMarketId().getId() == marketId) { // 마켓 ID가 DB에 있는 경우 -> 이미 좋아요를 누른 경우
+			if (list.get(i).getMarketId().getId().equals(marketId)) { // 마켓 ID가 DB에 있는 경우 -> 이미 좋아요를 누른 경우
 				if (list.get(i).getMemId() == memberId) { // 마켓ID와 멤버 ID도 모두 동일 한 경우
+					System.out.println(">>>>>>>>>>>>>>> " + marketId + "이미 좋아요 눌렀습니다.");
 					// 좋아요 삭제 하는 기능 추가
 				}
 			}
 		}
+		
+		MarketLike ml = MarketLike.createML(memberId);
+		marketService.saveMarketLike(ml, marketId, memberId);
 
 //		Long reservation = ml.getMathshId().getReservation().getId();
 //		Matchs match = ml.getMathshId();

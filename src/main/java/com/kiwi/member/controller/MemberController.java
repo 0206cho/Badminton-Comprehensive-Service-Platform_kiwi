@@ -141,7 +141,6 @@ public class MemberController {
 			model.addAttribute("lists", lists);
 			model.addAttribute("memberId", memberId);
 			System.out.println(">>>>>>>>>>>>>>>>> market : " + lists.get(0).getMarketId());
-			System.out.println(">>>>>>>>>>>>>>>>> LikeId : " + lists.get(0).getId());
 			System.out.println(">>>>>>>>>>>>>>>>> title : " + lists.get(0).getMarketId().getTitle());
 
 			int counts = 0;
