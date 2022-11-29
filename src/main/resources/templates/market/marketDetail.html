@@ -13,7 +13,6 @@
 		rel="stylesheet"
 		integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
 		crossorigin="anonymous">
-
 	<style>
 .content {
 	display: flex;
@@ -116,57 +115,10 @@ img {
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
 		integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
 		crossorigin="anonymous"></script>
-		<!-- Channel Plugin Scripts
-<script>
-  (function() {
-    var w = window;
-    if (w.ChannelIO) {
-      return (window.console.error || window.console.log || function(){})('ChannelIO script included twice.');
-    }
-    var ch = function() {
-      ch.c(arguments);
-    };
-    ch.q = [];
-    ch.c = function(args) {
-      ch.q.push(args);
-    };
-    w.ChannelIO = ch;
-    function l() {
-      if (w.ChannelIOInitialized) {
-        return;
-      }
-      w.ChannelIOInitialized = true;
-      var s = document.createElement('script');
-      s.type = 'text/javascript';
-      s.async = true;
-      s.src = 'https://cdn.channel.io/plugin/ch-plugin-web.js';
-      s.charset = 'UTF-8';
-      var x = document.getElementsByTagName('script')[0];
-      x.parentNode.insertBefore(s, x);
-    }
-    if (document.readyState === 'complete') {
-      l();
-    } else if (window.attachEvent) {
-      window.attachEvent('onload', l);
-    } else {
-      window.addEventListener('DOMContentLoaded', l, false);
-      window.addEventListener('load', l, false);
-    }
-  })();
-  ChannelIO('boot', {
-    "pluginKey": "fca736d4-fb37-47ee-a22f-4533d8676e38"
-  });
-</script>
-End Channel Plugin -->
-
-
-
 </th:block>
-
 
 <div layout:fragment="content">
 <!-- 	<form id="frm" name="frm" method="POST" action="/market/marketDetail"> -->
-
 		<div class="row">
 			<div class="card" style="width: 87%; border: none;">
 				<div class="card-body" style="padding-top: 30px;">
@@ -197,14 +149,12 @@ End Channel Plugin -->
 					</div>
 
 					<p>
-						<button type="button" class="btm_image" id="img_btn"
-							style="background-color: transparent; border: none;">
-							<img src="/img/하트.png" alt="좋아요"
-								style="width: 80%; height: 80%; padding-bottom: 0px; padding-right: 5px;">
+						<input type="hidden" id="like_id" name="like_id" th:value="${market.id}"> 
+						<button type="button" class="btm_image" id="btn_like" style="background-color: transparent; border: none;">
+							<img src="/img/하트.png" alt="좋아요" style="width: 80%; height: 80%; padding-bottom: 0px; padding-right: 5px;">
 						</button>
 				</div>
 			</div>
-
 		</div>
 		<hr>
 
@@ -301,8 +251,39 @@ End Channel Plugin -->
         $("#comment-btn-delete").on("click", () => {
             this.commentDelete();
         });
+        
+        $("#btn_like").on("click", () => {
+            this.marketLikeBtn();
+        });
     },
 
+    // 마켓 좋아요
+    marketLikeBtn: function () {
+    	alert("좋아요 눌러짐");
+    	let marketIdLike = $("#like_id").val();
+        console.log("marketIdLike: >>" + marketIdLike);
+        
+    	$.ajax({
+    		url : "/market/marketLike",
+    		type : "post",
+    		data : {
+    			"id" : marketIdLike
+    		},
+    		// ajax csrf 토큰 적용
+    		beforeSend: function (jqXHR, settings) {
+    	           var header = $("meta[name='_csrf_header']").attr("content");
+    	           var token = $("meta[name='_csrf']").attr("content");
+    	           jqXHR.setRequestHeader(header, token);
+    		},
+    		success : function(){
+    			alert("좋아요 목록에 추가되었습니다.")
+    			window.location.href = "http://localhost/market/marketList";	
+    		},
+    		error : function(){alert("error");}
+    	});
+    	
+    },    
+    
     // 댓글 작성
     commentSave: function () {
     	let marketId = $("#market_id").val();
@@ -326,8 +307,6 @@ End Channel Plugin -->
 	            alert(JSON.stringify(err));
 			}
         });
-        
-        
     },
     // 댓글 삭제
     commentDelete: function () {
@@ -352,6 +331,7 @@ End Channel Plugin -->
 }
 commentIndex.init();
 </script>
+
 <script th:inline="javascript">
 
 function pay() {

@@ -60,9 +60,6 @@ public class MatchController {
 	private MemberRepository memberRepository;
 
 	@Autowired
-	private ReservationRepository reservationRepository;
-
-	@Autowired
 	private MatchsReservationService mrService;
 
 	@Autowired

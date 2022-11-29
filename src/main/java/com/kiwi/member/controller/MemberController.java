@@ -24,6 +24,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kiwi.config.auth.PrincipalDetails;
 import com.kiwi.court.entity.Reservation;
+import com.kiwi.market.entity.MarketLike;
+import com.kiwi.market.service.MarketLikeService;
 import com.kiwi.match.entity.Matchs;
 import com.kiwi.match.entity.MatchsReservation;
 import com.kiwi.match.service.MatchService;
@@ -39,6 +41,7 @@ import com.kiwi.pay.entity.Cash;
 import com.kiwi.pay.repository.CashRepository;
 import com.kiwi.pay.service.CashService;
 
+import groovyjarjarantlr4.v4.parse.ANTLRParser.finallyClause_return;
 import lombok.RequiredArgsConstructor;
 
 @RequestMapping("/members")
@@ -60,6 +63,8 @@ public class MemberController {
 	private final MatchsReservationService matchsReservationService;
 	
 	private final CashService cashService;
+	
+	private final MarketLikeService likeService;
 
 	// 회원 가입 로직
 	@GetMapping(value = "/new")
@@ -88,9 +93,9 @@ public class MemberController {
 			model.addAttribute("genders", Gender.values());
 			model.addAttribute("bnames", Bank.values());
 			model.addAttribute("local", Address.values());
-			System.out.println("에러 메시지 전이야!");
+//			System.out.println("에러 메시지 전이야!");
 			model.addAttribute("errorMessage", e.getMessage());
-			System.out.println("에러 메시지 후야!");
+//			System.out.println("에러 메시지 후야!");
 			return "member/memberForm";
 		}
 		return "redirect:/members/login";
@@ -127,6 +132,35 @@ public class MemberController {
 		return "mypage/mypageMain";
 	}
 
+	// 마이페이지 - 좋아요목록
+		@GetMapping("/mypage/marketLike")
+		public String mypageMarketLike(@AuthenticationPrincipal PrincipalDetails principalDetails, Model model) {
+			Long memberId = principalDetails.getMember().getId();
+			
+			List<MarketLike> lists = likeService.marketLike();
+			model.addAttribute("lists", lists);
+			model.addAttribute("memberId", memberId);
+			System.out.println(">>>>>>>>>>>>>>>>> market : " + lists.get(0).getMarketId());
+			System.out.println(">>>>>>>>>>>>>>>>> LikeId : " + lists.get(0).getId());
+			System.out.println(">>>>>>>>>>>>>>>>> title : " + lists.get(0).getMarketId().getTitle());
+
+			int counts = 0;
+			Long marketLikeId = (long) 0;
+			for (int i = 0; i < lists.size(); i++) {
+				if (lists.get(i).getMemId().equals(memberId)) { // 좋아요 했을 경우
+					counts += 1; // 예약한 건 수 : count
+
+					marketLikeId = lists.get(i).getId(); // 해당하는 멤버의 좋아요 아이디 반환
+					model.addAttribute("marketLikeId" + counts, marketLikeId); // 각각의 예약 id반환하기 위해서 reservatuonId1 ,,
+																					// 2,,
+																					// 이런식으로 줌
+				}
+			}
+			model.addAttribute("count", counts);
+			
+			return "mypage/mypageMarketLike";
+		}
+		
 	// 마이페이지 - 충전내역
 	@GetMapping("/mypage/pay")
 	public String mypagePay(@AuthenticationPrincipal PrincipalDetails principalDetails, Model model) {
@@ -139,7 +173,7 @@ public class MemberController {
 		List<Cash> list = cashService.cash();
 		model.addAttribute("list", list);
 		model.addAttribute("memberId", memberId);
-		System.out.println(">>>>>>>>>>>>>>>>> pay : " + list.get(0).getAmount() + ", " + list.get(0).getTime());
+//		System.out.println(">>>>>>>>>>>>>>>>> pay : " + list.get(0).getAmount() + ", " + list.get(0).getTime());
 
 		int counts = 0;
 		Long payId = (long) 0;
@@ -165,7 +199,7 @@ public class MemberController {
 		List<MatchsReservation> lists = matchsReservationService.mrCourt();
 		model.addAttribute("lists", lists);
 		model.addAttribute("memberId", memberId);
-		System.out.println(">>>>>>>>>>>>>>>>> pay : " + lists.get(0).getPay_time());
+//		System.out.println(">>>>>>>>>>>>>>>>> pay : " + lists.get(0).getPay_time());
 
 		int counts = 0;
 		Long mreservationId = (long) 0;
@@ -224,11 +258,11 @@ public class MemberController {
 	@ResponseBody
 	public String testLogin(Authentication authentication,
 			@AuthenticationPrincipal PrincipalDetails principalDetails2) {
-		System.out.println("/test/login ===============");
+//		System.out.println("/test/login ===============");
 		// PrincipalDetail
 		PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
-		System.out.println("authentication : " + principalDetails.getMember());
-		System.out.println("userDetails : " + principalDetails2.getMember());
+//		System.out.println("authentication : " + principalDetails.getMember());
+//		System.out.println("userDetails : " + principalDetails2.getMember());
 		return "세션 정보 확인하기";
 	}
 
@@ -236,10 +270,10 @@ public class MemberController {
 	@GetMapping("/test/oauth/login")
 	@ResponseBody
 	public String testLogin(Authentication authentication, @AuthenticationPrincipal OAuth2User oauth) {
-		System.out.println("/test/oauth/login ===============");
+//		System.out.println("/test/oauth/login ===============");
 		OAuth2User oAuth2User = (OAuth2User) authentication.getPrincipal();
-		System.out.println("authentication : " + oAuth2User.getAttributes());
-		System.out.println("OAuth2User : " + oauth.getAttributes());
+//		System.out.println("authentication : " + oAuth2User.getAttributes());
+//		System.out.println("OAuth2User : " + oauth.getAttributes());
 
 		return "OAuth 세션 정보 확인하기";
 	}

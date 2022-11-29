@@ -1,5 +1,6 @@
 package com.kiwi.market.entity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -82,7 +83,6 @@ public class Market extends BaseEntity {
 	@Column(name = "buy_memId")
 	private Long buy_memId;  // 구매자 id
 	
-	
 	public static Market createMarket(MarketDto marketDto) {
 		Market market = new Market();
 		market.setTitle(marketDto.getTitle());
@@ -99,7 +99,6 @@ public class Market extends BaseEntity {
 		market.setBuy_memId(marketDto.getBuy_memId());
 		return market;
 	}
-	
 
 	// 마켓 구매완료 시 필요
 	public Market(Long marketId, String marketTitle, String marketPrice) {
@@ -108,7 +107,4 @@ public class Market extends BaseEntity {
 		price = marketPrice;
 		status = ItemSellStatus.구매대기;
 	}
-	
-	
-	
 }

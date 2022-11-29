@@ -1,6 +1,5 @@
 package com.kiwi.market.service;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -9,20 +8,19 @@ import javax.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.kiwi.config.auth.PrincipalDetails;
-import com.kiwi.court.entity.Court;
 import com.kiwi.market.UploadFile;
 import com.kiwi.market.constant.ItemSellStatus;
 import com.kiwi.market.dto.MarketDto;
 import com.kiwi.market.entity.Market;
+import com.kiwi.market.entity.MarketLike;
+import com.kiwi.market.repository.MarketLikeRepository;
 import com.kiwi.market.repository.MarketRepository;
-import com.kiwi.member.entity.Member;
 import com.kiwi.member.repository.MemberRepository;
 import com.kiwi.pay.service.CashService;
 
@@ -45,6 +43,20 @@ public class MarketService {
 	@Autowired
 	private CashService cashService;
 
+	@Autowired
+	private MarketLikeRepository marketLikeRepository;
+
+	// 마켓 좋아요
+	public void saveMarketLike(MarketLike ml, Long marketId, Long memberId) {
+		Market market = marketRepository.findById(marketId).orElseThrow(EntityNotFoundException::new);
+		System.out.println();
+		ml.setMarketId(market);
+
+		ml.setMemId(memberId);
+		marketLikeRepository.save(ml);
+	}
+	
+	// 마켓 글 저장
 	public void saveMarket(Market market, MultipartFile file, String memberName, String memberImage, Long memberId) throws Exception {
 		if (file.isEmpty()) {
 			String img = "";

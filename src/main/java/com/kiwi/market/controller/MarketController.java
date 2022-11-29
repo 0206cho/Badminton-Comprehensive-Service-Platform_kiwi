@@ -29,14 +29,13 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kiwi.config.auth.PrincipalDetails;
-import com.kiwi.court.dto.CourtDto;
-import com.kiwi.court.dto.ReservationDto;
-import com.kiwi.court.entity.Reservation;
 import com.kiwi.market.dto.MarketDto;
 import com.kiwi.market.entity.Comment;
 import com.kiwi.market.entity.Market;
+import com.kiwi.market.entity.MarketLike;
 import com.kiwi.market.repository.MarketRepository;
 import com.kiwi.market.service.CommentService;
+import com.kiwi.market.service.MarketLikeService;
 import com.kiwi.market.service.MarketService;
 import com.kiwi.member.entity.Member;
 import com.kiwi.member.repository.MemberRepository;
@@ -61,6 +60,38 @@ public class MarketController {
 
 	@Autowired
 	private MemberRepository memberRepository;
+
+	@Autowired
+	private MarketLikeService mlService;
+
+	// 마켓 좋아요 기능
+	@ResponseBody
+	@PostMapping("/marketLike")
+	public void marketLike(String id, Model model, @AuthenticationPrincipal PrincipalDetails principalDetails) {
+		System.out.println(">>>>>>>>>>>>>>> ajax로 넘겨온 id  : " + id);
+		Long marketId = Long.parseLong(id);
+
+		// 좋아요 저장
+		Long memberId = principalDetails.getMember().getId();
+
+		MarketLike ml = MarketLike.createML(memberId);
+		marketService.saveMarketLike(ml, marketId, memberId);
+
+		// 이미 좋아요가 눌러진 경우
+		List<MarketLike> list = mlService.marketLike();
+
+		for (int i = 0; i < list.size(); i++) {
+			if (list.get(i).getMarketId().getId() == marketId) { // 마켓 ID가 DB에 있는 경우 -> 이미 좋아요를 누른 경우
+				if (list.get(i).getMemId() == memberId) { // 마켓ID와 멤버 ID도 모두 동일 한 경우
+					// 좋아요 삭제 하는 기능 추가
+				}
+			}
+		}
+
+//		Long reservation = ml.getMathshId().getReservation().getId();
+//		Matchs match = ml.getMathshId();
+//		matchService.saveMatch(match, memberId, reservation);
+	}
 
 	// 마켓 글 작성 페이지
 	@GetMapping(value = "/marketNew")
@@ -154,7 +185,7 @@ public class MarketController {
 		// getTotalElements() : 전체 데이터 건수
 		// getTotalPages() : 총 페이지 개수
 		Page<Market> list = marketRepository.findByTitleContainingOrDetailContaining(searchText, searchText, pageable);
-		System.out.println(searchText);
+//		System.out.println(searchText);
 		int startPage = Math.max(1, list.getPageable().getPageNumber() - 7);
 		int endPage = Math.min(list.getTotalPages(), list.getPageable().getPageNumber() + 7);
 
@@ -174,16 +205,15 @@ public class MarketController {
 			@AuthenticationPrincipal PrincipalDetails principalDetails) {
 
 		if (principalDetails == null) {
-			System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>null");
 			principalDetails.getMember().setId(Long.valueOf(0));
-			System.out.println(principalDetails.getMember().getId());
+//			System.out.println(principalDetails.getMember().getId());
 		}
 
-		System.out.println(principalDetails);
+//		System.out.println(principalDetails);
 		Long memberId = principalDetails.getMember().getId();
 		Market market = marketService.marketDetail(id);
 		model.addAttribute("market", market);
-		System.out.println(">>>>>>>>>>>> marketId: " + market.getId());
+//		System.out.println(">>>>>>>>>>>> marketId: " + market.getId());
 		model.addAttribute("marketDto", new MarketDto());
 
 		// System.out.println(">>>>>>>>>>> : " + new MarketDto());
@@ -215,9 +245,9 @@ public class MarketController {
 		String memberName = principalDetails.getMember().getName();
 		String memberImage = principalDetails.getMember().getImage();
 		Long memberId = principalDetails.getMember().getId();
-		
+
 		marketService.saveMarket(market, file, memberName, memberImage, memberId);
-		
+
 		return "redirect:/market/marketList";
 	}
 
@@ -239,30 +269,30 @@ public class MarketController {
 	public String marketBuy(MarketDto marketDto, Model model,
 			@AuthenticationPrincipal PrincipalDetails principalDetails) {
 		// 캐시 조회
-		System.out.println("==============>" + marketDto.getId());
+//		System.out.println("==============>" + marketDto.getId());
 		Long id = principalDetails.getMember().getId();
 		Member member = memberRepository.findMemberById(id);
 		int money = member.getKiwicash();
-		System.out.println("==================>" + money);
+//		System.out.println("==================>" + money);
 		model.addAttribute("money", money);
 
 		// marketDto.marketBuy(marketDto, id);
 
 		marketDto.marketBuy(marketDto, id);
 		model.addAttribute("marketDto", marketDto);
-		System.out.println(marketDto.getTitle() + " ,  " + marketDto.getPrice());
+//		System.out.println(marketDto.getTitle() + " ,  " + marketDto.getPrice());
 
 		return "pay/marketBuy";
 	}
 
-	// 마켓 결제(구매 대기) 
+	// 마켓 결제(구매 대기)
 	@PostMapping("/pay/result")
 	@ResponseBody
 	public void payResult(Long id, @AuthenticationPrincipal PrincipalDetails principalDetails) {
 		marketService.buyMarket(principalDetails, id);
 	}
-	
-	// 마켓 결제(구매 완료) 
+
+	// 마켓 결제(구매 완료)
 	@PostMapping("/pay/finalResult")
 	@ResponseBody
 	public void payFinal(Long id, @AuthenticationPrincipal PrincipalDetails principalDetails) {
