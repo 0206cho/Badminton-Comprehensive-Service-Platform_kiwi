@@ -24,4 +24,9 @@ public class MarketLikeService {
 		List<MarketLike> marketLike = marketLikeRepository.findAllByOrderByIdDesc();
 		return marketLike;
 	}
+	
+	// 마켓 좋아요 삭제	
+	public void deleteMarketLike(Long id) {
+		marketLikeRepository.deleteById(id);
+	}
 }

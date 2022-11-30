@@ -140,8 +140,8 @@ public class MemberController {
 			List<MarketLike> lists = likeService.marketLike();
 			model.addAttribute("lists", lists);
 			model.addAttribute("memberId", memberId);
-			System.out.println(">>>>>>>>>>>>>>>>> market : " + lists.get(0).getMarketId());
-			System.out.println(">>>>>>>>>>>>>>>>> title : " + lists.get(0).getMarketId().getTitle());
+//			System.out.println(">>>>>>>>>>>>>>>>> market : " + lists.get(0).getMarketId());
+//			System.out.println(">>>>>>>>>>>>>>>>> title : " + lists.get(0).getMarketId().getTitle());
 
 			int counts = 0;
 			Long marketLikeId = (long) 0;
@@ -156,6 +156,7 @@ public class MemberController {
 				}
 			}
 			model.addAttribute("count", counts);
+			System.out.println(">>>>>>>>>> count : "+ counts);
 			
 			return "mypage/mypageMarketLike";
 		}
