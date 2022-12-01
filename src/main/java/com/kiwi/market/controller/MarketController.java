@@ -71,15 +71,14 @@ public class MarketController {
 		System.out.println(">>>>>>>>>>>>>>> ajax로 넘겨온 id  : " + id);
 		Long marketId = Long.parseLong(id);
 
-		// 좋아요 저장
 		Long memberId = principalDetails.getMember().getId();
 		Long marketLikeId = (long)0;
 		boolean count = false;  // 좋아요를 눌렀는지 확인
 
-		// 이미 좋아요가 눌러진 경우
 		List<MarketLike> list = mlService.marketLike();
 //		System.out.println(">>>>>>>>>>>> list" + list);
-
+		
+		// 이미 좋아요가 눌러진 경우
 		for (int i = 0; i < list.size(); i++) {
 			if (list.get(i).getMarketId().getId().equals(marketId)) { // 마켓 ID가 DB에 있는 경우 -> 이미 좋아요를 누른 경우
 				if (list.get(i).getMemId() == memberId) { // 마켓ID와 멤버 ID도 모두 동일 한 경우
@@ -93,16 +92,12 @@ public class MarketController {
 			} 
 		}
 		
+		// 좋아요 저장
 		if(!count) {
 //			System.out.println(">>>>>>>>>>>>>>>>>>>>> 좋아요 완료" + count);
 			MarketLike ml = MarketLike.createML(memberId);
 			marketService.saveMarketLike(ml, marketId, memberId);
 		}
-		
-
-//		Long reservation = ml.getMathshId().getReservation().getId();
-//		Matchs match = ml.getMathshId();
-//		matchService.saveMatch(match, memberId, reservation);
 	}
 
 	// 마켓 글 작성 페이지
@@ -137,7 +132,6 @@ public class MarketController {
 
 	@PostMapping(value = "/image/upload")
 	public ModelAndView image(MultipartHttpServletRequest request) throws Exception {
-
 		// ckeditor는 이미지 업로드 후 이미지 표시하기 위해 uploaded 와 url을 json 형식으로 받아야 함
 		// modelandview를 사용하여 json 형식으로 보내기위해 모델앤뷰 생성자 매개변수로 jsonView 라고 써줌
 		// jsonView 라고 쓴다고 무조건 json 형식으로 가는건 아니고 @Configuration 어노테이션을 단
@@ -233,6 +227,24 @@ public class MarketController {
 
 		List<Comment> list = commentService.commentList();
 		model.addAttribute("list", list);
+		
+		// ----------- 좋아요 확인 ----------- 
+		int counts = 0;  // 좋아요를 눌렀는지 확인
+
+		List<MarketLike> lists = mlService.marketLike();
+		
+		// 이미 좋아요가 눌러진 경우
+		for (int i = 0; i < lists.size(); i++) {
+			if (lists.get(i).getMarketId().getId().equals(id)) { // 마켓 ID가 DB에 있는 경우 -> 이미 좋아요를 누른 경우
+				if (lists.get(i).getMemId().equals(memberId)) { // 마켓ID와 멤버 ID도 모두 동일 한 경우
+					counts += 1; // 좋아요 누른 경우
+//					System.out.println(">>>>>>>>>>>>>>>>>>> : " + marketLikeId + "좋아요를 취소하였습니다.");
+				} 
+			} 
+		}
+		
+		model.addAttribute("likeStatus", counts);
+		System.out.println(">>>>>>> 좋아요 상태 : " + counts);
 
 		return "market/marketDetail";
 
