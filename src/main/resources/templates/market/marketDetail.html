@@ -150,6 +150,7 @@ img {
 
 					<p>
 						<input type="hidden" id="like_id" name="like_id" th:value="${market.id}"> 
+						<input type="hidden" id="like_status" name="like_status" th:value="${likeStatus}"> 
 						<button type="button" class="btm_image" id="btn_like" style="background-color: transparent; border: none;">
 							<img th:src="*{likeStatus == 0} ? @{/img/빈하트.png} : @{/img/하트.png}" alt="좋아요" th:style="${likeStatus == 0 ? 'width: 120%; height: 120%; padding-bottom: 0px; padding-right: 5px;' : 'width: 80%; height: 80%; padding-bottom: 0px; padding-right: 5px;'}">
 						</button>
@@ -262,6 +263,10 @@ img {
     	let marketIdLike = $("#like_id").val();
         console.log("marketIdLike: >>" + marketIdLike);
         
+        // 좋아요 상태 like_status
+        let likeStatus = $("#like_status").val();
+        console.log("marketIdLike: >>" + likeStatus);
+        
     	$.ajax({
     		url : "/market/marketLike",
     		type : "post",
@@ -275,7 +280,12 @@ img {
     	           jqXHR.setRequestHeader(header, token);
     		},
     		success : function(){
-    			alert("좋아요 목록에 추가되었습니다.")
+    			if(likeStatus == 0){
+    				alert("좋아요 목록에 추가되었습니다.")
+    			} else{
+    				alert("좋아요 목록에 제거되었습니다.")
+    			}
+    			
     			window.location.href = "http://localhost/market/marketList";	
     		},
     		error : function(){alert("error");}

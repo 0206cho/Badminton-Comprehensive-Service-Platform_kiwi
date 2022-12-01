@@ -117,36 +117,46 @@ a {
 <div layout:fragment="content">
 	<h4 style="margin-left: 10px;">마켓 좋아요 목록</h4>
 	<br>
-
-		<div th:each="vo : ${lists}">
-			<div th:if="${memberId == vo.memId}">
-
-				<div class="row">
-					<div></div>
-					<div class="col col-xl-3 col-lg-3 col-md-6" style="margin-bottom: 10px; margin-top: 0px; float: left; width: 33%;">
-					<a href="/market/marketDetail/" th:attrappend="href=${vo.MarketId.Id}"
-					style="text-decoration: none; color: black">
-						<div class="card" style="width: 18rem; border-color: black;">
-							<img th:src="${vo.MarketId.filepath}" class="card-img-top"
-								alt="이미지 로딩중"
-								style="width: 15rem; height: 15rem; margin: auto; padding-top: 15px;">
-							<div class="card-body">
-								<h5 class="card-title" style="font-weight: bold;"
-									th:text="${vo.MarketId.title}">최고급 라켓</h5>
-								<div style="display: flex;">
-									<p class="card-text" th:text="${vo.MarketId.price} +'원'"
-										style="width: 90%;">
-										5000원 <br>
-									</p>
+	<div class="container">
+	<div>
+			<div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-3">
+				<div class="col"></div>
+				<div class="col"></div>
+				<div class="col"></div>
+				<div class="col"></div>
+			</div>
+		</div>
+		
+		<div class="row">
+		<div></div>
+			<div class="col col-xl-3 col-lg-3 col-md-6"
+						style="margin-bottom: 40px; margin-top: 0px;float: center;" th:each="vo : ${lists}"><!--  margin-right: 20px; margin-left: 60px;  -->
+				<div th:if="${memberId == vo.memId}">
+						<a href="/market/marketDetail/"
+							th:attrappend="href=${vo.MarketId.Id}"
+							style="text-decoration: none; color: black">
+							<div class="card" style="width: 18rem; border-color: black;">
+								<img th:src="${vo.MarketId.filepath}" class="card-img-top"
+									alt="이미지 로딩중"
+									style="width: 15rem; height: 15rem; margin: auto; padding-top: 15px;">
+								<div class="card-body">
+									<h5 class="card-title" style="font-weight: bold;"
+										th:text="${vo.MarketId.title}">최고급 라켓</h5>
+									<div style="display: flex;">
+										<p class="card-text" th:text="${vo.MarketId.price} +'원'"
+											style="width: 90%;">
+											5000원 <br>
+										</p>
+									</div>
 								</div>
 							</div>
-						</div>
 						</a>
 					</div>
 				</div>
-				
-			</div>
+
 		</div>
+	</div>
+
 	<!-- 좋아요가 없는 경우 -->
 	<div th:if="${count == 0}"
 		style="float: left; width: 925px; border: 1px solid #808080; margin-bottom: 60px; border-radius: 15px;">
