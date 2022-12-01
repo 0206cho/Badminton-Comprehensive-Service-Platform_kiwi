@@ -1,20 +1,15 @@
 package com.kiwi.match.repository;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
+import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 
-import com.kiwi.court.entity.Court;
-import com.kiwi.court.entity.Reservation;
 import com.kiwi.match.entity.Matchs;
-import com.kiwi.match.entity.MatchsReservation;
 
-public interface MatchRepository extends JpaRepository<Matchs, Long>{
+public interface MatchRepository extends JpaRepository<Matchs, Long>, QuerydslPredicateExecutor<Matchs>, MatchRepositoryCustom{
 
 	// 매치리스트
 //	List<Match> findAllByOrderByIdDesc();

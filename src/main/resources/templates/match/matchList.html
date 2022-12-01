@@ -154,6 +154,28 @@
 		});
 	</script>
 	<!-- End Channel Plugin -->
+	<script th:inline="javascript">
+	
+	    $(document).ready(function(){
+            $("#searchBtn").on("click",function(e) {
+                e.preventDefault();
+                page(0);
+            });
+        });
+		
+        function page(page){
+           // var searchDateType = $("#searchDateType").val();
+            var searchStatus = $("#searchStatus").val();
+            var searchLevel = $("#searchLevel").val();
+            var searchType = $("#searchType").val();
+            //var searchQuery = $("#searchQuery").val();
+
+            location.href="/match/matchList/" + page + "?searchStatus=" + searchStatus
+            + "&searchLevel=" + searchLevel
+            + "&searchType=" + searchType
+           ;
+        }
+	</script>
 </th:block>
 
 
@@ -162,38 +184,41 @@
 		<!-- 지역 -->
 		<select class="select" name="sido" id="sido"
 			style="padding: 6px; padding-right: 10px; margin-right: 20px;"></select>
-		<!-- 도시 -->
-		<select class="select" name="gugun" id="gugun"
-			style="padding: 6px; padding-right: 50px; margin-right: 20px;"></select>
-
+		
+		<form th:action="@{'/match/matchList/' + ${list.number}}" role="form" method="get" th:object="${list}"> 
+		<div class="form-inline justify-content-center" th:object="${matchSearchDto}">
 		<!--레벨-->
-		<select class="select" name="region" style="padding: 6px; padding-right: 20px; margin-right: 20px;">
-			<option value="level" selected>레벨</option>
-			<option value="0">모든레벨</option>
-			<option value="1">LEVEL-A</option>
-			<option value="2">LEVEL-B</option>
-			<option value="3">LEVEL-C</option>
-			<option value="4">LEVEL-D</option>
+		<select th:field="*{searchLevel}" class="select" name="region" style="padding: 6px; padding-right: 20px; margin-right: 20px;">
+			<option value="" selected>레벨(전체)</option>
+			<option value="LEVEL_ALL">LEVEL-ALL</option>
+			<option value="LEVEL_A">LEVEL-A</option>
+			<option value="LEVEL_B">LEVEL-B</option>
+			<option value="LEVEL_C">LEVEL-C</option>
+			<option value="LEVEL_D">LEVEL-D</option>
 		</select>
-
+				
 		<!--종류-->
-		<select class="select" name="type" style="padding: 6px; padding-right: 20px; margin-right: 20px;">
-			<option value="type" selected>종류</option>
-			<option value="1">1vs1(단식)</option>
-			<option value="2">2vs2(복식)</option>
+		<select th:field="*{searchType}" class="select" name="type" style="padding: 6px; padding-right: 20px; margin-right: 20px;">
+			<option value="all" selected>종류(전체)</option>
+			<option value="1vs1(단식)">1vs1(단식)</option>
+			<option value="2vs2(복식)">2vs2(복식)</option>
 		</select>
-
+		
 		<!--상태-->
-		<select class="select" name="type" style="padding: 6px; padding-right: 50px; margin-right: 30px;">
-			<option value="type" selected>상태</option>
-			<option value="0">전체</option>
-			<option value="1">신청</option>
-			<option value="2">마감</option>
+		<select th:field="*{searchStatus}" class="select" name="type" style="padding: 6px; padding-right: 20px; margin-right: 20px;">
+			<option value="" selected>상태(전체)</option>
+			<option value="신청">신청</option>
+			<option value="마감">마감</option>
 		</select> <Br>
-
-		<button class="btn btn-outline-success" type="submit" style="width: 80px; margin-right: 10px">검색</button>
-		<button type="button" class="btn btn-kiwi" style="width: 120px;"
-			onclick="location.href='/match/matchNew'">개설하기</button>
+		
+		<input type="text" style="width: 200px; height: 36px; margin-bottom: 0x; padding-bottom: 0px; margin-right: 10px;">
+		
+		<button id="searchBtn" class="btn btn-outline-success" type="submit" style="width: 80px; margin-right: 10px">검색</button>
+		
+		<button type="button" class="btn btn-kiwi" style="width: 120px;"onclick="location.href='/match/matchNew'">개설하기</button>
+		</div>
+		</form>
+		
 	</div>
 
 
@@ -260,56 +285,8 @@
 						"함안군", "함양군", "합천군"];
 					var area16 = ["서귀포시", "제주시", "남제주군", "북제주군"];
 
-					// 시/도 선택 박스 초기화
-
-					$("select[name^=sido]")
-						.each(
-							function () {
-								$selsido = $(this);
-								$
-									.each(
-										eval(area0),
-										function () {
-											$selsido
-												.append("<option value='" + this + "'>"
-													+ this
-													+ "</option>");
-										});
-								$selsido
-									.next()
-									.append(
-										"<option value=''>도시</option>");
-							});
-
-					// 시/도 선택시 구/군 설정
-
-					$("select[name^=sido]")
-						.change(
-							function () {
-								var area = "area"
-									+ $("option", $(this))
-										.index(
-											$(
-												"option:selected",
-												$(this))); // 선택지역의 구군 Array
-								var $gugun = $(this).next(); // 선택영역 군구 객체
-								$("option", $gugun).remove(); // 구군 초기화
-
-								if (area == "area0")
-									$gugun
-										.append("<option value=''>지역</option>");
-								else {
-									$
-										.each(
-											eval(area),
-											function () {
-												$gugun
-													.append("<option value='" + this + "'>"
-														+ this
-														+ "</option>");
-											});
-								}
-							});
+					
+					
 							
 					
 						
@@ -457,22 +434,17 @@
 	</div>
 	<br>
 
-	<nav aria-label="Page navigation example">
+	<nav aria-label="Page navigation example" th:with="start=${(list.number/maxPage)*maxPage + 1}, end=(${(list.totalPages == 0) ? 1 : (start + (maxPage - 1) < list.totalPages ? start + (maxPage - 1) : list.totalPages)})">
 		<ul class="pagination my">
-			<li class="page-item" th:classappend="${1 == list.pageable.pageNumber + 1} ? 'disabled' : '' ">
-				<a class="page-link" aria-label="Previous"
-					th:href="@{/match/matchList/(page=${list.pageable.pageNumber - 1}, search=${param.searchText})}">
+			<li class="page-item" th:classappend="${list.first}?'disabled'">
+				<a class="page-link" aria-label="Previous" th:onclick="'javascript:page(' + ${list.number - 1} + ')'" >
 					<span aria-hidden="true" style="color: #70ACB1;">◀</span>
 				</a>
 			</li>
-			<li class="page-item" th:classappend="${i == list.pageable.pageNumber + 1} ? 'active' : '' "
-				th:each="i : ${#numbers.sequence(startPage, endPage)}"><a class="page-link" style="color: black;"
-					th:href="@{/match/matchList/(page=${i - 1}, search=${param.searchText})}"
-					th:classappend="${i - 1} == -1 ? 'pageno' : '' " th:text="${i}">1</a></li>
-			<li class="page-item"
-				th:classappend="${list.totalPages == list.pageable.pageNumber + 1} ? 'disabled' : '' ">
-				<a class="page-link" aria-label="Next" style="color: #70ACB1;"
-					th:href="@{/match/matchList/(page=${list.pageable.pageNumber + 1}, search=${param.searchText})}">
+			<li class="page-item" th:each="page: ${#numbers.sequence(start, end)}" th:classappend="${list.number eq page-1}?'active':''">
+				<a class="page-link" style="color: black;" th:onclick="'javascript:page(' + ${page - 1} + ')'" th:inline="text">[[${page}]]</a></li>
+			<li class="page-item" th:classappend="${list.last}?'disabled'" >
+				<a class="page-link" aria-label="Next" style="color: #70ACB1;" th:onclick="'javascript:page(' + ${list.number + 1} + ')'">
 					<span aria-hidden="true">▶</span>
 				</a>
 			</li>

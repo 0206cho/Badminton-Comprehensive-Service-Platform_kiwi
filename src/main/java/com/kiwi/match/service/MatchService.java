@@ -9,19 +9,19 @@ import java.util.Optional;
 import javax.persistence.EntityNotFoundException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.kiwi.court.entity.Reservation;
 import com.kiwi.court.repository.CourtRepository;
 import com.kiwi.court.repository.ReservationRepository;
-import com.kiwi.market.entity.Market;
-import com.kiwi.match.constant.Status;
+import com.kiwi.match.dto.MatchSearchDto;
 import com.kiwi.match.entity.Matchs;
 import com.kiwi.match.entity.MatchsReservation;
 import com.kiwi.match.repository.MatchRepository;
 import com.kiwi.match.repository.MatchsReservationRepository;
-import com.kiwi.member.entity.Member;
 
 import lombok.RequiredArgsConstructor;
 
@@ -151,5 +151,10 @@ public class MatchService {
 //	public void saveMatch(Match match) {
 //		matchRepository.save(match);		
 //	}
+	
+	public Page<Matchs> getSearchMatchPage(MatchSearchDto matchSearchDto, Pageable pageable){
+		return matchRepository.getSearchMatchPage(matchSearchDto, pageable);
+	}
+
 
 }
