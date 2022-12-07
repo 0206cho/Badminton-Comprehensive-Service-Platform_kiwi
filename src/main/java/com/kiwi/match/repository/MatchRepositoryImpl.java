@@ -40,13 +40,23 @@ public class MatchRepositoryImpl implements MatchRepositoryCustom {
 			return null;
 		}
 		else if(StringUtils.equals("1vs1(단식)", searchType)) {
-			System.out.println("test!! ===============> : "+ QMatchs.matchs.type.eq(searchType));
 			return QMatchs.matchs.type.eq(searchType);
 		}
 		else if(StringUtils.equals("2vs2(복식)", searchType)) {
 			return QMatchs.matchs.type.eq(searchType);
 		}
 		return null;
+		
+		//return searchType == null ? null : QMatchs.matchs.type.eq(searchType);
+	}
+	
+	private BooleanExpression searchDateEq(String searchDate) {
+		if(StringUtils.equals("all", searchDate) || searchDate == null) {
+			return null;
+		} else {
+			return QMatchs.matchs.retime.eq(searchDate);
+		}
+		
 	}
 	
 
@@ -57,7 +67,8 @@ public class MatchRepositoryImpl implements MatchRepositoryCustom {
 				.where(
 						searchStatusEq(matchSearchDto.getSearchStatus()),
 						searchLeverEq(matchSearchDto.getSearchLevel()),
-						searchType(matchSearchDto.getSearchType())
+						searchType(matchSearchDto.getSearchType()),
+						searchDateEq(matchSearchDto.getSearchDate())
 					  )
 				.orderBy(QMatchs.matchs.id.desc())
 				.offset(pageable.getOffset())
@@ -70,7 +81,8 @@ public class MatchRepositoryImpl implements MatchRepositoryCustom {
 				.where(
 						searchStatusEq(matchSearchDto.getSearchStatus()),
 						searchLeverEq(matchSearchDto.getSearchLevel()),
-						searchType(matchSearchDto.getSearchType())
+						searchType(matchSearchDto.getSearchType()),
+						searchDateEq(matchSearchDto.getSearchDate())
 						)
 				.fetchOne();
 				

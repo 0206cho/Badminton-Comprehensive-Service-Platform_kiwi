@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kiwi.config.auth.PrincipalDetails;
@@ -87,7 +88,8 @@ public class MatchController {
 	
 	// 매치 메인 - 매치 리스트 (페이징)
 	@GetMapping({"/matchList", "/matchList/{page}"})
-	public String matchList(MatchSearchDto matchSearchDto, Model model, @PathVariable("page") Optional<Integer> page) {
+	public String matchList(MatchSearchDto matchSearchDto,Model model, @PathVariable("page") Optional<Integer> page) {
+		//matchSearchDto.setSearchDate(searchText);
 		
 		Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0, 3);
 		Page<Matchs> matchs = matchService.getSearchMatchPage(matchSearchDto, pageable);
@@ -95,7 +97,6 @@ public class MatchController {
 		model.addAttribute("list", matchs);
 		model.addAttribute("matchSearchDto", matchSearchDto);
 		model.addAttribute("maxPage", 5);
-		
 		
 //		Page<Matchs> list = matchRepository.findByRetimeContaining(searchText, pageable);
 //		int startPage = Math.max(1, list.getPageable().getPageNumber() - 4);
