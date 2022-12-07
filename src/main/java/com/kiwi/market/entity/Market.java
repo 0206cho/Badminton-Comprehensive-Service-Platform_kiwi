@@ -71,6 +71,9 @@ public class Market extends BaseEntity {
 	@OneToMany(mappedBy = "market", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
 	private List<Comment> commentList;
 	
+	@OneToMany(mappedBy = "marketId", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<MarketLike> likeList = new ArrayList<>();
+	
 	@Column(name = "market_memId")
 	private Long memId;  // 작성자 id
 	
