@@ -45,17 +45,16 @@ public class MemberService implements UserDetailsService {
     public Member saveMatchs(Long memberId, Long win, int point){
     	Member m = memberRepository.findById(memberId).orElseThrow(EntityNotFoundException::new);
     	// 승리 점수
-    	System.out.println(">>>>>>>>>>>>기존 승리점수 : " + m.getWin());
     	int score = win.intValue();
         m.setWin(m.getWin() + score);
-        System.out.println(">>>>>>>>>>>>기존 승리점수 : " + m.getWin());
         
         // 매너 점수
-        System.out.println(">>>>>>>>>>>>기존 매너점수 : " + m.getWin());
         m.setPoint(m.getPoint() + point);
-        System.out.println(">>>>>>>>>>>변경 매너점수 : " + m.getWin());
         
         // 승리 점수에 따른 레벨 변경
+        if(m.getPoint() > 5) {
+        	
+        }
         m.getLevel();
     	return memberRepository.save(m);
     }
