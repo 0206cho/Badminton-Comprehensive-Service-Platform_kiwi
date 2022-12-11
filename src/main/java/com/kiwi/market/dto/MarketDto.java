@@ -1,6 +1,8 @@
 package com.kiwi.market.dto;
 
 import javax.persistence.Column;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.validation.constraints.NotBlank;
 
 import org.modelmapper.ModelMapper;
@@ -10,6 +12,7 @@ import com.kiwi.court.dto.ReservationDto;
 import com.kiwi.court.entity.Court;
 import com.kiwi.market.constant.ItemSellStatus;
 import com.kiwi.market.entity.Market;
+import com.kiwi.member.constant.Address;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -40,6 +43,9 @@ public class MarketDto {
 	private String filepath;
 
 	private String oriImgName;
+	
+	// 주소
+    private Address address;
 
 	@Column(name = "market_memId")
 	private Long memId; // 작성자 ID

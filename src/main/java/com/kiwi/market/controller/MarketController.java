@@ -2,6 +2,7 @@ package com.kiwi.market.controller;
 
 import java.io.File;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import javax.validation.Valid;
@@ -11,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
@@ -30,6 +32,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.kiwi.config.auth.PrincipalDetails;
 import com.kiwi.market.dto.MarketDto;
+import com.kiwi.market.dto.MarketSearchDto;
 import com.kiwi.market.entity.Comment;
 import com.kiwi.market.entity.Market;
 import com.kiwi.market.entity.MarketLike;
@@ -37,6 +40,9 @@ import com.kiwi.market.repository.MarketRepository;
 import com.kiwi.market.service.CommentService;
 import com.kiwi.market.service.MarketLikeService;
 import com.kiwi.market.service.MarketService;
+import com.kiwi.match.dto.MatchSearchDto;
+import com.kiwi.match.entity.Matchs;
+import com.kiwi.member.constant.Address;
 import com.kiwi.member.entity.Member;
 import com.kiwi.member.repository.MemberRepository;
 
@@ -104,6 +110,7 @@ public class MarketController {
 	@GetMapping(value = "/marketNew")
 	public String market(Model model) {
 		model.addAttribute("marketDto", new MarketDto());
+		model.addAttribute("local", Address.values());
 		return "market/marketForm";
 	}
 
@@ -182,26 +189,51 @@ public class MarketController {
 //		return "/market/marketList";
 //	}
 
+//	// 마켓 리스트 - 페이지
+//	@GetMapping("/marketList")
+//	public String marketList(Model model,@PageableDefault(size = 8, sort = "id", direction = Sort.Direction.DESC) Pageable pageable,@RequestParam(required = false, defaultValue = "") String searchText) {
+//		
+//		Page<Market> list = marketRepository.findByTitleContainingOrDetailContaining(searchText, searchText, pageable);
+//		int startPage = Math.max(1, list.getPageable().getPageNumber() - 7);
+//		int endPage = Math.min(list.getTotalPages(), list.getPageable().getPageNumber() + 7);
+//
+//		model.addAttribute("startPage", startPage);
+//		model.addAttribute("endPage", endPage);
+//		model.addAttribute("markets", list);
+//
+//		model.addAttribute("list", list);
+//		model.addAttribute("local", Address.values());
+//		return "market/marketList";
+//
+//	}
+	
 	// 마켓 리스트 - 페이지
-	@GetMapping("/marketList")
-	public String marketList(Model model,@PageableDefault(size = 8, sort = "id", direction = Sort.Direction.DESC) Pageable pageable,@RequestParam(required = false, defaultValue = "") String searchText) {
-		// list.getPageable().getPageNumber(); //: 현재 페이지 번호
-		// getTotalElements() : 전체 데이터 건수
-		// getTotalPages() : 총 페이지 개수
-		Page<Market> list = marketRepository.findByTitleContainingOrDetailContaining(searchText, searchText, pageable);
-//		System.out.println(searchText);
-		int startPage = Math.max(1, list.getPageable().getPageNumber() - 7);
-		int endPage = Math.min(list.getTotalPages(), list.getPageable().getPageNumber() + 7);
-
-		model.addAttribute("startPage", startPage);
-		model.addAttribute("endPage", endPage);
-		model.addAttribute("markets", list);
-
-		model.addAttribute("list", list);
-
+	@GetMapping({"/marketList","/marketList/{page}"})
+	public String marketList(MarketSearchDto marketSearchDto,Model model,@PathVariable("page") Optional<Integer> page) {
+		
+//		Page<Market> list = marketRepository.findByTitleContainingOrDetailContaining(searchText, searchText, pageable);
+//		int startPage = Math.max(1, list.getPageable().getPageNumber() - 7);
+//		int endPage = Math.min(list.getTotalPages(), list.getPageable().getPageNumber() + 7);
+//
+//		model.addAttribute("startPage", startPage);
+//		model.addAttribute("endPage", endPage);
+//		model.addAttribute("markets", list);
+//
+//		model.addAttribute("list", list);
+		
+		Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0, 8);
+		Page<Market> markets = marketService.getSearchMarketPage(marketSearchDto, pageable);
+		model.addAttribute("list", markets);
+		model.addAttribute("matchSearchDto", marketSearchDto);
+		model.addAttribute("maxPage", 8);
+		model.addAttribute("local", Address.values());
 		return "market/marketList";
 
 	}
+	
+
+	
+	
 
 	// 마켓 상세 페이지
 	@GetMapping("/marketDetail/{id}")
