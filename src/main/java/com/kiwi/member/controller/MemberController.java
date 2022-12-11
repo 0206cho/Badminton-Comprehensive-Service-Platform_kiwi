@@ -28,6 +28,7 @@ import com.kiwi.court.entity.Court;
 import com.kiwi.court.entity.Reservation;
 import com.kiwi.market.entity.MarketLike;
 import com.kiwi.market.service.MarketLikeService;
+import com.kiwi.match.dto.MatchsReservationDto;
 import com.kiwi.match.entity.Matchs;
 import com.kiwi.match.entity.MatchsReservation;
 import com.kiwi.match.service.MatchService;
@@ -199,39 +200,66 @@ public class MemberController {
 
 	// 마이페이지 - 매치 평가 /mypage/reservationMatchs
 	@PostMapping("/mypage/reservationMatchs")
-	public String MatchAppraisal(MatchsReservation matchsReservationDto, Model model,
+	public String MatchAppraisal(MatchsReservationDto matchsReservationDto,MatchsReservation matchsReservation, Model model,
 			@AuthenticationPrincipal PrincipalDetails principalDetails) {
 		// 승리일경우 매치 상대방 + 1
 		// 매너점수 1점당 + 20점
-
-		Long matchId = matchsReservationDto.getMathshId().getId(); // 매치 평가할 매치ID
+		
+		System.out.println("======================>매너점수 : "+matchsReservationDto.getManners());
+		System.out.println("======================> 매치신청ID : "+matchsReservationDto.getId());
+		System.out.println("======================> 승리여부 : "+matchsReservationDto.getWinYN());
+		System.out.println("======================> 매치ID : "+matchsReservationDto.getMathcshId());
+		
+		Long matchId = matchsReservationDto.getMathcshId(); // 매치 평가할 매치ID
 
 		Long memberId = principalDetails.getMember().getId(); // 현재 로그인 한 ID
-
-		System.out.println("==================> 매치 id : " + matchsReservationDto.getMathshId().getId());
+		
 
 		// 매치 신청 내역 중 매치 ID가 같을 경우 같이 매치 경기 진행,
-
 		List<MatchsReservation> lists = matchsReservationService.mrCourt(); // 매치신청 리스트
 
 		Long matchMemId = (long) 0;
-
+		int manner = 0; // 상대방에게 입력될 매너점수
+		Long win = (long) 0;
 		for (int i = 0; i < lists.size(); i++) {
-			if (lists.get(i).getMathshId().equals(matchId)) { // 같이 매치 경기를 한 경우
+			System.out.println("matchId : " + matchId);
+			System.out.println("lists.get(i).getMathshId().getId() : " + lists.get(i).getMathshId().getId());
+			if (lists.get(i).getMathshId().getId().equals(matchId)) { // 같이 매치 경기를 한 경우
+				System.out.println("if문 접근");
 				matchMemId = lists.get(i).getMemId(); // 같이 경기한 멤버의 ID - 본인도 포함될거임
 
 				if (matchMemId.equals(memberId)){ // 경기한 멤버가 본인일 경우
 					System.out.println("본인 예약 정보");
-				} else {
-					System.out.println("상대방의 ID : " + matchMemId); // 1vs1 경기일 때 내가 아니면 상대방이겠죠?
 					
-					System.out.println(">>>>>>>>>>>>>> 매너 점수 : " + matchsReservationDto.getManners());
-					System.out.println(">>>>>>>>>>>>>> 승리여부 : " + matchsReservationDto.getWin());
+				} else {
+					// 매너점수 
+					System.out.println(">>>>>>>>> 매너점수 확인 : " + matchsReservationDto.getManners());
+					if(matchsReservationDto.getManners() == 1) {
+						manner = 20;
+					} else if(matchsReservationDto.getManners() == 2) {
+						manner = 40;
+					} else if(matchsReservationDto.getManners() == 3) {
+						manner = 60;
+					} else if(matchsReservationDto.getManners() == 4) {
+						manner = 80;
+					} else if(matchsReservationDto.getManners() == 5) {
+						manner = 100;
+					} else if(matchsReservationDto.getManners() == 0) {
+						manner = 0;
+					}
+					
+					System.out.println("최종 입력될 매너점수 : "  + manner);
+					
+					// 승리점수
+					if(matchsReservationDto.getWinYN().equals("win,")) {
+						win += 1; // 패배일경우 0
+					}
+					memberService.saveMatchs(matchMemId, win, manner);
+					System.out.println(">>>>>>>>>>>> matchMemId : " + matchMemId);
+					System.out.println(">>>>>>>>>>>> win : " + win);
+					System.out.println(">>>>>>>>>>>> manner : " + manner);
 				}
 
-//				model.addAttribute("mreservationId" + counts, mreservationId); // 각각의 예약 id반환하기 위해서 reservatuonId1 ,,
-																				// 2,,
-																				// 이런식으로 줌
 			}
 		}
 //		model.addAttribute("count", counts);
@@ -259,12 +287,19 @@ public class MemberController {
 //		Court court = courtRepository.findById(courtId).orElseThrow();
 //		model.addAttribute("court", court);
 
-		return "mypage/mypageReservation";
+		return "redirect:/members/mypage";
 	}
-
+	
+//	@GetMapping("/mypage/reservationMatchs")
+//	public String GetMatchAppraisal(MatchsReservation matchsReservationDto, Model model, @AuthenticationPrincipal PrincipalDetails principalDetails) {
+//		model.addAttribute("matchsReservationDto", matchsReservationDto);
+//
+//		return "mypage/mypageReservation";
+//	}
 	// 마이페이지 - 신청 내역
 	@GetMapping("/mypage/reservation")
-	public String mypageReservation(@AuthenticationPrincipal PrincipalDetails principalDetails, Model model) {
+	public String mypageReservation(MatchsReservationDto matchsReservationDto,@AuthenticationPrincipal PrincipalDetails principalDetails, Model model) {
+		model.addAttribute("matchsReservationDto", matchsReservationDto);
 		Long memberId = principalDetails.getMember().getId();
 		// 매치 신청 부분
 		List<MatchsReservation> lists = matchsReservationService.mrCourt();
@@ -277,7 +312,7 @@ public class MemberController {
 		for (int i = 0; i < lists.size(); i++) {
 			if (lists.get(i).getMemId().equals(memberId)) { // 예약 했을 경우
 				counts += 1; // 예약한 건 수 : count
-
+				
 				mreservationId = lists.get(i).getId(); // 해당하는 멤버의 예약 아이디 반환
 				model.addAttribute("mreservationId" + counts, mreservationId); // 각각의 예약 id반환하기 위해서 reservatuonId1 ,,
 																				// 2,,

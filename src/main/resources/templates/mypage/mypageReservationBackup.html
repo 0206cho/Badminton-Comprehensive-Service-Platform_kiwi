@@ -150,7 +150,7 @@ a {
 				role="tabpanel" aria-labelledby="mypage_match-tab"
 				style="margin-left: 10px;">
 				<div th:each="vo : ${lists}">
-					<!-- <form class="signup-form" action="/members/mypage/reservationMatchs" role="form" method="post" th:object="${matchsReservationDto}" name="reservation_form"> -->
+					<form class="signup-form" action="/members/mypage/reservationMatchs" role="form" method="post" th:object="${matchsReservationDto}" name="reservation_form">
 					<div th:if="${memberId == vo.memId}">
 						<div>
 							<div style="float: left; width: 72%;">
@@ -181,17 +181,16 @@ a {
 								<div id="1"></div>
 
 								<a href="/match/matchDetail/" th:attrappend="href=${vo.MathshId.Id}"> 
-								<input class="btn btn-kiwi ok court_list diss" type="button" th:field="*{id}" id="001"  style="height: 40px; background-color: #C6F1E7; color: black;"
-									value='상세보기' /> <!--  -->
+								<input class="btn btn-kiwi ok court_list diss" type="button"  style="height: 40px; background-color: #C6F1E7; color: black;"
+									value='상세보기' /> <!-- th:field="*{id}" id="001" -->
 								</a> <a data-toggle="modal" href="#myModal"> <input
 									class="btn btn-kiwi ok court_list diss" type="button"
-									th:id="${vo.id}"
-									style="height: 40px; background-color: #C6F1E7; color: black;" onclick="sendMatch(this.id);"
-									value='매치평가' /> <!--  -->
+									
+									style="height: 40px; background-color: #C6F1E7; color: black;"
+									value='매치평가' /> <!-- th:field="*{id}" id="001" -->
 								</a>
-								<input type="hidden" th:id="${vo.MathshId.id}"> 
+
 								<!-- 매너 점수 모달 -->
-								<form class="signup-form" action="/members/mypage/reservationMatchs" role="form" method="post" th:object="${matchsReservationDto}" name="reservation_form">
 								<div class="modal fade" id="myModal" tabindex="-1"
 									aria-labelledby="exampleModalLabel" aria-hidden="true">
 									<div class="modal-dialog" style="display: flex; width: 400px;">
@@ -233,7 +232,7 @@ a {
 													</div>
 													<div class="form-check"
 														style="margin-left: 40px; margin-top: 10px;">
-														<input class="form-check-input" type="radio" value="defeat" name="winYN" id="winYN" checked>
+														<input class="form-check-input" type="radio" value=" defeat" name="winYN" id="winYN" checked>
 														<label class="form-check-label" for="flexRadioDefault2">패배</label>
 													</div>
 
@@ -243,19 +242,15 @@ a {
 												<input type="hidden" id="court_name" name="court_name" value="">
 												<input type="hidden" id="court_time" name="reservation_info" value="">
 												
+												 -->
 												
-												
-												 <input type="hidden" id="match_id" name="match_id"> 
+												<!-- <input type="hidden" id="match_id" name="match_id"> 
 												<input type="hidden" id="mathsh_id" name="mathsh_id">
 												<input type="hidden" id="matchsReservation_id" name="matchsReservation_id">
 												<input type="hidden" id="manners" name="manners" value="0">
-												 -->
-												<input type="hidden" id="mathcshId" name="mathcshId" th:value="${vo.MathshId.id}"> 
-												<input type="hidden" id="id" name="id"> 
-												<input type="hidden" id="manners" name="manners" value="0">
-												<input type="hidden" id="winYN" name="winYN">
+												-->
+												<input type="hidden" th:field="*{id}" value="1234">
 												<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
-												
 											</div>
 											<div class="modal-footer" style="border: none">
 												<button type="submit" class="btn btn-modal">확인</button>
@@ -264,7 +259,7 @@ a {
 									</div>
 
 								</div>
-								</form>
+
 								<div style="display: flex; margin-top: 10px; margin-left: 23px;">
 									<div style="margin-right: 8px;">결제일시</div>
 									<div
@@ -272,7 +267,7 @@ a {
 										11:30:20</div>
 								</div>
 						</div>
-						<!-- </form> -->
+						</form>
 						
 					</div>
 
@@ -324,9 +319,9 @@ a {
 
 							<a href="/court/info/" th:attrappend="href=${vo.court.id}"> <input
 								class="btn btn-kiwi ok court_list diss" type="button"
-								  th:field="*{id}" id="001"
+								 id="001"
 								style="height: 40px; background-color: #C6F1E7; color: black;"
-								value='상세보기' /><!-- -->
+								value='상세보기' /><!-- th:field="*{id}" -->
 							</a>
 
 							<div style="display: flex; margin-top: 10px; margin-left: 23px;">
@@ -378,18 +373,7 @@ a {
 							btn.closest('.number-spinner').find('input').val(
 									manners);
 							document.getElementById('manners').value = manners;
-							//alert(document.getElementById('id').value)
-							
-							// 승리여부 값 hidden에 넣기
-							var winYn = $('input[name="winYn"]:checked').val();
-							document.getElementById('winYn').value = winYn;
-							console.log("ddd " , winYn);
 						});
-				
-				function sendMatch(id){
-					document.getElementById('id').value = id;	
-				}
-				
 			</script>
 		</div>
 	</div>

@@ -156,4 +156,5 @@ public class Member extends BaseEntity {
     	kiwicash += amout;
     	return kiwicash;
     }
+
 }

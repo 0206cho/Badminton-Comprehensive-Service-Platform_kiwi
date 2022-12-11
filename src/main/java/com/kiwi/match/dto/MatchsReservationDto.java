@@ -16,10 +16,14 @@ public class MatchsReservationDto {
 
 	private Long id; // 매치 아이디
 
-    private Long memId;
-	
+	private Long memId;
+
 	private Long mathcshId;
-    
-//	private Matchs MathcshId;
+
+	private Long manners; // 매너점수
+
+	private String winYN; // 승리 여부
 	
+//	private Matchs MathcshId;
+
 }
