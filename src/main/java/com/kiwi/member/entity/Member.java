@@ -94,6 +94,9 @@ public class Member extends BaseEntity {
     // 매너점수
     private int point;
     
+    // 승리 점수
+    private int win;
+    
     // 프로필 사진
     private String image;
     

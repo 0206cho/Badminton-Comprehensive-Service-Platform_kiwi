@@ -38,6 +38,9 @@ public class MatchsReservation extends BaseEntity{
 	@Column(name = "mr_memId")
     private Long memId;
 	
+	// 승리점수
+	private Long win;
+	
 	
 	@ManyToOne
     @JoinColumn(name = "mr_mathsId")
