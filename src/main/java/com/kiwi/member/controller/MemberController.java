@@ -3,11 +3,13 @@ package com.kiwi.member.controller;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -42,6 +44,7 @@ import com.kiwi.member.constant.Address;
 import com.kiwi.member.constant.Bank;
 import com.kiwi.member.constant.Gender;
 import com.kiwi.member.dto.MemberFormDto;
+import com.kiwi.member.dto.MemberUpdateDto;
 import com.kiwi.member.dto.OauthAddInfoDto;
 import com.kiwi.member.entity.Member;
 import com.kiwi.member.repository.MemberRepository;
@@ -69,6 +72,9 @@ public class MemberController {
 
 	@Autowired
 	private CashRepository cashRepository;
+
+	@Value("${profileImgLocation}")
+	private String profileImgLocation;
 
 	private final MatchService matchService;
 
@@ -205,20 +211,19 @@ public class MemberController {
 
 	// 마이페이지 - 매치 평가 /mypage/reservationMatchs
 	@PostMapping("/mypage/reservationMatchs")
-	public String MatchAppraisal(MatchsReservationDto matchsReservationDto,MatchsReservation matchsReservation, Model model,
-			@AuthenticationPrincipal PrincipalDetails principalDetails) {
+	public String MatchAppraisal(MatchsReservationDto matchsReservationDto, MatchsReservation matchsReservation,
+			Model model, @AuthenticationPrincipal PrincipalDetails principalDetails) {
 		// 승리일경우 매치 상대방 + 1
 		// 매너점수 1점당 + 20점
-		
-		System.out.println("======================>매너점수 : "+matchsReservationDto.getManners());
-		System.out.println("======================> 매치신청ID : "+matchsReservationDto.getId());
-		System.out.println("======================> 승리여부 : "+matchsReservationDto.getWinYN());
-		System.out.println("======================> 매치ID : "+matchsReservationDto.getMathcshId());
-		
+
+		System.out.println("======================>매너점수 : " + matchsReservationDto.getManners());
+		System.out.println("======================> 매치신청ID : " + matchsReservationDto.getId());
+		System.out.println("======================> 승리여부 : " + matchsReservationDto.getWinYN());
+		System.out.println("======================> 매치ID : " + matchsReservationDto.getMathcshId());
+
 		Long matchId = matchsReservationDto.getMathcshId(); // 매치 평가할 매치ID
 
 		Long memberId = principalDetails.getMember().getId(); // 현재 로그인 한 ID
-		
 
 		// 매치 신청 내역 중 매치 ID가 같을 경우 같이 매치 경기 진행,
 		List<MatchsReservation> lists = matchsReservationService.mrCourt(); // 매치신청 리스트
@@ -233,30 +238,30 @@ public class MemberController {
 				System.out.println("if문 접근");
 				matchMemId = lists.get(i).getMemId(); // 같이 경기한 멤버의 ID - 본인도 포함될거임
 
-				if (matchMemId.equals(memberId)){ // 경기한 멤버가 본인일 경우
+				if (matchMemId.equals(memberId)) { // 경기한 멤버가 본인일 경우
 					System.out.println("본인 예약 정보");
-					
+
 				} else {
-					// 매너점수 
+					// 매너점수
 					System.out.println(">>>>>>>>> 매너점수 확인 : " + matchsReservationDto.getManners());
-					if(matchsReservationDto.getManners() == 1) {
+					if (matchsReservationDto.getManners() == 1) {
 						manner = 20;
-					} else if(matchsReservationDto.getManners() == 2) {
+					} else if (matchsReservationDto.getManners() == 2) {
 						manner = 40;
-					} else if(matchsReservationDto.getManners() == 3) {
+					} else if (matchsReservationDto.getManners() == 3) {
 						manner = 60;
-					} else if(matchsReservationDto.getManners() == 4) {
+					} else if (matchsReservationDto.getManners() == 4) {
 						manner = 80;
-					} else if(matchsReservationDto.getManners() == 5) {
+					} else if (matchsReservationDto.getManners() == 5) {
 						manner = 100;
-					} else if(matchsReservationDto.getManners() == 0) {
+					} else if (matchsReservationDto.getManners() == 0) {
 						manner = 0;
 					}
-					
-					System.out.println("최종 입력될 매너점수 : "  + manner);
-					
+
+					System.out.println("최종 입력될 매너점수 : " + manner);
+
 					// 승리점수
-					if(matchsReservationDto.getWinYN().equals("win,")) {
+					if (matchsReservationDto.getWinYN().equals("win,")) {
 						win += 1; // 패배일경우 0
 					}
 					memberService.saveMatchs(matchMemId, win, manner);
@@ -294,7 +299,7 @@ public class MemberController {
 
 		return "redirect:/members/mypage";
 	}
-	
+
 //	@GetMapping("/mypage/reservationMatchs")
 //	public String GetMatchAppraisal(MatchsReservation matchsReservationDto, Model model, @AuthenticationPrincipal PrincipalDetails principalDetails) {
 //		model.addAttribute("matchsReservationDto", matchsReservationDto);
@@ -303,7 +308,8 @@ public class MemberController {
 //	}
 	// 마이페이지 - 신청 내역
 	@GetMapping("/mypage/reservation")
-	public String mypageReservation(MatchsReservationDto matchsReservationDto,@AuthenticationPrincipal PrincipalDetails principalDetails, Model model) {
+	public String mypageReservation(MatchsReservationDto matchsReservationDto,
+			@AuthenticationPrincipal PrincipalDetails principalDetails, Model model) {
 		model.addAttribute("matchsReservationDto", matchsReservationDto);
 		Long memberId = principalDetails.getMember().getId();
 		// 매치 신청 부분
@@ -317,7 +323,7 @@ public class MemberController {
 		for (int i = 0; i < lists.size(); i++) {
 			if (lists.get(i).getMemId().equals(memberId)) { // 예약 했을 경우
 				counts += 1; // 예약한 건 수 : count
-				
+
 				mreservationId = lists.get(i).getId(); // 해당하는 멤버의 예약 아이디 반환
 				model.addAttribute("mreservationId" + counts, mreservationId); // 각각의 예약 id반환하기 위해서 reservatuonId1 ,,
 																				// 2,,
@@ -350,39 +356,52 @@ public class MemberController {
 	// 마이페이지 - 프로필 설정
 	@GetMapping("/mypage/profile")
 	public String mypageProfile(@AuthenticationPrincipal PrincipalDetails principalDetails, Model model) {
-		Member member = memberService.mypageInfo(principalDetails);	
+		Member member = memberService.mypageInfo(principalDetails);
 		model.addAttribute("member", member);
 		model.addAttribute("bnames", Bank.values());
 		model.addAttribute("local", Address.values());
+		model.addAttribute("memberUpdateDto", new MemberUpdateDto());
 		return "mypage/mypageProfile";
 	}
-	
-	
+ 
 	@PostMapping("/mypage/profile/insert_image")
-	public String image_insert(@AuthenticationPrincipal PrincipalDetails principalDetails, HttpServletRequest request, @RequestParam("filename") MultipartFile mFile, Model model) throws Exception {
-		System.out.println("============ 여기까지는??");
-		String upload_path = "C:/market/profileImage/"; // 프로필 사진들 모아두는 폴더
-		Member member = memberService.mypageInfo(principalDetails);	
+	public String image_insert(@AuthenticationPrincipal PrincipalDetails principalDetails,MemberUpdateDto memberUpdateDto, HttpServletRequest request, Model model) throws Exception {
+		
+		Member member = memberService.mypageInfo(principalDetails);
 
-		try {
-			if (member.getImage() != null) { // 이미 프로필 사진이 있을경우
-				File file = new File(upload_path + member.getImage()); // 경로 + 유저 프로필사진 이름을 가져와서
-				file.delete(); // 원래파일 삭제
+		// 파일의 오리지널 네임
+		//String originalFileName = mFile.getOriginalFilename();
+		//String ext = originalFileName.substring(originalFileName.indexOf("."));
+		String originalFileName = memberUpdateDto.getFilename().getOriginalFilename();
+		
+		
+		// 이미지 수정 안 하는 경우
+		if(originalFileName.equals("")) {
+			memberService.updateProfile(member, memberUpdateDto);
+		} 
+		// 이미지 수정 하는 경우
+		else {
+			String ext = originalFileName.substring(originalFileName.indexOf("."));
+			String newFileName = UUID.randomUUID() + ext;
+			String uploadPath = "/members/mypage/profile/" + newFileName;
+
+			try {
+				if (member.getImage() != null) { // 이미 프로필 사진이 있을경우
+					File file = new File(profileImgLocation + member.getImage()); // 경로 + 유저 프로필사진 이름을 가져와서
+					file.delete(); // 원래파일 삭제
+				}
+				//mFile.transferTo(new File(profileImgLocation + newFileName)); // 경로에 업로드
+				memberUpdateDto.getFilename().transferTo(new File(profileImgLocation + newFileName)); // 경로에 업로드
+			} catch (IOException e) {
+				e.printStackTrace();
 			}
-			mFile.transferTo(new File(upload_path + mFile.getOriginalFilename()));  // 경로에 업로드
-		} catch (IOException e) {
-			e.printStackTrace();
+			memberService.updateImage(member, uploadPath,memberUpdateDto);
 		}
-		memberService.updateImage(member, mFile.getOriginalFilename());
-		return "redirect:/members/mypage";
+		
+		
+		return "redirect:/members/mypage/profile";
 	}
-	
-	
-	
-	
-		
-		
-		
+
 	// 소셜로그인 추가정보
 	@GetMapping("/login/addInfo")
 	public String addInfo(Model model, @AuthenticationPrincipal PrincipalDetails principalDetails) {

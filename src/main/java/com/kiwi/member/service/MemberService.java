@@ -19,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.kiwi.config.auth.PrincipalDetails;
 import com.kiwi.match.entity.Matchs;
+import com.kiwi.member.dto.MemberUpdateDto;
 import com.kiwi.member.dto.OauthAddInfoDto;
 import com.kiwi.member.entity.Member;
 import com.kiwi.member.repository.MemberRepository;
@@ -94,8 +95,22 @@ public class MemberService implements UserDetailsService {
     	return id;
     }
     
-    public Member updateImage(Member member, String fileName) {
+    // 프로필 수정(이미지 변경할 경우)
+    public Member updateImage(Member member, String fileName, MemberUpdateDto memberUpdateDto) {
     	member.setImage(fileName);
+    	member.setBnumber(memberUpdateDto.getBnumber());
+    	member.setBname(memberUpdateDto.getBname());
+    	member.setAddress(memberUpdateDto.getAddress());
+    	member.setPnum(memberUpdateDto.getPnum());
+    	return memberRepository.save(member);
+    }
+    
+    // 프로필 수정(이미지 변경 안할 경우)
+    public Member updateProfile(Member member,MemberUpdateDto memberUpdateDto) {
+    	member.setBnumber(memberUpdateDto.getBnumber());
+    	member.setBname(memberUpdateDto.getBname());
+    	member.setAddress(memberUpdateDto.getAddress());
+    	member.setPnum(memberUpdateDto.getPnum());
     	return memberRepository.save(member);
     }
     
