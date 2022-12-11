@@ -166,7 +166,7 @@
 								  <br>
 								  <label class="label" th:for="address" style="margin-bottom: 15px">위치</label>
 								  <br>
-								  <select class="form-select " th:field="*{address}" aria-label="Default select example" style="padding-top:5px">
+								  <select class="form-select " aria-label="Default select example" style="padding-top:5px">
 									<option value="">지역</option>
 									<option th:each="address : ${local}" th:value="${address}" th:text="${address}"></option>
 								  </select>

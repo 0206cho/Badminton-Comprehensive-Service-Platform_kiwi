@@ -59,6 +59,11 @@ public class MatchRepositoryImpl implements MatchRepositoryCustom {
 		
 	}
 	
+	private BooleanExpression searchByQuery(String searchQuery) {
+			return searchQuery == null ? null : QMatchs.matchs.reservation.court_name.like("%" + searchQuery + "%");
+	}
+	
+	
 
 	@Override
 	public Page<Matchs> getSearchMatchPage(MatchSearchDto matchSearchDto, Pageable pageable) {
@@ -68,6 +73,7 @@ public class MatchRepositoryImpl implements MatchRepositoryCustom {
 						searchStatusEq(matchSearchDto.getSearchStatus()),
 						searchLeverEq(matchSearchDto.getSearchLevel()),
 						searchType(matchSearchDto.getSearchType()),
+						searchByQuery(matchSearchDto.getSearchQuery()),
 						searchDateEq(matchSearchDto.getSearchDate())
 					  )
 				.orderBy(QMatchs.matchs.id.desc())
@@ -82,6 +88,7 @@ public class MatchRepositoryImpl implements MatchRepositoryCustom {
 						searchStatusEq(matchSearchDto.getSearchStatus()),
 						searchLeverEq(matchSearchDto.getSearchLevel()),
 						searchType(matchSearchDto.getSearchType()),
+						searchByQuery(matchSearchDto.getSearchQuery()),
 						searchDateEq(matchSearchDto.getSearchDate())
 						)
 				.fetchOne();
