@@ -34,7 +34,7 @@ public class ReservationDto {
 
 	// 예약한 아이디
 	private String reservation_email;
-	
+	 
 	// 버튼 번호
 	private String btnNum;
 	
