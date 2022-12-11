@@ -236,20 +236,17 @@ public class MemberController {
 		return "mypage/mypageReservation";
 	}
 
-	// 마이페이지 - 좋아요목록
+	// 마이페이지 - 프로필 설정
 	@GetMapping("/mypage/profile")
-	public String mypageProfile() {
-			
-		
+	public String mypageProfile(@AuthenticationPrincipal PrincipalDetails principalDetails, Model model) {
+		Member member = memberService.mypageInfo(principalDetails);	
+		model.addAttribute("member", member);
 		return "mypage/mypageProfile";
 	}
-	
 		
 		
 		
-		
-		
-		// 소셜로그인 추가정보
+	// 소셜로그인 추가정보
 	@GetMapping("/login/addInfo")
 	public String addInfo(Model model, @AuthenticationPrincipal PrincipalDetails principalDetails) {
 		model.addAttribute("oauthAddInfoDto", new OauthAddInfoDto());

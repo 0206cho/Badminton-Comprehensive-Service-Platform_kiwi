@@ -33,6 +33,7 @@ a {
 	background-color: #70ACB1;
 	color: white;
 	border-color: #666;
+	font-size: 19px;
 }
 
 .box {
@@ -127,52 +128,55 @@ a {
 			</div>
 		</div>
 		
-		<div class="row">
-		<div></div>
-			
-
-		</div>
 	</div>
 
-	<div style="float: left; width: 925px; border: 1px solid #808080; margin-bottom: 60px; border-radius: 15px;">
-		<p
-			style="margin-top: 37px; margin-left: 50px; margin-bottom: 35px; font-weight: bold; font-size: 22px;">
-			좋아요 누른 마켓 상품이 없습니다. &#127992;</p>
+	<div style="float: center; width: 925px; border: 1px solid #808080; margin-left:60px;margin-bottom: 60px; border-radius: 15px;">
+	
 			
-			
-			<!-- 프로필 사진 -->
+			<div style="margin-left:70px;" th:object="${member}">
+				<!-- 프로필 사진 -->
+ 				<img class="profile" th:src="*{image} != null ? *{image} : @{/img/kiwiLogo2.png}" alt="fog" style="margin-left:280px;border:1px solid black; margin-top: 30px; width: 215px; height: 215px; object-fit: cover; border-radius: 30%; overflow: hidden;">
+    
 				<div
 					style="text-align: left; margin-left: 40px; margin-top: 25px; font-size: 20px; font-weight: bold;">프로필
 					사진</div>
-				<br>
 				<div class="input-group mb-3"
-					style="margin-left: 40px; width: 700px;">
+					style="margin-left: 40px; width: 700px;margin-top: 10px;">
 					<input type="file" class="form-control" id="inputGroupFile02">
 				</div>
 
-				<!-- 포그 이름 -->
-				<div
-					style="text-align: left; margin-left: 40px; margin-top: 23px; font-size: 20px; font-weight: bold;">포그
-					이름</div>
-				<br> <input class="fogText" type="text" name="fog_name"
-					style="width: 700px; font-size: 20px; letter-spacing: 4px; text-align: left; margin-left: 45px; float: left; padding: 5px;"
-					value="스누피"> <br>
 
-				<!-- 분야 / 공개여부 - 타이틀 -->
-				<div style="float: left; width: 50%; margin-top: 20px;">
+				<!-- 포그 이름 -->
+				<div style="float: left; width: 30%; margin-top: 20px;">
 					<div
-						style="text-align: left; margin-left: 40px; margin-top: 15px; font-size: 20px; font-weight: bold;">분야</div>
+						style="text-align: left; margin-left: 40px; margin-top: 15px; font-size: 20px; font-weight: bold;">사용자 이름</div>
 				</div>
 				<div style="float: left; width: 50%; margin-top: 20px;">
 					<div
-						style="text-align: left; margin-left: 40px; margin-top: 15px; font-size: 20px; font-weight: bold;">공개여부</div>
+						style="text-align: left; margin-left: 153px; margin-top: 15px; font-size: 20px; font-weight: bold;">핸드폰번호</div>
+				</div>
+				 <input class="fogText" type="text" name="fog_name"
+					style="margin-top: 10px;width: 38%; font-size: 20px; letter-spacing: 4px; text-align: left; margin-left: 40px; float: left; padding: 5px;"
+					value="스누피"> <br>
+				<input class="fogText" type="text" name="fog_name"
+					style="margin-top: 10px;width: 38%; font-size: 20px; margin-left:50px;letter-spacing: 4px; text-align: left;  float: left; padding: 5px;"
+					value="스누피"> <br>	
+				
+				<!-- 분야 / 공개여부 - 타이틀 -->
+				<div style="float: left; width: 30%; margin-top: 20px;">
+					<div
+						style="text-align: left; margin-left: 40px; margin-top: 15px; font-size: 20px; font-weight: bold;">계좌은행</div>
+				</div>
+				<div style="float: left; width: 50%; margin-top: 20px;">
+					<div
+						style="text-align: left; margin-left: 153px; margin-top: 15px; font-size: 20px; font-weight: bold;">예금주</div>
 				</div>
 
 				<!-- 분야 / 공개여부 - 내용 -->
-				<div style="float: left; width: 50%; margin-top: 10px;">
+				<div style="float: left; width: 30%; margin-top: 10px;">
 					<select class="form-select border-1"
 						style="height: 50px; width: 180px; margin-left: 40px;">
-						<option selected>카테고리</option>
+						<option selected>은행</option>
 						<option value="1">프로필</option>
 						<option value="2">프로젝트</option>
 						<option value="3">대외 활동</option>
@@ -182,43 +186,50 @@ a {
 				</div>
 
 				<div
-					style="float: left; width: 50%; margin-top: 23px; text-align: left;">
-					<input class="form-check-input" type="radio"
-						name="flexRadioDefault" id="flexRadioDefault1"
-						style="margin-left: 40px;" checked> <label
-						class="form-check-label" for="flexRadioDefault1"
-						style="margin-left: 65px;"> 공개(기본) </label> <input
-						class="form-check-input" type="radio" name="flexRadioDefault"
-						id="flexRadioDefault2" style="margin-left: 20px;"> <label
-						class="form-check-label" for="flexRadioDefault2"
-						style="margin-left: 50px;">비공개</label>
+					style="float: left; width: 30%; margin-top: 10px; text-align: left;">
+					<input class="fogText" type="text" name="fog_name"
+					style="width: 324px; font-size: 20px; letter-spacing: 4px; text-align: left; margin-left: 160px; float: left; padding: 5px;"
+					value="스누피">
 				</div>
 
 				<br>
 				<Br>
 				<Br>
 				<br>
-				<Br>
 				<!-- 썸네일 -->
-				<div
-					style="text-align: left; margin-left: 40px; margin-top: 50px; font-size: 20px; font-weight: bold;">썸네일</div>
+				
+				
 				<br>
-				<div class="input-group mb-3"
-					style="margin-left: 40px; width: 700px;">
-					<input type="file" class="form-control" id="inputGroupFile02">
+				
+				<div style="float: left; width: 100%; margin-top: 20px;">
+					<div
+						style="text-align: left; margin-left: 40px; margin-top: 15px; font-size: 20px; font-weight: bold;">위치</div>
 				</div>
-
-				<!-- 비밀번호 변경 -->
-				<div
-					style="text-align: left; margin-left: 40px; margin-top: 25px; font-size: 20px; font-weight: bold;">비밀번호
-					변경</div>
-				<br> <input class="fogText" type="password" name="fog_name"
-					style="width: 700px; font-size: 20px; letter-spacing: 4px; text-align: left; margin-left: 45px; float: left; padding: 5px;"
-					value="12345678"> <br> <Br>
+				
+				<div style="float: left; width: 50%; margin-top: 10px;">
+				
+					<select class="form-select border-1" style="height: 50px; width: 180px; margin-left: 40px;margin-bottom:50px">
+						<option selected>은행</option>
+						<option value="1">프로필</option>
+						<option value="2">프로젝트</option>
+						<option value="3">대외 활동</option>
+						<option value="4">수상자격 / 자격증</option>
+						<option value="5">보유 기술</option>
+					</select>
+				</div>
+				
+				<br>
+				<br>
+				</div>
+				<br>
+				<br>
+				<br>
+			
 
 			</div>
 			
-			
+			<button class="btn btn-kiwi" type="button" style="width: 120px;height:70px;margin-right:20px" onclick="openPopup()">저장</button>
+			</div>
 			
 			
 	</div>
