@@ -399,7 +399,7 @@ public class MemberController {
 		}
 		
 		
-		return "redirect:/members/mypage/profile";
+		return "redirect:/members/mypage";
 	}
 
 	// 소셜로그인 추가정보
