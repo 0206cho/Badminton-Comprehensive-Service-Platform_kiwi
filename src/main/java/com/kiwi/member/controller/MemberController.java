@@ -61,9 +61,9 @@ public class MemberController {
 	private final MatchService matchService;
 
 	private final MatchsReservationService matchsReservationService;
-	
+
 	private final CashService cashService;
-	
+
 	private final MarketLikeService likeService;
 
 	// 회원 가입 로직
@@ -133,41 +133,41 @@ public class MemberController {
 	}
 
 	// 마이페이지 - 좋아요목록
-		@GetMapping("/mypage/marketLike")
-		public String mypageMarketLike(@AuthenticationPrincipal PrincipalDetails principalDetails, Model model) {
-			Long memberId = principalDetails.getMember().getId();
-			
-			List<MarketLike> lists = likeService.marketLike();
-			model.addAttribute("lists", lists);
-			model.addAttribute("memberId", memberId);
+	@GetMapping("/mypage/marketLike")
+	public String mypageMarketLike(@AuthenticationPrincipal PrincipalDetails principalDetails, Model model) {
+		Long memberId = principalDetails.getMember().getId();
+
+		List<MarketLike> lists = likeService.marketLike();
+		model.addAttribute("lists", lists);
+		model.addAttribute("memberId", memberId);
 //			System.out.println(">>>>>>>>>>>>>>>>> market : " + lists.get(0).getMarketId());
 //			System.out.println(">>>>>>>>>>>>>>>>> title : " + lists.get(0).getMarketId().getTitle());
 
-			int counts = 0;
-			Long marketLikeId = (long) 0;
-			for (int i = 0; i < lists.size(); i++) {
-				if (lists.get(i).getMemId().equals(memberId)) { // 좋아요 했을 경우
-					counts += 1; // 예약한 건 수 : count
+		int counts = 0;
+		Long marketLikeId = (long) 0;
+		for (int i = 0; i < lists.size(); i++) {
+			if (lists.get(i).getMemId().equals(memberId)) { // 좋아요 했을 경우
+				counts += 1; // 예약한 건 수 : count
 
-					marketLikeId = lists.get(i).getId(); // 해당하는 멤버의 좋아요 아이디 반환
-					model.addAttribute("marketLikeId" + counts, marketLikeId); // 각각의 예약 id반환하기 위해서 reservatuonId1 ,,
-																					// 2,,
-																					// 이런식으로 줌
-				}
+				marketLikeId = lists.get(i).getId(); // 해당하는 멤버의 좋아요 아이디 반환
+				model.addAttribute("marketLikeId" + counts, marketLikeId); // 각각의 예약 id반환하기 위해서 reservatuonId1 ,,
+																			// 2,,
+																			// 이런식으로 줌
 			}
-			model.addAttribute("count", counts);
-			System.out.println(">>>>>>>>>> count : "+ counts);
-			
-			return "mypage/mypageMarketLike";
 		}
-		
+		model.addAttribute("count", counts);
+		System.out.println(">>>>>>>>>> count : " + counts);
+
+		return "mypage/mypageMarketLike";
+	}
+
 	// 마이페이지 - 충전내역
 	@GetMapping("/mypage/pay")
 	public String mypagePay(@AuthenticationPrincipal PrincipalDetails principalDetails, Model model) {
 		// 키위캐시 금액 표시, 충전버튼 관련
 		Member member = memberService.mypageInfo(principalDetails);
 		model.addAttribute("member", member);
-		
+
 		// 충전내역 표시
 		Long memberId = principalDetails.getMember().getId();
 		List<Cash> list = cashService.cash();
@@ -183,11 +183,11 @@ public class MemberController {
 
 				payId = list.get(i).getId(); // 해당하는 멤버의 충전 아이디 반환
 				model.addAttribute("mreservationId" + counts, payId); // 각각의 충전 id반환하기 위해서 payId1 ,,
-																				// 2,, 이런식으로 줌
+																		// 2,, 이런식으로 줌
 			}
 		}
 		model.addAttribute("count", counts);
-		
+
 		return "mypage/mypagePay";
 	}
 
@@ -236,7 +236,20 @@ public class MemberController {
 		return "mypage/mypageReservation";
 	}
 
-	// 소셜로그인 추가정보
+	// 마이페이지 - 좋아요목록
+	@GetMapping("/mypage/profile")
+	public String mypageProfile() {
+			
+		
+		return "mypage/mypageProfile";
+	}
+	
+		
+		
+		
+		
+		
+		// 소셜로그인 추가정보
 	@GetMapping("/login/addInfo")
 	public String addInfo(Model model, @AuthenticationPrincipal PrincipalDetails principalDetails) {
 		model.addAttribute("oauthAddInfoDto", new OauthAddInfoDto());
