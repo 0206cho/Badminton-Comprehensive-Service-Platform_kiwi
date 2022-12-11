@@ -18,6 +18,7 @@ import javax.persistence.Table;
 
 import com.kiwi.market.constant.ItemSellStatus;
 import com.kiwi.market.dto.MarketDto;
+import com.kiwi.member.constant.Address;
 import com.kiwi.shop.entity.BaseEntity;
 
 import lombok.AllArgsConstructor;
@@ -86,6 +87,11 @@ public class Market extends BaseEntity {
 	@Column(name = "buy_memId")
 	private Long buy_memId;  // 구매자 id
 	
+	// 주소
+    @Enumerated(EnumType.STRING)
+    @Column(name="member_address")
+    private Address address;
+	
 	public static Market createMarket(MarketDto marketDto) {
 		Market market = new Market();
 		market.setTitle(marketDto.getTitle());
@@ -95,6 +101,7 @@ public class Market extends BaseEntity {
 		market.setFilename(marketDto.getFilename());
 		market.setFilepath(marketDto.getFilepath());
 		market.setOriImgName(marketDto.getOriImgName());
+		market.setAddress(marketDto.getAddress());
 		
 		market.setMemId(marketDto.getMemId());
 		market.setMemName(marketDto.getMemName());

@@ -8,6 +8,7 @@ import javax.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,10 +18,13 @@ import com.kiwi.config.auth.PrincipalDetails;
 import com.kiwi.market.UploadFile;
 import com.kiwi.market.constant.ItemSellStatus;
 import com.kiwi.market.dto.MarketDto;
+import com.kiwi.market.dto.MarketSearchDto;
 import com.kiwi.market.entity.Market;
 import com.kiwi.market.entity.MarketLike;
 import com.kiwi.market.repository.MarketLikeRepository;
 import com.kiwi.market.repository.MarketRepository;
+import com.kiwi.match.dto.MatchSearchDto;
+import com.kiwi.match.entity.Matchs;
 import com.kiwi.member.repository.MemberRepository;
 import com.kiwi.pay.service.CashService;
 
@@ -138,6 +142,11 @@ public class MarketService {
 		String price = market.getPrice();
 		cashService.cashPlus(memId, Integer.parseInt(price));
 		market.setStatus(ItemSellStatus.구매완료);
+	}
+	
+	// 마켓 검색 필터
+	public Page<Market> getSearchMarketPage(MarketSearchDto marketSearchDto, Pageable pageable){
+		return marketRepository.getSearchMarketPage(marketSearchDto, pageable);
 	}
 
 }
