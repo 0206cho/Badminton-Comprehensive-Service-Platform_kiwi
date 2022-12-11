@@ -52,10 +52,16 @@ public class MemberService implements UserDetailsService {
         m.setPoint(m.getPoint() + point);
         
         // 승리 점수에 따른 레벨 변경
-        if(m.getPoint() > 5) {
-        	
+        if(m.getWin() >= 5) {
+        	if(m.getLevel().equals("A")) {
+        		m.setLevel("B");
+        	} else if(m.getLevel().equals("B")) {
+        		m.setLevel("C");
+        	} else if(m.getLevel().equals("C")) {
+        		m.setLevel("D");
+        	}
+        	m.setWin(0);
         }
-        m.getLevel();
     	return memberRepository.save(m);
     }
 
