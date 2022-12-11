@@ -1,7 +1,10 @@
 package com.kiwi.member.controller;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,10 +20,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.kiwi.config.auth.PrincipalDetails;
 import com.kiwi.court.entity.Reservation;
@@ -241,8 +246,34 @@ public class MemberController {
 	public String mypageProfile(@AuthenticationPrincipal PrincipalDetails principalDetails, Model model) {
 		Member member = memberService.mypageInfo(principalDetails);	
 		model.addAttribute("member", member);
+		model.addAttribute("bnames", Bank.values());
+		model.addAttribute("local", Address.values());
 		return "mypage/mypageProfile";
 	}
+	
+	
+	@PostMapping("/mypage/profile/insert_image")
+	public String image_insert(@AuthenticationPrincipal PrincipalDetails principalDetails, HttpServletRequest request, @RequestParam("filename") MultipartFile mFile, Model model) throws Exception {
+		System.out.println("============ 여기까지는??");
+		String upload_path = "C:/market/profileImage/"; // 프로필 사진들 모아두는 폴더
+		Member member = memberService.mypageInfo(principalDetails);	
+
+		try {
+			if (member.getImage() != null) { // 이미 프로필 사진이 있을경우
+				File file = new File(upload_path + member.getImage()); // 경로 + 유저 프로필사진 이름을 가져와서
+				file.delete(); // 원래파일 삭제
+			}
+			mFile.transferTo(new File(upload_path + mFile.getOriginalFilename()));  // 경로에 업로드
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		memberService.updateImage(member, mFile.getOriginalFilename());
+		return "redirect:/members/mypage";
+	}
+	
+	
+	
+	
 		
 		
 		

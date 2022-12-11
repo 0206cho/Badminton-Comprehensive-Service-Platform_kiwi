@@ -183,10 +183,6 @@
 <div layout:fragment="content" style="margin-top: 27px;">
 <form th:action="@{'/match/matchList/' + ${list.number}}"  role="form" method="get" th:object="${list}">
 	<div class="head" style="margin-bottom: 0x; padding-bottom: 0px;">
-		<!-- 지역 -->
-		<select class="select" name="sido" id="sido"
-			style="padding: 6px; padding-right: 10px; margin-right: 20px;"></select>
-		
 		 
 		<div class="form-inline justify-content-center" th:object="${matchSearchDto}">
 		<!--레벨-->
