@@ -9,6 +9,7 @@ import lombok.ToString;
 import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import com.kiwi.market.entity.MarketLike;
 import com.kiwi.member.constant.Address;
 import com.kiwi.member.constant.Bank;
 import com.kiwi.member.constant.Gender;
@@ -101,7 +102,7 @@ public class Member extends BaseEntity {
     
 //    @OneToMany(mappedBy = "member")
 //    private List<Cash> cashs = new ArrayList<>();
-
+    
     public static Member createMember(MemberFormDto memberFormDto, PasswordEncoder passwordEncoder){
         Member member = new Member();
         member.setName(memberFormDto.getName());
