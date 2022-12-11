@@ -69,7 +69,7 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
 			memberEntity = Member.builder()
 					.email(email)
 					.password(password)
-					.provider(provider)
+					.provider(provider) 
 					.providerId(providerId)
 					.role(Role.ADMIN)
 					.name(name)
