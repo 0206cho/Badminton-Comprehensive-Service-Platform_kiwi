@@ -19,11 +19,16 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
 	@Value("${resource.path}")
 	private String resourcePath;
+	
+	@Value("${profileuploadPath}")
+	private String profileuploadPath;
+	
 
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		registry.addResourceHandler("/market/image/upload/**").addResourceLocations(marketuploadPath);
 		registry.addResourceHandler("/image/title/**").addResourceLocations(resourcePath);
+		registry.addResourceHandler("/members/mypage/profile/**").addResourceLocations(profileuploadPath);
 	}
 
 }
