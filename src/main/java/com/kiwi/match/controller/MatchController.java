@@ -1,39 +1,30 @@
 package com.kiwi.match.controller;
 
-import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 
-import javax.persistence.EntityNotFoundException;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.kiwi.config.auth.PrincipalDetails;
 import com.kiwi.court.entity.Reservation;
 import com.kiwi.court.repository.ReservationRepository;
-import com.kiwi.market.dto.MarketDto;
-import com.kiwi.market.entity.Market;
-import com.kiwi.market.repository.MarketRepository;
-import com.kiwi.market.service.CommentService;
-import com.kiwi.market.service.MarketService;
-import com.kiwi.match.constant.Level;
 import com.kiwi.match.constant.Status;
 import com.kiwi.match.dto.MatchDto;
+import com.kiwi.match.dto.MatchSearchDto;
 import com.kiwi.match.dto.MatchsReservationDto;
 import com.kiwi.match.entity.Matchs;
 import com.kiwi.match.entity.MatchsReservation;
@@ -78,20 +69,38 @@ public class MatchController {
 //		return "match/matchList";
 //	}
 
+//	// 매치 메인 - 매치 리스트 (페이징)
+//	@GetMapping("/matchList")
+//	public String matchList(Model model,@PageableDefault(size = 5, sort = "id", direction = Sort.Direction.DESC) Pageable pageable,@RequestParam(required = false, defaultValue = "") String searchText) {
+//		System.out.println("================> : "+searchText);
+//		Page<Matchs> list = matchRepository.findByRetimeContaining(searchText, pageable);
+//		int startPage = Math.max(1, list.getPageable().getPageNumber() - 4);
+//		int endPage = Math.min(list.getTotalPages(), list.getPageable().getPageNumber() + 4);
+//		model.addAttribute("startPage", startPage);
+//		model.addAttribute("endPage", endPage);
+//		model.addAttribute("list", list);
+//
+//		return "match/matchList";
+//	}
+	
 	// 매치 메인 - 매치 리스트 (페이징)
-	@GetMapping("/matchList")
-	public String matchList(Model model,
-			@PageableDefault(size = 5, sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
-			@RequestParam(required = false, defaultValue = "") String searchText) {
-		// String courtName = matchService.courtTest(1L);
-//		Page<Matchs> list = matchRepository.findAll(pageable);
-		System.out.println("================> : "+searchText);
-		Page<Matchs> list = matchRepository.findByRetimeContaining(searchText, pageable);
-		int startPage = Math.max(1, list.getPageable().getPageNumber() - 4);
-		int endPage = Math.min(list.getTotalPages(), list.getPageable().getPageNumber() + 4);
-		model.addAttribute("startPage", startPage);
-		model.addAttribute("endPage", endPage);
-		model.addAttribute("list", list);
+	@GetMapping({"/matchList", "/matchList/{page}"})
+	public String matchList(MatchSearchDto matchSearchDto,Model model, @PathVariable("page") Optional<Integer> page) {
+		//matchSearchDto.setSearchDate(searchText);
+		
+		Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0, 3);
+		Page<Matchs> matchs = matchService.getSearchMatchPage(matchSearchDto, pageable);
+		
+		model.addAttribute("list", matchs);
+		model.addAttribute("matchSearchDto", matchSearchDto);
+		model.addAttribute("maxPage", 5);
+		
+//		Page<Matchs> list = matchRepository.findByRetimeContaining(searchText, pageable);
+//		int startPage = Math.max(1, list.getPageable().getPageNumber() - 4);
+//		int endPage = Math.min(list.getTotalPages(), list.getPageable().getPageNumber() + 4);
+//		model.addAttribute("startPage", startPage);
+//		model.addAttribute("endPage", endPage);
+//		model.addAttribute("list", list);
 
 		return "match/matchList";
 	}
