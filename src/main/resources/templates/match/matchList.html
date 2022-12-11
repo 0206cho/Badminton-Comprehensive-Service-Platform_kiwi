@@ -168,24 +168,26 @@
             var searchStatus = $("#searchStatus").val();
             var searchLevel = $("#searchLevel").val();
             var searchType = $("#searchType").val();
-            //var searchQuery = $("#searchQuery").val();
+            var searchQuery = $("#searchQuery").val();
 
             location.href="/match/matchList/" + page + "?searchStatus=" + searchStatus
             + "&searchLevel=" + searchLevel
             + "&searchType=" + searchType
-           ;
+            + "&searchQuery=" + searchQuery
+            ;
         }
 	</script>
 </th:block>
 
 
 <div layout:fragment="content" style="margin-top: 27px;">
+<form th:action="@{'/match/matchList/' + ${list.number}}"  role="form" method="get" th:object="${list}">
 	<div class="head" style="margin-bottom: 0x; padding-bottom: 0px;">
 		<!-- 지역 -->
 		<select class="select" name="sido" id="sido"
 			style="padding: 6px; padding-right: 10px; margin-right: 20px;"></select>
 		
-		<form th:action="@{'/match/matchList/' + ${list.number}}" role="form" method="get" th:object="${list}"> 
+		 
 		<div class="form-inline justify-content-center" th:object="${matchSearchDto}">
 		<!--레벨-->
 		<select th:field="*{searchLevel}" class="select" name="region" style="padding: 6px; padding-right: 20px; margin-right: 20px;">
@@ -211,26 +213,30 @@
 			<option value="마감">마감</option>
 		</select> <Br>
 		
-		<input type="text" style="width: 200px; height: 36px; margin-bottom: 0x; padding-bottom: 0px; margin-right: 10px;">
+		<input type="text" th:field="*{searchQuery}" style="width: 200px; height: 36px; margin-bottom: 0x; padding-bottom: 0px; margin-right: 10px;">
 		
 		<button id="searchBtn" class="btn btn-outline-success" type="submit" style="width: 80px; margin-right: 10px">검색</button>
 		
 		<button type="button" class="btn btn-kiwi" style="width: 120px;"onclick="location.href='/match/matchNew'">개설하기</button>
+		<input type="hidden" id="searchDate" name="searchDate" style="width: 280px; height: 36px; margin-bottom: 0x; padding-bottom: 0px; margin-right: 10px;">
 		</div>
-		</form>
+		
 		
 	</div>
-
-
+	<div id="form_date" style="align-items: center; margin-left: 20%; ">
+		
+	</div>
+	
+	
+	</form>
+<!--  
 	<div id="div_date">
 		<form class="form-inline" id="form_date" method="get" th:action="@{/match/matchList}">
-			 <input type="hidden" id="searchText" name="searchText" th:value="${param.searchText}"
-				style="width: 280px; height: 36px; margin-bottom: 0x; padding-bottom: 0px; margin-right: 10px;">
-
+			 <input type="hidden" id="searchText" name="searchText" th:value="${param.searchText}" style="width: 280px; height: 36px; margin-bottom: 0x; padding-bottom: 0px; margin-right: 10px;">
 		</form>
 
 	</div>
-
+-->
 	<script th:inline="javascript">
 		$(document).ready(function () {
 					var area0 = ["지역", "서울특별시", "인천광역시", "대전광역시",
@@ -266,7 +272,8 @@
 								dateBtnValue[i] = dd + "(" + week[gg] + ")";
 							}
 							
-							var html_btn = '<input type="hidden" id="searchText" name="searchText" th:value="${param.searchText}" style="width: 280px; height: 36px; margin-bottom: 0x; padding-bottom: 0px; margin-right: 10px;">';
+							//var html_btn = '<input type="hidden" id="searchText" name="searchText" th:value="${param.searchText}" style="width: 280px; height: 36px; margin-bottom: 0x; padding-bottom: 0px; margin-right: 10px;">';
+							var html_btn = '';
 							html_btn = html_btn.replace('{}', i);
 							str_court = str_court + html_btn + '\n';
 							for (var i = 0; i < 6; i++) {
@@ -321,11 +328,11 @@
 		function changeBtn(id) {
 		//alert(id);
 		//form안에 hidden으로 만든 매치날짜 input에 선택한 버튼의 id값인 매치 날짜 넣어줌
-		document.getElementById('searchText').value = id;
+		document.getElementById('searchDate').value = id;
 		//alert("값 : "+ document.getElementById('searchText').value);
 		var event = jQuery.Event("keypress", { keyCode: 13 });
 		
-		$("#searchText").trigger(event);
+		$("#searchDate").trigger(event);
 		
 		}
 		
