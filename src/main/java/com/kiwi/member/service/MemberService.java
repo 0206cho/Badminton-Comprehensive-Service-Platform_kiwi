@@ -88,6 +88,11 @@ public class MemberService implements UserDetailsService {
     	return id;
     }
     
+    public Member updateImage(Member member, String fileName) {
+    	member.setImage(fileName);
+    	return memberRepository.save(member);
+    }
+    
     
     //public Member saveOAuth2()
 
