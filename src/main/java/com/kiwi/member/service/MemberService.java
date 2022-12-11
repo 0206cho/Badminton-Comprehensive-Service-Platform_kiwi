@@ -5,6 +5,8 @@ import lombok.RequiredArgsConstructor;
 import java.util.Map;
 import java.util.Optional;
 
+import javax.persistence.EntityNotFoundException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
@@ -16,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.kiwi.config.auth.PrincipalDetails;
+import com.kiwi.match.entity.Matchs;
 import com.kiwi.member.dto.OauthAddInfoDto;
 import com.kiwi.member.entity.Member;
 import com.kiwi.member.repository.MemberRepository;
@@ -37,6 +40,23 @@ public class MemberService implements UserDetailsService {
     public Member saveMember(Member member){
         validateDuplicateMember(member);
         return memberRepository.save(member);
+    }
+    
+    public Member saveMatchs(Long memberId, Long win, int point){
+    	Member m = memberRepository.findById(memberId).orElseThrow(EntityNotFoundException::new);
+    	// 승리 점수
+    	int score = win.intValue();
+        m.setWin(m.getWin() + score);
+        
+        // 매너 점수
+        m.setPoint(m.getPoint() + point);
+        
+        // 승리 점수에 따른 레벨 변경
+        if(m.getPoint() > 5) {
+        	
+        }
+        m.getLevel();
+    	return memberRepository.save(m);
     }
 
     // 회원 중복체크

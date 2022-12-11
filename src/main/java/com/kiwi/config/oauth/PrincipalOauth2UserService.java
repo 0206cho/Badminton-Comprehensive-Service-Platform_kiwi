@@ -74,7 +74,7 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
 					.role(Role.ADMIN)
 					.name(name)
 					.cash(0)
-					.level(1)
+					.level("A")
 					.point(100)
 					.image(image)
 					.build();

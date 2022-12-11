@@ -89,10 +89,13 @@ public class Member extends BaseEntity {
     private int kiwicash;
     
     // 레벨
-    private int level;
+    private String level;
     
     // 매너점수
     private int point;
+    
+    // 승리 점수
+    private int win;
     
     // 프로필 사진
     private String image;
@@ -117,7 +120,7 @@ public class Member extends BaseEntity {
         member.setBname(memberFormDto.getBname());
         member.setBnumber(memberFormDto.getBnumber());
         member.setKiwicash(0);
-        member.setLevel(1);
+        member.setLevel("A");
         member.setPoint(100);
         member.setImage(memberFormDto.getImage());
         return member;
@@ -131,7 +134,7 @@ public class Member extends BaseEntity {
     }
      
     @Builder
-	public Member(String email, String password, Role role, String provider, String providerId,String name, int cash, int level, int point,String image,String updateYn) {
+	public Member(String email, String password, Role role, String provider, String providerId,String name, int cash, String level, int point,String image,String updateYn) {
 		this.email = email;
 		this.password = password;
 		this.role = role;
@@ -153,4 +156,5 @@ public class Member extends BaseEntity {
     	kiwicash += amout;
     	return kiwicash;
     }
+
 }
