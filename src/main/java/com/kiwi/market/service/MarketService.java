@@ -25,6 +25,7 @@ import com.kiwi.market.repository.MarketLikeRepository;
 import com.kiwi.market.repository.MarketRepository;
 import com.kiwi.match.dto.MatchSearchDto;
 import com.kiwi.match.entity.Matchs;
+import com.kiwi.member.entity.Member;
 import com.kiwi.member.repository.MemberRepository;
 import com.kiwi.pay.service.CashService;
 
@@ -68,10 +69,12 @@ public class MarketService {
 		} else {
 			uploadFile.fildUpload(market, file);
 		}
-
+		
+		Member member = memberRepository.findMemberById(memberId);
+		
 		market.setMemId(memberId);
 		market.setMemName(memberName);
-		market.setMemImg(memberImage);
+		market.setMemImg(member.getImage());
 		market.setStatus(ItemSellStatus.판매중);
 		System.out.println(">>>>>>>>>> 판매중 : " + market.getStatus());
 		marketRepository.save(market);
