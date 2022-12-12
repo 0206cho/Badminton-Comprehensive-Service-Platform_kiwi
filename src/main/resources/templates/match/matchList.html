@@ -160,6 +160,7 @@
             $("#searchBtn").on("click",function(e) {
                 e.preventDefault();
                 page(0);
+                
             });
         });
 		
@@ -169,10 +170,13 @@
             var searchLevel = $("#searchLevel").val();
             var searchType = $("#searchType").val();
             var searchQuery = $("#searchQuery").val();
+            var searchDate = $("#searchDate").val();
 
-            location.href="/match/matchList/" + page + "?searchStatus=" + searchStatus
+            location.href="/match/matchList/" + page 
+            + "?searchStatus=" + searchStatus
             + "&searchLevel=" + searchLevel
             + "&searchType=" + searchType
+            + "&searchDate=" + searchDate
             + "&searchQuery=" + searchQuery
             ;
         }
@@ -211,10 +215,10 @@
 		
 		<input type="text" th:field="*{searchQuery}" style="width: 200px; height: 36px; margin-bottom: 0x; padding-bottom: 0px; margin-right: 10px;">
 		 
-		<button id="searchBtn" class="btn btn-outline-success" type="submit" style="width: 80px; margin-right: 10px">검색</button>
+		<button id="searchBtn" class="btn btn-outline-success" type="submit" onclick="tt();" style="width: 80px; margin-right: 10px">검색</button>
 		
 		<button type="button" class="btn btn-kiwi" style="width: 120px;"onclick="location.href='/match/matchNew'">개설하기</button>
-		<input type="hidden" id="searchDate" name="searchDate" style="width: 280px; height: 36px; margin-bottom: 0x; padding-bottom: 0px; margin-right: 10px;">
+		<input type="hidden" id="searchDate" name="searchDate" value="" style="width: 280px; height: 36px; margin-bottom: 0x; padding-bottom: 0px; margin-right: 10px;">
 		</div>
 		
 		
@@ -320,12 +324,17 @@
 			}
 		}
 		
+		function tt() {
+			var input = document.getElementById('searchDate'); 
+            input.value = null; 
+		}
+		
 		// 날짜 버튼을 선택했을 경우
 		function changeBtn(id) {
 		//alert(id);
 		//form안에 hidden으로 만든 매치날짜 input에 선택한 버튼의 id값인 매치 날짜 넣어줌
 		document.getElementById('searchDate').value = id;
-		//alert("값 : "+ document.getElementById('searchText').value);
+		//alert("값 : "+ document.getElementById('searchDate').value);
 		var event = jQuery.Event("keypress", { keyCode: 13 });
 		
 		$("#searchDate").trigger(event);

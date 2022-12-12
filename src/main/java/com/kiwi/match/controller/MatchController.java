@@ -87,14 +87,22 @@ public class MatchController {
 	@GetMapping({"/matchList", "/matchList/{page}"})
 	public String matchList(MatchSearchDto matchSearchDto,Model model, @PathVariable("page") Optional<Integer> page) {
 		//matchSearchDto.setSearchDate(searchText);
-		
-		Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0, 5);
-		Page<Matchs> matchs = matchService.getSearchMatchPage(matchSearchDto, pageable);
+		if(matchSearchDto.getSearchDate() == "") {
+			matchSearchDto.setSearchDate(null);
+		}
 		
 		System.out.println("====================> date : " + matchSearchDto.getSearchDate());
 		System.out.println("====================> Level : " + matchSearchDto.getSearchLevel());
 		System.out.println("====================> status : " + matchSearchDto.getSearchStatus());
 		System.out.println("====================> Query : " + matchSearchDto.getSearchQuery());
+		
+		
+		
+		
+		Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0, 5);
+		Page<Matchs> matchs = matchService.getSearchMatchPage(matchSearchDto, pageable);
+		
+
 		
 		model.addAttribute("list", matchs);
 		model.addAttribute("matchSearchDto", matchSearchDto);
