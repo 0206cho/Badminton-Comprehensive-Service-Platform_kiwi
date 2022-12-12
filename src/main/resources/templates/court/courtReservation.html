@@ -721,14 +721,17 @@
 				// 오늘 날짜 하나만 받아와서 if문 안에 넣기
 				var currentDay = new Date();
 				var today = ''+currentDay.getDate();
-				//console.log("=================> : " + today);
+				console.log("=================>today : " + today);
 				
 				var clickDay = ''+date;
-				//console.log("=================>t : " + clickDay);
-				//console.log("=================> : " + clickDay.substring(10,12));
+				//console.log("=================>click : " + clickDay);
+				//console.log("=================>substring : " + clickDay.substring(10,12));
+				var clickDaySubstring = clickDay.substring(10,12);
+				//console.log("=================>clickDaySubstring : " + clickDaySubstring);
+				//console.log("=================>includes : " + clickDay.includes(today));
 				
 				// 오늘 날짜 기준으로 시간이 변하면 코트 비활성화
-				if(clickDay.includes(today)){
+				if(clickDaySubstring.includes(today)){
 					if (0600 <= nowTime && 0800 >= nowTime) {
 						for (var i = 0; i <= 5; i++) {
 							(function (i) {
@@ -890,8 +893,6 @@
 			function changeBtn(id) {
 				var date = id;
 				getBtn(date);
-				
-				
 				
 				// form안에 hidden으로 만든 매치날짜 input에 선택한 버튼의 id값인 매치 날짜 넣어줌
 				document.getElementById('searchText').value = id;
