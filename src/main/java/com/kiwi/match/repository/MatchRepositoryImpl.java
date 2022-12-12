@@ -51,12 +51,8 @@ public class MatchRepositoryImpl implements MatchRepositoryCustom {
 	}
 	
 	private BooleanExpression searchDateEq(String searchDate) {
-		if(StringUtils.equals("all", searchDate) || searchDate == null) {
-			return null;
-		} else {
-			return QMatchs.matchs.retime.eq(searchDate);
-		}
-		
+		System.out.println("====================> retime 직전 : " + searchDate);
+		return searchDate == null ? null : QMatchs.matchs.retime.eq(searchDate);
 	}
 	
 	private BooleanExpression searchByQuery(String searchQuery) {
@@ -73,8 +69,8 @@ public class MatchRepositoryImpl implements MatchRepositoryCustom {
 						searchStatusEq(matchSearchDto.getSearchStatus()),
 						searchLeverEq(matchSearchDto.getSearchLevel()),
 						searchType(matchSearchDto.getSearchType()),
-						searchByQuery(matchSearchDto.getSearchQuery()),
-						searchDateEq(matchSearchDto.getSearchDate())
+						searchDateEq(matchSearchDto.getSearchDate()),
+						searchByQuery(matchSearchDto.getSearchQuery())
 					  )
 				.orderBy(QMatchs.matchs.id.desc())
 				.offset(pageable.getOffset())
@@ -88,8 +84,8 @@ public class MatchRepositoryImpl implements MatchRepositoryCustom {
 						searchStatusEq(matchSearchDto.getSearchStatus()),
 						searchLeverEq(matchSearchDto.getSearchLevel()),
 						searchType(matchSearchDto.getSearchType()),
-						searchByQuery(matchSearchDto.getSearchQuery()),
-						searchDateEq(matchSearchDto.getSearchDate())
+						searchDateEq(matchSearchDto.getSearchDate()),
+						searchByQuery(matchSearchDto.getSearchQuery())
 						)
 				.fetchOne();
 				
