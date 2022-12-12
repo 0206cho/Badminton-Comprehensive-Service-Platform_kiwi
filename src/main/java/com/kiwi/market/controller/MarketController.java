@@ -231,10 +231,6 @@ public class MarketController {
 
 	}
 	
-
-	
-	
-
 	// 마켓 상세 페이지
 	@GetMapping("/marketDetail/{id}")
 	public String marketDetail(@PathVariable("id") Long id, Model model,@AuthenticationPrincipal PrincipalDetails principalDetails) {
@@ -257,6 +253,8 @@ public class MarketController {
 		List<Comment> list = commentService.commentList();
 		model.addAttribute("list", list);
 		
+		String level = principalDetails.getMember().getLevel();
+		model.addAttribute("level", level);
 		// ----------- 좋아요 확인 ----------- 
 		int counts = 0;  // 좋아요를 눌렀는지 확인
 
