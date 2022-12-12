@@ -2,6 +2,7 @@ package com.kiwi.member.service;
 
 import lombok.RequiredArgsConstructor;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -18,6 +19,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.kiwi.config.auth.PrincipalDetails;
+import com.kiwi.market.entity.Comment;
+import com.kiwi.market.entity.Market;
+import com.kiwi.market.repository.CommentRepository;
+import com.kiwi.market.repository.MarketRepository;
 import com.kiwi.match.entity.Matchs;
 import com.kiwi.member.dto.MemberUpdateDto;
 import com.kiwi.member.dto.OauthAddInfoDto;
@@ -37,6 +42,12 @@ public class MemberService implements UserDetailsService {
     //빈에 생성자가 1개이고 생성자의 파라미터 타입이 빈으로 등록이 가능하면 @Autowired 없이 의존성 주입 가능
     @Autowired
     private MemberRepository memberRepository;
+    
+    @Autowired
+    private MarketRepository marketRepository;
+    
+    @Autowired
+    private CommentRepository commentRepository;
 
     public Member saveMember(Member member){
         validateDuplicateMember(member);
@@ -102,6 +113,25 @@ public class MemberService implements UserDetailsService {
     	member.setBname(memberUpdateDto.getBname());
     	member.setAddress(memberUpdateDto.getAddress());
     	member.setPnum(memberUpdateDto.getPnum());
+    	
+    	// 로그인한 사용자가 이미지 변경했을때 마켓 테이블 프로필 이미지 변경
+    	if(marketRepository.findMarketByMemId(member.getId()) != null) {
+    	List<Market> markets = marketRepository.findMarketByMemId(member.getId());
+    	for (Market market2 : markets) {
+			market2.setMemImg(fileName);
+			}
+    	}
+    	
+    	// 로그인한 사용자가 이미지 변경했을때 댓글 테이블 프로필 이미지 변경
+    	if(commentRepository.findCommentByMemId(member.getId()) != null) {
+    		List<Comment> comments = commentRepository.findCommentByMemId(member.getId());
+    		for (Comment comment : comments) {
+				comment.setMemImg(fileName);
+			}
+    	}
+    	
+    	
+    	//marketRepository.save(market);
     	return memberRepository.save(member);
     }
     

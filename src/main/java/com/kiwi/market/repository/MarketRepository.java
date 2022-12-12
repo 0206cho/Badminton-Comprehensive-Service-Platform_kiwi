@@ -20,4 +20,6 @@ public interface MarketRepository extends JpaRepository<Market,Long>,QuerydslPre
 	
 	// 검색 - 제목, 내용
 	Page<Market> findByTitleContainingOrDetailContaining(String title, String detail, Pageable pageable);
+	
+	List<Market> findMarketByMemId(Long id);
 }

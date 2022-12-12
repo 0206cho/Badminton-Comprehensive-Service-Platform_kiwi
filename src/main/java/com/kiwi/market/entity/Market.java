@@ -16,6 +16,7 @@ import javax.persistence.Lob;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.kiwi.market.constant.ItemSellStatus;
 import com.kiwi.market.dto.MarketDto;
 import com.kiwi.member.constant.Address;
@@ -69,6 +70,7 @@ public class Market extends BaseEntity {
 	// mappendBy : 연관관계의 주인이 아니므로 DB의 FK가 아님
 	// DB에는 하나의 raw 데이터에 하나의 값만 들어갈 수 있음. 
 	// 만약 여러 개의 데이터가 들어간다면 원자성이 깨지므로 commentList는 DB에 FK로 생성되면 안되기 때문에 mappedBy를 사용
+	@JsonManagedReference
 	@OneToMany(mappedBy = "market", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
 	private List<Comment> commentList;
 	

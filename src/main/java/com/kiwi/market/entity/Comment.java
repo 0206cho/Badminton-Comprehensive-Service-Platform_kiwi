@@ -14,6 +14,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.kiwi.member.entity.Member;
 import com.kiwi.shop.entity.BaseEntity;
@@ -39,7 +40,8 @@ public class Comment extends BaseEntity {
 
 	@Column(length = 500)
 	private String content; // 댓글 내용
-
+	
+	@JsonBackReference
 	@ManyToOne // 한 글에 여러개의 댓글 가능
 	@JoinColumn(name = "market_id")
 	private Market market; // 마켓 게시글

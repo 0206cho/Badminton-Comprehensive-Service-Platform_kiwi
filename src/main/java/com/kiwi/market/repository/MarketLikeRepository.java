@@ -10,4 +10,6 @@ import com.kiwi.market.entity.MarketLike;
 @Repository
 public interface MarketLikeRepository extends JpaRepository<MarketLike, Long> {
 	List<MarketLike> findAllByOrderByIdDesc();
+	
+	
 }
