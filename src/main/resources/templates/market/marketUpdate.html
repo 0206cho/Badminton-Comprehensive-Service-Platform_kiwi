@@ -3,6 +3,12 @@
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{layouts/layout1}">
+	
+	<head>
+	<!-- 로그인하지 않았을때 csrf가 null이므로 에러가 나타남 아래 코드 2줄로 null이 아닐경우에만 csrf 참조 하도록 수정  -->
+	<meta name="_csrf" th:content="${_csrf?.token}">
+	<meta name="_csrf_header" th:content="${_csrf?.headerName}">
+</head>
 
 <!-- 사용자 CSS 추가-->
 <th:block layout:fragment="css">
@@ -159,9 +165,9 @@ a {
 
 		<div class="head">
 		<!-- 지역 -->
-			<select class="form-select " th:field="*{address}" aria-label="Default select example" style="margin-left:100px;padding-top:5px;width:150px;">
+			<select class="form-select " name="address" aria-label="Default select example" style="margin-left:100px;padding-top:5px;width:150px;">
 					<option value="">지역</option>
-					<option th:each="address : ${local}" th:value="${address}" th:text="${address}"></option>
+					<option th:each="address : ${local}" th:value="${address}" th:text="${address}" th:selected="${address} == ${market.address}"></option>
 			</select>
 			
 			 <input type="number" th:value="${market.price}" class="form-control"
