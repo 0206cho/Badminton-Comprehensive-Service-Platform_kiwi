@@ -285,13 +285,14 @@ public class MarketController {
 		Market market = marketService.marketDetail(id);
 		model.addAttribute("memberId", memberId); // 현재 로그인 한 ID
 		model.addAttribute("market", market);
+		model.addAttribute("local", Address.values());
 		return "market/marketUpdate";
 	}
 
 	// 마켓 수정 페이지
 	@PostMapping(value = "/marketUpdate/{id}")
 	public String marketUpdate(Market market, MultipartFile file, @AuthenticationPrincipal PrincipalDetails principalDetails) throws Exception {
-
+		
 		String memberName = principalDetails.getMember().getName();
 		String memberImage = principalDetails.getMember().getImage();
 		Long memberId = principalDetails.getMember().getId();
