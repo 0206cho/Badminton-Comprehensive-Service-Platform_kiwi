@@ -89,7 +89,7 @@
 
 ### [ 프로필 ]
 <img src="libs/30.png">
-<img src="libs/21.png">
+<img src="libs/31.png">
 <img src="libs/32.png">
 <img src="libs/33.png">
 <img src="libs/34.png">
@@ -98,8 +98,8 @@
 <br>
 
 ### [ 결제 ] 
-<img src="libs/25.png">
-<img src="libs/26.png">
+<img src="libs/35.png">
+<img src="libs/36.png">
 <br><Br>
 <hr>
 <Br>
